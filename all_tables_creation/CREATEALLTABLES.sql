@@ -286,7 +286,6 @@ CREATE TABLE m2m_rcp_eqp
 CREATE TABLE m2m_stp_igt
 (
 	msi_id integer NOT NULL   DEFAULT NEXTVAL(('"m2m_stp_igt_msi_id_seq"'::text)::regclass),
-	msi_rcp_id integer NULL,
 	msi_igt_id integer NULL,
 	msi_quantity integer NULL,
 	msi_quantity_type quantity_enum NULL,

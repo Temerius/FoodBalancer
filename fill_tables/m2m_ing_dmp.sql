@@ -1,10 +1,7 @@
-INSERT INTO m2m_ing_dmp (mid_dmp_id, mid_ing_id, mid_quantity)
-SELECT
-    dmp_id,
-    (random() * 49 + 1)::integer, 
-    (random() * 450 + 50)::integer 
-FROM daily_meal_plan
-CROSS JOIN LATERAL (
-    SELECT generate_series(1, (random() * 5 + 3)::integer)
-) AS ingredients(n)
-ON CONFLICT DO NOTHING;
+INSERT INTO m2m_ing_dmp (mid_dmp_id, mid_ing_id, mid_quantity, mid_quantity_type)
+SELECT 
+    (random() * 49 + 1)::int, 
+    (random() * 49 + 1)::int, 
+    (random() * 100 + 1)::int,
+    (ARRAY['grams','milliliters','pieces','liters'])[(random() * 3 + 1)::int]
+FROM generate_series(1, 100);
