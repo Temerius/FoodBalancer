@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import '../models/user.dart';
+import '../models/enums.dart';
 import '../services/auth_service.dart';
+import '../repositories/data_repository.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 
 class AuthProvider with ChangeNotifier {
   final AuthService _authService = AuthService();
@@ -51,6 +55,8 @@ class AuthProvider with ChangeNotifier {
     try {
       _user = await _authService.register(name, email, password);
       _isAuthenticated = true;
+
+      // After successful registration, initialize user data in DataRepository
       notifyListeners();
       return true;
     } catch (e) {
@@ -74,6 +80,7 @@ class AuthProvider with ChangeNotifier {
         await _authService.saveLoginStatus(true);
       }
 
+      // After successful login, load user data in DataRepository
       notifyListeners();
       return true;
     } catch (e) {
@@ -98,6 +105,20 @@ class AuthProvider with ChangeNotifier {
       _setError(e.toString());
     } finally {
       _setLoading(false);
+    }
+  }
+
+  // Load user data in DataRepository
+  void loadUserDataInRepository(BuildContext context) {
+    if (!_isAuthenticated || _user == null) return;
+
+    final dataRepository = Provider.of<DataRepository>(context, listen: false);
+    if (!dataRepository.isInitialized) {
+      dataRepository.initialize().then((_) {
+        dataRepository.loadUserData();
+      });
+    } else {
+      dataRepository.loadUserData();
     }
   }
 

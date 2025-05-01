@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
+import '../../models/enums.dart';
+import '../../models/user.dart';
+import '../../repositories/data_repository.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
@@ -16,7 +19,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController _weightController;
   late TextEditingController _ageController;
   late TextEditingController _caloriesController;
-  String? _gender;
+  Gender? _gender;
 
   @override
   void initState() {
@@ -153,26 +156,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 Row(
                   children: [
                     Expanded(
-                      child: RadioListTile<String>(
+                      child: RadioListTile<Gender>(
                         title: const Text('Мужской'),
-                        value: 'male',
+                        value: Gender.male,
                         groupValue: _gender,
-                        onChanged: (value) {
-                          setState(() {
-                            _gender = value;
-                          });
+                        onChanged: (Gender? value) {
+                          if (value != null) {
+                            setState(() {
+                              _gender = value;
+                            });
+                          }
                         },
                       ),
                     ),
                     Expanded(
-                      child: RadioListTile<String>(
+                      child: RadioListTile<Gender>(
                         title: const Text('Женский'),
-                        value: 'female',
+                        value: Gender.female,
                         groupValue: _gender,
-                        onChanged: (value) {
-                          setState(() {
-                            _gender = value;
-                          });
+                        onChanged: (Gender? value) {
+                          if (value != null) {
+                            setState(() {
+                              _gender = value;
+                            });
+                          }
                         },
                       ),
                     ),
@@ -206,15 +213,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        // TODO: Сохранение профиля
-                        Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Профиль успешно обновлен')),
-                        );
-                      }
-                    },
+                    onPressed: _saveProfile,
                     child: const Text('Сохранить'),
                   ),
                 ),
@@ -224,5 +223,47 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
       ),
     );
+  }
+
+  void _saveProfile() async {
+    if (_formKey.currentState!.validate()) {
+      // Create updated user object
+      final dataRepository = Provider.of<DataRepository>(context, listen: false);
+      final currentUser = Provider.of<AuthProvider>(context, listen: false).currentUser;
+
+      if (currentUser == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Ошибка: пользователь не найден')),
+        );
+        return;
+      }
+
+      final updatedUser = User(
+        id: currentUser.id,
+        name: _nameController.text,
+        email: currentUser.email,
+        height: _heightController.text.isEmpty ? null : int.tryParse(_heightController.text),
+        weight: _weightController.text.isEmpty ? null : int.tryParse(_weightController.text),
+        age: _ageController.text.isEmpty ? null : int.tryParse(_ageController.text),
+        gender: _gender,
+        caloriesPerDay: _caloriesController.text.isEmpty ? null : int.tryParse(_caloriesController.text),
+        allergenIds: currentUser.allergenIds,
+        equipmentIds: currentUser.equipmentIds,
+      );
+
+      // Save profile
+      final success = await dataRepository.updateUserProfile(updatedUser);
+
+      if (success) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Профиль успешно обновлен')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(dataRepository.error ?? 'Ошибка обновления профиля')),
+        );
+      }
+    }
   }
 }

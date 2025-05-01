@@ -1,17 +1,16 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+import '../utils/network_util.dart';
 
 class ApiService {
-  // Для эмулятора Android
-  // static const String baseUrl = 'http://10.0.2.2:8000';
-  // Для реального устройства (замените на свой IP)
+  // For your real server
   static const String baseUrl = 'http://192.168.100.7:8000';
 
-  // Отключаем моковые ответы
+  // Test whether we should use mock responses
   static const bool useMockResponses = false;
 
-  // Эндпоинты
+  // API endpoints
   static const String loginUrl = '/api/users/login/';
   static const String registerUrl = '/api/users/register/';
   static const String profileUrl = '/api/users/profile/';
@@ -19,81 +18,174 @@ class ApiService {
   static const String passwordResetConfirmUrl = '/api/users/password-reset/confirm/';
   static const String logoutUrl = '/api/users/logout/';
 
-  // HTTP клиент
+  // For caching
+  static const int defaultCacheTime = 24 * 60 * 60 * 1000; // 24 hours
+
+  // HTTP client
   final http.Client _client = http.Client();
 
-  // Заголовки по умолчанию
+  // Network utility
+  final NetworkUtil _networkUtil = NetworkUtil();
+
+  // Default headers
   Map<String, String> get _headers => {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     if (_token != null) 'Authorization': 'Token $_token',
   };
 
-  // Токен авторизации
+  // Auth token
   String? _token;
 
-  // Установка токена
+  // Set token
   void setToken(String token) {
     _token = token;
   }
 
-  // Очистка токена
+  // Clear token
   void clearToken() {
     _token = null;
   }
 
-  // GET запрос
+  // Initialize
+  Future<void> initialize() async {
+    await _networkUtil.initialize();
+  }
+
+  // GET request
   Future<Map<String, dynamic>> get(String endpoint) async {
-    final response = await _client.get(
-      Uri.parse('$baseUrl$endpoint'),
-      headers: _headers,
-    );
+    // Check connection before making request
+    final hasConnection = await _networkUtil.checkConnection();
+    if (!hasConnection) {
+      throw NoConnectionException(
+          'Нет подключения к интернету. Запрос: GET $endpoint'
+      );
+    }
 
-    return _handleResponse(response);
+    try {
+      final response = await _client.get(
+        Uri.parse('$baseUrl$endpoint'),
+        headers: _headers,
+      ).timeout(const Duration(seconds: 15));
+
+      return _handleResponse(response);
+    } on SocketException {
+      throw NoConnectionException(
+          'Ошибка соединения с сервером. Запрос: GET $endpoint'
+      );
+    } on TimeoutException {
+      throw TimeoutException(
+          'Превышено время ожидания ответа от сервера. Запрос: GET $endpoint'
+      );
+    } catch (e) {
+      throw ApiException('Ошибка при запросе: $e. Запрос: GET $endpoint');
+    }
   }
 
-  // POST запрос
+  // POST request
   Future<Map<String, dynamic>> post(String endpoint, Map<String, dynamic> data) async {
-    final response = await _client.post(
-      Uri.parse('$baseUrl$endpoint'),
-      headers: _headers,
-      body: jsonEncode(data),
-    );
+    // Check connection before making request
+    final hasConnection = await _networkUtil.checkConnection();
+    if (!hasConnection) {
+      throw NoConnectionException(
+          'Нет подключения к интернету. Запрос: POST $endpoint'
+      );
+    }
 
-    return _handleResponse(response);
+    try {
+      final response = await _client.post(
+        Uri.parse('$baseUrl$endpoint'),
+        headers: _headers,
+        body: jsonEncode(data),
+      ).timeout(const Duration(seconds: 15));
+
+      return _handleResponse(response);
+    } on SocketException {
+      throw NoConnectionException(
+          'Ошибка соединения с сервером. Запрос: POST $endpoint'
+      );
+    } on TimeoutException {
+      throw TimeoutException(
+          'Превышено время ожидания ответа от сервера. Запрос: POST $endpoint'
+      );
+    } catch (e) {
+      throw ApiException('Ошибка при запросе: $e. Запрос: POST $endpoint');
+    }
   }
 
-  // PUT запрос
+  // PUT request
   Future<Map<String, dynamic>> put(String endpoint, Map<String, dynamic> data) async {
-    final response = await _client.put(
-      Uri.parse('$baseUrl$endpoint'),
-      headers: _headers,
-      body: jsonEncode(data),
-    );
+    // Check connection before making request
+    final hasConnection = await _networkUtil.checkConnection();
+    if (!hasConnection) {
+      throw NoConnectionException(
+          'Нет подключения к интернету. Запрос: PUT $endpoint'
+      );
+    }
 
-    return _handleResponse(response);
+    try {
+      final response = await _client.put(
+        Uri.parse('$baseUrl$endpoint'),
+        headers: _headers,
+        body: jsonEncode(data),
+      ).timeout(const Duration(seconds: 15));
+
+      return _handleResponse(response);
+    } on SocketException {
+      throw NoConnectionException(
+          'Ошибка соединения с сервером. Запрос: PUT $endpoint'
+      );
+    } on TimeoutException {
+      throw TimeoutException(
+          'Превышено время ожидания ответа от сервера. Запрос: PUT $endpoint'
+      );
+    } catch (e) {
+      throw ApiException('Ошибка при запросе: $e. Запрос: PUT $endpoint');
+    }
   }
 
-  // DELETE запрос
+  // DELETE request
   Future<Map<String, dynamic>> delete(String endpoint) async {
-    final response = await _client.delete(
-      Uri.parse('$baseUrl$endpoint'),
-      headers: _headers,
-    );
+    // Check connection before making request
+    final hasConnection = await _networkUtil.checkConnection();
+    if (!hasConnection) {
+      throw NoConnectionException(
+          'Нет подключения к интернету. Запрос: DELETE $endpoint'
+      );
+    }
 
-    return _handleResponse(response);
+    try {
+      final response = await _client.delete(
+        Uri.parse('$baseUrl$endpoint'),
+        headers: _headers,
+      ).timeout(const Duration(seconds: 15));
+
+      return _handleResponse(response);
+    } on SocketException {
+      throw NoConnectionException(
+          'Ошибка соединения с сервером. Запрос: DELETE $endpoint'
+      );
+    } on TimeoutException {
+      throw TimeoutException(
+          'Превышено время ожидания ответа от сервера. Запрос: DELETE $endpoint'
+      );
+    } catch (e) {
+      throw ApiException('Ошибка при запросе: $e. Запрос: DELETE $endpoint');
+    }
   }
 
-  // Добавьте в начало файла этот импорт
-
-
-// Обновите метод _handleResponse
+  // Handle response
   Map<String, dynamic> _handleResponse(http.Response response) {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       if (response.body.isEmpty) return {};
-      return jsonDecode(response.body);
+
+      try {
+        return jsonDecode(utf8.decode(response.bodyBytes));
+      } catch (e) {
+        throw FormatException('Ошибка при декодировании ответа: $e');
+      }
     } else {
-      // Обработка ошибок
+      // Error handling
       String errorMessage = 'Ошибка сервера: ${response.statusCode}';
 
       try {
@@ -102,7 +194,7 @@ class ApiService {
         if (errorData.containsKey('error')) {
           errorMessage = errorData['error'];
         } else if (errorData.containsKey('errors')) {
-          // Обработка объекта с ошибками
+          // Handle error object
           final errors = errorData['errors'];
           if (errors is Map) {
             List<String> errorList = [];
@@ -123,48 +215,59 @@ class ApiService {
           errorMessage = errorData['message'];
         }
       } catch (e) {
-        // Если не удалось распарсить JSON или мы не смогли найти подходящее сообщение
+        // If JSON parsing fails, try to decode the body as text
         if (response.bodyBytes.isNotEmpty) {
           try {
-            // Просто декодируем тело как текст в UTF-8
             errorMessage = utf8.decode(response.bodyBytes);
           } catch (_) {
-            // Если и это не работает, оставляем стандартное сообщение
+            // If that fails too, keep the default message
           }
         }
       }
 
-      // Обрабатываем специфические случаи ошибок
+      // Handle specific error cases
       if (errorMessage.contains("already exists") ||
           errorMessage.contains("уже существует")) {
         errorMessage = "Пользователь с таким email уже существует";
       }
 
-      throw Exception(errorMessage);
+      // Throw appropriate exception based on status code
+      if (response.statusCode == 401) {
+        throw UnauthorizedException(errorMessage);
+      } else if (response.statusCode == 403) {
+        throw ForbiddenException(errorMessage);
+      } else if (response.statusCode == 404) {
+        throw NotFoundException(errorMessage);
+      } else if (response.statusCode >= 500) {
+        throw ServerException(errorMessage);
+      } else {
+        throw ApiException(errorMessage);
+      }
     }
   }
 
+  // Get mock response (for testing)
   Map<String, dynamic> _getMockResponse(String endpoint, [Map<String, dynamic>? data]) {
-    // Мок для регистрации
-    if (endpoint == '/register/') {
+    // Mock for registration
+    if (endpoint == '/api/users/register/') {
       return {
         'user': {
           'usr_id': 1,
-          'usr_name': data?['name'] ?? 'Тестовый пользователь',
-          'usr_mail': data?['email'] ?? 'test@example.com',
+          'usr_name': data?['usr_name'] ?? 'Тестовый пользователь',
+          'usr_mail': data?['usr_mail'] ?? 'test@example.com',
           'usr_height': null,
           'usr_weight': null,
           'usr_age': null,
-          'usr_gender': 'male',
+          'usr_gender': null,
           'usr_cal_day': null,
         },
         'token': 'mock_token_12345',
       };
     }
 
-    // Мок для входа
-    if (endpoint == '/token/') {
-      // Проверка моковых учетных данных
+    // Mock for login
+    if (endpoint == '/api/users/login/') {
+      // Check mock credentials
       if (data?['email'] == 'test@example.com' && data?['password'] == 'password') {
         return {
           'user': {
@@ -180,33 +283,44 @@ class ApiService {
           'token': 'mock_token_12345',
         };
       } else {
-        throw Exception('Неверный email или пароль');
+        throw ApiException('Неверный email или пароль');
       }
     }
 
-    // Мок для восстановления пароля
-    if (endpoint == '/password-reset/') {
-      return {
-        'success': true,
-        'message': 'Инструкции по восстановлению пароля отправлены на указанный email',
-      };
-    }
-
-    // Мок для данных пользователя
-    if (endpoint == '/users/me/') {
-      return {
-        'usr_id': 1,
-        'usr_name': 'Тестовый пользователь',
-        'usr_mail': 'test@example.com',
-        'usr_height': 180,
-        'usr_weight': 75,
-        'usr_age': 30,
-        'usr_gender': 'male',
-        'usr_cal_day': 2000,
-      };
-    }
-
-    // Для всех остальных эндпоинтов
+    // For all other endpoints
     return {'message': 'Мок-ответ для $endpoint'};
   }
+}
+
+// API Exceptions
+class ApiException implements Exception {
+  final String message;
+  ApiException(this.message);
+
+  @override
+  String toString() => message;
+}
+
+class NoConnectionException extends ApiException {
+  NoConnectionException(String message) : super(message);
+}
+
+class TimeoutException extends ApiException {
+  TimeoutException(String message) : super(message);
+}
+
+class UnauthorizedException extends ApiException {
+  UnauthorizedException(String message) : super(message);
+}
+
+class ForbiddenException extends ApiException {
+  ForbiddenException(String message) : super(message);
+}
+
+class NotFoundException extends ApiException {
+  NotFoundException(String message) : super(message);
+}
+
+class ServerException extends ApiException {
+  ServerException(String message) : super(message);
 }
