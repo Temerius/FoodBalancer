@@ -110,6 +110,76 @@ class DataRepository with ChangeNotifier {
     }
   }
 
+  // Helper methods
+  void _setLoading(bool loading) {
+    _isLoading = loading;
+    notifyListeners();
+  }
+
+  void _setError(String message) {
+    _error = message;
+    notifyListeners();
+  }
+
+  // Update user profile
+  Future<bool> updateUserProfile(User updatedUser) async {
+    _setLoading(true);
+    try {
+      // Here you would typically call your API service
+      // For example:
+      // final response = await _apiService.put('/api/users/profile/', updatedUser.toJson());
+      // _currentUser = User.fromJson(response);
+
+      // For now, let's just update the local user
+      _currentUser = updatedUser;
+      await _updateCache();
+
+      _setLoading(false);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _setError(e.toString());
+      _setLoading(false);
+      return false;
+    }
+  }
+
+  // Update cache with fresh data
+  Future<void> _updateCache() async {
+    // Save basic data
+    if (_currentUser != null) {
+      await CacheManager.saveUser(_currentUser!.toJson());
+    }
+
+    if (_allergens.isNotEmpty) {
+      await CacheManager.saveAllergens(_allergens.map((a) => a.toJson()).toList());
+    }
+
+    if (_equipment.isNotEmpty) {
+      await CacheManager.saveEquipment(_equipment.map((e) => e.toJson()).toList());
+    }
+
+    if (_ingredientTypes.isNotEmpty) {
+      await CacheManager.saveIngredientTypes(_ingredientTypes.map((t) => t.toJson()).toList());
+    }
+
+    if (_recipes.isNotEmpty) {
+      await CacheManager.saveRecipes(_recipes.map((r) => r.toJson()).toList());
+
+      // Save recipe details
+      Map<String, dynamic> recipeDetailsMap = {};
+      for (var recipe in _recipes) {
+        recipeDetailsMap[recipe.id.toString()] = {
+          'steps': recipe.steps.map((step) => step.toJson()).toList(),
+          'ingredients': recipe.ingredients.map((ingredient) => ingredient.toJson()).toList(),
+          'required_equipment': recipe.requiredEquipment.map((equip) => equip.id).toList(),
+        };
+      }
+
+      await CacheManager.saveRecipeDetails(recipeDetailsMap);
+    }
+  }
+
   // Private methods for fetching data
   Future<void> _fetchUser() async {
     try {
@@ -534,3 +604,37 @@ class DataRepository with ChangeNotifier {
                 for (var meal in meals) {
                   final mealJson = (dayJson['meals'] as List)
                       .firstWhere((m) => m['adm_id'] == meal.id);
+
+                  if (mealJson['recipes'] != null) {
+                    for (var recipeMapping in (mealJson['recipes'] as List)) {
+                      final recipeId = recipeMapping['mra_rcp_id'];
+
+                      // Find the recipe in our cached recipes
+                      if (_recipes.any((r) => r.id == recipeId)) {
+                        final recipe = _recipes.firstWhere((r) => r.id == recipeId);
+                        final mealRecipe = MealRecipe(
+                          mealId: meal.id,
+                          recipeId: recipeId,
+                          recipe: recipe,
+                        );
+                        meal.recipes.add(mealRecipe);
+                      }
+                    }
+                  }
+                }
+
+                day.meals = meals;
+              }
+            }
+
+            weeklyPlan.dailyPlans = dailyPlans;
+          }
+
+          _currentUser!.currentMealPlan = weeklyPlan;
+        }
+      }
+    } catch (e) {
+      print('Error loading from cache: $e');
+    }
+  }
+}
