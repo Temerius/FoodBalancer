@@ -6,7 +6,7 @@ class ApiService {
   // Для эмулятора Android
   // static const String baseUrl = 'http://10.0.2.2:8000';
   // Для реального устройства (замените на свой IP)
-  static const String baseUrl = 'http://192.168.100.5:8000';
+  static const String baseUrl = 'http://192.168.100.7:8000';
 
   // Отключаем моковые ответы
   static const bool useMockResponses = false;
