@@ -1,13 +1,22 @@
-from django.urls import path
-from . import views
+# AppBackend/apps/users/urls.py
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import profile, login, logout, register, password_reset_request, password_reset_confirm
+from apps.core.views import RefrigeratorViewSet, FavoriteRecipeViewSet
 
 app_name = 'users'
 
+# Создаем роутер для API эндпоинтов
+router = DefaultRouter()
+router.register(r'refrigerator', RefrigeratorViewSet, basename='refrigerator')
+router.register(r'favorites', FavoriteRecipeViewSet, basename='favorites')
+
 urlpatterns = [
-    path('register/', views.register, name='register'),
-    path('login/', views.login, name='login'),
-    path('profile/', views.profile, name='profile'),
-    path('password-reset/', views.password_reset_request, name='password_reset_request'),
-    path('password-reset/confirm/', views.password_reset_confirm, name='password_reset_confirm'),
-    path('logout/', views.logout, name='logout'),
+    path('register/', register, name='register'),
+    path('login/', login, name='login'),
+    path('profile/', profile, name='profile'),
+    path('password-reset/', password_reset_request, name='password_reset_request'),
+    path('password-reset/confirm/', password_reset_confirm, name='password_reset_confirm'),
+    path('logout/', logout, name='logout'),
+    path('', include(router.urls)),  # Добавляем маршруты из router
 ]

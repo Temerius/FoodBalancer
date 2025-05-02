@@ -7,15 +7,21 @@ from rest_framework.response import Response
 from ..models import Equipment, M2MUsrEqp
 from ..serializers import EquipmentSerializer, UserEquipmentSerializer
 
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from ..mixins import CacheInvalidationMixin
 
-class EquipmentViewSet(viewsets.ReadOnlyModelViewSet):
+
+class EquipmentViewSet(viewsets.ModelViewSet):
     """API для доступа к кухонному оборудованию"""
     queryset = Equipment.objects.all()
     serializer_class = EquipmentSerializer
     permission_classes = [IsAuthenticated]
 
 
-class UserEquipmentViewSet(viewsets.ModelViewSet):
+@method_decorator(cache_page(60 * 60 * 10), name='list')
+class UserEquipmentViewSet(CacheInvalidationMixin, viewsets.ModelViewSet):
+    cache_prefix = 'user_equipment'
     """API для управления оборудованием пользователя"""
     serializer_class = UserEquipmentSerializer
     permission_classes = [IsAuthenticated]

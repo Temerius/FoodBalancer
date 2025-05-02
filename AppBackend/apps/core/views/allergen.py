@@ -5,6 +5,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.models import Q
 
+from ..mixins import CacheInvalidationMixin
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+
 from ..models import Allergen, M2MUsrAlg
 from ..serializers import AllergenSerializer, UserAllergenSerializer
 
@@ -15,8 +19,9 @@ class AllergenViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = AllergenSerializer
     permission_classes = [IsAuthenticated]
 
-
-class UserAllergenViewSet(viewsets.ModelViewSet):
+@method_decorator(cache_page(60 * 60 * 10), name='list')
+class UserAllergenViewSet(CacheInvalidationMixin, viewsets.ModelViewSet):
+    cache_prefix = 'user_allergen'
     """API для управления аллергенами пользователя"""
     serializer_class = UserAllergenSerializer
     permission_classes = [IsAuthenticated]

@@ -303,18 +303,19 @@ class DataRepository with ChangeNotifier {
     if (_currentUser == null) return;
 
     try {
-      final response = await _apiService.get('/api/users/refrigerator/');
+      // Изменяем путь с '/api/users/refrigerator/' на '/api/refrigerator/'
+      final response = await _apiService.get('/api/refrigerator/');
       final List<dynamic> itemsJson = response['results'];
 
-      // Create UserIngredient objects
+      // Создаем список объектов UserIngredient
       final refrigeratorItems = itemsJson.map((json) => UserIngredient.fromJson(json)).toList();
 
-      // Link with ingredients
+      // Связываем с ингредиентами
       for (var item in refrigeratorItems) {
         final response = await _apiService.get('/api/ingredients/${item.ingredientId}/');
         item.ingredient = Ingredient.fromJson(response);
 
-        // Link ingredient with its type
+        // Связываем ингредиент с его типом
         if (_ingredientTypes.any((type) => type.id == item.ingredient!.ingredientTypeId)) {
           item.ingredient!.type = _ingredientTypes.firstWhere(
                 (type) => type.id == item.ingredient!.ingredientTypeId,
@@ -332,7 +333,8 @@ class DataRepository with ChangeNotifier {
     if (_currentUser == null) return;
 
     try {
-      final response = await _apiService.get('/api/users/favorites/');
+      // Изменяем путь с '/api/users/favorites/' на '/api/favorites/'
+      final response = await _apiService.get('/api/favorites/');
       final List<dynamic> favoritesJson = response['results'];
       final favoriteIds = favoritesJson.map<int>((json) => json['fvr_rcp_id']).toList();
 

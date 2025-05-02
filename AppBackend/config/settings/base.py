@@ -11,6 +11,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # Секретный ключ
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-key-for-development')
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'cache_table',
+    }
+}
+
+# Время жизни кэша по умолчанию - 24 часа
+CACHE_MIDDLEWARE_SECONDS = 86400
+
+# Ключ для префикса кэша
+CACHE_MIDDLEWARE_KEY_PREFIX = 'cookhelper'
+
 # Режим отладки
 DEBUG = False
 

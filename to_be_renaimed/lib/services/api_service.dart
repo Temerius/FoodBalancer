@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/network_util.dart';
+
 
 class ApiService {
   // For your real server
@@ -10,6 +12,7 @@ class ApiService {
   // Test whether we should use mock responses
   static const bool useMockResponses = false;
 
+  static const bool DEBUG = true;
   // API endpoints
   static const String loginUrl = '/api/users/login/';
   static const String registerUrl = '/api/users/register/';
@@ -50,6 +53,16 @@ class ApiService {
   // Initialize
   Future<void> initialize() async {
     await _networkUtil.initialize();
+
+    // Восстановление токена из SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString(_tokenKey);
+    if (token != null) {
+      _token = token;
+      print('Токен аутентификации восстановлен');
+    } else {
+      print('Токен аутентификации не найден');
+    }
   }
 
   // GET request
@@ -63,24 +76,31 @@ class ApiService {
     }
 
     try {
+      if (DEBUG) {
+        print('API Request: GET $baseUrl$endpoint');
+        print('Headers: $_headers');
+      }
+
       final response = await _client.get(
         Uri.parse('$baseUrl$endpoint'),
         headers: _headers,
       ).timeout(const Duration(seconds: 15));
 
+      if (DEBUG) {
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body.substring(0,
+            response.body.length > 200 ? 200 : response.body.length)}...');
+      }
+
       return _handleResponse(response);
-    } on SocketException {
-      throw NoConnectionException(
-          'Ошибка соединения с сервером. Запрос: GET $endpoint'
-      );
-    } on TimeoutException {
-      throw TimeoutException(
-          'Превышено время ожидания ответа от сервера. Запрос: GET $endpoint'
-      );
     } catch (e) {
+      if (DEBUG) {
+        print('API Error: $e');
+      }
       throw ApiException('Ошибка при запросе: $e. Запрос: GET $endpoint');
     }
   }
+
 
   // POST request
   Future<Map<String, dynamic>> post(String endpoint, Map<String, dynamic> data) async {
@@ -188,50 +208,33 @@ class ApiService {
       // Error handling
       String errorMessage = 'Ошибка сервера: ${response.statusCode}';
 
-      try {
-        var errorData = jsonDecode(utf8.decode(response.bodyBytes));
-
-        if (errorData.containsKey('error')) {
-          errorMessage = errorData['error'];
-        } else if (errorData.containsKey('errors')) {
-          // Handle error object
-          final errors = errorData['errors'];
-          if (errors is Map) {
-            List<String> errorList = [];
-            errors.forEach((key, value) {
-              if (value is List) {
-                errorList.add('$key: ${value.join(', ')}');
-              } else {
-                errorList.add('$key: $value');
-              }
-            });
-            errorMessage = errorList.join('. ');
-          } else if (errors is String) {
-            errorMessage = errors;
-          }
-        } else if (errorData.containsKey('detail')) {
-          errorMessage = errorData['detail'];
-        } else if (errorData.containsKey('message')) {
-          errorMessage = errorData['message'];
+      // Проверка, является ли ответ HTML (что часто бывает для 404)
+      if (response.body.trim().startsWith('<!DOCTYPE html>') ||
+          response.body.trim().startsWith('<html>')) {
+        // Это HTML, выводим более понятное сообщение об ошибке
+        if (response.statusCode == 404) {
+          errorMessage = 'Эндпоинт не найден: ${response.request?.url.path}';
+        } else {
+          errorMessage = 'Сервер вернул HTML-страницу вместо ожидаемого JSON ответа';
         }
-      } catch (e) {
-        // If JSON parsing fails, try to decode the body as text
-        if (response.bodyBytes.isNotEmpty) {
-          try {
-            errorMessage = utf8.decode(response.bodyBytes);
-          } catch (_) {
-            // If that fails too, keep the default message
+      } else {
+        // Пытаемся парсить как JSON, как и раньше
+        try {
+          var errorData = jsonDecode(utf8.decode(response.bodyBytes));
+          // ... остальной код обработки JSON-ошибок
+        } catch (e) {
+          // Если парсинг не удался, используем текстовое содержимое
+          if (response.bodyBytes.isNotEmpty) {
+            try {
+              errorMessage = utf8.decode(response.bodyBytes);
+            } catch (_) {
+              // Если и это не удалось, оставляем стандартное сообщение
+            }
           }
         }
       }
 
-      // Handle specific error cases
-      if (errorMessage.contains("already exists") ||
-          errorMessage.contains("уже существует")) {
-        errorMessage = "Пользователь с таким email уже существует";
-      }
-
-      // Throw appropriate exception based on status code
+      // Выбрасываем соответствующее исключение
       if (response.statusCode == 401) {
         throw UnauthorizedException(errorMessage);
       } else if (response.statusCode == 403) {

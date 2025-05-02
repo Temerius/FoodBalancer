@@ -1,4 +1,7 @@
+// lib/screens/recipes/recipes_screen.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../repositories/data_repository.dart';
 
 class RecipesScreen extends StatefulWidget {
   const RecipesScreen({Key? key}) : super(key: key);
@@ -11,19 +14,6 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
-
-  // Симуляция списка рецептов
-  final List<Map<String, dynamic>> _recipes = List.generate(
-    20,
-        (index) => {
-      'id': index + 1,
-      'title': 'Рецепт ${index + 1}',
-      'calories': 200 + (index * 30),
-      'time': 15 + (index % 4) * 10,
-      'imageUrl': '',
-      'isFavorite': false,
-    },
-  );
 
   @override
   void initState() {
@@ -38,26 +28,27 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
     super.dispose();
   }
 
-  List<Map<String, dynamic>> get _filteredRecipes {
-    if (_searchQuery.isEmpty) {
-      return _recipes;
-    }
-    return _recipes.where((recipe) {
-      return recipe['title'].toLowerCase().contains(_searchQuery.toLowerCase());
-    }).toList();
-  }
-
-  List<Map<String, dynamic>> get _favoriteRecipes {
-    return _recipes.where((recipe) => recipe['isFavorite']).toList();
-  }
-
-  List<Map<String, dynamic>> get _recommendedRecipes {
-    // Просто для примера берем первые 5 рецептов
-    return _recipes.take(5).toList();
-  }
-
   @override
   Widget build(BuildContext context) {
+    // Получаем данные из репозитория через Provider
+    final dataRepository = Provider.of<DataRepository>(context);
+
+    // Используем рецепты из репозитория
+    final recipes = dataRepository.recipes;
+
+    // Фильтрация рецептов по поисковому запросу
+    final filteredRecipes = _searchQuery.isEmpty
+        ? recipes
+        : recipes.where((recipe) =>
+        recipe.title.toLowerCase().contains(_searchQuery.toLowerCase())
+    ).toList();
+
+    // Избранные рецепты
+    final favoriteRecipes = recipes.where((recipe) => recipe.isFavorite).toList();
+
+    // Рекомендуемые рецепты (для примера берем первые 5 или менее)
+    final recommendedRecipes = recipes.take(recipes.length < 5 ? recipes.length : 5).toList();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Рецепты'),
@@ -103,19 +94,23 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
             ),
           ),
 
-          // Список рецептов
+          // Список рецептов с индикатором загрузки
           Expanded(
-            child: TabBarView(
+            child: dataRepository.isLoading
+                ? Center(
+              child: CircularProgressIndicator(),
+            )
+                : TabBarView(
               controller: _tabController,
               children: [
                 // Вкладка "Все"
-                _buildRecipesList(_filteredRecipes),
+                _buildRecipesList(filteredRecipes),
 
                 // Вкладка "Рекомендации"
-                _buildRecipesList(_recommendedRecipes),
+                _buildRecipesList(recommendedRecipes),
 
                 // Вкладка "Избранное"
-                _buildRecipesList(_favoriteRecipes),
+                _buildRecipesList(favoriteRecipes),
               ],
             ),
           ),
@@ -133,7 +128,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
     );
   }
 
-  Widget _buildRecipesList(List<Map<String, dynamic>> recipes) {
+  Widget _buildRecipesList(List<dynamic> recipes) {
     return recipes.isEmpty
         ? Center(
       child: Column(
@@ -164,7 +159,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
               Navigator.pushNamed(
                 context,
                 '/recipes/detail',
-                arguments: {'recipeId': recipe['id']},
+                arguments: {'recipeId': recipe.id},
               );
             },
             child: Padding(
@@ -193,7 +188,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          recipe['title'],
+                          recipe.title,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         const SizedBox(height: 8),
@@ -206,7 +201,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              '${recipe['calories']} ккал',
+                              '${recipe.calories} ккал',
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             const SizedBox(width: 16),
@@ -217,7 +212,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              '${recipe['time']} мин',
+                              '${recipe.prepTime} мин',
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ],
@@ -229,14 +224,16 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                   // Кнопка "Избранное"
                   IconButton(
                     icon: Icon(
-                      recipe['isFavorite']
+                      recipe.isFavorite
                           ? Icons.favorite
                           : Icons.favorite_border,
-                      color: recipe['isFavorite'] ? Colors.red : null,
+                      color: recipe.isFavorite ? Colors.red : null,
                     ),
                     onPressed: () {
+                      // Здесь мы должны обновить статус избранного через репозиторий
+                      // Но для демонстрации просто обновим состояние
                       setState(() {
-                        recipe['isFavorite'] = !recipe['isFavorite'];
+                        recipe.isFavorite = !recipe.isFavorite;
                       });
                     },
                   ),
