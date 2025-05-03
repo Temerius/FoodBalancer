@@ -12,18 +12,20 @@ PASSWORD_HASHERS = [
 ]
 AUTH_PASSWORD_VALIDATORS = []
 
-# Дополнительные приложения для разработки
-INSTALLED_APPS += [
-    # # # # 'debug_toolbar',  # Disabled to fix NoReverseMatch error  # Disabled to fix NoReverseMatch error  # Disabled to fix NoReverseMatch error  # Disabled to fix NoReverseMatch error
-]
-
-MIDDLEWARE += [
-    # # # # 'debug_toolbar.middleware.DebugToolbarMiddleware',  # Disabled to fix NoReverseMatch error  # Disabled to fix NoReverseMatch error  # Disabled to fix NoReverseMatch error  # Disabled to fix NoReverseMatch error
-]
-
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+# Debug Toolbar settings
+INSTALLED_APPS += [
+    'debug_toolbar',
+]
+
+MIDDLEWARE = ['debug_toolbar.middleware.DebugToolbarMiddleware'] + MIDDLEWARE
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
+}
 
 # Более детальные логи
 LOGGING = {

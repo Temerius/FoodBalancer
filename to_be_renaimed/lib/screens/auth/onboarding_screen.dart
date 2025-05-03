@@ -9,6 +9,7 @@ import '../../config/theme.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/logo_widget.dart';
 import '../../config/routes.dart';
+import '../../services/api_initializer.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -20,6 +21,23 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize the app and run API tests
+    _initializeApp();
+  }
+
+  Future<void> _initializeApp() async {
+    // Your existing initialization code...
+
+    // Run API tests
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      AppInitializer.runApiTests(context);
+    });
+  }
 
   final List<OnboardingPage> _pages = [
     OnboardingPage(

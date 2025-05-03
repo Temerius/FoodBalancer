@@ -1,4 +1,4 @@
-# AppBackend/apps/core/urls.py
+# AppBackend/apps/core/urls.py - CORRECTED VERSION
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
