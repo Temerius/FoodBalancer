@@ -7,7 +7,7 @@ import '../utils/network_util.dart';
 
 class ApiService {
   // For your real server
-  static const String baseUrl = 'http://192.168.100.7:8000';
+  static const String baseUrl = 'http://192.168.151.120:8000';
 
   // Test whether we should use mock responses
   static const bool useMockResponses = false;
@@ -20,6 +20,9 @@ class ApiService {
   static const String passwordResetUrl = '/api/users/password-reset/';
   static const String passwordResetConfirmUrl = '/api/users/password-reset/confirm/';
   static const String logoutUrl = '/api/users/logout/';
+
+  // For token storage
+  static const String _tokenKey = 'auth_token';
 
   // For caching
   static const int defaultCacheTime = 24 * 60 * 60 * 1000; // 24 hours

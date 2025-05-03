@@ -14,11 +14,11 @@ AUTH_PASSWORD_VALIDATORS = []
 
 # Дополнительные приложения для разработки
 INSTALLED_APPS += [
-    # # # # 'debug_toolbar',  # Disabled to fix NoReverseMatch error  # Disabled to fix NoReverseMatch error  # Disabled to fix NoReverseMatch error  # Disabled to fix NoReverseMatch error
+    # # # 'debug_toolbar',  # Disabled to fix NoReverseMatch error  # Disabled to fix NoReverseMatch error  # Disabled to fix NoReverseMatch error
 ]
 
 MIDDLEWARE += [
-    # # # # 'debug_toolbar.middleware.DebugToolbarMiddleware',  # Disabled to fix NoReverseMatch error  # Disabled to fix NoReverseMatch error  # Disabled to fix NoReverseMatch error  # Disabled to fix NoReverseMatch error
+    # # # 'debug_toolbar.middleware.DebugToolbarMiddleware',  # Disabled to fix NoReverseMatch error  # Disabled to fix NoReverseMatch error  # Disabled to fix NoReverseMatch error
 ]
 
 INTERNAL_IPS = [
