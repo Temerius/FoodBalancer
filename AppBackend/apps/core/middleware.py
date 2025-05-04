@@ -1,5 +1,6 @@
 # AppBackend/apps/core/middleware.py
 import logging
+import time
 from django.urls import resolve
 from django.utils.deprecation import MiddlewareMixin
 from django.conf import settings
@@ -97,3 +98,91 @@ class URLDebugMiddleware(MiddlewareMixin):
             logger.error(f"404 Not Found: {request.method} {request.path_info}")
 
         return response
+
+
+class PerformanceLoggingMiddleware(MiddlewareMixin):
+    """
+    Middleware для измерения времени выполнения запросов.
+    """
+
+    def process_request(self, request):
+        """Засекаем время начала обработки запроса"""
+        request._start_time = time.time()
+        return None
+
+    def process_response(self, request, response):
+        """Логируем время выполнения запроса"""
+        # Проверяем, был ли засечен старт
+        if hasattr(request, '_start_time'):
+            # Вычисляем время выполнения
+            duration = time.time() - request._start_time
+
+            # Получаем информацию о пользователе
+            user_id = 'anonymous'
+            if hasattr(request, 'user') and request.user.is_authenticated:
+                user_id = request.user.usr_id
+
+            # Получаем информацию о запросе
+            path = request.path_info
+            method = request.method
+            status_code = response.status_code
+
+            # Определяем уровень логирования на основе времени выполнения и статуса
+            log_message = f"Request {method} {path} completed in {duration:.2f}s with status {status_code} for user_id={user_id}"
+
+            performance_logger = logging.getLogger('app.performance')
+
+            if duration > 1.0 or status_code >= 500:
+                # Медленные запросы (>1s) или серверные ошибки логируем как warning
+                performance_logger.warning(log_message)
+            elif status_code >= 400 or duration > 0.5:
+                # Клиентские ошибки или запросы >0.5s логируем как info
+                performance_logger.info(log_message)
+            else:
+                # Остальные запросы логируем как debug
+                performance_logger.debug(log_message)
+
+        return response
+
+
+class ExceptionLoggingMiddleware(MiddlewareMixin):
+    """
+    Middleware для детального логирования исключений.
+    """
+
+    def process_exception(self, request, exception):
+        """
+        Логирование исключений, возникающих при обработке запросов.
+        """
+        logger = logging.getLogger('django.request')
+
+        # Получаем IP пользователя
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+
+        # Определяем пользователя (если авторизован)
+        user_id = 'anonymous'
+        if hasattr(request, 'user') and request.user.is_authenticated:
+            user_id = request.user.usr_id
+
+        # Логируем информацию о запросе и исключении
+        logger.error(
+            f"Exception in {request.method} {request.path}: "
+            f"{exception.__class__.__name__}: {str(exception)}, "
+            f"user_id={user_id}, ip={ip}",
+            exc_info=True,
+            extra={
+                'status_code': 500,
+                'request': request,
+                'user_id': user_id,
+                'ip': ip,
+                'method': request.method,
+                'path': request.path,
+            }
+        )
+
+        # Middleware продолжает стандартную обработку исключения
+        return None

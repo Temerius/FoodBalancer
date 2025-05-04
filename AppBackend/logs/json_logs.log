@@ -1,0 +1,15 @@
+{"timestamp": "2025-05-04T15:18:30.781474", "level": "INFO", "logger": "apps.users", "message": "Registration attempt: email=test_8jhd2sou@example.com", "module": "views", "process": 24448, "thread": 27820}
+{"timestamp": "2025-05-04T15:18:31.132506", "level": "INFO", "logger": "apps.users", "message": "User registered successfully: user_id=89, email=test_8jhd2sou@example.com, time=0.35s", "module": "views", "process": 24448, "thread": 27820}
+{"timestamp": "2025-05-04T15:18:31.325273", "level": "INFO", "logger": "apps.users", "message": "Login attempt: email=test_8jhd2sou@example.com", "module": "views", "process": 24448, "thread": 29616}
+{"timestamp": "2025-05-04T15:18:31.567127", "level": "INFO", "logger": "apps.users", "message": "User login successful: user_id=89, email=test_8jhd2sou@example.com, time=0.24s", "module": "views", "process": 24448, "thread": 29616}
+{"timestamp": "2025-05-04T15:18:31.679765", "level": "INFO", "logger": "apps.users", "message": "Profile accessed: user_id=89", "module": "views", "process": 24448, "thread": 5516}
+{"timestamp": "2025-05-04T15:18:31.777105", "level": "INFO", "logger": "apps.core.refrigerator", "message": "Listing refrigerator ingredients: user_id=89", "module": "ingredient", "process": 24448, "thread": 35828}
+{"timestamp": "2025-05-04T15:18:31.788422", "level": "INFO", "logger": "apps.core.refrigerator", "message": "Retrieved 0 refrigerator ingredients for user_id=89, time=0.01s", "module": "ingredient", "process": 24448, "thread": 35828}
+{"timestamp": "2025-05-04T15:18:31.958030", "level": "INFO", "logger": "apps.core.allergens", "message": "Listing all allergens: user_id=89", "module": "allergen", "process": 24448, "thread": 6112}
+{"timestamp": "2025-05-04T15:18:31.963813", "level": "INFO", "logger": "apps.core.allergens", "message": "Retrieved 50 allergens, user_id=89, time=0.01s", "module": "allergen", "process": 24448, "thread": 6112}
+{"timestamp": "2025-05-04T15:18:32.035386", "level": "INFO", "logger": "apps.core.equipment", "message": "Listing all equipment: user_id=89", "module": "equipment", "process": 24448, "thread": 22216}
+{"timestamp": "2025-05-04T15:18:32.042549", "level": "INFO", "logger": "apps.core.equipment", "message": "Retrieved 73 equipment items, user_id=89, time=0.01s", "module": "equipment", "process": 24448, "thread": 22216}
+{"timestamp": "2025-05-04T15:18:32.103835", "level": "INFO", "logger": "apps.users", "message": "Logout attempt: user_id=89", "module": "views", "process": 24448, "thread": 28428}
+{"timestamp": "2025-05-04T15:18:32.109143", "level": "INFO", "logger": "apps.users", "message": "User logged out successfully: user_id=89", "module": "views", "process": 24448, "thread": 28428}
+{"timestamp": "2025-05-04T15:22:49.424819", "level": "INFO", "logger": "apps.users", "message": "Login attempt: email=w0rkma1lmoc@gmail.com", "module": "views", "process": 24448, "thread": 27312}
+{"timestamp": "2025-05-04T15:22:49.639678", "level": "INFO", "logger": "apps.users", "message": "User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.21s", "module": "views", "process": 24448, "thread": 27312}

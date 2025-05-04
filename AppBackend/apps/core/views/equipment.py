@@ -11,12 +11,42 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from ..mixins import CacheInvalidationMixin
 
+import logging
+import time
+
+# Создаем логгер для модуля оборудования
+logger = logging.getLogger('apps.core.equipment')
+
 
 class EquipmentViewSet(viewsets.ModelViewSet):
     """API для доступа к кухонному оборудованию"""
     queryset = Equipment.objects.all()
     serializer_class = EquipmentSerializer
     permission_classes = [IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        """Получение списка оборудования"""
+        start_time = time.time()
+        user_id = request.user.usr_id
+        logger.info(f"Listing all equipment: user_id={user_id}")
+
+        response = super().list(request, *args, **kwargs)
+        count = response.data['count'] if 'count' in response.data else 'unknown'
+        logger.info(f"Retrieved {count} equipment items, user_id={user_id}, time={time.time() - start_time:.2f}s")
+        return response
+
+    def retrieve(self, request, *args, **kwargs):
+        """Получение конкретного оборудования"""
+        start_time = time.time()
+        instance = self.get_object()
+        user_id = request.user.usr_id
+        equipment_id = instance.eqp_id
+
+        logger.info(f"Retrieving equipment: equipment_id={equipment_id}, user_id={user_id}")
+        response = super().retrieve(request, *args, **kwargs)
+        logger.info(
+            f"Retrieved equipment: equipment_id={equipment_id}, type='{instance.eqp_type}', user_id={user_id}, time={time.time() - start_time:.2f}s")
+        return response
 
 
 @method_decorator(cache_page(60 * 60 * 10), name='list')
@@ -28,54 +58,108 @@ class UserEquipmentViewSet(CacheInvalidationMixin, viewsets.ModelViewSet):
 
     def get_queryset(self):
         """Возвращает оборудование текущего пользователя"""
+        user_id = self.request.user.usr_id
+        logger.debug(f"Getting user equipment: user_id={user_id}")
         return M2MUsrEqp.objects.filter(mue_usr_id=self.request.user)
+
+    def list(self, request, *args, **kwargs):
+        """Получение списка оборудования пользователя"""
+        start_time = time.time()
+        user_id = request.user.usr_id
+        logger.info(f"Listing user equipment: user_id={user_id}")
+
+        response = super().list(request, *args, **kwargs)
+        count = len(response.data) if isinstance(response.data, list) else 'unknown'
+        logger.info(f"Retrieved {count} user equipment items, user_id={user_id}, time={time.time() - start_time:.2f}s")
+        return response
 
     def create(self, request, *args, **kwargs):
         """Добавление оборудования пользователю"""
+        start_time = time.time()
+        user_id = request.user.usr_id
+
         if 'mue_eqp_id' not in request.data:
+            logger.warning(f"Missing equipment ID in add request: user_id={user_id}")
             return Response(
                 {"error": "Необходимо указать ID оборудования"},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
         equipment_id = request.data['mue_eqp_id']
+        logger.info(f"Adding equipment to user: equipment_id={equipment_id}, user_id={user_id}")
 
         # Проверка, существует ли уже такое оборудование у пользователя
         if M2MUsrEqp.objects.filter(mue_usr_id=request.user, mue_eqp_id=equipment_id).exists():
+            logger.info(f"Equipment already added to user: equipment_id={equipment_id}, user_id={user_id}")
             return Response(
                 {"error": "Это оборудование уже добавлено"},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
         # Создание связи
-        equipment_rel = M2MUsrEqp.objects.create(
-            mue_usr_id=request.user,
-            mue_eqp_id_id=equipment_id
-        )
+        try:
+            equipment = Equipment.objects.get(eqp_id=equipment_id)
+            equipment_rel = M2MUsrEqp.objects.create(
+                mue_usr_id=request.user,
+                mue_eqp_id_id=equipment_id
+            )
 
-        serializer = self.get_serializer(equipment_rel)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+            logger.info(
+                f"Equipment added to user: equipment_id={equipment_id}, type='{equipment.eqp_type}', user_id={user_id}, time={time.time() - start_time:.2f}s")
+            serializer = self.get_serializer(equipment_rel)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        except Equipment.DoesNotExist:
+            logger.warning(f"Equipment not found: equipment_id={equipment_id}, user_id={user_id}")
+            return Response(
+                {"error": "Указанное оборудование не существует"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            logger.error(
+                f"Error adding equipment to user: equipment_id={equipment_id}, user_id={user_id}, error: {str(e)}",
+                exc_info=True)
+            return Response(
+                {"error": f"Произошла ошибка: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def destroy(self, request, *args, **kwargs):
         """Удаление оборудования у пользователя"""
+        start_time = time.time()
         instance = self.get_object()
+        user_id = request.user.usr_id
+        equipment_id = instance.mue_eqp_id.eqp_id
+        equipment_type = instance.mue_eqp_id.eqp_type
 
         # Проверка, принадлежит ли связь текущему пользователю
         if instance.mue_usr_id != request.user:
+            logger.warning(
+                f"Unauthorized equipment delete attempt: equipment_id={equipment_id}, requested_by={user_id}, owner={instance.mue_usr_id.usr_id}")
             return Response(
                 {"error": "У вас нет прав на удаление этого оборудования"},
                 status=status.HTTP_403_FORBIDDEN
             )
 
+        logger.info(
+            f"Removing equipment from user: equipment_id={equipment_id}, type='{equipment_type}', user_id={user_id}")
         self.perform_destroy(instance)
+        logger.info(
+            f"Equipment removed from user: equipment_id={equipment_id}, type='{equipment_type}', user_id={user_id}, time={time.time() - start_time:.2f}s")
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(detail=False, methods=['get'])
     def user_equipment(self, request):
         """Получить все оборудование пользователя"""
+        start_time = time.time()
+        user_id = request.user.usr_id
+        logger.info(f"Getting equipment IDs for user_id={user_id}")
+
         user_equipment = self.get_queryset()
 
         # Получаем только ID оборудования для клиента
         equipment_ids = [rel.mue_eqp_id.eqp_id for rel in user_equipment]
+        count = len(equipment_ids)
 
+        logger.info(f"Retrieved {count} equipment IDs for user_id={user_id}, time={time.time() - start_time:.2f}s")
         return Response(equipment_ids, status=status.HTTP_200_OK)

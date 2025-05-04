@@ -2,11 +2,6 @@
 import os
 import sys
 
-sys.stdout.write("STDOUT: Прямой вывод в stdout\n")
-sys.stdout.flush()
-sys.stderr.write("STDERR: Прямой вывод в stderr\n")
-sys.stderr.flush()
-
 if __name__ == '__main__':
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
     try:

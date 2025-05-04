@@ -32,8 +32,10 @@ INSTALLED_APPS += [
 ]
 
 MIDDLEWARE = [
+    'apps.core.middleware.PerformanceLoggingMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'apps.core.middleware.URLDebugMiddleware',  # Add this line
+    'apps.core.middleware.URLDebugMiddleware',
+    'apps.core.middleware.ExceptionLoggingMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -48,7 +50,7 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
 }
 
-# Более детальные логи
+# Добавляем кастомный JSON форматтер
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -61,13 +63,16 @@ LOGGING = {
             'format': '{levelname} {asctime} {message}',
             'style': '{',
         },
+        'json': {
+            '()': 'apps.core.formatters.CustomJsonFormatter',
+        },
     },
     'filters': {
         'require_debug_true': {
             '()': 'django.utils.log.RequireDebugTrue',
         },
     },
-'handlers': {
+    'handlers': {
         'console': {
             'level': 'DEBUG',
             'filters': ['require_debug_true'],
@@ -98,6 +103,14 @@ LOGGING = {
             'maxBytes': 10485760,  # 10MB
             'backupCount': 10,
         },
+        'json_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': LOGS_DIR / 'json_logs.log',
+            'formatter': 'json',
+            'maxBytes': 10485760,  # 10MB
+            'backupCount': 10,
+        },
     },
     'loggers': {
         'django': {
@@ -106,7 +119,7 @@ LOGGING = {
             'propagate': True,
         },
         'django.request': {
-            'handlers': ['file_error'],
+            'handlers': ['file_error', 'json_file'],
             'level': 'ERROR',
             'propagate': False,
         },
@@ -115,10 +128,30 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False,
         },
-        'apps': {  # This will catch all loggers from your apps directory
-            'handlers': ['console', 'file_debug', 'file_info', 'file_error'],
+        'apps': {
+            'handlers': ['console', 'file_debug', 'file_info', 'file_error', 'json_file'],
             'level': 'DEBUG',
             'propagate': True,
+        },
+        'apps.users': {
+            'handlers': ['console', 'file_info', 'file_error', 'json_file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'apps.core.recipes': {
+            'handlers': ['console', 'file_info', 'json_file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'apps.core.refrigerator': {
+            'handlers': ['console', 'file_info', 'json_file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'apps.core.shopping': {
+            'handlers': ['console', 'file_info', 'json_file'],
+            'level': 'INFO',
+            'propagate': False,
         },
     },
 }

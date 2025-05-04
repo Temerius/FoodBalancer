@@ -1,45 +1,53 @@
-INFO 2025-05-04 01:20:52,828 autoreload 31776 19760 Watching for file changes with StatReloader
-INFO 2025-05-04 01:21:18,192 autoreload 31776 19760 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\manage.py changed, reloading.
-INFO 2025-05-04 01:21:18,723 autoreload 26488 14348 Watching for file changes with StatReloader
-INFO 2025-05-04 01:21:34,526 autoreload 16300 27596 Watching for file changes with StatReloader
-INFO 2025-05-04 01:22:06,270 autoreload 33968 26096 Watching for file changes with StatReloader
-INFO 2025-05-04 01:22:47,739 autoreload 33968 26096 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\config\settings\development.py changed, reloading.
-INFO 2025-05-04 01:22:48,683 autoreload 35044 17272 Watching for file changes with StatReloader
-INFO 2025-05-04 01:22:54,713 autoreload 32240 8612 Watching for file changes with StatReloader
-INFO 2025-05-04 01:24:22,645 autoreload 8032 30632 Watching for file changes with StatReloader
-INFO 2025-05-04 01:24:23,845 views 8032 6116 Info message - Login endpoint called
-WARNING 2025-05-04 01:24:23,845 views 8032 6116 Warning message - Login endpoint called
-ERROR 2025-05-04 01:24:23,845 views 8032 6116 Error message - Login endpoint called
-WARNING 2025-05-04 01:24:24,366 basehttp 8032 6116 "POST /api/users/login/ HTTP/1.1" 401 54
-WARNING 2025-05-04 01:24:24,652 basehttp 8032 32012 "GET /api/users/profile/ HTTP/1.1" 401 82
-INFO 2025-05-04 01:24:32,269 views 8032 33984 Info message - Login endpoint called
-WARNING 2025-05-04 01:24:32,269 views 8032 33984 Warning message - Login endpoint called
-ERROR 2025-05-04 01:24:32,269 views 8032 33984 Error message - Login endpoint called
-INFO 2025-05-04 01:24:32,897 basehttp 8032 33984 "POST /api/users/login/ HTTP/1.1" 200 216
-INFO 2025-05-04 01:24:52,962 basehttp 8032 33504 "POST /api/users/register/ HTTP/1.1" 201 232
-INFO 2025-05-04 01:24:53,185 views 8032 4908 Info message - Login endpoint called
-WARNING 2025-05-04 01:24:53,185 views 8032 4908 Warning message - Login endpoint called
-ERROR 2025-05-04 01:24:53,185 views 8032 4908 Error message - Login endpoint called
-INFO 2025-05-04 01:24:53,425 basehttp 8032 4908 "POST /api/users/login/ HTTP/1.1" 200 232
-INFO 2025-05-04 01:24:53,498 basehttp 8032 26120 "GET /api/users/profile/ HTTP/1.1" 200 172
-INFO 2025-05-04 01:24:53,624 basehttp 8032 11236 "GET /api/refrigerator/ HTTP/1.1" 200 52
-INFO 2025-05-04 01:24:53,718 basehttp 8032 32888 "GET /api/favorites/ HTTP/1.1" 200 52
-INFO 2025-05-04 01:24:53,978 basehttp 8032 37768 "GET /api/allergens/ HTTP/1.1" 200 766
-INFO 2025-05-04 01:24:54,055 basehttp 8032 1124 "GET /api/equipment/ HTTP/1.1" 200 3963
-INFO 2025-05-04 01:24:54,142 basehttp 8032 13328 "POST /api/users/logout/ HTTP/1.1" 200 16
-INFO 2025-05-04 12:02:42,568 autoreload 10312 9988 Watching for file changes with StatReloader
-INFO 2025-05-04 12:03:06,273 basehttp 10312 13916 "POST /api/users/register/ HTTP/1.1" 201 232
-INFO 2025-05-04 12:03:06,368 views 10312 3124 Info message - Login endpoint called
-WARNING 2025-05-04 12:03:06,368 views 10312 3124 Warning message - Login endpoint called
-ERROR 2025-05-04 12:03:06,368 views 10312 3124 Error message - Login endpoint called
-INFO 2025-05-04 12:03:06,680 basehttp 10312 3124 "POST /api/users/login/ HTTP/1.1" 200 232
-INFO 2025-05-04 12:03:06,803 basehttp 10312 27796 "GET /api/users/profile/ HTTP/1.1" 200 172
-INFO 2025-05-04 12:03:06,953 basehttp 10312 33816 "GET /api/refrigerator/ HTTP/1.1" 200 52
-INFO 2025-05-04 12:03:07,030 basehttp 10312 6564 "GET /api/favorites/ HTTP/1.1" 200 52
-INFO 2025-05-04 12:03:07,108 basehttp 10312 32564 "GET /api/allergens/ HTTP/1.1" 200 766
-INFO 2025-05-04 12:03:07,191 basehttp 10312 25788 "GET /api/equipment/ HTTP/1.1" 200 3963
-INFO 2025-05-04 12:03:07,264 basehttp 10312 35572 "POST /api/users/logout/ HTTP/1.1" 200 16
-INFO 2025-05-04 12:07:54,335 views 10312 23784 Info message - Login endpoint called
-WARNING 2025-05-04 12:07:54,335 views 10312 23784 Warning message - Login endpoint called
-ERROR 2025-05-04 12:07:54,335 views 10312 23784 Error message - Login endpoint called
-INFO 2025-05-04 12:07:54,592 basehttp 10312 23784 "POST /api/users/login/ HTTP/1.1" 200 216
+INFO 2025-05-04 15:09:37,940 autoreload 36752 22168 Watching for file changes with StatReloader
+INFO 2025-05-04 15:15:44,842 autoreload 36752 22168 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\ingredient.py changed, reloading.
+INFO 2025-05-04 15:15:45,805 autoreload 29556 36772 Watching for file changes with StatReloader
+INFO 2025-05-04 15:15:46,214 wsgi 29556 10708 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-04 15:15:46,214 wsgi 29556 10708 Environment: config.settings
+INFO 2025-05-04 15:15:46,214 wsgi 29556 10708 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-04 15:15:46,218 wsgi 29556 10708 Application initialized successfully
+INFO 2025-05-04 15:17:12,969 autoreload 29556 36772 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\users\urls.py changed, reloading.
+INFO 2025-05-04 15:17:13,724 autoreload 31760 10776 Watching for file changes with StatReloader
+INFO 2025-05-04 15:17:13,995 wsgi 31760 27868 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-04 15:17:13,997 wsgi 31760 27868 Environment: config.settings
+INFO 2025-05-04 15:17:13,997 wsgi 31760 27868 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-04 15:17:14,000 wsgi 31760 27868 Application initialized successfully
+INFO 2025-05-04 15:17:28,435 autoreload 26476 37704 Watching for file changes with StatReloader
+INFO 2025-05-04 15:17:28,680 wsgi 26476 32940 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-04 15:17:28,681 wsgi 26476 32940 Environment: config.settings
+INFO 2025-05-04 15:17:28,681 wsgi 26476 32940 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-04 15:17:28,684 wsgi 26476 32940 Application initialized successfully
+INFO 2025-05-04 15:17:44,302 autoreload 26476 37704 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\manage.py changed, reloading.
+INFO 2025-05-04 15:17:44,994 autoreload 32252 32680 Watching for file changes with StatReloader
+INFO 2025-05-04 15:17:45,242 wsgi 32252 28320 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-04 15:17:45,242 wsgi 32252 28320 Environment: config.settings
+INFO 2025-05-04 15:17:45,243 wsgi 32252 28320 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-04 15:17:45,246 wsgi 32252 28320 Application initialized successfully
+INFO 2025-05-04 15:17:48,651 autoreload 24448 6808 Watching for file changes with StatReloader
+INFO 2025-05-04 15:17:48,849 wsgi 24448 23320 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-04 15:17:48,849 wsgi 24448 23320 Environment: config.settings
+INFO 2025-05-04 15:17:48,849 wsgi 24448 23320 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-04 15:17:48,852 wsgi 24448 23320 Application initialized successfully
+INFO 2025-05-04 15:18:30,781 views 24448 27820 Registration attempt: email=test_8jhd2sou@example.com
+INFO 2025-05-04 15:18:31,132 views 24448 27820 User registered successfully: user_id=89, email=test_8jhd2sou@example.com, time=0.35s
+INFO 2025-05-04 15:18:31,208 basehttp 24448 27820 "POST /api/users/register/ HTTP/1.1" 201 232
+INFO 2025-05-04 15:18:31,325 views 24448 29616 Login attempt: email=test_8jhd2sou@example.com
+INFO 2025-05-04 15:18:31,567 views 24448 29616 User login successful: user_id=89, email=test_8jhd2sou@example.com, time=0.24s
+INFO 2025-05-04 15:18:31,590 basehttp 24448 29616 "POST /api/users/login/ HTTP/1.1" 200 232
+INFO 2025-05-04 15:18:31,679 views 24448 5516 Profile accessed: user_id=89
+INFO 2025-05-04 15:18:31,699 basehttp 24448 5516 "GET /api/users/profile/ HTTP/1.1" 200 172
+INFO 2025-05-04 15:18:31,777 ingredient 24448 35828 Listing refrigerator ingredients: user_id=89
+INFO 2025-05-04 15:18:31,788 ingredient 24448 35828 Retrieved 0 refrigerator ingredients for user_id=89, time=0.01s
+INFO 2025-05-04 15:18:31,805 basehttp 24448 35828 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-04 15:18:31,896 basehttp 24448 27384 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-04 15:18:31,958 allergen 24448 6112 Listing all allergens: user_id=89
+INFO 2025-05-04 15:18:31,963 allergen 24448 6112 Retrieved 50 allergens, user_id=89, time=0.01s
+INFO 2025-05-04 15:18:31,980 basehttp 24448 6112 "GET /api/allergens/ HTTP/1.1" 200 766
+INFO 2025-05-04 15:18:32,035 equipment 24448 22216 Listing all equipment: user_id=89
+INFO 2025-05-04 15:18:32,042 equipment 24448 22216 Retrieved 73 equipment items, user_id=89, time=0.01s
+INFO 2025-05-04 15:18:32,059 basehttp 24448 22216 "GET /api/equipment/ HTTP/1.1" 200 3963
+INFO 2025-05-04 15:18:32,103 views 24448 28428 Logout attempt: user_id=89
+INFO 2025-05-04 15:18:32,109 views 24448 28428 User logged out successfully: user_id=89
+INFO 2025-05-04 15:18:32,124 basehttp 24448 28428 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-04 15:22:49,424 views 24448 27312 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-04 15:22:49,639 views 24448 27312 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.21s
+INFO 2025-05-04 15:22:49,666 basehttp 24448 27312 "POST /api/users/login/ HTTP/1.1" 200 216
