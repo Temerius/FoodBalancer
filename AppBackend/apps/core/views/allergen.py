@@ -57,6 +57,62 @@ class UserAllergenViewSet(CacheInvalidationMixin, viewsets.ModelViewSet):
     serializer_class = UserAllergenSerializer
     permission_classes = [IsAuthenticated]
 
+    @action(detail=False, methods=['post'], url_path='update')
+    def update_user_allergens(self, request):
+        """Update user's allergens"""
+        import logging
+        logger = logging.getLogger('apps.core')
+
+        logger.info(f"Starting user allergens update for user ID: {request.user.usr_id}")
+        logger.info(f"Request data: {request.data}")
+
+        try:
+            allergen_ids = request.data.get('allergen_ids', [])
+            user = request.user
+
+            logger.info(f"Allergen IDs to update: {allergen_ids}")
+
+            # Get your M2M model and Allergen model
+            from apps.core.models import M2MUsrAlg, Allergen
+            from django.contrib.auth import get_user_model
+
+            User = get_user_model()
+            user_obj = User.objects.get(usr_id=user.usr_id)
+
+            # Clear existing user allergens
+            delete_count = M2MUsrAlg.objects.filter(mua_usr_id=user.usr_id).delete()
+            logger.info(f"Deleted {delete_count} existing allergen records")
+
+            # Add new allergens
+            created_allergens = []
+            for allergen_id in allergen_ids:
+                # Get the Allergen instance
+                allergen_obj = Allergen.objects.get(alg_id=allergen_id)
+
+                # Create the relationship with proper objects
+                allergen_relation = M2MUsrAlg.objects.create(
+                    mua_usr_id=user_obj,  # Use the User instance
+                    mua_alg_id=allergen_obj  # Use the Allergen instance
+                )
+                created_allergens.append(allergen_id)
+                logger.info(f"Created allergen mapping: user {user.usr_id} - allergen {allergen_id}")
+
+            logger.info(f"Successfully updated allergens for user {user.usr_id}: {created_allergens}")
+
+            return Response({
+                'success': True,
+                'message': 'Allergens updated successfully'
+            })
+        except Exception as e:
+            import traceback
+            error_traceback = traceback.format_exc()
+            logger.error(f"Error updating allergens: {str(e)}")
+            logger.error(f"Traceback: {error_traceback}")
+
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
     def get_queryset(self):
         """Возвращает аллергены текущего пользователя"""
         user_id = self.request.user.usr_id

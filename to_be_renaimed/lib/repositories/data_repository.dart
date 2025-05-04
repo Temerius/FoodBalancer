@@ -41,6 +41,7 @@ class DataRepository with ChangeNotifier {
   bool get isInitialized => _isInitialized;
 
   // Initialize repository and load cached data
+  // Initialize repository and load cached data
   Future<void> initialize() async {
     _setLoading(true);
     try {
@@ -53,6 +54,11 @@ class DataRepository with ChangeNotifier {
       // If data is not in cache or outdated, fetch from API
       if (_currentUser == null || cacheExpired) {
         await refreshAllData();
+      }
+
+      // Load user-specific data if user is logged in
+      if (_currentUser != null) {
+        await loadUserData();
       }
 
       _isInitialized = true;
@@ -94,7 +100,7 @@ class DataRepository with ChangeNotifier {
     _setLoading(true);
     try {
       await Future.wait([
-        _fetchUserAllergens(),
+        _fetchUserAllergens(),  // Make sure this is called
         _fetchUserEquipment(),
         _fetchUserIngredients(),
         _fetchFavoriteRecipes(),
@@ -107,6 +113,9 @@ class DataRepository with ChangeNotifier {
 
       // Update cache with user-specific data
       await _updateCache();
+
+      // Notify listeners to update UI
+      notifyListeners();
     } catch (e) {
       _setError(e.toString());
     } finally {
@@ -153,14 +162,14 @@ class DataRepository with ChangeNotifier {
 
       // Обновляем данные об аллергенах, если они указаны
       if (updatedUser.allergenIds.isNotEmpty) {
-        await _apiService.put('/api/users/allergies/', {
+        await _apiService.post('/api/user-allergens/update/', {
           'allergen_ids': updatedUser.allergenIds,
         });
       }
 
       // Обновляем данные об оборудовании, если оно указано
       if (updatedUser.equipmentIds.isNotEmpty) {
-        await _apiService.put('/api/users/equipment/', {
+        await _apiService.post('/api/user-equipment/user_equipment/', {
           'equipment_ids': updatedUser.equipmentIds,
         });
       }
@@ -178,6 +187,7 @@ class DataRepository with ChangeNotifier {
 
       _setLoading(false);
       notifyListeners();
+      await refreshUserData();
       return true;
     } catch (e) {
       _setError(e.toString());
@@ -186,40 +196,31 @@ class DataRepository with ChangeNotifier {
     }
   }
 
+  // Update the refreshUserData method in data_repository.dart
+
   Future<void> refreshUserData() async {
     _setLoading(true);
     try {
-      // Запрашиваем актуальные данные пользователя
+      // Fetch user profile
       await _fetchUser();
 
-      // Запрашиваем аллергены пользователя
-      final allergensResponse = await _apiService.get('/api/users/allergies/');
-      if (allergensResponse.containsKey('results')) {
-        final List<dynamic> userAllergensJson = allergensResponse['results'];
-        _currentUser!.allergenIds = userAllergensJson
-            .map<int>((item) => item['alg_id'] as int)
-            .toList();
-      }
+      // Make sure we have all allergens loaded
+      await _fetchAllergens();
 
-      // Запрашиваем оборудование пользователя
-      final equipmentResponse = await _apiService.get('/api/users/equipment/');
-      if (equipmentResponse.containsKey('results')) {
-        final List<dynamic> userEquipmentJson = equipmentResponse['results'];
-        _currentUser!.equipmentIds = userEquipmentJson
-            .map<int>((item) => item['eqp_id'] as int)
-            .toList();
-      }
+      // Fetch user allergens
+      await _fetchUserAllergens();
 
-      // Обновляем связанные данные пользователя
-      await loadUserData();
+      // Other data fetching methods...
 
-      // Обновляем кэш
-      await CacheManager.saveUser(_currentUser!.toJson());
+      // Update cache
+      await _updateCache();
+
+      // Notify listeners to update the UI
+      notifyListeners();
     } catch (e) {
       _setError(e.toString());
     } finally {
       _setLoading(false);
-      notifyListeners();
     }
   }
 
@@ -270,12 +271,17 @@ class DataRepository with ChangeNotifier {
     }
   }
 
+  // Add or modify in data_repository.dart
+
   Future<void> _fetchAllergens() async {
     try {
-      final response = await _apiService.get('/api/allergens/');
-      final List<dynamic> allergensJson = response['results'];
-      _allergens = allergensJson.map((json) => Allergen.fromJson(json)).toList();
-      await CacheManager.saveAllergens(allergensJson.cast<Map<String, dynamic>>());
+      // Fix pagination by requesting more items
+      final response = await _apiService.get('/api/allergens/?limit=1000');
+
+      if (response.containsKey('results')) {
+        final List<dynamic> allergensJson = response['results'];
+        _allergens = allergensJson.map((json) => Allergen.fromJson(json)).toList();
+      }
     } catch (e) {
       throw Exception('Failed to load allergens: $e');
     }
@@ -289,6 +295,45 @@ class DataRepository with ChangeNotifier {
       await CacheManager.saveEquipment(equipmentJson.cast<Map<String, dynamic>>());
     } catch (e) {
       throw Exception('Failed to load equipment: $e');
+    }
+  }
+
+  Future<List<int>> getUserAllergenIds() async {
+    try {
+      print("Directly fetching user allergens");
+
+      // Get user allergens with higher limit
+      final response = await _apiService.get('/api/user-allergens/?limit=1000');
+      print("User allergens direct response: $response");
+
+      List<int> allergenIds = [];
+
+      if (response.containsKey('results')) {
+        final List<dynamic> userAllergensJson = response['results'];
+
+        for (var item in userAllergensJson) {
+          print("Processing allergen item: $item");
+
+          if (item.containsKey('mua_alg_id')) {
+            var algId = item['mua_alg_id'];
+            if (algId is Map) {
+              if (algId.containsKey('alg_id')) {
+                allergenIds.add(algId['alg_id'] as int);
+              }
+            } else if (algId is int) {
+              allergenIds.add(algId);
+            }
+          } else if (item.containsKey('alg_id')) {
+            allergenIds.add(item['alg_id'] as int);
+          }
+        }
+      }
+
+      print("Directly fetched allergen IDs: $allergenIds");
+      return allergenIds;
+    } catch (e) {
+      print("Error directly fetching allergen IDs: $e");
+      return [];
     }
   }
 
@@ -352,18 +397,45 @@ class DataRepository with ChangeNotifier {
     }
   }
 
+  // In the DataRepository's _fetchUserAllergens method, we need to make sure it's correctly getting the user's allergies:
+
   Future<void> _fetchUserAllergens() async {
     if (_currentUser == null) return;
 
     try {
-      _currentUser!.allergens = _allergens
-          .where((allergen) => _currentUser!.allergenIds.contains(allergen.id))
-          .map((allergen) => allergen.copyWith(isSelected: true))
-          .toList();
+      // Get user allergens from the API - this URL should match your backend
+      final response = await _apiService.get('/api/user-allergens/?limit=100');
+
+      List<int> allergenIds = [];
+
+      if (response.containsKey('results')) {
+        final List<dynamic> userAllergensJson = response['results'];
+
+        for (var item in userAllergensJson) {
+          // Extract the allergen ID from the response
+          // The exact structure depends on your API's response format
+          if (item.containsKey('mua_alg_id')) {
+            allergenIds.add(item['mua_alg_id']);
+          }
+        }
+      }
+
+      // Update the user's allergen IDs
+      _currentUser!.allergenIds = allergenIds;
+
+      // Now map these IDs to actual Allergen objects
+      _currentUser!.allergens = [];
+      for (var allergen in _allergens) {
+        if (allergenIds.contains(allergen.id)) {
+          _currentUser!.allergens.add(allergen);
+        }
+      }
     } catch (e) {
       print('Error loading user allergens: $e');
     }
   }
+
+
 
   Future<void> _fetchUserEquipment() async {
     if (_currentUser == null) return;
@@ -716,6 +788,28 @@ class DataRepository with ChangeNotifier {
       }
     } catch (e) {
       print('Error loading from cache: $e');
+    }
+  }
+
+  void updateLocalUser(User updatedUser) {
+    _currentUser = updatedUser;
+    notifyListeners();
+  }
+
+  // Add this to your DataRepository class
+  Future<List<Allergen>> getAllAllergens() async {
+    try {
+      // Direct API call to get all allergens with no pagination limit
+      final response = await _apiService.get('/api/allergens/?limit=1000');
+
+      if (response.containsKey('results')) {
+        final List<dynamic> allergensJson = response['results'];
+        return allergensJson.map((json) => Allergen.fromJson(json)).toList();
+      }
+      return [];
+    } catch (e) {
+      print('Error fetching allergens: $e');
+      return [];
     }
   }
 }

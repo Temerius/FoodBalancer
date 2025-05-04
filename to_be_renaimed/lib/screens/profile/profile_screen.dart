@@ -141,6 +141,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(height: 16),
 
               // Аллергии
+              // In the ProfileScreen build method where it displays allergies:
+
+// Allergies section
               Card(
                 margin: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -158,28 +161,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           IconButton(
                             icon: const Icon(Icons.edit),
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/profile/allergies').then((_) {
-                                setState(() {});
+                            onPressed: () async {
+                              await Navigator.pushNamed(context, '/profile/allergies');
+
+                              // Force refresh data when returning
+                              setState(() {
+                                _isLoading = true;
                               });
+
+                              try {
+                                final dataRepository = Provider.of<DataRepository>(context, listen: false);
+                                await dataRepository.refreshUserData();
+                              } finally {
+                                setState(() {
+                                  _isLoading = false;
+                                });
+                              }
                             },
                           ),
                         ],
                       ),
                       const SizedBox(height: 8),
-                      if (user?.allergens.isEmpty ?? true)
-                        const Text('Аллергии не указаны')
-                      else
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: user!.allergens.map((allergen) {
-                            return Chip(
-                              label: Text(allergen.name),
-                              backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+
+                      // Display the user's allergies
+                      Builder(
+                        builder: (context) {
+                          // Get fresh data each time this widget builds
+                          final dataRepository = Provider.of<DataRepository>(context);
+                          final user = dataRepository.user;
+
+                          // Debugging output
+                          print("Current user allergens: ${user?.allergens?.map((a) => a.name).toList()}");
+                          print("Current user allergen IDs: ${user?.allergenIds}");
+
+                          if (user?.allergens == null || user!.allergens.isEmpty) {
+                            return const Text('Аллергии не указаны');
+                          } else {
+                            return Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              children: user.allergens.map((allergen) {
+                                return Chip(
+                                  label: Text(allergen.name),
+                                  backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+                                );
+                              }).toList(),
                             );
-                          }).toList(),
-                        ),
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),

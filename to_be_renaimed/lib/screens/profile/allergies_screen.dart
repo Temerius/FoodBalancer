@@ -1,4 +1,3 @@
-// lib/screens/profile/allergies_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
@@ -33,31 +32,11 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Если аллергенов нет в репозитории, пробуем их загрузить
-      if (dataRepository.allergens.isEmpty) {
-        // Здесь нужно вызвать метод для загрузки аллергенов
-        await dataRepository.refreshAllData();
-      }
+      // Get all allergens
+      // Force fetch from API with limit=1000 to avoid pagination
+      _allergens = await dataRepository.getAllAllergens();
 
-      // Получаем все аллергены из репозитория
-      _allergens = List.from(dataRepository.allergens);
-
-      // Если аллергенов всё еще нет, создаём тестовые данные
-      if (_allergens.isEmpty) {
-        _allergens = [
-          Allergen(id: 1, name: 'Глютен'),
-          Allergen(id: 2, name: 'Лактоза'),
-          Allergen(id: 3, name: 'Яйца'),
-          Allergen(id: 4, name: 'Орехи'),
-          Allergen(id: 5, name: 'Арахис'),
-          Allergen(id: 6, name: 'Соя'),
-          Allergen(id: 7, name: 'Рыба'),
-          Allergen(id: 8, name: 'Морепродукты'),
-          Allergen(id: 9, name: 'Цитрусовые'),
-        ];
-      }
-
-      // Получаем выбранные аллергены текущего пользователя
+      // Get user's selected allergens
       final user = dataRepository.user ??
           Provider.of<AuthProvider>(context, listen: false).currentUser;
 
@@ -93,21 +72,16 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
         return;
       }
 
-      // Создаем копию пользователя с обновленными аллергенами
+      // Create updated user with new allergen IDs
       final updatedUser = user.copyWith(
         allergenIds: _selectedAllergenIds.toList(),
       );
 
-      // Обновляем профиль в репозитории
+      // Update profile
       final success = await dataRepository.updateUserProfile(updatedUser);
 
       if (success) {
-        if (mounted) {
-          Navigator.pop(context);
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Аллергии успешно обновлены')),
-          );
-        }
+        Navigator.pop(context, true); // Pass true to indicate success
       } else {
         setState(() {
           _errorMessage = dataRepository.error ?? 'Ошибка обновления аллергий';
@@ -130,7 +104,6 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
       appBar: AppBar(
         title: const Text('Аллергии'),
         actions: [
-          // Добавим кнопку обновления для случаев, когда данные не загрузились
           IconButton(
             icon: Icon(Icons.refresh),
             onPressed: _loadData,
@@ -141,7 +114,6 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
           ? const Center(child: CircularProgressIndicator())
           : Column(
         children: [
-          // Сообщение об ошибке (если есть)
           if (_errorMessage != null)
             Container(
               padding: const EdgeInsets.all(12),
@@ -172,7 +144,6 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
             ),
           ),
 
-          // Список всех аллергенов
           Expanded(
             child: _allergens.isEmpty
                 ? Center(
@@ -214,7 +185,6 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
             ),
           ),
 
-          // Информация о выбранных аллергенах
           Container(
             padding: const EdgeInsets.all(16.0),
             alignment: Alignment.center,
@@ -228,7 +198,6 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
             ),
           ),
 
-          // Кнопка сохранения
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -247,4 +216,5 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
       ),
     );
   }
+
 }

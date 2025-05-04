@@ -1,6 +1,7 @@
 # AppBackend/apps/core/models/allergen.py
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
@@ -41,25 +42,29 @@ class M2MIngAlg(models.Model):
         verbose_name_plural = _('Связи ингредиент-аллерген')
 
 
+
 class M2MUsrAlg(models.Model):
-    """Связь между пользователем и аллергеном"""
-    mua_alg_id = models.ForeignKey(
-        'Allergen',
-        on_delete=models.CASCADE,
-        db_column='mua_alg_id',
-        related_name='user_allergies',
-        verbose_name=_('Аллерген')
-    )
+    # Foreign keys with existing column names
     mua_usr_id = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        related_name='allergens',
         db_column='mua_usr_id',
-        related_name='user_allergens',
-        verbose_name=_('Пользователь')
+        primary_key=True  # Part of composite primary key
+    )
+
+    mua_alg_id = models.ForeignKey(
+        'Allergen',  # Make sure this points to your Allergen model
+        on_delete=models.CASCADE,
+        related_name='users',
+        db_column='mua_alg_id',
+        primary_key=False  # Not marked as primary key in Django
     )
 
     class Meta:
-        db_table = 'm2m_usr_alg'
-        unique_together = ('mua_alg_id', 'mua_usr_id')
-        verbose_name = _('Аллергия пользователя')
-        verbose_name_plural = _('Аллергии пользователей')
+        db_table = 'm2m_usr_alg'  # Use the existing table name
+        unique_together = ('mua_usr_id', 'mua_alg_id')  # This creates a composite primary key
+        managed = True  # Let Django manage this model
+
+    def __str__(self):
+        return f"User {self.mua_usr_id_id} - Allergen {self.mua_alg_id_id}"

@@ -1,394 +1,1417 @@
-INFO 2025-05-04 15:09:37,940 autoreload 36752 22168 Watching for file changes with StatReloader
-INFO 2025-05-04 15:15:44,842 autoreload 36752 22168 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\ingredient.py changed, reloading.
-INFO 2025-05-04 15:15:45,805 autoreload 29556 36772 Watching for file changes with StatReloader
-INFO 2025-05-04 15:15:46,214 wsgi 29556 10708 ==== Starting FoodBalancer Backend Application ====
-INFO 2025-05-04 15:15:46,214 wsgi 29556 10708 Environment: config.settings
-INFO 2025-05-04 15:15:46,214 wsgi 29556 10708 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
-INFO 2025-05-04 15:15:46,218 wsgi 29556 10708 Application initialized successfully
-INFO 2025-05-04 15:17:12,969 autoreload 29556 36772 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\users\urls.py changed, reloading.
-INFO 2025-05-04 15:17:13,724 autoreload 31760 10776 Watching for file changes with StatReloader
-INFO 2025-05-04 15:17:13,995 wsgi 31760 27868 ==== Starting FoodBalancer Backend Application ====
-INFO 2025-05-04 15:17:13,997 wsgi 31760 27868 Environment: config.settings
-INFO 2025-05-04 15:17:13,997 wsgi 31760 27868 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
-INFO 2025-05-04 15:17:14,000 wsgi 31760 27868 Application initialized successfully
-INFO 2025-05-04 15:17:28,435 autoreload 26476 37704 Watching for file changes with StatReloader
-INFO 2025-05-04 15:17:28,680 wsgi 26476 32940 ==== Starting FoodBalancer Backend Application ====
-INFO 2025-05-04 15:17:28,681 wsgi 26476 32940 Environment: config.settings
-INFO 2025-05-04 15:17:28,681 wsgi 26476 32940 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
-INFO 2025-05-04 15:17:28,684 wsgi 26476 32940 Application initialized successfully
-INFO 2025-05-04 15:17:44,302 autoreload 26476 37704 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\manage.py changed, reloading.
-INFO 2025-05-04 15:17:44,994 autoreload 32252 32680 Watching for file changes with StatReloader
-INFO 2025-05-04 15:17:45,242 wsgi 32252 28320 ==== Starting FoodBalancer Backend Application ====
-INFO 2025-05-04 15:17:45,242 wsgi 32252 28320 Environment: config.settings
-INFO 2025-05-04 15:17:45,243 wsgi 32252 28320 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
-INFO 2025-05-04 15:17:45,246 wsgi 32252 28320 Application initialized successfully
-INFO 2025-05-04 15:17:48,651 autoreload 24448 6808 Watching for file changes with StatReloader
-INFO 2025-05-04 15:17:48,849 wsgi 24448 23320 ==== Starting FoodBalancer Backend Application ====
-INFO 2025-05-04 15:17:48,849 wsgi 24448 23320 Environment: config.settings
-INFO 2025-05-04 15:17:48,849 wsgi 24448 23320 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
-INFO 2025-05-04 15:17:48,852 wsgi 24448 23320 Application initialized successfully
-INFO 2025-05-04 15:18:30,781 views 24448 27820 Registration attempt: email=test_8jhd2sou@example.com
-INFO 2025-05-04 15:18:31,132 views 24448 27820 User registered successfully: user_id=89, email=test_8jhd2sou@example.com, time=0.35s
-INFO 2025-05-04 15:18:31,208 basehttp 24448 27820 "POST /api/users/register/ HTTP/1.1" 201 232
-INFO 2025-05-04 15:18:31,325 views 24448 29616 Login attempt: email=test_8jhd2sou@example.com
-INFO 2025-05-04 15:18:31,567 views 24448 29616 User login successful: user_id=89, email=test_8jhd2sou@example.com, time=0.24s
-INFO 2025-05-04 15:18:31,590 basehttp 24448 29616 "POST /api/users/login/ HTTP/1.1" 200 232
-INFO 2025-05-04 15:18:31,679 views 24448 5516 Profile accessed: user_id=89
-INFO 2025-05-04 15:18:31,699 basehttp 24448 5516 "GET /api/users/profile/ HTTP/1.1" 200 172
-INFO 2025-05-04 15:18:31,777 ingredient 24448 35828 Listing refrigerator ingredients: user_id=89
-INFO 2025-05-04 15:18:31,788 ingredient 24448 35828 Retrieved 0 refrigerator ingredients for user_id=89, time=0.01s
-INFO 2025-05-04 15:18:31,805 basehttp 24448 35828 "GET /api/refrigerator/ HTTP/1.1" 200 52
-INFO 2025-05-04 15:18:31,896 basehttp 24448 27384 "GET /api/favorites/ HTTP/1.1" 200 52
-INFO 2025-05-04 15:18:31,958 allergen 24448 6112 Listing all allergens: user_id=89
-INFO 2025-05-04 15:18:31,963 allergen 24448 6112 Retrieved 50 allergens, user_id=89, time=0.01s
-INFO 2025-05-04 15:18:31,980 basehttp 24448 6112 "GET /api/allergens/ HTTP/1.1" 200 766
-INFO 2025-05-04 15:18:32,035 equipment 24448 22216 Listing all equipment: user_id=89
-INFO 2025-05-04 15:18:32,042 equipment 24448 22216 Retrieved 73 equipment items, user_id=89, time=0.01s
-INFO 2025-05-04 15:18:32,059 basehttp 24448 22216 "GET /api/equipment/ HTTP/1.1" 200 3963
-INFO 2025-05-04 15:18:32,103 views 24448 28428 Logout attempt: user_id=89
-INFO 2025-05-04 15:18:32,109 views 24448 28428 User logged out successfully: user_id=89
-INFO 2025-05-04 15:18:32,124 basehttp 24448 28428 "POST /api/users/logout/ HTTP/1.1" 200 16
-INFO 2025-05-04 15:22:49,424 views 24448 27312 Login attempt: email=w0rkma1lmoc@gmail.com
-INFO 2025-05-04 15:22:49,639 views 24448 27312 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.21s
-INFO 2025-05-04 15:22:49,666 basehttp 24448 27312 "POST /api/users/login/ HTTP/1.1" 200 216
-INFO 2025-05-04 22:12:08,026 autoreload 24072 1820 Watching for file changes with StatReloader
-INFO 2025-05-04 22:12:08,446 wsgi 24072 22508 ==== Starting FoodBalancer Backend Application ====
-INFO 2025-05-04 22:12:08,447 wsgi 24072 22508 Environment: config.settings
-INFO 2025-05-04 22:12:08,447 wsgi 24072 22508 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
-INFO 2025-05-04 22:12:08,450 wsgi 24072 22508 Application initialized successfully
-INFO 2025-05-04 22:21:27,927 views 24072 29016 Registration attempt: email=test_u6wq1ktd@example.com
-INFO 2025-05-04 22:21:28,818 views 24072 29016 User registered successfully: user_id=90, email=test_u6wq1ktd@example.com, time=0.89s
-INFO 2025-05-04 22:21:29,343 basehttp 24072 29016 "POST /api/users/register/ HTTP/1.1" 201 232
-INFO 2025-05-04 22:21:29,502 views 24072 15944 Login attempt: email=test_u6wq1ktd@example.com
-INFO 2025-05-04 22:21:29,911 views 24072 15944 User login successful: user_id=90, email=test_u6wq1ktd@example.com, time=0.41s
-INFO 2025-05-04 22:21:29,939 basehttp 24072 15944 "POST /api/users/login/ HTTP/1.1" 200 232
-INFO 2025-05-04 22:21:30,241 views 24072 14132 Profile accessed: user_id=90
-INFO 2025-05-04 22:21:30,272 basehttp 24072 14132 "GET /api/users/profile/ HTTP/1.1" 200 172
-INFO 2025-05-04 22:21:30,481 ingredient 24072 28320 Listing refrigerator ingredients: user_id=90
-INFO 2025-05-04 22:21:30,607 ingredient 24072 28320 Retrieved 0 refrigerator ingredients for user_id=90, time=0.13s
-INFO 2025-05-04 22:21:30,627 basehttp 24072 28320 "GET /api/refrigerator/ HTTP/1.1" 200 52
-INFO 2025-05-04 22:21:30,782 basehttp 24072 23684 "GET /api/favorites/ HTTP/1.1" 200 52
-INFO 2025-05-04 22:21:30,877 allergen 24072 6080 Listing all allergens: user_id=90
-INFO 2025-05-04 22:21:30,910 allergen 24072 6080 Retrieved 50 allergens, user_id=90, time=0.03s
-INFO 2025-05-04 22:21:30,930 basehttp 24072 6080 "GET /api/allergens/ HTTP/1.1" 200 766
-INFO 2025-05-04 22:21:30,989 equipment 24072 25720 Listing all equipment: user_id=90
-INFO 2025-05-04 22:21:31,011 equipment 24072 25720 Retrieved 73 equipment items, user_id=90, time=0.02s
-INFO 2025-05-04 22:21:31,032 basehttp 24072 25720 "GET /api/equipment/ HTTP/1.1" 200 3963
-INFO 2025-05-04 22:21:31,099 views 24072 19536 Logout attempt: user_id=90
-INFO 2025-05-04 22:21:31,104 views 24072 19536 User logged out successfully: user_id=90
-INFO 2025-05-04 22:21:31,124 basehttp 24072 19536 "POST /api/users/logout/ HTTP/1.1" 200 16
-INFO 2025-05-04 22:21:38,467 views 24072 25684 Login attempt: email=w0rkma1lmoc@gmail.com
-INFO 2025-05-04 22:21:38,819 views 24072 25684 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.35s
-INFO 2025-05-04 22:21:38,873 basehttp 24072 25684 "POST /api/users/login/ HTTP/1.1" 200 216
-WARNING 2025-05-04 22:22:15,590 basehttp 24072 25340 "PUT /api/users/profile/ HTTP/1.1" 401 82
-INFO 2025-05-04 22:24:42,786 autoreload 24072 1820 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\users\views.py changed, reloading.
-INFO 2025-05-04 22:24:43,541 autoreload 33936 12412 Watching for file changes with StatReloader
-INFO 2025-05-04 22:24:43,779 wsgi 33936 7636 ==== Starting FoodBalancer Backend Application ====
-INFO 2025-05-04 22:24:43,781 wsgi 33936 7636 Environment: config.settings
-INFO 2025-05-04 22:24:43,781 wsgi 33936 7636 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
-INFO 2025-05-04 22:24:43,784 wsgi 33936 7636 Application initialized successfully
-WARNING 2025-05-04 22:26:35,363 basehttp 33936 30532 "PUT /api/users/profile/ HTTP/1.1" 401 82
-INFO 2025-05-04 22:35:47,077 views 33936 30276 Registration attempt: email=test_7c4ih133@example.com
-INFO 2025-05-04 22:35:47,492 views 33936 30276 User registered successfully: user_id=91, email=test_7c4ih133@example.com, time=0.41s
-INFO 2025-05-04 22:35:47,554 basehttp 33936 30276 "POST /api/users/register/ HTTP/1.1" 201 232
-INFO 2025-05-04 22:35:47,649 views 33936 27936 Login attempt: email=test_7c4ih133@example.com
-INFO 2025-05-04 22:35:47,995 views 33936 27936 User login successful: user_id=91, email=test_7c4ih133@example.com, time=0.35s
-INFO 2025-05-04 22:35:48,032 basehttp 33936 27936 "POST /api/users/login/ HTTP/1.1" 200 232
-INFO 2025-05-04 22:35:48,128 views 33936 24468 Profile accessed: user_id=91
-INFO 2025-05-04 22:35:48,156 basehttp 33936 24468 "GET /api/users/profile/ HTTP/1.1" 200 172
-INFO 2025-05-04 22:35:48,241 ingredient 33936 27876 Listing refrigerator ingredients: user_id=91
-INFO 2025-05-04 22:35:48,256 ingredient 33936 27876 Retrieved 0 refrigerator ingredients for user_id=91, time=0.02s
-INFO 2025-05-04 22:35:48,286 basehttp 33936 27876 "GET /api/refrigerator/ HTTP/1.1" 200 52
-INFO 2025-05-04 22:35:48,385 basehttp 33936 32492 "GET /api/favorites/ HTTP/1.1" 200 52
-INFO 2025-05-04 22:35:48,454 allergen 33936 10624 Listing all allergens: user_id=91
-INFO 2025-05-04 22:35:48,463 allergen 33936 10624 Retrieved 50 allergens, user_id=91, time=0.01s
-INFO 2025-05-04 22:35:48,488 basehttp 33936 10624 "GET /api/allergens/ HTTP/1.1" 200 766
-INFO 2025-05-04 22:35:48,586 equipment 33936 36160 Listing all equipment: user_id=91
-INFO 2025-05-04 22:35:48,596 equipment 33936 36160 Retrieved 73 equipment items, user_id=91, time=0.01s
-INFO 2025-05-04 22:35:48,631 basehttp 33936 36160 "GET /api/equipment/ HTTP/1.1" 200 3963
-INFO 2025-05-04 22:35:48,745 views 33936 27112 Logout attempt: user_id=91
-INFO 2025-05-04 22:35:48,751 views 33936 27112 User logged out successfully: user_id=91
-INFO 2025-05-04 22:35:48,773 basehttp 33936 27112 "POST /api/users/logout/ HTTP/1.1" 200 16
-INFO 2025-05-04 22:36:02,027 views 33936 26516 Login attempt: email=w0rkma1lmoc@gmail.com
-INFO 2025-05-04 22:36:02,376 views 33936 26516 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.35s
-INFO 2025-05-04 22:36:02,408 basehttp 33936 26516 "POST /api/users/login/ HTTP/1.1" 200 216
-WARNING 2025-05-04 22:36:21,863 basehttp 33936 16768 "PUT /api/users/profile/ HTTP/1.1" 401 82
-INFO 2025-05-04 22:44:58,291 views 33936 6156 Registration attempt: email=test_hgl5hjwq@example.com
-INFO 2025-05-04 22:44:58,677 views 33936 6156 User registered successfully: user_id=92, email=test_hgl5hjwq@example.com, time=0.39s
-INFO 2025-05-04 22:44:58,729 basehttp 33936 6156 "POST /api/users/register/ HTTP/1.1" 201 232
-INFO 2025-05-04 22:44:58,892 views 33936 13924 Login attempt: email=test_hgl5hjwq@example.com
-INFO 2025-05-04 22:44:59,223 views 33936 13924 User login successful: user_id=92, email=test_hgl5hjwq@example.com, time=0.33s
-INFO 2025-05-04 22:44:59,252 basehttp 33936 13924 "POST /api/users/login/ HTTP/1.1" 200 232
-INFO 2025-05-04 22:44:59,323 views 33936 30008 Profile accessed: user_id=92
-INFO 2025-05-04 22:44:59,351 basehttp 33936 30008 "GET /api/users/profile/ HTTP/1.1" 200 172
-INFO 2025-05-04 22:44:59,404 ingredient 33936 27528 Listing refrigerator ingredients: user_id=92
-INFO 2025-05-04 22:44:59,409 ingredient 33936 27528 Retrieved 0 refrigerator ingredients for user_id=92, time=0.01s
-INFO 2025-05-04 22:44:59,431 basehttp 33936 27528 "GET /api/refrigerator/ HTTP/1.1" 200 52
-INFO 2025-05-04 22:44:59,533 basehttp 33936 34912 "GET /api/favorites/ HTTP/1.1" 200 52
-INFO 2025-05-04 22:44:59,590 allergen 33936 32744 Listing all allergens: user_id=92
-INFO 2025-05-04 22:44:59,597 allergen 33936 32744 Retrieved 50 allergens, user_id=92, time=0.01s
-INFO 2025-05-04 22:44:59,616 basehttp 33936 32744 "GET /api/allergens/ HTTP/1.1" 200 766
-INFO 2025-05-04 22:44:59,722 equipment 33936 36284 Listing all equipment: user_id=92
-INFO 2025-05-04 22:44:59,729 equipment 33936 36284 Retrieved 73 equipment items, user_id=92, time=0.01s
-INFO 2025-05-04 22:44:59,747 basehttp 33936 36284 "GET /api/equipment/ HTTP/1.1" 200 3963
-INFO 2025-05-04 22:44:59,818 views 33936 29532 Logout attempt: user_id=92
-INFO 2025-05-04 22:44:59,822 views 33936 29532 User logged out successfully: user_id=92
-INFO 2025-05-04 22:44:59,842 basehttp 33936 29532 "POST /api/users/logout/ HTTP/1.1" 200 16
-INFO 2025-05-04 22:45:12,532 views 33936 8724 Login attempt: email=w0rkma1lmoc@gmail.com
-INFO 2025-05-04 22:45:12,851 views 33936 8724 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.32s
-INFO 2025-05-04 22:45:12,877 basehttp 33936 8724 "POST /api/users/login/ HTTP/1.1" 200 216
-INFO 2025-05-04 22:45:25,098 views 33936 8724 Profile update attempt: user_id=66
-ERROR 2025-05-04 22:45:25,586 basehttp 33936 8724 "PUT /api/users/profile/ HTTP/1.1" 500 28338
-INFO 2025-05-04 22:49:54,012 views 33936 33704 Registration attempt: email=test_bhgy6vmq@example.com
-INFO 2025-05-04 22:49:54,401 views 33936 33704 User registered successfully: user_id=93, email=test_bhgy6vmq@example.com, time=0.39s
-INFO 2025-05-04 22:49:54,436 basehttp 33936 33704 "POST /api/users/register/ HTTP/1.1" 201 232
-INFO 2025-05-04 22:49:54,558 views 33936 33232 Login attempt: email=test_bhgy6vmq@example.com
-INFO 2025-05-04 22:49:54,882 views 33936 33232 User login successful: user_id=93, email=test_bhgy6vmq@example.com, time=0.32s
-INFO 2025-05-04 22:49:54,926 basehttp 33936 33232 "POST /api/users/login/ HTTP/1.1" 200 232
-INFO 2025-05-04 22:49:55,019 views 33936 6040 Profile accessed: user_id=93
-INFO 2025-05-04 22:49:55,057 basehttp 33936 6040 "GET /api/users/profile/ HTTP/1.1" 200 172
-INFO 2025-05-04 22:49:55,128 ingredient 33936 35732 Listing refrigerator ingredients: user_id=93
-INFO 2025-05-04 22:49:55,132 ingredient 33936 35732 Retrieved 0 refrigerator ingredients for user_id=93, time=0.00s
-INFO 2025-05-04 22:49:55,151 basehttp 33936 35732 "GET /api/refrigerator/ HTTP/1.1" 200 52
-INFO 2025-05-04 22:49:55,255 basehttp 33936 23584 "GET /api/favorites/ HTTP/1.1" 200 52
-INFO 2025-05-04 22:49:55,327 allergen 33936 19132 Listing all allergens: user_id=93
-INFO 2025-05-04 22:49:55,331 allergen 33936 19132 Retrieved 50 allergens, user_id=93, time=0.00s
-INFO 2025-05-04 22:49:55,350 basehttp 33936 19132 "GET /api/allergens/ HTTP/1.1" 200 766
-INFO 2025-05-04 22:49:55,524 equipment 33936 32032 Listing all equipment: user_id=93
-INFO 2025-05-04 22:49:55,530 equipment 33936 32032 Retrieved 73 equipment items, user_id=93, time=0.01s
-INFO 2025-05-04 22:49:55,555 basehttp 33936 32032 "GET /api/equipment/ HTTP/1.1" 200 3963
-INFO 2025-05-04 22:49:55,623 views 33936 34868 Logout attempt: user_id=93
-INFO 2025-05-04 22:49:55,627 views 33936 34868 User logged out successfully: user_id=93
-INFO 2025-05-04 22:49:55,648 basehttp 33936 34868 "POST /api/users/logout/ HTTP/1.1" 200 16
-INFO 2025-05-04 22:50:07,205 views 33936 35624 Login attempt: email=w0rkma1lmoc@gmail.com
-INFO 2025-05-04 22:50:07,544 views 33936 35624 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.34s
-INFO 2025-05-04 22:50:07,563 basehttp 33936 35624 "POST /api/users/login/ HTTP/1.1" 200 216
-INFO 2025-05-04 22:50:23,164 views 33936 2104 Profile update attempt: user_id=66
-WARNING 2025-05-04 22:50:23,167 views 33936 2104 Profile update validation error: user_id=66, errors={'usr_gender': [ErrorDetail(string='Значения MALE нет среди допустимых вариантов.', code='invalid_choice')]}
-WARNING 2025-05-04 22:50:23,186 basehttp 33936 2104 "PUT /api/users/profile/ HTTP/1.1" 400 99
-INFO 2025-05-04 22:53:16,397 views 33936 7860 Registration attempt: email=test_adt7kxy2@example.com
-INFO 2025-05-04 22:53:16,767 views 33936 7860 User registered successfully: user_id=94, email=test_adt7kxy2@example.com, time=0.37s
-INFO 2025-05-04 22:53:16,814 basehttp 33936 7860 "POST /api/users/register/ HTTP/1.1" 201 232
-INFO 2025-05-04 22:53:16,930 views 33936 20504 Login attempt: email=test_adt7kxy2@example.com
-INFO 2025-05-04 22:53:17,248 views 33936 20504 User login successful: user_id=94, email=test_adt7kxy2@example.com, time=0.32s
-INFO 2025-05-04 22:53:17,277 basehttp 33936 20504 "POST /api/users/login/ HTTP/1.1" 200 232
-INFO 2025-05-04 22:53:17,364 views 33936 21864 Profile accessed: user_id=94
-INFO 2025-05-04 22:53:17,396 basehttp 33936 21864 "GET /api/users/profile/ HTTP/1.1" 200 172
-INFO 2025-05-04 22:53:17,456 ingredient 33936 35012 Listing refrigerator ingredients: user_id=94
-INFO 2025-05-04 22:53:17,459 ingredient 33936 35012 Retrieved 0 refrigerator ingredients for user_id=94, time=0.00s
-INFO 2025-05-04 22:53:17,478 basehttp 33936 35012 "GET /api/refrigerator/ HTTP/1.1" 200 52
-INFO 2025-05-04 22:53:17,582 basehttp 33936 27540 "GET /api/favorites/ HTTP/1.1" 200 52
-INFO 2025-05-04 22:53:17,671 allergen 33936 28588 Listing all allergens: user_id=94
-INFO 2025-05-04 22:53:17,675 allergen 33936 28588 Retrieved 50 allergens, user_id=94, time=0.00s
-INFO 2025-05-04 22:53:17,694 basehttp 33936 28588 "GET /api/allergens/ HTTP/1.1" 200 766
-INFO 2025-05-04 22:53:17,762 equipment 33936 30396 Listing all equipment: user_id=94
-INFO 2025-05-04 22:53:17,770 equipment 33936 30396 Retrieved 73 equipment items, user_id=94, time=0.01s
-INFO 2025-05-04 22:53:17,796 basehttp 33936 30396 "GET /api/equipment/ HTTP/1.1" 200 3963
-INFO 2025-05-04 22:53:17,999 views 33936 6740 Logout attempt: user_id=94
-INFO 2025-05-04 22:53:18,003 views 33936 6740 User logged out successfully: user_id=94
-INFO 2025-05-04 22:53:18,021 basehttp 33936 6740 "POST /api/users/logout/ HTTP/1.1" 200 16
-INFO 2025-05-04 22:53:26,681 views 33936 20612 Login attempt: email=w0rkma1lmoc@gmail.com
-INFO 2025-05-04 22:53:26,993 views 33936 20612 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.31s
-INFO 2025-05-04 22:53:27,015 basehttp 33936 20612 "POST /api/users/login/ HTTP/1.1" 200 216
-INFO 2025-05-04 22:53:33,340 views 33936 20612 Profile update attempt: user_id=66
-INFO 2025-05-04 22:53:33,350 views 33936 20612 Profile updated successfully: user_id=66, time=0.01s
-INFO 2025-05-04 22:53:33,376 basehttp 33936 20612 "PUT /api/users/profile/ HTTP/1.1" 200 143
-INFO 2025-05-04 22:53:46,071 views 33936 20612 Profile update attempt: user_id=66
-WARNING 2025-05-04 22:53:46,071 views 33936 20612 Profile update validation error: user_id=66, errors={'usr_gender': [ErrorDetail(string='Значения MALE нет среди допустимых вариантов.', code='invalid_choice')]}
-WARNING 2025-05-04 22:53:46,087 basehttp 33936 20612 "PUT /api/users/profile/ HTTP/1.1" 400 99
-INFO 2025-05-04 22:54:00,805 views 33936 20612 Profile update attempt: user_id=66
-INFO 2025-05-04 22:54:00,812 views 33936 20612 Profile updated successfully: user_id=66, time=0.01s
-INFO 2025-05-04 22:54:00,843 basehttp 33936 20612 "PUT /api/users/profile/ HTTP/1.1" 200 139
-INFO 2025-05-04 22:54:16,507 views 33936 25132 Profile update attempt: user_id=66
-INFO 2025-05-04 22:54:16,513 views 33936 25132 Profile updated successfully: user_id=66, time=0.01s
-INFO 2025-05-04 22:54:16,538 basehttp 33936 25132 "PUT /api/users/profile/ HTTP/1.1" 200 139
-INFO 2025-05-04 22:54:48,669 views 33936 22916 Profile update attempt: user_id=66
-WARNING 2025-05-04 22:54:48,671 views 33936 22916 Profile update validation error: user_id=66, errors={'usr_gender': [ErrorDetail(string='Значения MALE нет среди допустимых вариантов.', code='invalid_choice')]}
-WARNING 2025-05-04 22:54:48,687 basehttp 33936 22916 "PUT /api/users/profile/ HTTP/1.1" 400 99
-INFO 2025-05-04 22:57:31,539 views 33936 2148 Profile update attempt: user_id=66
-WARNING 2025-05-04 22:57:31,541 views 33936 2148 Profile update validation error: user_id=66, errors={'usr_gender': [ErrorDetail(string='Значения MALE нет среди допустимых вариантов.', code='invalid_choice')]}
-WARNING 2025-05-04 22:57:31,560 basehttp 33936 2148 "PUT /api/users/profile/ HTTP/1.1" 400 99
-INFO 2025-05-04 22:57:37,842 views 33936 2148 Profile update attempt: user_id=66
-WARNING 2025-05-04 22:57:37,843 views 33936 2148 Profile update validation error: user_id=66, errors={'usr_gender': [ErrorDetail(string='Значения MALE нет среди допустимых вариантов.', code='invalid_choice')]}
-WARNING 2025-05-04 22:57:37,859 basehttp 33936 2148 "PUT /api/users/profile/ HTTP/1.1" 400 99
-INFO 2025-05-04 23:05:47,117 views 33936 14584 Profile accessed: user_id=66
-INFO 2025-05-04 23:05:47,153 basehttp 33936 14584 "GET /api/users/profile/ HTTP/1.1" 200 151
-INFO 2025-05-04 23:05:47,259 ingredient 33936 14584 Listing refrigerator ingredients: user_id=66
-INFO 2025-05-04 23:05:47,285 ingredient 33936 14584 Retrieved 0 refrigerator ingredients for user_id=66, time=0.03s
-INFO 2025-05-04 23:05:47,291 meal_plan 33936 20880 Getting current meal plan for user_id=66, date=2025-05-04
-WARNING 2025-05-04 23:05:47,350 meal_plan 33936 20880 No current meal plan found for user_id=66, time=0.06s
-INFO 2025-05-04 23:05:47,363 basehttp 33936 14584 "GET /api/refrigerator/ HTTP/1.1" 200 52
-WARNING 2025-05-04 23:05:47,418 basehttp 33936 20880 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
-INFO 2025-05-04 23:05:47,423 basehttp 33936 7668 "GET /api/favorites/ HTTP/1.1" 200 52
-INFO 2025-05-04 23:05:47,442 basehttp 33936 36516 "GET /api/shopping-list/ HTTP/1.1" 200 52
-INFO 2025-05-04 23:05:55,769 views 33936 7668 Profile update attempt: user_id=66
-ERROR 2025-05-04 23:05:55,929 basehttp 33936 7668 "PUT /api/users/profile/ HTTP/1.1" 500 28338
-INFO 2025-05-04 23:06:47,558 autoreload 34608 34168 Watching for file changes with StatReloader
-INFO 2025-05-04 23:06:47,848 wsgi 34608 36496 ==== Starting FoodBalancer Backend Application ====
-INFO 2025-05-04 23:06:47,848 wsgi 34608 36496 Environment: config.settings
-INFO 2025-05-04 23:06:47,848 wsgi 34608 36496 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
-INFO 2025-05-04 23:06:47,852 wsgi 34608 36496 Application initialized successfully
-INFO 2025-05-04 23:06:55,656 views 34608 26220 Profile update attempt: user_id=66
-ERROR 2025-05-04 23:06:55,818 basehttp 34608 26220 "PUT /api/users/profile/ HTTP/1.1" 500 28338
-INFO 2025-05-04 23:13:14,674 views 34608 36588 Profile update attempt: user_id=66
-WARNING 2025-05-04 23:13:14,675 views 34608 36588 Profile update validation error: user_id=66, errors={'usr_gender': [ErrorDetail(string='Значения Male нет среди допустимых вариантов.', code='invalid_choice')]}
-WARNING 2025-05-04 23:13:14,693 basehttp 34608 36588 "PUT /api/users/profile/ HTTP/1.1" 400 99
-INFO 2025-05-04 23:14:14,645 autoreload 34608 34168 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\enums.py changed, reloading.
-INFO 2025-05-04 23:14:15,551 autoreload 30008 3148 Watching for file changes with StatReloader
-INFO 2025-05-04 23:14:15,771 wsgi 30008 9208 ==== Starting FoodBalancer Backend Application ====
-INFO 2025-05-04 23:14:15,771 wsgi 30008 9208 Environment: config.settings
-INFO 2025-05-04 23:14:15,772 wsgi 30008 9208 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
-INFO 2025-05-04 23:14:15,775 wsgi 30008 9208 Application initialized successfully
-INFO 2025-05-04 23:15:13,754 autoreload 30008 3148 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\users\serializers.py changed, reloading.
-INFO 2025-05-04 23:15:14,360 autoreload 34964 18268 Watching for file changes with StatReloader
-INFO 2025-05-04 23:15:14,578 wsgi 34964 35224 ==== Starting FoodBalancer Backend Application ====
-INFO 2025-05-04 23:15:14,578 wsgi 34964 35224 Environment: config.settings
-INFO 2025-05-04 23:15:14,578 wsgi 34964 35224 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
-INFO 2025-05-04 23:15:14,581 wsgi 34964 35224 Application initialized successfully
-INFO 2025-05-04 23:15:43,814 autoreload 34964 18268 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\users\serializers.py changed, reloading.
-INFO 2025-05-04 23:15:45,014 autoreload 23492 36748 Watching for file changes with StatReloader
-INFO 2025-05-04 23:15:45,274 wsgi 23492 33636 ==== Starting FoodBalancer Backend Application ====
-INFO 2025-05-04 23:15:45,274 wsgi 23492 33636 Environment: config.settings
-INFO 2025-05-04 23:15:45,275 wsgi 23492 33636 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
-INFO 2025-05-04 23:15:45,281 wsgi 23492 33636 Application initialized successfully
-INFO 2025-05-04 23:16:09,440 autoreload 23492 36748 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\users\views.py changed, reloading.
-INFO 2025-05-04 23:16:10,278 autoreload 32312 11868 Watching for file changes with StatReloader
-INFO 2025-05-04 23:16:10,572 wsgi 32312 33904 ==== Starting FoodBalancer Backend Application ====
-INFO 2025-05-04 23:16:10,574 wsgi 32312 33904 Environment: config.settings
-INFO 2025-05-04 23:16:10,574 wsgi 32312 33904 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
-INFO 2025-05-04 23:16:10,579 wsgi 32312 33904 Application initialized successfully
-INFO 2025-05-04 23:16:39,118 autoreload 32012 4664 Watching for file changes with StatReloader
-INFO 2025-05-04 23:16:39,295 wsgi 32012 34012 ==== Starting FoodBalancer Backend Application ====
-INFO 2025-05-04 23:16:39,295 wsgi 32012 34012 Environment: config.settings
-INFO 2025-05-04 23:16:39,295 wsgi 32012 34012 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
-INFO 2025-05-04 23:16:39,298 wsgi 32012 34012 Application initialized successfully
-INFO 2025-05-04 23:17:17,516 views 32012 20620 Profile accessed: user_id=66
-INFO 2025-05-04 23:17:17,568 basehttp 32012 20620 "GET /api/users/profile/ HTTP/1.1" 200 151
-INFO 2025-05-04 23:17:17,706 ingredient 32012 20620 Listing refrigerator ingredients: user_id=66
-INFO 2025-05-04 23:17:17,714 meal_plan 32012 30236 Getting current meal plan for user_id=66, date=2025-05-04
-WARNING 2025-05-04 23:17:17,720 meal_plan 32012 30236 No current meal plan found for user_id=66, time=0.01s
-INFO 2025-05-04 23:17:17,727 ingredient 32012 20620 Retrieved 0 refrigerator ingredients for user_id=66, time=0.02s
-INFO 2025-05-04 23:17:17,778 basehttp 32012 20620 "GET /api/refrigerator/ HTTP/1.1" 200 52
-INFO 2025-05-04 23:17:17,799 basehttp 32012 37528 "GET /api/shopping-list/ HTTP/1.1" 200 52
-INFO 2025-05-04 23:17:17,818 basehttp 32012 27512 "GET /api/favorites/ HTTP/1.1" 200 52
-WARNING 2025-05-04 23:17:17,831 basehttp 32012 30236 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
-INFO 2025-05-04 23:17:23,500 views 32012 27512 Profile update attempt: user_id=66
-INFO 2025-05-04 23:17:23,559 views 32012 27512 Profile updated successfully: user_id=66, time=0.06s
-INFO 2025-05-04 23:17:23,577 basehttp 32012 27512 "PUT /api/users/profile/ HTTP/1.1" 200 141
-INFO 2025-05-04 23:18:48,416 views 32012 37264 Profile update attempt: user_id=66
-INFO 2025-05-04 23:18:48,424 views 32012 37264 Profile updated successfully: user_id=66, time=0.01s
-INFO 2025-05-04 23:18:48,442 basehttp 32012 37264 "PUT /api/users/profile/ HTTP/1.1" 200 141
-INFO 2025-05-04 23:19:47,506 views 32012 9980 Profile accessed: user_id=66
-INFO 2025-05-04 23:19:47,518 basehttp 32012 9980 "GET /api/users/profile/ HTTP/1.1" 200 153
-WARNING 2025-05-04 23:19:47,690 basehttp 32012 9980 "GET /api/users/allergies/ HTTP/1.1" 404 38591
-INFO 2025-05-04 23:19:48,761 views 32012 9980 Profile accessed: user_id=66
-INFO 2025-05-04 23:19:48,775 basehttp 32012 9980 "GET /api/users/profile/ HTTP/1.1" 200 153
-WARNING 2025-05-04 23:19:48,824 basehttp 32012 9980 "GET /api/users/allergies/ HTTP/1.1" 404 38590
-INFO 2025-05-04 23:20:06,306 views 32012 35872 Profile update attempt: user_id=66
-INFO 2025-05-04 23:20:06,319 views 32012 35872 Profile updated successfully: user_id=66, time=0.01s
-INFO 2025-05-04 23:20:06,346 basehttp 32012 35872 "PUT /api/users/profile/ HTTP/1.1" 200 141
-INFO 2025-05-04 23:20:54,437 views 32012 4228 Profile update attempt: user_id=66
-INFO 2025-05-04 23:20:54,446 views 32012 4228 Profile updated successfully: user_id=66, time=0.01s
-INFO 2025-05-04 23:20:54,472 basehttp 32012 4228 "PUT /api/users/profile/ HTTP/1.1" 200 141
-INFO 2025-05-04 23:26:39,209 views 32012 24140 Profile accessed: user_id=66
-INFO 2025-05-04 23:26:39,227 basehttp 32012 24140 "GET /api/users/profile/ HTTP/1.1" 200 153
-INFO 2025-05-04 23:26:39,364 ingredient 32012 24140 Listing refrigerator ingredients: user_id=66
-INFO 2025-05-04 23:26:39,367 ingredient 32012 24140 Retrieved 0 refrigerator ingredients for user_id=66, time=0.00s
-INFO 2025-05-04 23:26:39,392 basehttp 32012 24140 "GET /api/refrigerator/ HTTP/1.1" 200 52
-INFO 2025-05-04 23:26:39,481 meal_plan 32012 31672 Getting current meal plan for user_id=66, date=2025-05-04
-WARNING 2025-05-04 23:26:39,485 meal_plan 32012 31672 No current meal plan found for user_id=66, time=0.00s
-INFO 2025-05-04 23:26:39,503 basehttp 32012 32340 "GET /api/favorites/ HTTP/1.1" 200 52
-INFO 2025-05-04 23:26:39,528 basehttp 32012 27972 "GET /api/shopping-list/ HTTP/1.1" 200 52
-WARNING 2025-05-04 23:26:39,538 basehttp 32012 31672 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
-INFO 2025-05-04 23:26:59,908 views 32012 21128 Profile update attempt: user_id=66
-INFO 2025-05-04 23:26:59,920 views 32012 21128 Profile updated successfully: user_id=66, time=0.01s
-INFO 2025-05-04 23:26:59,943 basehttp 32012 21128 "PUT /api/users/profile/ HTTP/1.1" 200 141
-INFO 2025-05-04 23:29:18,975 views 32012 6136 Profile accessed: user_id=66
-INFO 2025-05-04 23:29:18,993 basehttp 32012 6136 "GET /api/users/profile/ HTTP/1.1" 200 153
-INFO 2025-05-04 23:29:19,150 meal_plan 32012 22068 Getting current meal plan for user_id=66, date=2025-05-04
-WARNING 2025-05-04 23:29:19,154 meal_plan 32012 22068 No current meal plan found for user_id=66, time=0.00s
-INFO 2025-05-04 23:29:19,163 ingredient 32012 36940 Listing refrigerator ingredients: user_id=66
-INFO 2025-05-04 23:29:19,169 ingredient 32012 36940 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
-INFO 2025-05-04 23:29:19,225 basehttp 32012 22512 "GET /api/shopping-list/ HTTP/1.1" 200 52
-INFO 2025-05-04 23:29:19,241 basehttp 32012 6136 "GET /api/favorites/ HTTP/1.1" 200 52
-INFO 2025-05-04 23:29:19,242 basehttp 32012 36940 "GET /api/refrigerator/ HTTP/1.1" 200 52
-WARNING 2025-05-04 23:29:19,253 basehttp 32012 22068 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
-INFO 2025-05-04 23:29:30,211 views 32012 36940 Profile update attempt: user_id=66
-INFO 2025-05-04 23:29:30,222 views 32012 36940 Profile updated successfully: user_id=66, time=0.01s
-INFO 2025-05-04 23:29:30,245 basehttp 32012 36940 "PUT /api/users/profile/ HTTP/1.1" 200 141
-INFO 2025-05-04 23:31:43,377 views 32012 22916 Profile accessed: user_id=66
-INFO 2025-05-04 23:31:43,396 basehttp 32012 22916 "GET /api/users/profile/ HTTP/1.1" 200 153
-INFO 2025-05-04 23:31:43,540 ingredient 32012 33324 Listing refrigerator ingredients: user_id=66
-INFO 2025-05-04 23:31:43,543 meal_plan 32012 29660 Getting current meal plan for user_id=66, date=2025-05-04
-INFO 2025-05-04 23:31:43,546 ingredient 32012 33324 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
-WARNING 2025-05-04 23:31:43,548 meal_plan 32012 29660 No current meal plan found for user_id=66, time=0.01s
-INFO 2025-05-04 23:31:43,577 basehttp 32012 22916 "GET /api/favorites/ HTTP/1.1" 200 52
-WARNING 2025-05-04 23:31:43,601 basehttp 32012 29660 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
-INFO 2025-05-04 23:31:43,613 basehttp 32012 23996 "GET /api/shopping-list/ HTTP/1.1" 200 52
-INFO 2025-05-04 23:31:43,623 basehttp 32012 33324 "GET /api/refrigerator/ HTTP/1.1" 200 52
-INFO 2025-05-04 23:31:46,813 allergen 32012 33324 Listing all allergens: user_id=66
-INFO 2025-05-04 23:31:46,820 equipment 32012 23996 Listing all equipment: user_id=66
-INFO 2025-05-04 23:31:46,828 ingredient 32012 29660 Listing ingredient types: user_id=66, params=<QueryDict: {}>
-INFO 2025-05-04 23:31:46,843 allergen 32012 33324 Retrieved 50 allergens, user_id=66, time=0.03s
-INFO 2025-05-04 23:31:46,853 equipment 32012 23996 Retrieved 73 equipment items, user_id=66, time=0.03s
-INFO 2025-05-04 23:31:46,877 views 32012 30924 Profile accessed: user_id=66
-INFO 2025-05-04 23:31:46,934 recipe 32012 22916 Listing recipes: user_id=66, params=<QueryDict: {}>
-INFO 2025-05-04 23:31:46,952 basehttp 32012 30924 "GET /api/users/profile/ HTTP/1.1" 200 153
-INFO 2025-05-04 23:31:46,994 basehttp 32012 23996 "GET /api/equipment/ HTTP/1.1" 200 3963
-INFO 2025-05-04 23:31:47,030 basehttp 32012 33324 "GET /api/allergens/ HTTP/1.1" 200 766
-ERROR 2025-05-04 23:31:47,155 basehttp 32012 29660 "GET /api/ingredient-types/ HTTP/1.1" 500 27895
-INFO 2025-05-04 23:31:47,290 basehttp 32012 22916 "GET /api/recipes/ HTTP/1.1" 200 3102
-INFO 2025-05-04 23:31:47,452 recipe 32012 33324 Recipe viewed: recipe_id=1, title='Classic Spaghetti Carbonara', user_id=66
-ERROR 2025-05-04 23:31:47,611 basehttp 32012 33324 "GET /api/recipes/1/ HTTP/1.1" 500 30627
-INFO 2025-05-04 23:31:47,689 recipe 32012 33324 Recipe viewed: recipe_id=2, title='Vegetarian Lentil Curry', user_id=66
-ERROR 2025-05-04 23:31:47,902 basehttp 32012 33324 "GET /api/recipes/2/ HTTP/1.1" 500 30627
-INFO 2025-05-04 23:31:48,026 recipe 32012 33324 Recipe viewed: recipe_id=3, title='Banana Pancakes', user_id=66
-ERROR 2025-05-04 23:31:48,140 basehttp 32012 33324 "GET /api/recipes/3/ HTTP/1.1" 500 30627
-INFO 2025-05-04 23:31:48,232 recipe 32012 33324 Recipe viewed: recipe_id=4, title='Greek Salad', user_id=66
-ERROR 2025-05-04 23:31:48,369 basehttp 32012 33324 "GET /api/recipes/4/ HTTP/1.1" 500 30627
-INFO 2025-05-04 23:31:48,450 recipe 32012 33324 Recipe viewed: recipe_id=5, title='Beef Chili', user_id=66
-ERROR 2025-05-04 23:31:48,591 basehttp 32012 33324 "GET /api/recipes/5/ HTTP/1.1" 500 30627
-INFO 2025-05-04 23:31:48,674 recipe 32012 33324 Recipe viewed: recipe_id=6, title='Tiramisu', user_id=66
-ERROR 2025-05-04 23:31:48,829 basehttp 32012 33324 "GET /api/recipes/6/ HTTP/1.1" 500 30627
-INFO 2025-05-04 23:31:48,914 recipe 32012 33324 Recipe viewed: recipe_id=7, title='Chicken Stir-Fry', user_id=66
-ERROR 2025-05-04 23:31:49,028 basehttp 32012 33324 "GET /api/recipes/7/ HTTP/1.1" 500 30627
-INFO 2025-05-04 23:31:49,114 recipe 32012 33324 Recipe viewed: recipe_id=8, title='Vegetable Soup', user_id=66
-ERROR 2025-05-04 23:31:49,232 basehttp 32012 33324 "GET /api/recipes/8/ HTTP/1.1" 500 30627
-INFO 2025-05-04 23:31:49,316 recipe 32012 33324 Recipe viewed: recipe_id=9, title='Homemade Pizza', user_id=66
-ERROR 2025-05-04 23:31:49,433 basehttp 32012 33324 "GET /api/recipes/9/ HTTP/1.1" 500 30627
-INFO 2025-05-04 23:31:49,536 recipe 32012 33324 Recipe viewed: recipe_id=10, title='Chocolate Mousse', user_id=66
-ERROR 2025-05-04 23:31:49,649 basehttp 32012 33324 "GET /api/recipes/10/ HTTP/1.1" 500 30631
-INFO 2025-05-04 23:31:49,739 recipe 32012 33324 Recipe viewed: recipe_id=11, title='Salmon Teriyaki', user_id=66
-ERROR 2025-05-04 23:31:49,858 basehttp 32012 33324 "GET /api/recipes/11/ HTTP/1.1" 500 30631
-INFO 2025-05-04 23:31:49,943 recipe 32012 33324 Recipe viewed: recipe_id=12, title='Ratatouille', user_id=66
-ERROR 2025-05-04 23:31:50,067 basehttp 32012 33324 "GET /api/recipes/12/ HTTP/1.1" 500 30631
-INFO 2025-05-04 23:31:50,143 recipe 32012 33324 Recipe viewed: recipe_id=13, title='Caesar Salad', user_id=66
-ERROR 2025-05-04 23:31:50,253 basehttp 32012 33324 "GET /api/recipes/13/ HTTP/1.1" 500 30631
-INFO 2025-05-04 23:31:50,334 recipe 32012 33324 Recipe viewed: recipe_id=14, title='Beef Bourguignon', user_id=66
-ERROR 2025-05-04 23:31:50,454 basehttp 32012 33324 "GET /api/recipes/14/ HTTP/1.1" 500 30631
-INFO 2025-05-04 23:31:50,560 recipe 32012 33324 Recipe viewed: recipe_id=15, title='Apple Pie', user_id=66
-ERROR 2025-05-04 23:31:50,677 basehttp 32012 33324 "GET /api/recipes/15/ HTTP/1.1" 500 30631
-INFO 2025-05-04 23:31:50,775 recipe 32012 33324 Recipe viewed: recipe_id=16, title='Shrimp Scampi', user_id=66
-INFO 2025-05-04 23:31:50,869 basehttp 32012 33324 "GET /api/recipes/16/ HTTP/1.1" 200 941
-INFO 2025-05-04 23:31:50,968 recipe 32012 33324 Recipe viewed: recipe_id=17, title='Caprese Salad', user_id=66
-INFO 2025-05-04 23:31:51,086 basehttp 32012 33324 "GET /api/recipes/17/ HTTP/1.1" 200 952
-INFO 2025-05-04 23:31:51,177 recipe 32012 33324 Recipe viewed: recipe_id=18, title='Chicken Curry', user_id=66
-INFO 2025-05-04 23:31:51,243 basehttp 32012 33324 "GET /api/recipes/18/ HTTP/1.1" 200 936
-INFO 2025-05-04 23:31:51,311 recipe 32012 33324 Recipe viewed: recipe_id=19, title='Guacamole', user_id=66
-INFO 2025-05-04 23:31:51,411 basehttp 32012 33324 "GET /api/recipes/19/ HTTP/1.1" 200 867
-INFO 2025-05-04 23:31:51,496 recipe 32012 33324 Recipe viewed: recipe_id=20, title='Beef Tacos', user_id=66
-INFO 2025-05-04 23:31:51,549 basehttp 32012 33324 "GET /api/recipes/20/ HTTP/1.1" 200 907
-INFO 2025-05-04 23:32:20,310 views 32012 34032 Profile update attempt: user_id=66
-INFO 2025-05-04 23:32:20,316 views 32012 34032 Profile updated successfully: user_id=66, time=0.01s
-INFO 2025-05-04 23:32:20,338 basehttp 32012 34032 "PUT /api/users/profile/ HTTP/1.1" 200 141
-WARNING 2025-05-04 23:32:20,392 basehttp 32012 34032 "PUT /api/users/allergies/ HTTP/1.1" 404 38590
-INFO 2025-05-04 23:32:54,191 views 32012 5704 Profile update attempt: user_id=66
-INFO 2025-05-04 23:32:54,198 views 32012 5704 Profile updated successfully: user_id=66, time=0.01s
-INFO 2025-05-04 23:32:54,221 basehttp 32012 5704 "PUT /api/users/profile/ HTTP/1.1" 200 141
-WARNING 2025-05-04 23:32:54,279 basehttp 32012 5704 "PUT /api/users/allergies/ HTTP/1.1" 404 38590
-INFO 2025-05-04 23:33:54,962 autoreload 32012 4664 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\users\views.py changed, reloading.
-INFO 2025-05-04 23:33:56,330 autoreload 20660 24940 Watching for file changes with StatReloader
-INFO 2025-05-04 23:33:56,782 wsgi 20660 16636 ==== Starting FoodBalancer Backend Application ====
-INFO 2025-05-04 23:33:56,782 wsgi 20660 16636 Environment: config.settings
-INFO 2025-05-04 23:33:56,782 wsgi 20660 16636 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
-INFO 2025-05-04 23:33:56,789 wsgi 20660 16636 Application initialized successfully
+INFO 2025-05-05 00:08:49,918 autoreload 26292 18416 Watching for file changes with StatReloader
+INFO 2025-05-05 00:08:50,121 wsgi 26292 5596 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 00:08:50,122 wsgi 26292 5596 Environment: config.settings
+INFO 2025-05-05 00:08:50,122 wsgi 26292 5596 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 00:08:50,126 wsgi 26292 5596 Application initialized successfully
+INFO 2025-05-05 00:09:01,417 views 26292 26916 Profile update attempt: user_id=66
+INFO 2025-05-05 00:09:01,448 views 26292 26916 Profile updated successfully: user_id=66, time=0.03s
+INFO 2025-05-05 00:09:01,497 basehttp 26292 26916 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 00:09:01,620 allergen 26292 26916 Starting user allergens update for user ID: 66
+INFO 2025-05-05 00:09:01,620 allergen 26292 26916 Request data: {'allergen_ids': [17, 18, 1, 2]}
+INFO 2025-05-05 00:09:01,620 allergen 26292 26916 Allergen IDs to update: [17, 18, 1, 2]
+ERROR 2025-05-05 00:09:01,623 allergen 26292 26916 Error updating allergens: cannot import name 'M2MUserAllergen' from 'apps.core.models' (D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\__init__.py)
+ERROR 2025-05-05 00:09:01,623 allergen 26292 26916 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 76, in update_user_allergens
+    from apps.core.models import M2MUserAllergen  # Use your actual model
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'M2MUserAllergen' from 'apps.core.models' (D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\__init__.py)
+
+WARNING 2025-05-05 00:09:01,640 basehttp 26292 26916 "POST /api/user-allergens/update/ HTTP/1.1" 400 166
+INFO 2025-05-05 00:10:22,808 autoreload 26292 18416 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py changed, reloading.
+INFO 2025-05-05 00:10:23,733 autoreload 468 35808 Watching for file changes with StatReloader
+INFO 2025-05-05 00:10:23,985 wsgi 468 35260 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 00:10:23,986 wsgi 468 35260 Environment: config.settings
+INFO 2025-05-05 00:10:23,986 wsgi 468 35260 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 00:10:23,989 wsgi 468 35260 Application initialized successfully
+INFO 2025-05-05 00:10:27,275 autoreload 32820 24032 Watching for file changes with StatReloader
+INFO 2025-05-05 00:10:27,492 wsgi 32820 35968 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 00:10:27,492 wsgi 32820 35968 Environment: config.settings
+INFO 2025-05-05 00:10:27,492 wsgi 32820 35968 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 00:10:27,495 wsgi 32820 35968 Application initialized successfully
+INFO 2025-05-05 00:10:29,542 views 32820 3636 Profile update attempt: user_id=66
+INFO 2025-05-05 00:10:29,562 views 32820 3636 Profile updated successfully: user_id=66, time=0.02s
+INFO 2025-05-05 00:10:29,602 basehttp 32820 3636 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 00:10:29,668 allergen 32820 3636 Starting user allergens update for user ID: 66
+INFO 2025-05-05 00:10:29,668 allergen 32820 3636 Request data: {'allergen_ids': [17, 18, 1, 2]}
+INFO 2025-05-05 00:10:29,668 allergen 32820 3636 Allergen IDs to update: [17, 18, 1, 2]
+ERROR 2025-05-05 00:10:29,678 allergen 32820 3636 Error updating allergens: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+
+ERROR 2025-05-05 00:10:29,680 allergen 32820 3636 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 80, in update_user_allergens
+    logger.info(f"Existing allergens to delete: {[a.mua_alg_id for a in existing_allergens]}")
+                                                                        ^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 398, in __iter__
+    self._fetch_all()
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+
+
+WARNING 2025-05-05 00:10:29,696 basehttp 32820 3636 "POST /api/user-allergens/update/ HTTP/1.1" 400 150
+INFO 2025-05-05 00:11:54,731 autoreload 32820 24032 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py changed, reloading.
+INFO 2025-05-05 00:11:55,266 autoreload 14312 17872 Watching for file changes with StatReloader
+INFO 2025-05-05 00:11:55,479 wsgi 14312 28316 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 00:11:55,479 wsgi 14312 28316 Environment: config.settings
+INFO 2025-05-05 00:11:55,479 wsgi 14312 28316 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 00:11:55,483 wsgi 14312 28316 Application initialized successfully
+INFO 2025-05-05 00:12:08,966 autoreload 24896 28352 Watching for file changes with StatReloader
+INFO 2025-05-05 00:12:09,182 wsgi 24896 2304 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 00:12:09,183 wsgi 24896 2304 Environment: config.settings
+INFO 2025-05-05 00:12:09,183 wsgi 24896 2304 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 00:12:09,187 wsgi 24896 2304 Application initialized successfully
+INFO 2025-05-05 00:12:10,971 views 24896 37596 Profile update attempt: user_id=66
+INFO 2025-05-05 00:12:10,993 views 24896 37596 Profile updated successfully: user_id=66, time=0.02s
+INFO 2025-05-05 00:12:11,032 basehttp 24896 37596 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 00:12:11,128 allergen 24896 37596 Starting user allergens update for user ID: 66
+INFO 2025-05-05 00:12:11,128 allergen 24896 37596 Request data: {'allergen_ids': [17, 18, 1, 2]}
+INFO 2025-05-05 00:12:11,130 allergen 24896 37596 Allergen IDs to update: [17, 18, 1, 2]
+INFO 2025-05-05 00:12:11,135 allergen 24896 37596 Deleted (2, {'core.M2MUsrAlg': 2}) existing allergen records
+ERROR 2025-05-05 00:12:11,152 allergen 24896 37596 Error updating allergens: Cannot assign "17": "M2MUsrAlg.mua_alg_id" must be a "Allergen" instance.
+ERROR 2025-05-05 00:12:11,152 allergen 24896 37596 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 85, in update_user_allergens
+    allergen = M2MUsrAlg.objects.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 656, in create
+    obj = self.model(**kwargs)
+          ^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 543, in __init__
+    _setattr(self, field.name, rel_obj)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 266, in __set__
+    raise ValueError(
+ValueError: Cannot assign "17": "M2MUsrAlg.mua_alg_id" must be a "Allergen" instance.
+
+WARNING 2025-05-05 00:12:11,165 basehttp 24896 37596 "POST /api/user-allergens/update/ HTTP/1.1" 400 91
+INFO 2025-05-05 00:30:40,660 autoreload 24896 28352 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py changed, reloading.
+INFO 2025-05-05 00:30:41,726 autoreload 25528 22036 Watching for file changes with StatReloader
+INFO 2025-05-05 00:30:41,934 wsgi 25528 37652 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 00:30:41,934 wsgi 25528 37652 Environment: config.settings
+INFO 2025-05-05 00:30:41,935 wsgi 25528 37652 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 00:30:41,938 wsgi 25528 37652 Application initialized successfully
+INFO 2025-05-05 00:31:59,977 autoreload 25528 22036 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\allergen.py changed, reloading.
+INFO 2025-05-05 00:32:00,729 autoreload 20968 5368 Watching for file changes with StatReloader
+INFO 2025-05-05 00:32:00,948 wsgi 20968 12412 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 00:32:00,948 wsgi 20968 12412 Environment: config.settings
+INFO 2025-05-05 00:32:00,948 wsgi 20968 12412 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 00:32:00,950 wsgi 20968 12412 Application initialized successfully
+INFO 2025-05-05 00:32:12,798 autoreload 22376 21032 Watching for file changes with StatReloader
+INFO 2025-05-05 00:32:12,987 wsgi 22376 32656 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 00:32:12,988 wsgi 22376 32656 Environment: config.settings
+INFO 2025-05-05 00:32:12,988 wsgi 22376 32656 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 00:32:12,991 wsgi 22376 32656 Application initialized successfully
+INFO 2025-05-05 00:32:20,514 views 22376 29872 Profile update attempt: user_id=66
+INFO 2025-05-05 00:32:20,597 views 22376 29872 Profile updated successfully: user_id=66, time=0.08s
+INFO 2025-05-05 00:32:20,817 basehttp 22376 29872 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 00:32:20,895 allergen 22376 29872 Starting user allergens update for user ID: 66
+INFO 2025-05-05 00:32:20,895 allergen 22376 29872 Request data: {'allergen_ids': [17, 18, 1, 2]}
+INFO 2025-05-05 00:32:20,895 allergen 22376 29872 Allergen IDs to update: [17, 18, 1, 2]
+INFO 2025-05-05 00:32:20,898 allergen 22376 29872 Deleted (0, {}) existing allergen records
+ERROR 2025-05-05 00:32:20,941 allergen 22376 29872 Error updating allergens: Cannot assign "17": "M2MUsrAlg.mua_alg_id" must be a "Allergen" instance.
+ERROR 2025-05-05 00:32:20,942 allergen 22376 29872 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 85, in update_user_allergens
+    allergen = M2MUsrAlg.objects.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 656, in create
+    obj = self.model(**kwargs)
+          ^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 543, in __init__
+    _setattr(self, field.name, rel_obj)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 266, in __set__
+    raise ValueError(
+ValueError: Cannot assign "17": "M2MUsrAlg.mua_alg_id" must be a "Allergen" instance.
+
+WARNING 2025-05-05 00:32:20,956 basehttp 22376 29872 "POST /api/user-allergens/update/ HTTP/1.1" 400 91
+INFO 2025-05-05 00:34:26,275 autoreload 22376 21032 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py changed, reloading.
+INFO 2025-05-05 00:34:26,857 autoreload 20980 37100 Watching for file changes with StatReloader
+INFO 2025-05-05 00:34:27,050 wsgi 20980 27236 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 00:34:27,050 wsgi 20980 27236 Environment: config.settings
+INFO 2025-05-05 00:34:27,051 wsgi 20980 27236 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 00:34:27,054 wsgi 20980 27236 Application initialized successfully
+INFO 2025-05-05 00:34:31,183 views 20980 30620 Profile update attempt: user_id=66
+INFO 2025-05-05 00:34:31,202 views 20980 30620 Profile updated successfully: user_id=66, time=0.02s
+INFO 2025-05-05 00:34:31,240 basehttp 20980 30620 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 00:34:31,303 allergen 20980 30620 Starting user allergens update for user ID: 66
+INFO 2025-05-05 00:34:31,304 allergen 20980 30620 Request data: {'allergen_ids': [17, 18, 1, 2]}
+INFO 2025-05-05 00:34:31,304 allergen 20980 30620 Allergen IDs to update: [17, 18, 1, 2]
+INFO 2025-05-05 00:34:31,308 allergen 20980 30620 Deleted (0, {}) existing allergen records
+ERROR 2025-05-05 00:34:31,367 allergen 20980 30620 Error updating allergens: column m2m_usr_alg.id does not exist
+LINE 1: ..._alg_id", "mua_usr_id") VALUES (17, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+ERROR 2025-05-05 00:34:31,367 allergen 20980 30620 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column m2m_usr_alg.id does not exist
+LINE 1: ..._alg_id", "mua_usr_id") VALUES (17, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 93, in update_user_allergens
+    allergen_relation = M2MUsrAlg.objects.create(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: ..._alg_id", "mua_usr_id") VALUES (17, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+
+WARNING 2025-05-05 00:34:31,392 basehttp 20980 30620 "POST /api/user-allergens/update/ HTTP/1.1" 400 194
+INFO 2025-05-05 00:35:07,254 autoreload 22512 32616 Watching for file changes with StatReloader
+INFO 2025-05-05 00:35:07,438 wsgi 22512 3872 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 00:35:07,438 wsgi 22512 3872 Environment: config.settings
+INFO 2025-05-05 00:35:07,438 wsgi 22512 3872 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 00:35:07,441 wsgi 22512 3872 Application initialized successfully
+INFO 2025-05-05 00:35:09,414 views 22512 33396 Profile update attempt: user_id=66
+INFO 2025-05-05 00:35:09,435 views 22512 33396 Profile updated successfully: user_id=66, time=0.02s
+INFO 2025-05-05 00:35:09,472 basehttp 22512 33396 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 00:35:09,540 allergen 22512 33396 Starting user allergens update for user ID: 66
+INFO 2025-05-05 00:35:09,540 allergen 22512 33396 Request data: {'allergen_ids': [17, 18, 1, 2]}
+INFO 2025-05-05 00:35:09,540 allergen 22512 33396 Allergen IDs to update: [17, 18, 1, 2]
+INFO 2025-05-05 00:35:09,545 allergen 22512 33396 Deleted (0, {}) existing allergen records
+ERROR 2025-05-05 00:35:09,552 allergen 22512 33396 Error updating allergens: column m2m_usr_alg.id does not exist
+LINE 1: ..._alg_id", "mua_usr_id") VALUES (17, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+ERROR 2025-05-05 00:35:09,552 allergen 22512 33396 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column m2m_usr_alg.id does not exist
+LINE 1: ..._alg_id", "mua_usr_id") VALUES (17, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 93, in update_user_allergens
+    allergen_relation = M2MUsrAlg.objects.create(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: ..._alg_id", "mua_usr_id") VALUES (17, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+
+WARNING 2025-05-05 00:35:09,572 basehttp 22512 33396 "POST /api/user-allergens/update/ HTTP/1.1" 400 194
+INFO 2025-05-05 00:36:28,906 autoreload 22512 32616 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py changed, reloading.
+INFO 2025-05-05 00:36:29,438 autoreload 29556 37880 Watching for file changes with StatReloader
+INFO 2025-05-05 00:36:29,622 wsgi 29556 34472 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 00:36:29,622 wsgi 29556 34472 Environment: config.settings
+INFO 2025-05-05 00:36:29,623 wsgi 29556 34472 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 00:36:29,625 wsgi 29556 34472 Application initialized successfully
+INFO 2025-05-05 00:40:07,716 autoreload 29556 37880 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\allergen.py changed, reloading.
+INFO 2025-05-05 00:40:08,812 autoreload 31336 1752 Watching for file changes with StatReloader
+INFO 2025-05-05 00:40:23,142 autoreload 31336 1752 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\allergen.py changed, reloading.
+INFO 2025-05-05 00:40:23,713 autoreload 26356 25560 Watching for file changes with StatReloader
+INFO 2025-05-05 00:40:33,989 autoreload 26356 25560 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\allergen.py changed, reloading.
+INFO 2025-05-05 00:40:34,795 autoreload 32044 31252 Watching for file changes with StatReloader
+INFO 2025-05-05 00:40:34,993 wsgi 32044 34528 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 00:40:34,994 wsgi 32044 34528 Environment: config.settings
+INFO 2025-05-05 00:40:34,994 wsgi 32044 34528 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 00:40:34,998 wsgi 32044 34528 Application initialized successfully
+INFO 2025-05-05 00:41:04,230 autoreload 32044 31252 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\allergen.py changed, reloading.
+INFO 2025-05-05 00:41:05,381 autoreload 2204 8308 Watching for file changes with StatReloader
+INFO 2025-05-05 00:41:05,604 wsgi 2204 37304 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 00:41:05,604 wsgi 2204 37304 Environment: config.settings
+INFO 2025-05-05 00:41:05,604 wsgi 2204 37304 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 00:41:05,608 wsgi 2204 37304 Application initialized successfully
+INFO 2025-05-05 00:41:12,893 autoreload 12656 24940 Watching for file changes with StatReloader
+INFO 2025-05-05 00:41:13,071 wsgi 12656 26112 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 00:41:13,071 wsgi 12656 26112 Environment: config.settings
+INFO 2025-05-05 00:41:13,071 wsgi 12656 26112 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 00:41:13,074 wsgi 12656 26112 Application initialized successfully
+INFO 2025-05-05 00:41:14,020 views 12656 32400 Profile update attempt: user_id=66
+INFO 2025-05-05 00:41:14,041 views 12656 32400 Profile updated successfully: user_id=66, time=0.02s
+INFO 2025-05-05 00:41:14,080 basehttp 12656 32400 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 00:41:14,166 allergen 12656 32400 Starting user allergens update for user ID: 66
+INFO 2025-05-05 00:41:14,167 allergen 12656 32400 Request data: {'allergen_ids': [17, 18, 1, 2]}
+INFO 2025-05-05 00:41:14,167 allergen 12656 32400 Allergen IDs to update: [17, 18, 1, 2]
+INFO 2025-05-05 00:41:14,172 allergen 12656 32400 Deleted (0, {}) existing allergen records
+ERROR 2025-05-05 00:41:14,179 allergen 12656 32400 Error updating allergens: column m2m_usr_alg.id does not exist
+LINE 1: ..._usr_id", "mua_alg_id") VALUES (66, 17) RETURNING "m2m_usr_a...
+                                                             ^
+
+ERROR 2025-05-05 00:41:14,180 allergen 12656 32400 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column m2m_usr_alg.id does not exist
+LINE 1: ..._usr_id", "mua_alg_id") VALUES (66, 17) RETURNING "m2m_usr_a...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 93, in update_user_allergens
+    allergen_relation = M2MUsrAlg.objects.create(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: ..._usr_id", "mua_alg_id") VALUES (66, 17) RETURNING "m2m_usr_a...
+                                                             ^
+
+
+WARNING 2025-05-05 00:41:14,213 basehttp 12656 32400 "POST /api/user-allergens/update/ HTTP/1.1" 400 194
+INFO 2025-05-05 00:42:59,640 autoreload 12656 24940 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\allergen.py changed, reloading.
+INFO 2025-05-05 00:43:00,250 autoreload 1548 6500 Watching for file changes with StatReloader
+INFO 2025-05-05 00:43:04,224 autoreload 35108 7276 Watching for file changes with StatReloader
+INFO 2025-05-05 00:43:09,944 autoreload 35224 32052 Watching for file changes with StatReloader
+INFO 2025-05-05 00:43:24,598 autoreload 35224 32052 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\allergen.py changed, reloading.
+INFO 2025-05-05 00:43:25,364 autoreload 21084 9856 Watching for file changes with StatReloader
+INFO 2025-05-05 00:43:25,559 wsgi 21084 2128 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 00:43:25,560 wsgi 21084 2128 Environment: config.settings
+INFO 2025-05-05 00:43:25,560 wsgi 21084 2128 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 00:43:25,564 wsgi 21084 2128 Application initialized successfully
+INFO 2025-05-05 00:43:27,711 autoreload 21388 3944 Watching for file changes with StatReloader
+INFO 2025-05-05 00:43:27,900 wsgi 21388 31004 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 00:43:27,900 wsgi 21388 31004 Environment: config.settings
+INFO 2025-05-05 00:43:27,900 wsgi 21388 31004 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 00:43:27,904 wsgi 21388 31004 Application initialized successfully
+INFO 2025-05-05 00:43:35,303 views 21388 28092 Profile update attempt: user_id=66
+INFO 2025-05-05 00:43:35,328 views 21388 28092 Profile updated successfully: user_id=66, time=0.02s
+INFO 2025-05-05 00:43:35,372 basehttp 21388 28092 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 00:43:35,450 allergen 21388 28092 Starting user allergens update for user ID: 66
+INFO 2025-05-05 00:43:35,451 allergen 21388 28092 Request data: {'allergen_ids': [17, 18, 1, 2]}
+INFO 2025-05-05 00:43:35,451 allergen 21388 28092 Allergen IDs to update: [17, 18, 1, 2]
+INFO 2025-05-05 00:43:35,457 allergen 21388 28092 Deleted (0, {}) existing allergen records
+INFO 2025-05-05 00:43:35,463 allergen 21388 28092 Created allergen mapping: user 66 - allergen 17
+INFO 2025-05-05 00:43:35,470 allergen 21388 28092 Created allergen mapping: user 66 - allergen 18
+INFO 2025-05-05 00:43:35,475 allergen 21388 28092 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-05 00:43:35,480 allergen 21388 28092 Created allergen mapping: user 66 - allergen 2
+INFO 2025-05-05 00:43:35,480 allergen 21388 28092 Successfully updated allergens for user 66: [17, 18, 1, 2]
+INFO 2025-05-05 00:43:35,511 basehttp 21388 28092 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 00:43:42,062 views 21388 28092 Profile accessed: user_id=66
+INFO 2025-05-05 00:43:42,075 basehttp 21388 28092 "GET /api/users/profile/ HTTP/1.1" 200 153
+WARNING 2025-05-05 00:43:42,194 basehttp 21388 28092 "GET /api/users/allergies/ HTTP/1.1" 404 39154
+INFO 2025-05-05 00:43:47,051 views 21388 28092 Profile update attempt: user_id=66
+INFO 2025-05-05 00:43:47,058 views 21388 28092 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 00:43:47,074 basehttp 21388 28092 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 00:43:47,146 allergen 21388 28092 Starting user allergens update for user ID: 66
+INFO 2025-05-05 00:43:47,146 allergen 21388 28092 Request data: {'allergen_ids': [1, 2, 3]}
+INFO 2025-05-05 00:43:47,147 allergen 21388 28092 Allergen IDs to update: [1, 2, 3]
+INFO 2025-05-05 00:43:47,153 allergen 21388 28092 Deleted (4, {'core.M2MUsrAlg': 4}) existing allergen records
+INFO 2025-05-05 00:43:47,160 allergen 21388 28092 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-05 00:43:47,164 allergen 21388 28092 Created allergen mapping: user 66 - allergen 2
+INFO 2025-05-05 00:43:47,169 allergen 21388 28092 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 00:43:47,169 allergen 21388 28092 Successfully updated allergens for user 66: [1, 2, 3]
+INFO 2025-05-05 00:43:47,188 basehttp 21388 28092 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 00:46:35,154 views 21388 1640 Profile update attempt: user_id=66
+INFO 2025-05-05 00:46:35,187 views 21388 1640 Profile updated successfully: user_id=66, time=0.03s
+INFO 2025-05-05 00:46:35,211 basehttp 21388 1640 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 00:46:35,309 allergen 21388 1640 Starting user allergens update for user ID: 66
+INFO 2025-05-05 00:46:35,309 allergen 21388 1640 Request data: {'allergen_ids': [5, 6]}
+INFO 2025-05-05 00:46:35,310 allergen 21388 1640 Allergen IDs to update: [5, 6]
+INFO 2025-05-05 00:46:35,329 allergen 21388 1640 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-05 00:46:35,352 allergen 21388 1640 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 00:46:35,373 allergen 21388 1640 Created allergen mapping: user 66 - allergen 6
+INFO 2025-05-05 00:46:35,373 allergen 21388 1640 Successfully updated allergens for user 66: [5, 6]
+INFO 2025-05-05 00:46:35,399 basehttp 21388 1640 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 00:46:52,226 views 21388 22860 Profile accessed: user_id=66
+INFO 2025-05-05 00:46:52,243 basehttp 21388 22860 "GET /api/users/profile/ HTTP/1.1" 200 153
+WARNING 2025-05-05 00:46:52,447 basehttp 21388 22860 "GET /api/users/allergies/ HTTP/1.1" 404 39154
+INFO 2025-05-05 01:00:05,568 views 21388 32344 Profile accessed: user_id=66
+INFO 2025-05-05 01:00:05,630 basehttp 21388 32344 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:00:05,976 meal_plan 21388 36508 Getting current meal plan for user_id=66, date=2025-05-05
+INFO 2025-05-05 01:00:06,065 ingredient 21388 7032 Listing refrigerator ingredients: user_id=66
+WARNING 2025-05-05 01:00:06,124 meal_plan 21388 36508 No current meal plan found for user_id=66, time=0.15s
+WARNING 2025-05-05 01:00:06,151 basehttp 21388 36508 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:00:06,232 basehttp 21388 32344 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:00:06,244 basehttp 21388 21932 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:00:06,246 ingredient 21388 7032 Retrieved 0 refrigerator ingredients for user_id=66, time=0.18s
+INFO 2025-05-05 01:00:06,267 basehttp 21388 7032 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:00:12,094 views 21388 21932 Profile update attempt: user_id=66
+INFO 2025-05-05 01:00:12,111 views 21388 21932 Profile updated successfully: user_id=66, time=0.02s
+INFO 2025-05-05 01:00:12,135 basehttp 21388 21932 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:00:12,262 allergen 21388 21932 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:00:12,263 allergen 21388 21932 Request data: {'allergen_ids': [1, 2, 3]}
+INFO 2025-05-05 01:00:12,263 allergen 21388 21932 Allergen IDs to update: [1, 2, 3]
+INFO 2025-05-05 01:00:12,272 allergen 21388 21932 Deleted (2, {'core.M2MUsrAlg': 2}) existing allergen records
+INFO 2025-05-05 01:00:12,280 allergen 21388 21932 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-05 01:00:12,285 allergen 21388 21932 Created allergen mapping: user 66 - allergen 2
+INFO 2025-05-05 01:00:12,290 allergen 21388 21932 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:00:12,291 allergen 21388 21932 Successfully updated allergens for user 66: [1, 2, 3]
+INFO 2025-05-05 01:00:12,312 basehttp 21388 21932 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:00:12,589 views 21388 21932 Profile accessed: user_id=66
+INFO 2025-05-05 01:00:12,615 basehttp 21388 21932 "GET /api/users/profile/ HTTP/1.1" 200 153
+WARNING 2025-05-05 01:00:12,714 basehttp 21388 21932 "GET /api/users/allergies/ HTTP/1.1" 404 39154
+INFO 2025-05-05 01:01:49,302 views 21388 10068 Profile accessed: user_id=66
+INFO 2025-05-05 01:01:49,321 basehttp 21388 10068 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:01:49,472 meal_plan 21388 20312 Getting current meal plan for user_id=66, date=2025-05-05
+WARNING 2025-05-05 01:01:49,478 meal_plan 21388 20312 No current meal plan found for user_id=66, time=0.01s
+INFO 2025-05-05 01:01:49,481 ingredient 21388 34400 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:01:49,490 ingredient 21388 34400 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-05 01:01:49,499 basehttp 21388 10068 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:01:49,535 basehttp 21388 32308 "GET /api/shopping-list/ HTTP/1.1" 200 52
+WARNING 2025-05-05 01:01:49,552 basehttp 21388 20312 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:01:49,565 basehttp 21388 34400 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:01:56,765 views 21388 20312 Profile update attempt: user_id=66
+INFO 2025-05-05 01:01:56,776 views 21388 20312 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:01:56,806 basehttp 21388 20312 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:01:56,901 allergen 21388 20312 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:01:56,902 allergen 21388 20312 Request data: {'allergen_ids': [1, 2, 3]}
+INFO 2025-05-05 01:01:56,902 allergen 21388 20312 Allergen IDs to update: [1, 2, 3]
+INFO 2025-05-05 01:01:56,911 allergen 21388 20312 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-05 01:01:56,917 allergen 21388 20312 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-05 01:01:56,924 allergen 21388 20312 Created allergen mapping: user 66 - allergen 2
+INFO 2025-05-05 01:01:56,930 allergen 21388 20312 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:01:56,931 allergen 21388 20312 Successfully updated allergens for user 66: [1, 2, 3]
+INFO 2025-05-05 01:01:56,954 basehttp 21388 20312 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:01:57,090 views 21388 20312 Profile accessed: user_id=66
+INFO 2025-05-05 01:01:57,114 basehttp 21388 20312 "GET /api/users/profile/ HTTP/1.1" 200 153
+WARNING 2025-05-05 01:01:57,188 basehttp 21388 20312 "GET /api/users/allergies/ HTTP/1.1" 404 39154
+INFO 2025-05-05 01:01:57,275 views 21388 20312 Profile accessed: user_id=66
+INFO 2025-05-05 01:01:57,292 basehttp 21388 20312 "GET /api/users/profile/ HTTP/1.1" 200 153
+WARNING 2025-05-05 01:01:57,399 basehttp 21388 20312 "GET /api/users/allergies/ HTTP/1.1" 404 39154
+INFO 2025-05-05 01:02:08,370 views 21388 20312 Profile update attempt: user_id=66
+INFO 2025-05-05 01:02:08,380 views 21388 20312 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:02:08,405 basehttp 21388 20312 "PUT /api/users/profile/ HTTP/1.1" 200 141
+WARNING 2025-05-05 01:02:08,515 basehttp 21388 20312 "POST /api/user-equipment/user_equipment/ HTTP/1.1" 405 55
+INFO 2025-05-05 01:02:14,725 views 21388 20312 Profile update attempt: user_id=66
+INFO 2025-05-05 01:02:14,733 views 21388 20312 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:02:14,763 basehttp 21388 20312 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:02:14,835 allergen 21388 20312 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:02:14,835 allergen 21388 20312 Request data: {'allergen_ids': [5, 6]}
+INFO 2025-05-05 01:02:14,836 allergen 21388 20312 Allergen IDs to update: [5, 6]
+INFO 2025-05-05 01:02:14,845 allergen 21388 20312 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-05 01:02:14,851 allergen 21388 20312 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:02:14,856 allergen 21388 20312 Created allergen mapping: user 66 - allergen 6
+INFO 2025-05-05 01:02:14,857 allergen 21388 20312 Successfully updated allergens for user 66: [5, 6]
+INFO 2025-05-05 01:02:14,879 basehttp 21388 20312 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:02:15,000 views 21388 20312 Profile accessed: user_id=66
+INFO 2025-05-05 01:02:15,017 basehttp 21388 20312 "GET /api/users/profile/ HTTP/1.1" 200 153
+WARNING 2025-05-05 01:02:15,116 basehttp 21388 20312 "GET /api/users/allergies/ HTTP/1.1" 404 39154
+INFO 2025-05-05 01:02:15,223 views 21388 20312 Profile accessed: user_id=66
+INFO 2025-05-05 01:02:15,243 basehttp 21388 20312 "GET /api/users/profile/ HTTP/1.1" 200 153
+WARNING 2025-05-05 01:02:15,349 basehttp 21388 20312 "GET /api/users/allergies/ HTTP/1.1" 404 39154
+INFO 2025-05-05 01:02:29,343 views 21388 20312 Profile update attempt: user_id=66
+INFO 2025-05-05 01:02:29,350 views 21388 20312 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:02:29,373 basehttp 21388 20312 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:02:29,485 allergen 21388 20312 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:02:29,485 allergen 21388 20312 Request data: {'allergen_ids': [6, 5]}
+INFO 2025-05-05 01:02:29,486 allergen 21388 20312 Allergen IDs to update: [6, 5]
+INFO 2025-05-05 01:02:29,496 allergen 21388 20312 Deleted (2, {'core.M2MUsrAlg': 2}) existing allergen records
+INFO 2025-05-05 01:02:29,503 allergen 21388 20312 Created allergen mapping: user 66 - allergen 6
+INFO 2025-05-05 01:02:29,508 allergen 21388 20312 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:02:29,509 allergen 21388 20312 Successfully updated allergens for user 66: [6, 5]
+INFO 2025-05-05 01:02:29,530 basehttp 21388 20312 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:02:29,614 views 21388 20312 Profile accessed: user_id=66
+INFO 2025-05-05 01:02:29,632 basehttp 21388 20312 "GET /api/users/profile/ HTTP/1.1" 200 153
+WARNING 2025-05-05 01:02:29,740 basehttp 21388 20312 "GET /api/users/allergies/ HTTP/1.1" 404 39154
+INFO 2025-05-05 01:02:29,837 views 21388 20312 Profile accessed: user_id=66
+INFO 2025-05-05 01:02:29,856 basehttp 21388 20312 "GET /api/users/profile/ HTTP/1.1" 200 153
+WARNING 2025-05-05 01:02:29,941 basehttp 21388 20312 "GET /api/users/allergies/ HTTP/1.1" 404 39154
+INFO 2025-05-05 01:08:59,430 views 21388 36344 Profile accessed: user_id=66
+INFO 2025-05-05 01:08:59,467 basehttp 21388 36344 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:08:59,641 ingredient 21388 36344 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:08:59,649 ingredient 21388 36344 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-05 01:08:59,656 meal_plan 21388 8136 Getting current meal plan for user_id=66, date=2025-05-05
+WARNING 2025-05-05 01:08:59,663 meal_plan 21388 8136 No current meal plan found for user_id=66, time=0.01s
+INFO 2025-05-05 01:08:59,895 basehttp 21388 36344 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:08:59,919 basehttp 21388 25232 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:08:59,923 basehttp 21388 5300 "GET /api/shopping-list/ HTTP/1.1" 200 52
+WARNING 2025-05-05 01:08:59,936 basehttp 21388 8136 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:09:05,724 views 21388 36344 Profile update attempt: user_id=66
+INFO 2025-05-05 01:09:05,739 views 21388 36344 Profile updated successfully: user_id=66, time=0.02s
+INFO 2025-05-05 01:09:05,766 basehttp 21388 36344 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:09:05,842 allergen 21388 36344 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:09:05,842 allergen 21388 36344 Request data: {'allergen_ids': [5, 4, 3]}
+INFO 2025-05-05 01:09:05,843 allergen 21388 36344 Allergen IDs to update: [5, 4, 3]
+INFO 2025-05-05 01:09:05,856 allergen 21388 36344 Deleted (2, {'core.M2MUsrAlg': 2}) existing allergen records
+INFO 2025-05-05 01:09:05,864 allergen 21388 36344 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:09:05,871 allergen 21388 36344 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:09:05,878 allergen 21388 36344 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:09:05,878 allergen 21388 36344 Successfully updated allergens for user 66: [5, 4, 3]
+INFO 2025-05-05 01:09:05,909 basehttp 21388 36344 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:09:05,993 views 21388 36344 Profile accessed: user_id=66
+INFO 2025-05-05 01:09:06,013 basehttp 21388 36344 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:09:06,151 allergen 21388 36344 Listing user allergens: user_id=66
+INFO 2025-05-05 01:09:06,196 allergen 21388 36344 Retrieved unknown user allergens, user_id=66, time=0.04s
+INFO 2025-05-05 01:09:06,267 basehttp 21388 36344 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:09:06,394 views 21388 36344 Profile accessed: user_id=66
+INFO 2025-05-05 01:09:06,411 basehttp 21388 36344 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:09:06,510 basehttp 21388 36344 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:13:36,431 views 21388 23144 Profile accessed: user_id=66
+INFO 2025-05-05 01:13:36,449 basehttp 21388 23144 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:13:36,673 ingredient 21388 11192 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:13:36,681 ingredient 21388 11192 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-05 01:13:36,688 meal_plan 21388 24724 Getting current meal plan for user_id=66, date=2025-05-05
+WARNING 2025-05-05 01:13:36,693 meal_plan 21388 24724 No current meal plan found for user_id=66, time=0.01s
+INFO 2025-05-05 01:13:36,733 basehttp 21388 23144 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:13:36,751 basehttp 21388 31320 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:13:36,771 basehttp 21388 11192 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:13:36,786 basehttp 21388 33872 "GET /api/shopping-list/ HTTP/1.1" 200 52
+WARNING 2025-05-05 01:13:36,798 basehttp 21388 24724 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:13:36,948 meal_plan 21388 31320 Getting current meal plan for user_id=66, date=2025-05-05
+WARNING 2025-05-05 01:13:36,953 meal_plan 21388 31320 No current meal plan found for user_id=66, time=0.00s
+INFO 2025-05-05 01:13:36,988 ingredient 21388 11192 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:13:36,999 ingredient 21388 11192 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-05 01:13:37,033 basehttp 21388 24724 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:13:37,088 basehttp 21388 11192 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:13:37,115 basehttp 21388 23144 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:13:37,141 basehttp 21388 33872 "GET /api/shopping-list/ HTTP/1.1" 200 52
+WARNING 2025-05-05 01:13:37,146 basehttp 21388 31320 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:13:45,674 views 21388 24724 Profile update attempt: user_id=66
+INFO 2025-05-05 01:13:45,683 views 21388 24724 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:13:45,705 basehttp 21388 24724 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:13:45,843 allergen 21388 24724 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:13:45,843 allergen 21388 24724 Request data: {'allergen_ids': [5, 4, 3, 2]}
+INFO 2025-05-05 01:13:45,843 allergen 21388 24724 Allergen IDs to update: [5, 4, 3, 2]
+INFO 2025-05-05 01:13:45,851 allergen 21388 24724 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-05 01:13:45,857 allergen 21388 24724 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:13:45,861 allergen 21388 24724 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:13:45,866 allergen 21388 24724 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:13:45,872 allergen 21388 24724 Created allergen mapping: user 66 - allergen 2
+INFO 2025-05-05 01:13:45,872 allergen 21388 24724 Successfully updated allergens for user 66: [5, 4, 3, 2]
+INFO 2025-05-05 01:13:45,897 basehttp 21388 24724 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:13:45,996 views 21388 24724 Profile accessed: user_id=66
+INFO 2025-05-05 01:13:46,024 basehttp 21388 24724 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:13:46,117 basehttp 21388 24724 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:13:46,230 equipment 21388 24724 Listing user equipment: user_id=66
+INFO 2025-05-05 01:13:46,253 equipment 21388 24724 Retrieved unknown user equipment items, user_id=66, time=0.02s
+INFO 2025-05-05 01:13:46,303 basehttp 21388 24724 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:13:46,382 views 21388 24724 Profile accessed: user_id=66
+INFO 2025-05-05 01:13:46,400 basehttp 21388 24724 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:13:46,494 basehttp 21388 24724 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:13:46,621 basehttp 21388 24724 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:14:02,336 views 21388 27236 Profile update attempt: user_id=66
+INFO 2025-05-05 01:14:02,344 views 21388 27236 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:14:02,371 basehttp 21388 27236 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:14:02,461 allergen 21388 27236 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:14:02,461 allergen 21388 27236 Request data: {'allergen_ids': [5, 4, 3]}
+INFO 2025-05-05 01:14:02,461 allergen 21388 27236 Allergen IDs to update: [5, 4, 3]
+INFO 2025-05-05 01:14:02,469 allergen 21388 27236 Deleted (4, {'core.M2MUsrAlg': 4}) existing allergen records
+INFO 2025-05-05 01:14:02,474 allergen 21388 27236 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:14:02,480 allergen 21388 27236 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:14:02,486 allergen 21388 27236 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:14:02,486 allergen 21388 27236 Successfully updated allergens for user 66: [5, 4, 3]
+INFO 2025-05-05 01:14:02,509 basehttp 21388 27236 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:14:02,667 views 21388 27236 Profile accessed: user_id=66
+INFO 2025-05-05 01:14:02,687 basehttp 21388 27236 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:14:02,784 basehttp 21388 27236 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:14:02,860 basehttp 21388 27236 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:14:03,005 views 21388 27236 Profile accessed: user_id=66
+INFO 2025-05-05 01:14:03,023 basehttp 21388 27236 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:14:03,120 basehttp 21388 27236 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:14:03,202 basehttp 21388 27236 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:14:06,566 views 21388 27236 Profile update attempt: user_id=66
+INFO 2025-05-05 01:14:06,574 views 21388 27236 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:14:06,596 basehttp 21388 27236 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:14:06,663 allergen 21388 27236 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:14:06,664 allergen 21388 27236 Request data: {'allergen_ids': [5, 4, 3, 7, 8]}
+INFO 2025-05-05 01:14:06,664 allergen 21388 27236 Allergen IDs to update: [5, 4, 3, 7, 8]
+INFO 2025-05-05 01:14:06,673 allergen 21388 27236 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-05 01:14:06,679 allergen 21388 27236 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:14:06,685 allergen 21388 27236 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:14:06,690 allergen 21388 27236 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:14:06,696 allergen 21388 27236 Created allergen mapping: user 66 - allergen 7
+INFO 2025-05-05 01:14:06,702 allergen 21388 27236 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-05 01:14:06,702 allergen 21388 27236 Successfully updated allergens for user 66: [5, 4, 3, 7, 8]
+INFO 2025-05-05 01:14:06,733 basehttp 21388 27236 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:14:06,847 views 21388 27236 Profile accessed: user_id=66
+INFO 2025-05-05 01:14:06,868 basehttp 21388 27236 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:14:06,963 basehttp 21388 27236 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:14:07,089 basehttp 21388 27236 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:14:07,289 views 21388 27236 Profile accessed: user_id=66
+INFO 2025-05-05 01:14:07,314 basehttp 21388 27236 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:14:07,419 basehttp 21388 27236 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:14:07,494 basehttp 21388 27236 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:14:31,287 views 21388 28848 Profile accessed: user_id=66
+INFO 2025-05-05 01:14:31,308 basehttp 21388 28848 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:14:31,394 basehttp 21388 28848 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:14:31,476 basehttp 21388 28848 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:17:14,664 views 21388 23828 Profile accessed: user_id=66
+INFO 2025-05-05 01:17:14,686 basehttp 21388 23828 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:17:14,833 allergen 21388 23828 Listing all allergens: user_id=66
+INFO 2025-05-05 01:17:14,846 allergen 21388 23828 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-05 01:17:14,879 ingredient 21388 11648 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:17:14,883 meal_plan 21388 12344 Getting current meal plan for user_id=66, date=2025-05-05
+INFO 2025-05-05 01:17:14,887 ingredient 21388 11648 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+WARNING 2025-05-05 01:17:14,888 meal_plan 21388 12344 No current meal plan found for user_id=66, time=0.00s
+INFO 2025-05-05 01:17:14,896 basehttp 21388 23828 "GET /api/allergens/?limit=100 HTTP/1.1" 200 776
+INFO 2025-05-05 01:17:14,974 basehttp 21388 21516 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:17:14,997 basehttp 21388 11648 "GET /api/refrigerator/ HTTP/1.1" 200 52
+WARNING 2025-05-05 01:17:15,017 basehttp 21388 12344 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:17:15,022 basehttp 21388 14576 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:17:15,026 allergen 21388 23828 Listing user allergens: user_id=66
+INFO 2025-05-05 01:17:15,044 allergen 21388 23828 Retrieved unknown user allergens, user_id=66, time=0.02s
+INFO 2025-05-05 01:17:15,100 basehttp 21388 23828 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:17:15,267 meal_plan 21388 21516 Getting current meal plan for user_id=66, date=2025-05-05
+WARNING 2025-05-05 01:17:15,270 meal_plan 21388 21516 No current meal plan found for user_id=66, time=0.00s
+INFO 2025-05-05 01:17:15,284 allergen 21388 12344 Listing all allergens: user_id=66
+INFO 2025-05-05 01:17:15,287 ingredient 21388 14576 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:17:15,292 ingredient 21388 14576 Retrieved 0 refrigerator ingredients for user_id=66, time=0.00s
+INFO 2025-05-05 01:17:15,297 allergen 21388 12344 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-05 01:17:15,356 basehttp 21388 12344 "GET /api/allergens/?limit=100 HTTP/1.1" 200 776
+INFO 2025-05-05 01:17:15,373 basehttp 21388 11648 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:17:15,402 basehttp 21388 23828 "GET /api/shopping-list/ HTTP/1.1" 200 52
+WARNING 2025-05-05 01:17:15,413 basehttp 21388 21516 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:17:15,418 basehttp 21388 14576 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:17:15,470 basehttp 21388 12344 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:17:23,681 views 21388 12344 Profile update attempt: user_id=66
+INFO 2025-05-05 01:17:23,689 views 21388 12344 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:17:23,712 basehttp 21388 12344 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:17:23,773 allergen 21388 12344 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:17:23,773 allergen 21388 12344 Request data: {'allergen_ids': [3, 7, 8]}
+INFO 2025-05-05 01:17:23,773 allergen 21388 12344 Allergen IDs to update: [3, 7, 8]
+INFO 2025-05-05 01:17:23,782 allergen 21388 12344 Deleted (5, {'core.M2MUsrAlg': 5}) existing allergen records
+INFO 2025-05-05 01:17:23,788 allergen 21388 12344 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:17:23,794 allergen 21388 12344 Created allergen mapping: user 66 - allergen 7
+INFO 2025-05-05 01:17:23,799 allergen 21388 12344 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-05 01:17:23,800 allergen 21388 12344 Successfully updated allergens for user 66: [3, 7, 8]
+INFO 2025-05-05 01:17:23,836 basehttp 21388 12344 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:17:23,927 views 21388 12344 Profile accessed: user_id=66
+INFO 2025-05-05 01:17:23,946 basehttp 21388 12344 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:17:24,042 basehttp 21388 12344 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:17:24,135 basehttp 21388 12344 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:17:24,230 views 21388 12344 Profile accessed: user_id=66
+INFO 2025-05-05 01:17:24,250 basehttp 21388 12344 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:17:24,334 basehttp 21388 12344 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:17:24,429 basehttp 21388 12344 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:17:30,777 views 21388 12344 Profile update attempt: user_id=66
+INFO 2025-05-05 01:17:30,783 views 21388 12344 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:17:30,806 basehttp 21388 12344 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:17:31,003 allergen 21388 12344 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:17:31,004 allergen 21388 12344 Request data: {'allergen_ids': [5, 4, 3, 7, 8]}
+INFO 2025-05-05 01:17:31,004 allergen 21388 12344 Allergen IDs to update: [5, 4, 3, 7, 8]
+INFO 2025-05-05 01:17:31,009 allergen 21388 12344 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-05 01:17:31,015 allergen 21388 12344 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:17:31,019 allergen 21388 12344 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:17:31,024 allergen 21388 12344 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:17:31,030 allergen 21388 12344 Created allergen mapping: user 66 - allergen 7
+INFO 2025-05-05 01:17:31,034 allergen 21388 12344 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-05 01:17:31,034 allergen 21388 12344 Successfully updated allergens for user 66: [5, 4, 3, 7, 8]
+INFO 2025-05-05 01:17:31,071 basehttp 21388 12344 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:17:31,177 views 21388 12344 Profile accessed: user_id=66
+INFO 2025-05-05 01:17:31,195 basehttp 21388 12344 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:17:31,290 basehttp 21388 12344 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:17:31,366 basehttp 21388 12344 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:17:31,522 views 21388 12344 Profile accessed: user_id=66
+INFO 2025-05-05 01:17:31,539 basehttp 21388 12344 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:17:31,654 basehttp 21388 12344 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:17:31,732 basehttp 21388 12344 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:17:37,438 views 21388 12344 Profile update attempt: user_id=66
+INFO 2025-05-05 01:17:37,447 views 21388 12344 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:17:37,468 basehttp 21388 12344 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:17:37,547 allergen 21388 12344 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:17:37,547 allergen 21388 12344 Request data: {'allergen_ids': [5, 4, 3, 2, 1]}
+INFO 2025-05-05 01:17:37,549 allergen 21388 12344 Allergen IDs to update: [5, 4, 3, 2, 1]
+INFO 2025-05-05 01:17:37,557 allergen 21388 12344 Deleted (5, {'core.M2MUsrAlg': 5}) existing allergen records
+INFO 2025-05-05 01:17:37,562 allergen 21388 12344 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:17:37,568 allergen 21388 12344 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:17:37,574 allergen 21388 12344 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:17:37,580 allergen 21388 12344 Created allergen mapping: user 66 - allergen 2
+INFO 2025-05-05 01:17:37,585 allergen 21388 12344 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-05 01:17:37,586 allergen 21388 12344 Successfully updated allergens for user 66: [5, 4, 3, 2, 1]
+INFO 2025-05-05 01:17:37,616 basehttp 21388 12344 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:17:37,734 views 21388 12344 Profile accessed: user_id=66
+INFO 2025-05-05 01:17:37,761 basehttp 21388 12344 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:17:37,877 basehttp 21388 12344 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:17:37,963 basehttp 21388 12344 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:17:38,059 views 21388 12344 Profile accessed: user_id=66
+INFO 2025-05-05 01:17:38,078 basehttp 21388 12344 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:17:38,173 basehttp 21388 12344 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:17:38,267 basehttp 21388 12344 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:17:41,589 views 21388 12344 Profile update attempt: user_id=66
+INFO 2025-05-05 01:17:41,595 views 21388 12344 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:17:41,618 basehttp 21388 12344 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:17:41,683 allergen 21388 12344 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:17:41,684 allergen 21388 12344 Request data: {'allergen_ids': [5, 4]}
+INFO 2025-05-05 01:17:41,684 allergen 21388 12344 Allergen IDs to update: [5, 4]
+INFO 2025-05-05 01:17:41,691 allergen 21388 12344 Deleted (5, {'core.M2MUsrAlg': 5}) existing allergen records
+INFO 2025-05-05 01:17:41,697 allergen 21388 12344 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:17:41,701 allergen 21388 12344 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:17:41,701 allergen 21388 12344 Successfully updated allergens for user 66: [5, 4]
+INFO 2025-05-05 01:17:41,723 basehttp 21388 12344 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:17:41,809 views 21388 12344 Profile accessed: user_id=66
+INFO 2025-05-05 01:17:41,826 basehttp 21388 12344 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:17:41,936 basehttp 21388 12344 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:17:42,028 basehttp 21388 12344 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:17:42,151 views 21388 12344 Profile accessed: user_id=66
+INFO 2025-05-05 01:17:42,169 basehttp 21388 12344 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:17:42,260 basehttp 21388 12344 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:17:42,353 basehttp 21388 12344 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:17:46,966 views 21388 12344 Profile update attempt: user_id=66
+INFO 2025-05-05 01:17:46,974 views 21388 12344 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:17:47,094 basehttp 21388 12344 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:17:47,156 allergen 21388 12344 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:17:47,157 allergen 21388 12344 Request data: {'allergen_ids': [5, 4, 3, 7, 8]}
+INFO 2025-05-05 01:17:47,157 allergen 21388 12344 Allergen IDs to update: [5, 4, 3, 7, 8]
+INFO 2025-05-05 01:17:47,165 allergen 21388 12344 Deleted (2, {'core.M2MUsrAlg': 2}) existing allergen records
+INFO 2025-05-05 01:17:47,170 allergen 21388 12344 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:17:47,175 allergen 21388 12344 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:17:47,181 allergen 21388 12344 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:17:47,186 allergen 21388 12344 Created allergen mapping: user 66 - allergen 7
+INFO 2025-05-05 01:17:47,192 allergen 21388 12344 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-05 01:17:47,192 allergen 21388 12344 Successfully updated allergens for user 66: [5, 4, 3, 7, 8]
+INFO 2025-05-05 01:17:47,228 basehttp 21388 12344 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:17:47,321 views 21388 12344 Profile accessed: user_id=66
+INFO 2025-05-05 01:17:47,342 basehttp 21388 12344 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:17:47,457 basehttp 21388 12344 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:17:47,561 basehttp 21388 12344 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:17:47,687 views 21388 12344 Profile accessed: user_id=66
+INFO 2025-05-05 01:17:47,710 basehttp 21388 12344 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:17:47,829 basehttp 21388 12344 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:17:47,919 basehttp 21388 12344 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:18:03,194 views 21388 17704 Profile update attempt: user_id=66
+INFO 2025-05-05 01:18:03,202 views 21388 17704 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:18:03,232 basehttp 21388 17704 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:18:03,293 allergen 21388 17704 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:18:03,294 allergen 21388 17704 Request data: {'allergen_ids': [5, 4, 3, 6]}
+INFO 2025-05-05 01:18:03,294 allergen 21388 17704 Allergen IDs to update: [5, 4, 3, 6]
+INFO 2025-05-05 01:18:03,301 allergen 21388 17704 Deleted (5, {'core.M2MUsrAlg': 5}) existing allergen records
+INFO 2025-05-05 01:18:03,306 allergen 21388 17704 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:18:03,310 allergen 21388 17704 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:18:03,315 allergen 21388 17704 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:18:03,318 allergen 21388 17704 Created allergen mapping: user 66 - allergen 6
+INFO 2025-05-05 01:18:03,318 allergen 21388 17704 Successfully updated allergens for user 66: [5, 4, 3, 6]
+INFO 2025-05-05 01:18:03,346 basehttp 21388 17704 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:18:03,420 views 21388 17704 Profile accessed: user_id=66
+INFO 2025-05-05 01:18:03,440 basehttp 21388 17704 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:18:03,563 basehttp 21388 17704 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:18:03,786 basehttp 21388 17704 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:18:03,884 views 21388 17704 Profile accessed: user_id=66
+INFO 2025-05-05 01:18:03,919 basehttp 21388 17704 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:18:04,050 basehttp 21388 17704 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:18:04,206 basehttp 21388 17704 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:18:21,880 views 21388 32184 Profile update attempt: user_id=66
+INFO 2025-05-05 01:18:21,888 views 21388 32184 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:18:21,913 basehttp 21388 32184 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:18:21,990 allergen 21388 32184 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:18:21,991 allergen 21388 32184 Request data: {'allergen_ids': [5, 4, 3, 1]}
+INFO 2025-05-05 01:18:21,991 allergen 21388 32184 Allergen IDs to update: [5, 4, 3, 1]
+INFO 2025-05-05 01:18:21,999 allergen 21388 32184 Deleted (4, {'core.M2MUsrAlg': 4}) existing allergen records
+INFO 2025-05-05 01:18:22,005 allergen 21388 32184 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:18:22,009 allergen 21388 32184 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:18:22,015 allergen 21388 32184 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:18:22,020 allergen 21388 32184 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-05 01:18:22,021 allergen 21388 32184 Successfully updated allergens for user 66: [5, 4, 3, 1]
+INFO 2025-05-05 01:18:22,047 basehttp 21388 32184 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:18:22,127 views 21388 32184 Profile accessed: user_id=66
+INFO 2025-05-05 01:18:22,153 basehttp 21388 32184 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:18:22,262 basehttp 21388 32184 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:18:22,410 basehttp 21388 32184 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:18:22,543 views 21388 32184 Profile accessed: user_id=66
+INFO 2025-05-05 01:18:22,570 basehttp 21388 32184 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:18:22,696 basehttp 21388 32184 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:18:22,787 basehttp 21388 32184 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:29:56,668 views 21388 32404 Profile accessed: user_id=66
+INFO 2025-05-05 01:29:56,743 basehttp 21388 32404 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:29:56,916 allergen 21388 36212 Listing all allergens: user_id=66
+INFO 2025-05-05 01:29:56,931 allergen 21388 36212 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-05 01:29:56,932 meal_plan 21388 31724 Getting current meal plan for user_id=66, date=2025-05-05
+INFO 2025-05-05 01:29:56,942 ingredient 21388 12496 Listing refrigerator ingredients: user_id=66
+WARNING 2025-05-05 01:29:56,946 meal_plan 21388 31724 No current meal plan found for user_id=66, time=0.01s
+INFO 2025-05-05 01:29:56,955 ingredient 21388 12496 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-05 01:29:57,007 basehttp 21388 32404 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:29:57,044 basehttp 21388 12496 "GET /api/refrigerator/ HTTP/1.1" 200 52
+WARNING 2025-05-05 01:29:57,070 basehttp 21388 31724 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:29:57,089 basehttp 21388 36212 "GET /api/allergens/?limit=100 HTTP/1.1" 200 776
+INFO 2025-05-05 01:29:57,103 basehttp 21388 37524 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:29:57,216 basehttp 21388 37524 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:29:57,411 ingredient 21388 12496 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:29:57,415 ingredient 21388 12496 Retrieved 0 refrigerator ingredients for user_id=66, time=0.00s
+INFO 2025-05-05 01:29:57,417 allergen 21388 37524 Listing all allergens: user_id=66
+INFO 2025-05-05 01:29:57,427 allergen 21388 37524 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-05 01:29:57,434 meal_plan 21388 31724 Getting current meal plan for user_id=66, date=2025-05-05
+WARNING 2025-05-05 01:29:57,438 meal_plan 21388 31724 No current meal plan found for user_id=66, time=0.00s
+WARNING 2025-05-05 01:29:57,489 basehttp 21388 31724 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:29:57,508 basehttp 21388 32404 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:29:57,527 basehttp 21388 37524 "GET /api/allergens/?limit=100 HTTP/1.1" 200 776
+INFO 2025-05-05 01:29:57,547 basehttp 21388 36212 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:29:57,554 basehttp 21388 12496 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:29:57,614 basehttp 21388 37524 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:30:06,704 views 21388 37524 Profile update attempt: user_id=66
+INFO 2025-05-05 01:30:06,722 views 21388 37524 Profile updated successfully: user_id=66, time=0.02s
+INFO 2025-05-05 01:30:06,747 basehttp 21388 37524 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:30:06,801 allergen 21388 37524 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:30:06,803 allergen 21388 37524 Request data: {'allergen_ids': [5, 4, 3, 7, 8, 6]}
+INFO 2025-05-05 01:30:06,803 allergen 21388 37524 Allergen IDs to update: [5, 4, 3, 7, 8, 6]
+INFO 2025-05-05 01:30:06,816 allergen 21388 37524 Deleted (4, {'core.M2MUsrAlg': 4}) existing allergen records
+INFO 2025-05-05 01:30:06,828 allergen 21388 37524 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:30:06,835 allergen 21388 37524 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:30:06,841 allergen 21388 37524 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:30:06,848 allergen 21388 37524 Created allergen mapping: user 66 - allergen 7
+INFO 2025-05-05 01:30:06,856 allergen 21388 37524 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-05 01:30:06,863 allergen 21388 37524 Created allergen mapping: user 66 - allergen 6
+INFO 2025-05-05 01:30:06,863 allergen 21388 37524 Successfully updated allergens for user 66: [5, 4, 3, 7, 8, 6]
+INFO 2025-05-05 01:30:06,898 basehttp 21388 37524 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:30:07,008 views 21388 37524 Profile accessed: user_id=66
+INFO 2025-05-05 01:30:07,030 basehttp 21388 37524 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:30:07,135 basehttp 21388 37524 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:30:07,247 basehttp 21388 37524 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:30:07,363 views 21388 37524 Profile accessed: user_id=66
+INFO 2025-05-05 01:30:07,381 basehttp 21388 37524 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:30:07,481 basehttp 21388 37524 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:30:07,567 basehttp 21388 37524 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:30:52,611 views 21388 37428 Profile update attempt: user_id=66
+INFO 2025-05-05 01:30:52,618 views 21388 37428 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:30:52,651 basehttp 21388 37428 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:30:52,726 allergen 21388 37428 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:30:52,727 allergen 21388 37428 Request data: {'allergen_ids': [5, 4, 3, 2, 1]}
+INFO 2025-05-05 01:30:52,727 allergen 21388 37428 Allergen IDs to update: [5, 4, 3, 2, 1]
+INFO 2025-05-05 01:30:52,737 allergen 21388 37428 Deleted (6, {'core.M2MUsrAlg': 6}) existing allergen records
+INFO 2025-05-05 01:30:52,744 allergen 21388 37428 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:30:52,749 allergen 21388 37428 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:30:52,756 allergen 21388 37428 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:30:52,761 allergen 21388 37428 Created allergen mapping: user 66 - allergen 2
+INFO 2025-05-05 01:30:52,768 allergen 21388 37428 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-05 01:30:52,768 allergen 21388 37428 Successfully updated allergens for user 66: [5, 4, 3, 2, 1]
+INFO 2025-05-05 01:30:52,816 basehttp 21388 37428 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:30:52,905 views 21388 37428 Profile accessed: user_id=66
+INFO 2025-05-05 01:30:52,935 basehttp 21388 37428 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:30:53,041 basehttp 21388 37428 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:30:53,227 basehttp 21388 37428 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:30:53,363 views 21388 37428 Profile accessed: user_id=66
+INFO 2025-05-05 01:30:53,383 basehttp 21388 37428 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:30:53,483 basehttp 21388 37428 "GET /api/user-allergens/ HTTP/1.1" 200 143
+INFO 2025-05-05 01:30:53,570 basehttp 21388 37428 "GET /api/user-equipment/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:34:45,843 views 21388 21604 Profile accessed: user_id=66
+INFO 2025-05-05 01:34:45,865 basehttp 21388 21604 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:34:46,066 allergen 21388 21604 Listing all allergens: user_id=66
+INFO 2025-05-05 01:34:46,072 allergen 21388 21604 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-05 01:34:46,100 ingredient 21388 27132 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:34:46,106 meal_plan 21388 28224 Getting current meal plan for user_id=66, date=2025-05-05
+INFO 2025-05-05 01:34:46,107 ingredient 21388 27132 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+WARNING 2025-05-05 01:34:46,113 meal_plan 21388 28224 No current meal plan found for user_id=66, time=0.01s
+WARNING 2025-05-05 01:34:46,174 basehttp 21388 28224 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:34:46,206 basehttp 21388 35352 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:34:46,217 basehttp 21388 26944 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:34:46,223 basehttp 21388 21604 "GET /api/allergens/?limit=100 HTTP/1.1" 200 776
+INFO 2025-05-05 01:34:46,236 basehttp 21388 27132 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:34:46,345 basehttp 21388 21604 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:34:46,748 meal_plan 21388 28224 Getting current meal plan for user_id=66, date=2025-05-05
+INFO 2025-05-05 01:34:46,754 ingredient 21388 27132 Listing refrigerator ingredients: user_id=66
+WARNING 2025-05-05 01:34:46,755 meal_plan 21388 28224 No current meal plan found for user_id=66, time=0.01s
+INFO 2025-05-05 01:34:46,760 ingredient 21388 27132 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-05 01:34:46,771 allergen 21388 21604 Listing all allergens: user_id=66
+INFO 2025-05-05 01:34:46,780 allergen 21388 21604 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-05 01:34:46,855 basehttp 21388 27132 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:34:46,871 basehttp 21388 21604 "GET /api/allergens/?limit=100 HTTP/1.1" 200 776
+INFO 2025-05-05 01:34:46,876 basehttp 21388 35352 "GET /api/favorites/ HTTP/1.1" 200 52
+WARNING 2025-05-05 01:34:46,900 basehttp 21388 28224 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:34:46,910 basehttp 21388 26944 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:34:47,110 basehttp 21388 21604 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:34:56,717 views 21388 27132 Profile update attempt: user_id=66
+INFO 2025-05-05 01:34:56,726 views 21388 27132 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:34:56,748 basehttp 21388 27132 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:34:56,917 allergen 21388 27132 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:34:56,918 allergen 21388 27132 Request data: {'allergen_ids': [5, 4, 3, 7, 8, 6]}
+INFO 2025-05-05 01:34:56,918 allergen 21388 27132 Allergen IDs to update: [5, 4, 3, 7, 8, 6]
+INFO 2025-05-05 01:34:56,928 allergen 21388 27132 Deleted (5, {'core.M2MUsrAlg': 5}) existing allergen records
+INFO 2025-05-05 01:34:56,934 allergen 21388 27132 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:34:56,941 allergen 21388 27132 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:34:56,948 allergen 21388 27132 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:34:56,955 allergen 21388 27132 Created allergen mapping: user 66 - allergen 7
+INFO 2025-05-05 01:34:56,962 allergen 21388 27132 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-05 01:34:56,968 allergen 21388 27132 Created allergen mapping: user 66 - allergen 6
+INFO 2025-05-05 01:34:56,968 allergen 21388 27132 Successfully updated allergens for user 66: [5, 4, 3, 7, 8, 6]
+INFO 2025-05-05 01:34:57,016 basehttp 21388 27132 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:34:57,108 views 21388 27132 Profile accessed: user_id=66
+INFO 2025-05-05 01:34:57,128 basehttp 21388 27132 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:34:57,234 allergen 21388 27132 Listing user allergens: user_id=66
+INFO 2025-05-05 01:34:57,255 allergen 21388 27132 Retrieved unknown user allergens, user_id=66, time=0.02s
+INFO 2025-05-05 01:34:57,323 basehttp 21388 27132 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:34:57,547 views 21388 27132 Profile accessed: user_id=66
+INFO 2025-05-05 01:34:57,570 basehttp 21388 27132 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:34:57,655 basehttp 21388 27132 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:35:03,414 views 21388 27132 Profile update attempt: user_id=66
+INFO 2025-05-05 01:35:03,423 views 21388 27132 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:35:03,447 basehttp 21388 27132 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:35:03,506 allergen 21388 27132 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:35:03,507 allergen 21388 27132 Request data: {'allergen_ids': [5, 4, 3, 7, 8, 6, 1, 2]}
+INFO 2025-05-05 01:35:03,507 allergen 21388 27132 Allergen IDs to update: [5, 4, 3, 7, 8, 6, 1, 2]
+INFO 2025-05-05 01:35:03,516 allergen 21388 27132 Deleted (6, {'core.M2MUsrAlg': 6}) existing allergen records
+INFO 2025-05-05 01:35:03,522 allergen 21388 27132 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:35:03,527 allergen 21388 27132 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:35:03,534 allergen 21388 27132 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:35:03,539 allergen 21388 27132 Created allergen mapping: user 66 - allergen 7
+INFO 2025-05-05 01:35:03,544 allergen 21388 27132 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-05 01:35:03,550 allergen 21388 27132 Created allergen mapping: user 66 - allergen 6
+INFO 2025-05-05 01:35:03,555 allergen 21388 27132 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-05 01:35:03,561 allergen 21388 27132 Created allergen mapping: user 66 - allergen 2
+INFO 2025-05-05 01:35:03,562 allergen 21388 27132 Successfully updated allergens for user 66: [5, 4, 3, 7, 8, 6, 1, 2]
+INFO 2025-05-05 01:35:03,598 basehttp 21388 27132 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:35:03,693 views 21388 27132 Profile accessed: user_id=66
+INFO 2025-05-05 01:35:03,711 basehttp 21388 27132 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:35:03,806 basehttp 21388 27132 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:35:03,929 views 21388 27132 Profile accessed: user_id=66
+INFO 2025-05-05 01:35:03,948 basehttp 21388 27132 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:35:04,039 basehttp 21388 27132 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:35:10,087 views 21388 27132 Profile update attempt: user_id=66
+INFO 2025-05-05 01:35:10,096 views 21388 27132 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:35:10,127 basehttp 21388 27132 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:35:10,254 allergen 21388 27132 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:35:10,254 allergen 21388 27132 Request data: {'allergen_ids': [5, 4, 3, 6]}
+INFO 2025-05-05 01:35:10,254 allergen 21388 27132 Allergen IDs to update: [5, 4, 3, 6]
+INFO 2025-05-05 01:35:10,263 allergen 21388 27132 Deleted (8, {'core.M2MUsrAlg': 8}) existing allergen records
+INFO 2025-05-05 01:35:10,269 allergen 21388 27132 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:35:10,273 allergen 21388 27132 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:35:10,278 allergen 21388 27132 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:35:10,285 allergen 21388 27132 Created allergen mapping: user 66 - allergen 6
+INFO 2025-05-05 01:35:10,285 allergen 21388 27132 Successfully updated allergens for user 66: [5, 4, 3, 6]
+INFO 2025-05-05 01:35:10,310 basehttp 21388 27132 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:35:10,426 views 21388 27132 Profile accessed: user_id=66
+INFO 2025-05-05 01:35:10,445 basehttp 21388 27132 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:35:10,537 basehttp 21388 27132 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:35:10,644 views 21388 27132 Profile accessed: user_id=66
+INFO 2025-05-05 01:35:10,662 basehttp 21388 27132 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:35:10,757 basehttp 21388 27132 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:35:27,262 views 21388 29328 Profile update attempt: user_id=66
+INFO 2025-05-05 01:35:27,270 views 21388 29328 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:35:27,297 basehttp 21388 29328 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:35:27,472 allergen 21388 29328 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:35:27,472 allergen 21388 29328 Request data: {'allergen_ids': [5, 4, 3, 7, 8, 6]}
+INFO 2025-05-05 01:35:27,473 allergen 21388 29328 Allergen IDs to update: [5, 4, 3, 7, 8, 6]
+INFO 2025-05-05 01:35:27,478 allergen 21388 29328 Deleted (4, {'core.M2MUsrAlg': 4}) existing allergen records
+INFO 2025-05-05 01:35:27,484 allergen 21388 29328 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:35:27,488 allergen 21388 29328 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:35:27,492 allergen 21388 29328 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:35:27,497 allergen 21388 29328 Created allergen mapping: user 66 - allergen 7
+INFO 2025-05-05 01:35:27,501 allergen 21388 29328 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-05 01:35:27,506 allergen 21388 29328 Created allergen mapping: user 66 - allergen 6
+INFO 2025-05-05 01:35:27,507 allergen 21388 29328 Successfully updated allergens for user 66: [5, 4, 3, 7, 8, 6]
+INFO 2025-05-05 01:35:27,533 basehttp 21388 29328 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:35:27,660 views 21388 29328 Profile accessed: user_id=66
+INFO 2025-05-05 01:35:27,678 basehttp 21388 29328 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:35:27,819 basehttp 21388 29328 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:35:28,076 views 21388 29328 Profile accessed: user_id=66
+INFO 2025-05-05 01:35:28,098 basehttp 21388 29328 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:35:28,423 basehttp 21388 29328 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:35:33,528 views 21388 29328 Profile update attempt: user_id=66
+INFO 2025-05-05 01:35:33,535 views 21388 29328 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:35:33,557 basehttp 21388 29328 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:35:33,622 allergen 21388 29328 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:35:33,622 allergen 21388 29328 Request data: {'allergen_ids': [7]}
+INFO 2025-05-05 01:35:33,622 allergen 21388 29328 Allergen IDs to update: [7]
+INFO 2025-05-05 01:35:33,629 allergen 21388 29328 Deleted (6, {'core.M2MUsrAlg': 6}) existing allergen records
+INFO 2025-05-05 01:35:33,635 allergen 21388 29328 Created allergen mapping: user 66 - allergen 7
+INFO 2025-05-05 01:35:33,635 allergen 21388 29328 Successfully updated allergens for user 66: [7]
+INFO 2025-05-05 01:35:33,655 basehttp 21388 29328 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:35:33,791 views 21388 29328 Profile accessed: user_id=66
+INFO 2025-05-05 01:35:33,809 basehttp 21388 29328 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:35:33,939 basehttp 21388 29328 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:35:34,056 views 21388 29328 Profile accessed: user_id=66
+INFO 2025-05-05 01:35:34,076 basehttp 21388 29328 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:35:34,172 basehttp 21388 29328 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:35:56,485 views 21388 3316 Profile update attempt: user_id=66
+INFO 2025-05-05 01:35:56,493 views 21388 3316 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:35:56,518 basehttp 21388 3316 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:35:56,595 allergen 21388 3316 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:35:56,596 allergen 21388 3316 Request data: {'allergen_ids': [5, 4, 3, 7, 8, 6]}
+INFO 2025-05-05 01:35:56,596 allergen 21388 3316 Allergen IDs to update: [5, 4, 3, 7, 8, 6]
+INFO 2025-05-05 01:35:56,603 allergen 21388 3316 Deleted (1, {'core.M2MUsrAlg': 1}) existing allergen records
+INFO 2025-05-05 01:35:56,610 allergen 21388 3316 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:35:56,615 allergen 21388 3316 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:35:56,621 allergen 21388 3316 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:35:56,627 allergen 21388 3316 Created allergen mapping: user 66 - allergen 7
+INFO 2025-05-05 01:35:56,632 allergen 21388 3316 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-05 01:35:56,638 allergen 21388 3316 Created allergen mapping: user 66 - allergen 6
+INFO 2025-05-05 01:35:56,638 allergen 21388 3316 Successfully updated allergens for user 66: [5, 4, 3, 7, 8, 6]
+INFO 2025-05-05 01:35:56,665 basehttp 21388 3316 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:35:56,733 views 21388 3316 Profile accessed: user_id=66
+INFO 2025-05-05 01:35:56,753 basehttp 21388 3316 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:35:56,849 basehttp 21388 3316 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:39:41,219 views 21388 27276 Profile accessed: user_id=66
+INFO 2025-05-05 01:39:41,246 basehttp 21388 27276 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:39:41,386 ingredient 21388 27276 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:39:41,391 ingredient 21388 27276 Retrieved 0 refrigerator ingredients for user_id=66, time=0.00s
+INFO 2025-05-05 01:39:41,421 allergen 21388 16312 Listing all allergens: user_id=66
+INFO 2025-05-05 01:39:41,430 allergen 21388 16312 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-05 01:39:41,431 meal_plan 21388 19852 Getting current meal plan for user_id=66, date=2025-05-05
+WARNING 2025-05-05 01:39:41,436 meal_plan 21388 19852 No current meal plan found for user_id=66, time=0.00s
+WARNING 2025-05-05 01:39:41,500 basehttp 21388 19852 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:39:41,518 basehttp 21388 36280 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:39:41,548 basehttp 21388 35484 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:39:41,555 basehttp 21388 27276 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:39:41,583 basehttp 21388 16312 "GET /api/allergens/?limit=100 HTTP/1.1" 200 776
+INFO 2025-05-05 01:39:41,711 basehttp 21388 16312 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:39:42,023 allergen 21388 16312 Listing all allergens: user_id=66
+INFO 2025-05-05 01:39:42,030 allergen 21388 16312 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-05 01:39:42,063 ingredient 21388 27276 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:39:42,071 ingredient 21388 27276 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-05 01:39:42,081 meal_plan 21388 35484 Getting current meal plan for user_id=66, date=2025-05-05
+WARNING 2025-05-05 01:39:42,089 meal_plan 21388 35484 No current meal plan found for user_id=66, time=0.01s
+INFO 2025-05-05 01:39:42,123 basehttp 21388 16312 "GET /api/allergens/?limit=100 HTTP/1.1" 200 776
+INFO 2025-05-05 01:39:42,168 basehttp 21388 36280 "GET /api/favorites/ HTTP/1.1" 200 52
+WARNING 2025-05-05 01:39:42,174 basehttp 21388 35484 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:39:42,204 basehttp 21388 19852 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:39:42,216 basehttp 21388 27276 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:39:42,237 basehttp 21388 16312 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:39:48,621 allergen 21388 16312 Listing all allergens: user_id=66
+INFO 2025-05-05 01:39:48,626 allergen 21388 16312 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-05 01:39:48,645 basehttp 21388 16312 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-05 01:39:51,629 views 21388 16312 Profile update attempt: user_id=66
+INFO 2025-05-05 01:39:51,637 views 21388 16312 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:39:51,660 basehttp 21388 16312 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:39:51,728 allergen 21388 16312 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:39:51,729 allergen 21388 16312 Request data: {'allergen_ids': [5, 4, 3, 7, 8, 1]}
+INFO 2025-05-05 01:39:51,729 allergen 21388 16312 Allergen IDs to update: [5, 4, 3, 7, 8, 1]
+INFO 2025-05-05 01:39:51,737 allergen 21388 16312 Deleted (6, {'core.M2MUsrAlg': 6}) existing allergen records
+INFO 2025-05-05 01:39:51,743 allergen 21388 16312 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:39:51,749 allergen 21388 16312 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:39:51,755 allergen 21388 16312 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:39:51,760 allergen 21388 16312 Created allergen mapping: user 66 - allergen 7
+INFO 2025-05-05 01:39:51,767 allergen 21388 16312 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-05 01:39:51,772 allergen 21388 16312 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-05 01:39:51,773 allergen 21388 16312 Successfully updated allergens for user 66: [5, 4, 3, 7, 8, 1]
+INFO 2025-05-05 01:39:51,811 basehttp 21388 16312 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:39:51,974 views 21388 16312 Profile accessed: user_id=66
+INFO 2025-05-05 01:39:52,000 basehttp 21388 16312 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:39:52,080 basehttp 21388 16312 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:39:52,254 views 21388 16312 Profile accessed: user_id=66
+INFO 2025-05-05 01:39:52,273 basehttp 21388 16312 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:39:52,365 basehttp 21388 16312 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:40:03,025 allergen 21388 16312 Listing all allergens: user_id=66
+INFO 2025-05-05 01:40:03,029 allergen 21388 16312 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-05 01:40:03,048 basehttp 21388 16312 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-05 01:40:05,678 views 21388 16312 Profile update attempt: user_id=66
+INFO 2025-05-05 01:40:05,684 views 21388 16312 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:40:05,709 basehttp 21388 16312 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:40:05,803 allergen 21388 16312 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:40:05,803 allergen 21388 16312 Request data: {'allergen_ids': [5, 4, 3, 7, 8, 6, 1]}
+INFO 2025-05-05 01:40:05,803 allergen 21388 16312 Allergen IDs to update: [5, 4, 3, 7, 8, 6, 1]
+INFO 2025-05-05 01:40:05,811 allergen 21388 16312 Deleted (6, {'core.M2MUsrAlg': 6}) existing allergen records
+INFO 2025-05-05 01:40:05,817 allergen 21388 16312 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:40:05,822 allergen 21388 16312 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:40:05,827 allergen 21388 16312 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:40:05,833 allergen 21388 16312 Created allergen mapping: user 66 - allergen 7
+INFO 2025-05-05 01:40:05,838 allergen 21388 16312 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-05 01:40:05,844 allergen 21388 16312 Created allergen mapping: user 66 - allergen 6
+INFO 2025-05-05 01:40:05,848 allergen 21388 16312 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-05 01:40:05,849 allergen 21388 16312 Successfully updated allergens for user 66: [5, 4, 3, 7, 8, 6, 1]
+INFO 2025-05-05 01:40:05,877 basehttp 21388 16312 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:40:06,048 views 21388 16312 Profile accessed: user_id=66
+INFO 2025-05-05 01:40:06,066 basehttp 21388 16312 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:40:06,162 basehttp 21388 16312 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:40:06,312 views 21388 16312 Profile accessed: user_id=66
+INFO 2025-05-05 01:40:06,331 basehttp 21388 16312 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:40:06,456 basehttp 21388 16312 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:40:16,861 allergen 21388 16312 Listing all allergens: user_id=66
+INFO 2025-05-05 01:40:16,866 allergen 21388 16312 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-05 01:40:16,884 basehttp 21388 16312 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-05 01:40:21,122 views 21388 16312 Profile update attempt: user_id=66
+INFO 2025-05-05 01:40:21,129 views 21388 16312 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:40:21,153 basehttp 21388 16312 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:40:21,263 allergen 21388 16312 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:40:21,264 allergen 21388 16312 Request data: {'allergen_ids': [1]}
+INFO 2025-05-05 01:40:21,264 allergen 21388 16312 Allergen IDs to update: [1]
+INFO 2025-05-05 01:40:21,272 allergen 21388 16312 Deleted (7, {'core.M2MUsrAlg': 7}) existing allergen records
+INFO 2025-05-05 01:40:21,277 allergen 21388 16312 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-05 01:40:21,279 allergen 21388 16312 Successfully updated allergens for user 66: [1]
+INFO 2025-05-05 01:40:21,300 basehttp 21388 16312 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:40:21,400 views 21388 16312 Profile accessed: user_id=66
+INFO 2025-05-05 01:40:21,419 basehttp 21388 16312 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:40:21,516 basehttp 21388 16312 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:40:21,684 views 21388 16312 Profile accessed: user_id=66
+INFO 2025-05-05 01:40:21,705 basehttp 21388 16312 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:40:21,830 basehttp 21388 16312 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:40:33,711 views 21388 22488 Profile accessed: user_id=66
+INFO 2025-05-05 01:40:33,731 basehttp 21388 22488 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:40:33,837 allergen 21388 22488 Listing all allergens: user_id=66
+INFO 2025-05-05 01:40:33,848 allergen 21388 22488 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-05 01:40:33,861 meal_plan 21388 34676 Getting current meal plan for user_id=66, date=2025-05-05
+INFO 2025-05-05 01:40:33,865 ingredient 21388 27144 Listing refrigerator ingredients: user_id=66
+WARNING 2025-05-05 01:40:33,864 meal_plan 21388 34676 No current meal plan found for user_id=66, time=0.00s
+INFO 2025-05-05 01:40:33,869 ingredient 21388 27144 Retrieved 0 refrigerator ingredients for user_id=66, time=0.00s
+INFO 2025-05-05 01:40:33,915 basehttp 21388 27144 "GET /api/refrigerator/ HTTP/1.1" 200 52
+WARNING 2025-05-05 01:40:33,933 basehttp 21388 34676 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:40:33,957 basehttp 21388 30324 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:40:33,966 basehttp 21388 28224 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:40:33,972 basehttp 21388 22488 "GET /api/allergens/?limit=100 HTTP/1.1" 200 776
+INFO 2025-05-05 01:40:34,054 basehttp 21388 30324 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:40:34,171 ingredient 21388 30324 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:40:34,175 ingredient 21388 30324 Retrieved 0 refrigerator ingredients for user_id=66, time=0.00s
+INFO 2025-05-05 01:40:34,176 allergen 21388 28224 Listing all allergens: user_id=66
+INFO 2025-05-05 01:40:34,183 allergen 21388 28224 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-05 01:40:34,188 meal_plan 21388 34676 Getting current meal plan for user_id=66, date=2025-05-05
+WARNING 2025-05-05 01:40:34,191 meal_plan 21388 34676 No current meal plan found for user_id=66, time=0.00s
+INFO 2025-05-05 01:40:34,239 basehttp 21388 30324 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:40:34,256 basehttp 21388 28224 "GET /api/allergens/?limit=100 HTTP/1.1" 200 776
+WARNING 2025-05-05 01:40:34,281 basehttp 21388 34676 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:40:34,299 basehttp 21388 27144 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:40:34,302 basehttp 21388 22488 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:40:34,342 basehttp 21388 30324 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:45:16,039 views 21388 30608 Profile accessed: user_id=66
+INFO 2025-05-05 01:45:16,073 basehttp 21388 30608 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:45:16,225 meal_plan 21388 34840 Getting current meal plan for user_id=66, date=2025-05-05
+WARNING 2025-05-05 01:45:16,229 meal_plan 21388 34840 No current meal plan found for user_id=66, time=0.00s
+INFO 2025-05-05 01:45:16,240 ingredient 21388 11792 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:45:16,245 allergen 21388 30608 Listing all allergens: user_id=66
+INFO 2025-05-05 01:45:16,250 ingredient 21388 11792 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-05 01:45:16,255 allergen 21388 30608 Retrieved 50 allergens, user_id=66, time=0.01s
+WARNING 2025-05-05 01:45:16,314 basehttp 21388 34840 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:45:16,331 basehttp 21388 11792 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:45:16,364 basehttp 21388 30608 "GET /api/allergens/?limit=100 HTTP/1.1" 200 776
+INFO 2025-05-05 01:45:16,371 basehttp 21388 33676 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:45:16,378 basehttp 21388 30888 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:45:16,460 basehttp 21388 11792 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:45:16,573 ingredient 21388 11792 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:45:16,576 ingredient 21388 11792 Retrieved 0 refrigerator ingredients for user_id=66, time=0.00s
+INFO 2025-05-05 01:45:16,605 allergen 21388 30888 Listing all allergens: user_id=66
+INFO 2025-05-05 01:45:16,618 allergen 21388 30888 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-05 01:45:16,621 meal_plan 21388 33676 Getting current meal plan for user_id=66, date=2025-05-05
+WARNING 2025-05-05 01:45:16,627 meal_plan 21388 33676 No current meal plan found for user_id=66, time=0.01s
+INFO 2025-05-05 01:45:16,638 basehttp 21388 11792 "GET /api/refrigerator/ HTTP/1.1" 200 52
+WARNING 2025-05-05 01:45:16,678 basehttp 21388 33676 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:45:16,705 basehttp 21388 34840 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:45:16,723 basehttp 21388 30608 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:45:16,726 basehttp 21388 30888 "GET /api/allergens/?limit=100 HTTP/1.1" 200 776
+INFO 2025-05-05 01:45:16,818 basehttp 21388 30888 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:45:21,182 allergen 21388 30888 Listing all allergens: user_id=66
+INFO 2025-05-05 01:45:21,187 allergen 21388 30888 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-05 01:45:21,206 basehttp 21388 30888 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-05 01:45:22,875 views 21388 30888 Profile update attempt: user_id=66
+INFO 2025-05-05 01:45:22,888 views 21388 30888 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:45:22,916 basehttp 21388 30888 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:45:22,993 allergen 21388 30888 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:45:22,993 allergen 21388 30888 Request data: {'allergen_ids': [5, 4, 3, 7, 8, 1]}
+INFO 2025-05-05 01:45:22,994 allergen 21388 30888 Allergen IDs to update: [5, 4, 3, 7, 8, 1]
+INFO 2025-05-05 01:45:23,002 allergen 21388 30888 Deleted (1, {'core.M2MUsrAlg': 1}) existing allergen records
+INFO 2025-05-05 01:45:23,008 allergen 21388 30888 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:45:23,013 allergen 21388 30888 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:45:23,019 allergen 21388 30888 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:45:23,024 allergen 21388 30888 Created allergen mapping: user 66 - allergen 7
+INFO 2025-05-05 01:45:23,029 allergen 21388 30888 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-05 01:45:23,035 allergen 21388 30888 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-05 01:45:23,036 allergen 21388 30888 Successfully updated allergens for user 66: [5, 4, 3, 7, 8, 1]
+INFO 2025-05-05 01:45:23,076 basehttp 21388 30888 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:45:23,186 views 21388 30888 Profile accessed: user_id=66
+INFO 2025-05-05 01:45:23,208 basehttp 21388 30888 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:45:23,340 basehttp 21388 30888 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:45:25,639 allergen 21388 30888 Listing all allergens: user_id=66
+INFO 2025-05-05 01:45:25,643 allergen 21388 30888 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-05 01:45:25,662 basehttp 21388 30888 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-05 01:45:27,206 views 21388 30888 Profile update attempt: user_id=66
+INFO 2025-05-05 01:45:27,214 views 21388 30888 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:45:27,238 basehttp 21388 30888 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:45:27,303 allergen 21388 30888 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:45:27,304 allergen 21388 30888 Request data: {'allergen_ids': [5, 4, 3, 7, 8, 6, 1]}
+INFO 2025-05-05 01:45:27,304 allergen 21388 30888 Allergen IDs to update: [5, 4, 3, 7, 8, 6, 1]
+INFO 2025-05-05 01:45:27,313 allergen 21388 30888 Deleted (6, {'core.M2MUsrAlg': 6}) existing allergen records
+INFO 2025-05-05 01:45:27,320 allergen 21388 30888 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:45:27,326 allergen 21388 30888 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:45:27,333 allergen 21388 30888 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:45:27,339 allergen 21388 30888 Created allergen mapping: user 66 - allergen 7
+INFO 2025-05-05 01:45:27,345 allergen 21388 30888 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-05 01:45:27,352 allergen 21388 30888 Created allergen mapping: user 66 - allergen 6
+INFO 2025-05-05 01:45:27,359 allergen 21388 30888 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-05 01:45:27,359 allergen 21388 30888 Successfully updated allergens for user 66: [5, 4, 3, 7, 8, 6, 1]
+INFO 2025-05-05 01:45:27,393 basehttp 21388 30888 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:45:27,501 views 21388 30888 Profile accessed: user_id=66
+INFO 2025-05-05 01:45:27,524 basehttp 21388 30888 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:45:27,707 basehttp 21388 30888 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:46:51,917 views 21388 36420 Profile accessed: user_id=66
+INFO 2025-05-05 01:46:51,950 basehttp 21388 36420 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:46:52,136 allergen 21388 36420 Listing all allergens: user_id=66
+INFO 2025-05-05 01:46:52,141 meal_plan 21388 6988 Getting current meal plan for user_id=66, date=2025-05-05
+INFO 2025-05-05 01:46:52,148 allergen 21388 36420 Retrieved 50 allergens, user_id=66, time=0.01s
+WARNING 2025-05-05 01:46:52,152 meal_plan 21388 6988 No current meal plan found for user_id=66, time=0.01s
+INFO 2025-05-05 01:46:52,164 ingredient 21388 21048 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:46:52,171 ingredient 21388 21048 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-05 01:46:52,257 basehttp 21388 30040 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:46:52,269 basehttp 21388 21048 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:46:52,330 basehttp 21388 25756 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:46:52,341 basehttp 21388 36420 "GET /api/allergens/?limit=100 HTTP/1.1" 200 776
+WARNING 2025-05-05 01:46:52,357 basehttp 21388 6988 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:46:52,634 basehttp 21388 21048 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:46:52,771 meal_plan 21388 36420 Getting current meal plan for user_id=66, date=2025-05-05
+WARNING 2025-05-05 01:46:52,776 meal_plan 21388 36420 No current meal plan found for user_id=66, time=0.00s
+INFO 2025-05-05 01:46:52,796 ingredient 21388 6988 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:46:52,803 ingredient 21388 6988 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-05 01:46:52,806 allergen 21388 21048 Listing all allergens: user_id=66
+INFO 2025-05-05 01:46:52,815 allergen 21388 21048 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-05 01:46:52,867 basehttp 21388 30040 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:46:52,888 basehttp 21388 6988 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:46:52,894 basehttp 21388 25756 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:46:52,913 basehttp 21388 21048 "GET /api/allergens/?limit=100 HTTP/1.1" 200 776
+WARNING 2025-05-05 01:46:52,928 basehttp 21388 36420 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:46:53,009 basehttp 21388 21048 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:46:56,700 allergen 21388 21048 Listing all allergens: user_id=66
+INFO 2025-05-05 01:46:56,704 allergen 21388 21048 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-05 01:46:56,722 basehttp 21388 21048 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-05 01:46:58,044 views 21388 21048 Profile update attempt: user_id=66
+INFO 2025-05-05 01:46:58,052 views 21388 21048 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:46:58,076 basehttp 21388 21048 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:46:58,198 allergen 21388 21048 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:46:58,198 allergen 21388 21048 Request data: {'allergen_ids': [5, 4, 3, 7, 8, 1]}
+INFO 2025-05-05 01:46:58,198 allergen 21388 21048 Allergen IDs to update: [5, 4, 3, 7, 8, 1]
+INFO 2025-05-05 01:46:58,206 allergen 21388 21048 Deleted (7, {'core.M2MUsrAlg': 7}) existing allergen records
+INFO 2025-05-05 01:46:58,212 allergen 21388 21048 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-05 01:46:58,216 allergen 21388 21048 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:46:58,223 allergen 21388 21048 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:46:58,227 allergen 21388 21048 Created allergen mapping: user 66 - allergen 7
+INFO 2025-05-05 01:46:58,233 allergen 21388 21048 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-05 01:46:58,238 allergen 21388 21048 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-05 01:46:58,238 allergen 21388 21048 Successfully updated allergens for user 66: [5, 4, 3, 7, 8, 1]
+INFO 2025-05-05 01:46:58,265 basehttp 21388 21048 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:46:58,399 views 21388 21048 Profile accessed: user_id=66
+INFO 2025-05-05 01:46:58,417 basehttp 21388 21048 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:46:58,528 basehttp 21388 21048 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:46:58,746 views 21388 21048 Profile accessed: user_id=66
+INFO 2025-05-05 01:46:58,770 basehttp 21388 21048 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:46:58,875 basehttp 21388 21048 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 241
+INFO 2025-05-05 01:52:44,038 views 21388 28508 Profile accessed: user_id=66
+INFO 2025-05-05 01:52:44,073 basehttp 21388 28508 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:52:44,234 ingredient 21388 28508 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:52:44,247 ingredient 21388 28508 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-05 01:52:44,249 meal_plan 21388 34240 Getting current meal plan for user_id=66, date=2025-05-05
+WARNING 2025-05-05 01:52:44,258 meal_plan 21388 34240 No current meal plan found for user_id=66, time=0.01s
+INFO 2025-05-05 01:52:44,348 basehttp 21388 25612 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:52:44,369 basehttp 21388 28756 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:52:44,376 basehttp 21388 4520 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:52:44,389 basehttp 21388 28508 "GET /api/refrigerator/ HTTP/1.1" 200 52
+WARNING 2025-05-05 01:52:44,401 basehttp 21388 34240 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:52:44,527 ingredient 21388 25612 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-05 01:52:44,534 ingredient 21388 25612 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-05 01:52:44,546 meal_plan 21388 34240 Getting current meal plan for user_id=66, date=2025-05-05
+WARNING 2025-05-05 01:52:44,553 meal_plan 21388 34240 No current meal plan found for user_id=66, time=0.01s
+INFO 2025-05-05 01:52:44,639 basehttp 21388 28756 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:52:44,644 basehttp 21388 28508 "GET /api/shopping-list/ HTTP/1.1" 200 52
+WARNING 2025-05-05 01:52:44,653 basehttp 21388 34240 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-05 01:52:44,672 basehttp 21388 4520 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:52:44,678 basehttp 21388 25612 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-05 01:52:49,240 allergen 21388 4520 Listing all allergens: user_id=66
+INFO 2025-05-05 01:52:49,244 allergen 21388 4520 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-05 01:52:49,265 basehttp 21388 4520 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-05 01:52:51,442 views 21388 4520 Profile update attempt: user_id=66
+INFO 2025-05-05 01:52:51,450 views 21388 4520 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:52:51,475 basehttp 21388 4520 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:52:51,553 allergen 21388 4520 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:52:51,554 allergen 21388 4520 Request data: {'allergen_ids': [1, 2]}
+INFO 2025-05-05 01:52:51,554 allergen 21388 4520 Allergen IDs to update: [1, 2]
+INFO 2025-05-05 01:52:51,563 allergen 21388 4520 Deleted (6, {'core.M2MUsrAlg': 6}) existing allergen records
+INFO 2025-05-05 01:52:51,570 allergen 21388 4520 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-05 01:52:51,576 allergen 21388 4520 Created allergen mapping: user 66 - allergen 2
+INFO 2025-05-05 01:52:51,577 allergen 21388 4520 Successfully updated allergens for user 66: [1, 2]
+INFO 2025-05-05 01:52:51,600 basehttp 21388 4520 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:52:51,693 views 21388 4520 Profile accessed: user_id=66
+INFO 2025-05-05 01:52:51,718 basehttp 21388 4520 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:52:51,801 allergen 21388 4520 Listing all allergens: user_id=66
+INFO 2025-05-05 01:52:51,805 allergen 21388 4520 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-05 01:52:51,825 basehttp 21388 4520 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-05 01:52:51,912 basehttp 21388 4520 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:52:52,135 views 21388 4520 Profile accessed: user_id=66
+INFO 2025-05-05 01:52:52,153 basehttp 21388 4520 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:52:52,233 allergen 21388 4520 Listing all allergens: user_id=66
+INFO 2025-05-05 01:52:52,239 allergen 21388 4520 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-05 01:52:52,260 basehttp 21388 4520 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-05 01:52:52,345 basehttp 21388 4520 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:53:28,395 allergen 21388 8596 Listing all allergens: user_id=66
+INFO 2025-05-05 01:53:28,399 allergen 21388 8596 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-05 01:53:28,420 basehttp 21388 8596 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-05 01:53:30,695 views 21388 8596 Profile update attempt: user_id=66
+INFO 2025-05-05 01:53:30,702 views 21388 8596 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-05 01:53:30,729 basehttp 21388 8596 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-05 01:53:30,805 allergen 21388 8596 Starting user allergens update for user ID: 66
+INFO 2025-05-05 01:53:30,806 allergen 21388 8596 Request data: {'allergen_ids': [3, 4]}
+INFO 2025-05-05 01:53:30,806 allergen 21388 8596 Allergen IDs to update: [3, 4]
+INFO 2025-05-05 01:53:30,813 allergen 21388 8596 Deleted (2, {'core.M2MUsrAlg': 2}) existing allergen records
+INFO 2025-05-05 01:53:30,819 allergen 21388 8596 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-05 01:53:30,825 allergen 21388 8596 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-05 01:53:30,825 allergen 21388 8596 Successfully updated allergens for user 66: [3, 4]
+INFO 2025-05-05 01:53:30,849 basehttp 21388 8596 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-05 01:53:30,942 views 21388 8596 Profile accessed: user_id=66
+INFO 2025-05-05 01:53:30,962 basehttp 21388 8596 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:53:31,038 allergen 21388 8596 Listing all allergens: user_id=66
+INFO 2025-05-05 01:53:31,043 allergen 21388 8596 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-05 01:53:31,062 basehttp 21388 8596 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-05 01:53:31,162 basehttp 21388 8596 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 01:53:31,391 views 21388 8596 Profile accessed: user_id=66
+INFO 2025-05-05 01:53:31,411 basehttp 21388 8596 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-05 01:53:31,515 allergen 21388 8596 Listing all allergens: user_id=66
+INFO 2025-05-05 01:53:31,519 allergen 21388 8596 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-05 01:53:31,541 basehttp 21388 8596 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-05 01:53:31,635 basehttp 21388 8596 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205

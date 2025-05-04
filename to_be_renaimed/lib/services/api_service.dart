@@ -120,7 +120,7 @@ class ApiService {
     }
 
     if (DEBUG) {
-      print('API Request: PUT $baseUrl$endpoint');
+      print('API Request: POST $baseUrl$endpoint');
       print('Headers: $_headers');
       print('Body: ${jsonEncode(data)}');
     }
