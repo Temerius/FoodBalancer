@@ -7,7 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 class AuthProvider with ChangeNotifier {
-  final AuthService _authService = AuthService();
+  final AuthService _authService;
+
+  AuthProvider({AuthService? authService}) :
+        _authService = authService ?? AuthService();
 
   User? _user;
   bool _isLoading = false;
@@ -68,6 +71,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   // Вход
+  // В классе AuthProvider (providers/auth_provider.dart), после успешной авторизации:
   Future<bool> login(String email, String password, {bool rememberMe = false}) async {
     _setLoading(true);
     _clearError();
@@ -76,11 +80,14 @@ class AuthProvider with ChangeNotifier {
       _user = await _authService.login(email, password);
       _isAuthenticated = true;
 
+      // Убедимся, что ApiService знает о токене
+      // Добавьте отладочный код, чтобы увидеть, что токен установлен
+      print("Токен авторизации успешно установлен: ${_authService.getToken()}");
+
       if (rememberMe) {
         await _authService.saveLoginStatus(true);
       }
 
-      // After successful login, load user data in DataRepository
       notifyListeners();
       return true;
     } catch (e) {

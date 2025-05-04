@@ -1,4 +1,9 @@
+// lib/screens/profile/equipment_screen.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../providers/auth_provider.dart';
+import '../../repositories/data_repository.dart';
+import '../../models/equipment.dart';
 
 class EquipmentScreen extends StatefulWidget {
   const EquipmentScreen({Key? key}) : super(key: key);
@@ -8,30 +13,99 @@ class EquipmentScreen extends StatefulWidget {
 }
 
 class _EquipmentScreenState extends State<EquipmentScreen> {
-  // Симуляция списка оборудования
-  final List<Map<String, dynamic>> _equipment = [
-    {
-      'id': 1,
-      'name': 'Духовка',
-      'type': 'Плита',
-      'power': 2500,
-      'capacity': 35,
-    },
-    {
-      'id': 2,
-      'name': 'Мультиварка',
-      'type': 'Малая бытовая техника',
-      'power': 860,
-      'capacity': 5,
-    },
-    {
-      'id': 3,
-      'name': 'Блендер',
-      'type': 'Малая бытовая техника',
-      'power': 600,
-      'capacity': 1,
-    },
-  ];
+  bool _isLoading = false;
+  String? _errorMessage;
+  List<Equipment> _equipment = [];
+  List<int> _userEquipmentIds = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final dataRepository = Provider.of<DataRepository>(context, listen: false);
+
+      // Получаем все оборудование из репозитория
+      _equipment = dataRepository.equipment;
+
+      // Получаем оборудование текущего пользователя
+      final user = dataRepository.user ??
+          Provider.of<AuthProvider>(context, listen: false).currentUser;
+
+      if (user != null) {
+        _userEquipmentIds = List<int>.from(user.equipmentIds);
+
+        // Обновляем статусы выбора в списке оборудования
+        for (var equip in _equipment) {
+          equip.isSelected = _userEquipmentIds.contains(equip.id);
+        }
+      }
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Ошибка загрузки данных: ${e.toString()}';
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _saveEquipment() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    try {
+      final dataRepository = Provider.of<DataRepository>(context, listen: false);
+      final user = dataRepository.user ??
+          Provider.of<AuthProvider>(context, listen: false).currentUser;
+
+      if (user == null) {
+        setState(() {
+          _errorMessage = 'Ошибка: пользователь не найден';
+        });
+        return;
+      }
+
+      // Создаем копию пользователя с обновленным оборудованием
+      final updatedUser = user.copyWith(
+        equipmentIds: _userEquipmentIds,
+      );
+
+      // Обновляем профиль в репозитории
+      final success = await dataRepository.updateUserProfile(updatedUser);
+
+      if (success) {
+        if (mounted) {
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Оборудование успешно обновлено')),
+          );
+        }
+      } else {
+        setState(() {
+          _errorMessage = dataRepository.error ?? 'Ошибка обновления оборудования';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Ошибка: ${e.toString()}';
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +113,33 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
       appBar: AppBar(
         title: const Text('Кухонное оборудование'),
       ),
-      body: Column(
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
         children: [
+          // Сообщение об ошибке (если есть)
+          if (_errorMessage != null)
+            Container(
+              padding: const EdgeInsets.all(12),
+              margin: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.red.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.error_outline, color: Colors.red),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      _errorMessage!,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
@@ -48,6 +147,7 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
+
           Expanded(
             child: _equipment.isEmpty
                 ? Center(
@@ -61,7 +161,7 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'У вас пока нет добавленного оборудования',
+                    'Нет доступного оборудования',
                     style: TextStyle(color: Colors.grey[600]),
                   ),
                 ],
@@ -70,89 +170,88 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
                 : ListView.builder(
               itemCount: _equipment.length,
               itemBuilder: (context, index) {
-                final item = _equipment[index];
+                final equip = _equipment[index];
                 return Card(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 60,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Icon(
-                            Icons.kitchen,
-                            color: Theme.of(context).colorScheme.primary,
-                            size: 30,
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                item['name'],
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium,
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'Тип: ${item['type']}',
-                                style:
-                                Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'Мощность: ${item['power']} Вт, Объем: ${item['capacity']} л',
-                                style:
-                                Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ],
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.edit),
-                          onPressed: () {
-                            _showEquipmentDialog(context, item);
-                          },
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.red),
-                          onPressed: () {
-                            setState(() {
-                              _equipment.removeAt(index);
-                            });
-                          },
-                        ),
-                      ],
+                  child: CheckboxListTile(
+                    title: Text(
+                      equip.displayName,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
+                    subtitle: Text(
+                      'Тип: ${equip.type}\nМощность: ${equip.power} Вт, Объем: ${equip.capacity} л',
+                    ),
+                    value: equip.isSelected,
+                    onChanged: (bool? value) {
+                      if (value != null) {
+                        setState(() {
+                          equip.isSelected = value;
+
+                          if (value) {
+                            if (!_userEquipmentIds.contains(equip.id)) {
+                              _userEquipmentIds.add(equip.id);
+                            }
+                          } else {
+                            _userEquipmentIds.remove(equip.id);
+                          }
+                        });
+                      }
+                    },
+                    secondary: Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Icon(
+                        Icons.kitchen,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    activeColor: Theme.of(context).colorScheme.primary,
                   ),
                 );
               },
             ),
           ),
+
+          // Информация о выбранных позициях
+          if (_equipment.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Выбрано: ${_userEquipmentIds.length} из ${_equipment.length}',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ),
+
+          // Кнопка добавления нового оборудования
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: OutlinedButton.icon(
+              onPressed: () {
+                _showAddEquipmentDialog(context);
+              },
+              icon: const Icon(Icons.add),
+              label: const Text('Добавить свое оборудование'),
+            ),
+          ),
+
+          // Кнопка сохранения
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: SizedBox(
               width: double.infinity,
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  _showEquipmentDialog(context, null);
-                },
-                icon: const Icon(Icons.add),
-                label: const Text('Добавить оборудование'),
+              child: ElevatedButton(
+                onPressed: _saveEquipment,
+                child: const Text('Сохранить'),
               ),
             ),
           ),
@@ -161,80 +260,131 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
     );
   }
 
-  void _showEquipmentDialog(BuildContext context, Map<String, dynamic>? equipment) {
-    final isEditing = equipment != null;
-    final nameController = TextEditingController(text: isEditing ? equipment['name'] : '');
-    final typeController = TextEditingController(text: isEditing ? equipment['type'] : '');
-    final powerController = TextEditingController(
-        text: isEditing ? equipment['power'].toString() : '');
-    final capacityController = TextEditingController(
-        text: isEditing ? equipment['capacity'].toString() : '');
+  void _showAddEquipmentDialog(BuildContext context) {
+    final nameController = TextEditingController();
+    final typeController = TextEditingController();
+    final powerController = TextEditingController(text: '800');
+    final capacityController = TextEditingController(text: '5');
+    String? errorMessage;
 
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(isEditing ? 'Редактировать оборудование' : 'Добавить оборудование'),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: nameController,
-                decoration: const InputDecoration(labelText: 'Название'),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: typeController,
-                decoration: const InputDecoration(labelText: 'Тип'),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: powerController,
-                decoration: const InputDecoration(labelText: 'Мощность (Вт)'),
-                keyboardType: TextInputType.number,
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: capacityController,
-                decoration: const InputDecoration(labelText: 'Объем (л)'),
-                keyboardType: TextInputType.number,
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Отмена'),
-          ),
-          TextButton(
-            onPressed: () {
-              final newEquipment = {
-                'id': isEditing ? equipment['id'] : _equipment.length + 1,
-                'name': nameController.text,
-                'type': typeController.text,
-                'power': int.tryParse(powerController.text) ?? 0,
-                'capacity': int.tryParse(capacityController.text) ?? 0,
-              };
+      builder: (context) => StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              title: Text('Добавить оборудование'),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Сообщение об ошибке (если есть)
+                    if (errorMessage != null) ...[
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.red.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          errorMessage!,
+                          style: TextStyle(color: Colors.red, fontSize: 12),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
 
-              setState(() {
-                if (isEditing) {
-                  final index = _equipment.indexWhere((e) => e['id'] == equipment['id']);
-                  if (index != -1) {
-                    _equipment[index] = newEquipment;
-                  }
-                } else {
-                  _equipment.add(newEquipment);
-                }
-              });
+                    TextField(
+                      controller: nameController,
+                      decoration: const InputDecoration(
+                        labelText: 'Название',
+                        helperText: 'Обязательное поле',
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: typeController,
+                      decoration: const InputDecoration(
+                        labelText: 'Тип',
+                        helperText: 'Например: Плита, Микроволновка и т.д.',
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: powerController,
+                      decoration: const InputDecoration(labelText: 'Мощность (Вт)'),
+                      keyboardType: TextInputType.number,
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: capacityController,
+                      decoration: const InputDecoration(labelText: 'Объем (л)'),
+                      keyboardType: TextInputType.number,
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Отмена'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    // Валидация
+                    if (nameController.text.isEmpty) {
+                      setDialogState(() {
+                        errorMessage = 'Пожалуйста, введите название оборудования';
+                      });
+                      return;
+                    }
 
-              Navigator.pop(context);
-            },
-            child: Text(isEditing ? 'Сохранить' : 'Добавить'),
-          ),
-        ],
+                    final power = int.tryParse(powerController.text) ?? 0;
+                    final capacity = int.tryParse(capacityController.text) ?? 0;
+
+                    if (power < 0 || power > 10000) {
+                      setDialogState(() {
+                        errorMessage = 'Мощность должна быть в диапазоне 0-10000 Вт';
+                      });
+                      return;
+                    }
+
+                    if (capacity < 0 || capacity > 1000) {
+                      setDialogState(() {
+                        errorMessage = 'Объем должен быть в диапазоне 0-1000 л';
+                      });
+                      return;
+                    }
+
+                    // Создаем новое оборудование
+                    final dataRepository = Provider.of<DataRepository>(context, listen: false);
+                    final maxId = _equipment.isEmpty ? 0 : _equipment.map((e) => e.id).reduce((a, b) => a > b ? a : b);
+
+                    final newEquipment = Equipment(
+                      id: maxId + 1, // Временный ID (должен быть заменен сервером)
+                      type: typeController.text.isNotEmpty ? typeController.text : 'Не указан',
+                      power: power,
+                      capacity: capacity,
+                      customName: nameController.text,
+                      isSelected: true, // Автоматически выбираем новое оборудование
+                    );
+
+                    setState(() {
+                      _equipment.add(newEquipment);
+                      _userEquipmentIds.add(newEquipment.id);
+                    });
+
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Оборудование добавлено')),
+                    );
+                  },
+                  child: const Text('Добавить'),
+                ),
+              ],
+            );
+          }
       ),
     );
   }

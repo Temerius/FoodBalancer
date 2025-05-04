@@ -74,4 +74,9 @@ enum Gender {
         return 'Женский';
     }
   }
+
+  String toPostgreSqlValue() {
+    final value = toString().split('.').last;
+    return value[0].toUpperCase() + value.substring(1).toLowerCase();
+  }
 }

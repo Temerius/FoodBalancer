@@ -5,7 +5,10 @@ import '../models/user.dart';
 import 'api_service.dart';
 
 class AuthService {
-  final ApiService _apiService = ApiService();
+  final ApiService _apiService;
+
+  AuthService({ApiService? apiService}) :
+        _apiService = apiService ?? ApiService();
   static const String _tokenKey = 'auth_token';
 
   // Инициализация - проверяем наличие сохраненного токена
@@ -86,9 +89,11 @@ class AuthService {
     final String token = response['token'];
     final user = User.fromJson(response['user']);
 
+    // Устанавливаем токен в ApiService
+    _apiService.setToken(token);
+
     // Сохраняем токен
     await _saveToken(token);
-    _apiService.setToken(token);
 
     return user;
   }
@@ -172,5 +177,10 @@ class AuthService {
   Future<bool> isLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool(_isLoggedInKey) ?? false;
+  }
+
+  // В классе AuthService (services/auth_service.dart)
+  String? getToken() {
+    return _tokenKey;
   }
 }

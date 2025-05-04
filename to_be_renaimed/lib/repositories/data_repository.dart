@@ -12,7 +12,11 @@ import '../services/api_service.dart';
 import '../utils/cache_manager.dart';
 
 class DataRepository with ChangeNotifier {
-  final ApiService _apiService = ApiService();
+
+  final ApiService _apiService;
+
+  DataRepository({ApiService? apiService}) :
+        _apiService = apiService ?? ApiService();
 
   // Current session data
   User? _currentUser;
@@ -122,17 +126,55 @@ class DataRepository with ChangeNotifier {
   }
 
   // Update user profile
+  // Обновление профиля пользователя
+  // Обновление профиля пользователя
+  // Обновление профиля пользователя
   Future<bool> updateUserProfile(User updatedUser) async {
     _setLoading(true);
     try {
-      // Here you would typically call your API service
-      // For example:
-      // final response = await _apiService.put('/api/users/profile/', updatedUser.toJson());
-      // _currentUser = User.fromJson(response);
+      // Формируем данные для запроса
+      final Map<String, dynamic> userData = {
+        'usr_name': updatedUser.name,
+        'usr_height': updatedUser.height,
+        'usr_weight': updatedUser.weight,
+        'usr_age': updatedUser.age,
+        'usr_cal_day': updatedUser.caloriesPerDay,
+      };
 
-      // For now, let's just update the local user
-      _currentUser = updatedUser;
-      await _updateCache();
+      // Добавляем пол, если он указан, точно в формате, соответствующем enum в PostgreSQL
+      if (updatedUser.gender != null) {
+        userData['usr_gender'] = updatedUser.gender!.toPostgreSqlValue();
+      }
+
+      print("Отправляем данные на сервер: ${jsonEncode(userData)}");
+
+      // Отправляем запрос на обновление профиля
+      final response = await _apiService.put('/api/users/profile/', userData);
+
+      // Обновляем данные об аллергенах, если они указаны
+      if (updatedUser.allergenIds.isNotEmpty) {
+        await _apiService.put('/api/users/allergies/', {
+          'allergen_ids': updatedUser.allergenIds,
+        });
+      }
+
+      // Обновляем данные об оборудовании, если оно указано
+      if (updatedUser.equipmentIds.isNotEmpty) {
+        await _apiService.put('/api/users/equipment/', {
+          'equipment_ids': updatedUser.equipmentIds,
+        });
+      }
+
+      // Если пришел ответ от сервера, обновляем локальную копию пользователя
+      if (response.containsKey('usr_id')) {
+        _currentUser = User.fromJson(response);
+      } else {
+        // Если сервер не вернул данные пользователя, используем переданные
+        _currentUser = updatedUser;
+      }
+
+      // Обновляем кэш
+      await CacheManager.saveUser(_currentUser!.toJson());
 
       _setLoading(false);
       notifyListeners();
@@ -141,6 +183,43 @@ class DataRepository with ChangeNotifier {
       _setError(e.toString());
       _setLoading(false);
       return false;
+    }
+  }
+
+  Future<void> refreshUserData() async {
+    _setLoading(true);
+    try {
+      // Запрашиваем актуальные данные пользователя
+      await _fetchUser();
+
+      // Запрашиваем аллергены пользователя
+      final allergensResponse = await _apiService.get('/api/users/allergies/');
+      if (allergensResponse.containsKey('results')) {
+        final List<dynamic> userAllergensJson = allergensResponse['results'];
+        _currentUser!.allergenIds = userAllergensJson
+            .map<int>((item) => item['alg_id'] as int)
+            .toList();
+      }
+
+      // Запрашиваем оборудование пользователя
+      final equipmentResponse = await _apiService.get('/api/users/equipment/');
+      if (equipmentResponse.containsKey('results')) {
+        final List<dynamic> userEquipmentJson = equipmentResponse['results'];
+        _currentUser!.equipmentIds = userEquipmentJson
+            .map<int>((item) => item['eqp_id'] as int)
+            .toList();
+      }
+
+      // Обновляем связанные данные пользователя
+      await loadUserData();
+
+      // Обновляем кэш
+      await CacheManager.saveUser(_currentUser!.toJson());
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
+      notifyListeners();
     }
   }
 

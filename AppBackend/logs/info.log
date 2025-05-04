@@ -51,3 +51,344 @@ INFO 2025-05-04 15:18:32,124 basehttp 24448 28428 "POST /api/users/logout/ HTTP/
 INFO 2025-05-04 15:22:49,424 views 24448 27312 Login attempt: email=w0rkma1lmoc@gmail.com
 INFO 2025-05-04 15:22:49,639 views 24448 27312 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.21s
 INFO 2025-05-04 15:22:49,666 basehttp 24448 27312 "POST /api/users/login/ HTTP/1.1" 200 216
+INFO 2025-05-04 22:12:08,026 autoreload 24072 1820 Watching for file changes with StatReloader
+INFO 2025-05-04 22:12:08,446 wsgi 24072 22508 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-04 22:12:08,447 wsgi 24072 22508 Environment: config.settings
+INFO 2025-05-04 22:12:08,447 wsgi 24072 22508 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-04 22:12:08,450 wsgi 24072 22508 Application initialized successfully
+INFO 2025-05-04 22:21:27,927 views 24072 29016 Registration attempt: email=test_u6wq1ktd@example.com
+INFO 2025-05-04 22:21:28,818 views 24072 29016 User registered successfully: user_id=90, email=test_u6wq1ktd@example.com, time=0.89s
+INFO 2025-05-04 22:21:29,343 basehttp 24072 29016 "POST /api/users/register/ HTTP/1.1" 201 232
+INFO 2025-05-04 22:21:29,502 views 24072 15944 Login attempt: email=test_u6wq1ktd@example.com
+INFO 2025-05-04 22:21:29,911 views 24072 15944 User login successful: user_id=90, email=test_u6wq1ktd@example.com, time=0.41s
+INFO 2025-05-04 22:21:29,939 basehttp 24072 15944 "POST /api/users/login/ HTTP/1.1" 200 232
+INFO 2025-05-04 22:21:30,241 views 24072 14132 Profile accessed: user_id=90
+INFO 2025-05-04 22:21:30,272 basehttp 24072 14132 "GET /api/users/profile/ HTTP/1.1" 200 172
+INFO 2025-05-04 22:21:30,481 ingredient 24072 28320 Listing refrigerator ingredients: user_id=90
+INFO 2025-05-04 22:21:30,607 ingredient 24072 28320 Retrieved 0 refrigerator ingredients for user_id=90, time=0.13s
+INFO 2025-05-04 22:21:30,627 basehttp 24072 28320 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-04 22:21:30,782 basehttp 24072 23684 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-04 22:21:30,877 allergen 24072 6080 Listing all allergens: user_id=90
+INFO 2025-05-04 22:21:30,910 allergen 24072 6080 Retrieved 50 allergens, user_id=90, time=0.03s
+INFO 2025-05-04 22:21:30,930 basehttp 24072 6080 "GET /api/allergens/ HTTP/1.1" 200 766
+INFO 2025-05-04 22:21:30,989 equipment 24072 25720 Listing all equipment: user_id=90
+INFO 2025-05-04 22:21:31,011 equipment 24072 25720 Retrieved 73 equipment items, user_id=90, time=0.02s
+INFO 2025-05-04 22:21:31,032 basehttp 24072 25720 "GET /api/equipment/ HTTP/1.1" 200 3963
+INFO 2025-05-04 22:21:31,099 views 24072 19536 Logout attempt: user_id=90
+INFO 2025-05-04 22:21:31,104 views 24072 19536 User logged out successfully: user_id=90
+INFO 2025-05-04 22:21:31,124 basehttp 24072 19536 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-04 22:21:38,467 views 24072 25684 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-04 22:21:38,819 views 24072 25684 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.35s
+INFO 2025-05-04 22:21:38,873 basehttp 24072 25684 "POST /api/users/login/ HTTP/1.1" 200 216
+WARNING 2025-05-04 22:22:15,590 basehttp 24072 25340 "PUT /api/users/profile/ HTTP/1.1" 401 82
+INFO 2025-05-04 22:24:42,786 autoreload 24072 1820 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\users\views.py changed, reloading.
+INFO 2025-05-04 22:24:43,541 autoreload 33936 12412 Watching for file changes with StatReloader
+INFO 2025-05-04 22:24:43,779 wsgi 33936 7636 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-04 22:24:43,781 wsgi 33936 7636 Environment: config.settings
+INFO 2025-05-04 22:24:43,781 wsgi 33936 7636 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-04 22:24:43,784 wsgi 33936 7636 Application initialized successfully
+WARNING 2025-05-04 22:26:35,363 basehttp 33936 30532 "PUT /api/users/profile/ HTTP/1.1" 401 82
+INFO 2025-05-04 22:35:47,077 views 33936 30276 Registration attempt: email=test_7c4ih133@example.com
+INFO 2025-05-04 22:35:47,492 views 33936 30276 User registered successfully: user_id=91, email=test_7c4ih133@example.com, time=0.41s
+INFO 2025-05-04 22:35:47,554 basehttp 33936 30276 "POST /api/users/register/ HTTP/1.1" 201 232
+INFO 2025-05-04 22:35:47,649 views 33936 27936 Login attempt: email=test_7c4ih133@example.com
+INFO 2025-05-04 22:35:47,995 views 33936 27936 User login successful: user_id=91, email=test_7c4ih133@example.com, time=0.35s
+INFO 2025-05-04 22:35:48,032 basehttp 33936 27936 "POST /api/users/login/ HTTP/1.1" 200 232
+INFO 2025-05-04 22:35:48,128 views 33936 24468 Profile accessed: user_id=91
+INFO 2025-05-04 22:35:48,156 basehttp 33936 24468 "GET /api/users/profile/ HTTP/1.1" 200 172
+INFO 2025-05-04 22:35:48,241 ingredient 33936 27876 Listing refrigerator ingredients: user_id=91
+INFO 2025-05-04 22:35:48,256 ingredient 33936 27876 Retrieved 0 refrigerator ingredients for user_id=91, time=0.02s
+INFO 2025-05-04 22:35:48,286 basehttp 33936 27876 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-04 22:35:48,385 basehttp 33936 32492 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-04 22:35:48,454 allergen 33936 10624 Listing all allergens: user_id=91
+INFO 2025-05-04 22:35:48,463 allergen 33936 10624 Retrieved 50 allergens, user_id=91, time=0.01s
+INFO 2025-05-04 22:35:48,488 basehttp 33936 10624 "GET /api/allergens/ HTTP/1.1" 200 766
+INFO 2025-05-04 22:35:48,586 equipment 33936 36160 Listing all equipment: user_id=91
+INFO 2025-05-04 22:35:48,596 equipment 33936 36160 Retrieved 73 equipment items, user_id=91, time=0.01s
+INFO 2025-05-04 22:35:48,631 basehttp 33936 36160 "GET /api/equipment/ HTTP/1.1" 200 3963
+INFO 2025-05-04 22:35:48,745 views 33936 27112 Logout attempt: user_id=91
+INFO 2025-05-04 22:35:48,751 views 33936 27112 User logged out successfully: user_id=91
+INFO 2025-05-04 22:35:48,773 basehttp 33936 27112 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-04 22:36:02,027 views 33936 26516 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-04 22:36:02,376 views 33936 26516 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.35s
+INFO 2025-05-04 22:36:02,408 basehttp 33936 26516 "POST /api/users/login/ HTTP/1.1" 200 216
+WARNING 2025-05-04 22:36:21,863 basehttp 33936 16768 "PUT /api/users/profile/ HTTP/1.1" 401 82
+INFO 2025-05-04 22:44:58,291 views 33936 6156 Registration attempt: email=test_hgl5hjwq@example.com
+INFO 2025-05-04 22:44:58,677 views 33936 6156 User registered successfully: user_id=92, email=test_hgl5hjwq@example.com, time=0.39s
+INFO 2025-05-04 22:44:58,729 basehttp 33936 6156 "POST /api/users/register/ HTTP/1.1" 201 232
+INFO 2025-05-04 22:44:58,892 views 33936 13924 Login attempt: email=test_hgl5hjwq@example.com
+INFO 2025-05-04 22:44:59,223 views 33936 13924 User login successful: user_id=92, email=test_hgl5hjwq@example.com, time=0.33s
+INFO 2025-05-04 22:44:59,252 basehttp 33936 13924 "POST /api/users/login/ HTTP/1.1" 200 232
+INFO 2025-05-04 22:44:59,323 views 33936 30008 Profile accessed: user_id=92
+INFO 2025-05-04 22:44:59,351 basehttp 33936 30008 "GET /api/users/profile/ HTTP/1.1" 200 172
+INFO 2025-05-04 22:44:59,404 ingredient 33936 27528 Listing refrigerator ingredients: user_id=92
+INFO 2025-05-04 22:44:59,409 ingredient 33936 27528 Retrieved 0 refrigerator ingredients for user_id=92, time=0.01s
+INFO 2025-05-04 22:44:59,431 basehttp 33936 27528 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-04 22:44:59,533 basehttp 33936 34912 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-04 22:44:59,590 allergen 33936 32744 Listing all allergens: user_id=92
+INFO 2025-05-04 22:44:59,597 allergen 33936 32744 Retrieved 50 allergens, user_id=92, time=0.01s
+INFO 2025-05-04 22:44:59,616 basehttp 33936 32744 "GET /api/allergens/ HTTP/1.1" 200 766
+INFO 2025-05-04 22:44:59,722 equipment 33936 36284 Listing all equipment: user_id=92
+INFO 2025-05-04 22:44:59,729 equipment 33936 36284 Retrieved 73 equipment items, user_id=92, time=0.01s
+INFO 2025-05-04 22:44:59,747 basehttp 33936 36284 "GET /api/equipment/ HTTP/1.1" 200 3963
+INFO 2025-05-04 22:44:59,818 views 33936 29532 Logout attempt: user_id=92
+INFO 2025-05-04 22:44:59,822 views 33936 29532 User logged out successfully: user_id=92
+INFO 2025-05-04 22:44:59,842 basehttp 33936 29532 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-04 22:45:12,532 views 33936 8724 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-04 22:45:12,851 views 33936 8724 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.32s
+INFO 2025-05-04 22:45:12,877 basehttp 33936 8724 "POST /api/users/login/ HTTP/1.1" 200 216
+INFO 2025-05-04 22:45:25,098 views 33936 8724 Profile update attempt: user_id=66
+ERROR 2025-05-04 22:45:25,586 basehttp 33936 8724 "PUT /api/users/profile/ HTTP/1.1" 500 28338
+INFO 2025-05-04 22:49:54,012 views 33936 33704 Registration attempt: email=test_bhgy6vmq@example.com
+INFO 2025-05-04 22:49:54,401 views 33936 33704 User registered successfully: user_id=93, email=test_bhgy6vmq@example.com, time=0.39s
+INFO 2025-05-04 22:49:54,436 basehttp 33936 33704 "POST /api/users/register/ HTTP/1.1" 201 232
+INFO 2025-05-04 22:49:54,558 views 33936 33232 Login attempt: email=test_bhgy6vmq@example.com
+INFO 2025-05-04 22:49:54,882 views 33936 33232 User login successful: user_id=93, email=test_bhgy6vmq@example.com, time=0.32s
+INFO 2025-05-04 22:49:54,926 basehttp 33936 33232 "POST /api/users/login/ HTTP/1.1" 200 232
+INFO 2025-05-04 22:49:55,019 views 33936 6040 Profile accessed: user_id=93
+INFO 2025-05-04 22:49:55,057 basehttp 33936 6040 "GET /api/users/profile/ HTTP/1.1" 200 172
+INFO 2025-05-04 22:49:55,128 ingredient 33936 35732 Listing refrigerator ingredients: user_id=93
+INFO 2025-05-04 22:49:55,132 ingredient 33936 35732 Retrieved 0 refrigerator ingredients for user_id=93, time=0.00s
+INFO 2025-05-04 22:49:55,151 basehttp 33936 35732 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-04 22:49:55,255 basehttp 33936 23584 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-04 22:49:55,327 allergen 33936 19132 Listing all allergens: user_id=93
+INFO 2025-05-04 22:49:55,331 allergen 33936 19132 Retrieved 50 allergens, user_id=93, time=0.00s
+INFO 2025-05-04 22:49:55,350 basehttp 33936 19132 "GET /api/allergens/ HTTP/1.1" 200 766
+INFO 2025-05-04 22:49:55,524 equipment 33936 32032 Listing all equipment: user_id=93
+INFO 2025-05-04 22:49:55,530 equipment 33936 32032 Retrieved 73 equipment items, user_id=93, time=0.01s
+INFO 2025-05-04 22:49:55,555 basehttp 33936 32032 "GET /api/equipment/ HTTP/1.1" 200 3963
+INFO 2025-05-04 22:49:55,623 views 33936 34868 Logout attempt: user_id=93
+INFO 2025-05-04 22:49:55,627 views 33936 34868 User logged out successfully: user_id=93
+INFO 2025-05-04 22:49:55,648 basehttp 33936 34868 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-04 22:50:07,205 views 33936 35624 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-04 22:50:07,544 views 33936 35624 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.34s
+INFO 2025-05-04 22:50:07,563 basehttp 33936 35624 "POST /api/users/login/ HTTP/1.1" 200 216
+INFO 2025-05-04 22:50:23,164 views 33936 2104 Profile update attempt: user_id=66
+WARNING 2025-05-04 22:50:23,167 views 33936 2104 Profile update validation error: user_id=66, errors={'usr_gender': [ErrorDetail(string='Значения MALE нет среди допустимых вариантов.', code='invalid_choice')]}
+WARNING 2025-05-04 22:50:23,186 basehttp 33936 2104 "PUT /api/users/profile/ HTTP/1.1" 400 99
+INFO 2025-05-04 22:53:16,397 views 33936 7860 Registration attempt: email=test_adt7kxy2@example.com
+INFO 2025-05-04 22:53:16,767 views 33936 7860 User registered successfully: user_id=94, email=test_adt7kxy2@example.com, time=0.37s
+INFO 2025-05-04 22:53:16,814 basehttp 33936 7860 "POST /api/users/register/ HTTP/1.1" 201 232
+INFO 2025-05-04 22:53:16,930 views 33936 20504 Login attempt: email=test_adt7kxy2@example.com
+INFO 2025-05-04 22:53:17,248 views 33936 20504 User login successful: user_id=94, email=test_adt7kxy2@example.com, time=0.32s
+INFO 2025-05-04 22:53:17,277 basehttp 33936 20504 "POST /api/users/login/ HTTP/1.1" 200 232
+INFO 2025-05-04 22:53:17,364 views 33936 21864 Profile accessed: user_id=94
+INFO 2025-05-04 22:53:17,396 basehttp 33936 21864 "GET /api/users/profile/ HTTP/1.1" 200 172
+INFO 2025-05-04 22:53:17,456 ingredient 33936 35012 Listing refrigerator ingredients: user_id=94
+INFO 2025-05-04 22:53:17,459 ingredient 33936 35012 Retrieved 0 refrigerator ingredients for user_id=94, time=0.00s
+INFO 2025-05-04 22:53:17,478 basehttp 33936 35012 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-04 22:53:17,582 basehttp 33936 27540 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-04 22:53:17,671 allergen 33936 28588 Listing all allergens: user_id=94
+INFO 2025-05-04 22:53:17,675 allergen 33936 28588 Retrieved 50 allergens, user_id=94, time=0.00s
+INFO 2025-05-04 22:53:17,694 basehttp 33936 28588 "GET /api/allergens/ HTTP/1.1" 200 766
+INFO 2025-05-04 22:53:17,762 equipment 33936 30396 Listing all equipment: user_id=94
+INFO 2025-05-04 22:53:17,770 equipment 33936 30396 Retrieved 73 equipment items, user_id=94, time=0.01s
+INFO 2025-05-04 22:53:17,796 basehttp 33936 30396 "GET /api/equipment/ HTTP/1.1" 200 3963
+INFO 2025-05-04 22:53:17,999 views 33936 6740 Logout attempt: user_id=94
+INFO 2025-05-04 22:53:18,003 views 33936 6740 User logged out successfully: user_id=94
+INFO 2025-05-04 22:53:18,021 basehttp 33936 6740 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-04 22:53:26,681 views 33936 20612 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-04 22:53:26,993 views 33936 20612 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.31s
+INFO 2025-05-04 22:53:27,015 basehttp 33936 20612 "POST /api/users/login/ HTTP/1.1" 200 216
+INFO 2025-05-04 22:53:33,340 views 33936 20612 Profile update attempt: user_id=66
+INFO 2025-05-04 22:53:33,350 views 33936 20612 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-04 22:53:33,376 basehttp 33936 20612 "PUT /api/users/profile/ HTTP/1.1" 200 143
+INFO 2025-05-04 22:53:46,071 views 33936 20612 Profile update attempt: user_id=66
+WARNING 2025-05-04 22:53:46,071 views 33936 20612 Profile update validation error: user_id=66, errors={'usr_gender': [ErrorDetail(string='Значения MALE нет среди допустимых вариантов.', code='invalid_choice')]}
+WARNING 2025-05-04 22:53:46,087 basehttp 33936 20612 "PUT /api/users/profile/ HTTP/1.1" 400 99
+INFO 2025-05-04 22:54:00,805 views 33936 20612 Profile update attempt: user_id=66
+INFO 2025-05-04 22:54:00,812 views 33936 20612 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-04 22:54:00,843 basehttp 33936 20612 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-04 22:54:16,507 views 33936 25132 Profile update attempt: user_id=66
+INFO 2025-05-04 22:54:16,513 views 33936 25132 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-04 22:54:16,538 basehttp 33936 25132 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-04 22:54:48,669 views 33936 22916 Profile update attempt: user_id=66
+WARNING 2025-05-04 22:54:48,671 views 33936 22916 Profile update validation error: user_id=66, errors={'usr_gender': [ErrorDetail(string='Значения MALE нет среди допустимых вариантов.', code='invalid_choice')]}
+WARNING 2025-05-04 22:54:48,687 basehttp 33936 22916 "PUT /api/users/profile/ HTTP/1.1" 400 99
+INFO 2025-05-04 22:57:31,539 views 33936 2148 Profile update attempt: user_id=66
+WARNING 2025-05-04 22:57:31,541 views 33936 2148 Profile update validation error: user_id=66, errors={'usr_gender': [ErrorDetail(string='Значения MALE нет среди допустимых вариантов.', code='invalid_choice')]}
+WARNING 2025-05-04 22:57:31,560 basehttp 33936 2148 "PUT /api/users/profile/ HTTP/1.1" 400 99
+INFO 2025-05-04 22:57:37,842 views 33936 2148 Profile update attempt: user_id=66
+WARNING 2025-05-04 22:57:37,843 views 33936 2148 Profile update validation error: user_id=66, errors={'usr_gender': [ErrorDetail(string='Значения MALE нет среди допустимых вариантов.', code='invalid_choice')]}
+WARNING 2025-05-04 22:57:37,859 basehttp 33936 2148 "PUT /api/users/profile/ HTTP/1.1" 400 99
+INFO 2025-05-04 23:05:47,117 views 33936 14584 Profile accessed: user_id=66
+INFO 2025-05-04 23:05:47,153 basehttp 33936 14584 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-04 23:05:47,259 ingredient 33936 14584 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-04 23:05:47,285 ingredient 33936 14584 Retrieved 0 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-04 23:05:47,291 meal_plan 33936 20880 Getting current meal plan for user_id=66, date=2025-05-04
+WARNING 2025-05-04 23:05:47,350 meal_plan 33936 20880 No current meal plan found for user_id=66, time=0.06s
+INFO 2025-05-04 23:05:47,363 basehttp 33936 14584 "GET /api/refrigerator/ HTTP/1.1" 200 52
+WARNING 2025-05-04 23:05:47,418 basehttp 33936 20880 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-04 23:05:47,423 basehttp 33936 7668 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-04 23:05:47,442 basehttp 33936 36516 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-04 23:05:55,769 views 33936 7668 Profile update attempt: user_id=66
+ERROR 2025-05-04 23:05:55,929 basehttp 33936 7668 "PUT /api/users/profile/ HTTP/1.1" 500 28338
+INFO 2025-05-04 23:06:47,558 autoreload 34608 34168 Watching for file changes with StatReloader
+INFO 2025-05-04 23:06:47,848 wsgi 34608 36496 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-04 23:06:47,848 wsgi 34608 36496 Environment: config.settings
+INFO 2025-05-04 23:06:47,848 wsgi 34608 36496 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-04 23:06:47,852 wsgi 34608 36496 Application initialized successfully
+INFO 2025-05-04 23:06:55,656 views 34608 26220 Profile update attempt: user_id=66
+ERROR 2025-05-04 23:06:55,818 basehttp 34608 26220 "PUT /api/users/profile/ HTTP/1.1" 500 28338
+INFO 2025-05-04 23:13:14,674 views 34608 36588 Profile update attempt: user_id=66
+WARNING 2025-05-04 23:13:14,675 views 34608 36588 Profile update validation error: user_id=66, errors={'usr_gender': [ErrorDetail(string='Значения Male нет среди допустимых вариантов.', code='invalid_choice')]}
+WARNING 2025-05-04 23:13:14,693 basehttp 34608 36588 "PUT /api/users/profile/ HTTP/1.1" 400 99
+INFO 2025-05-04 23:14:14,645 autoreload 34608 34168 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\enums.py changed, reloading.
+INFO 2025-05-04 23:14:15,551 autoreload 30008 3148 Watching for file changes with StatReloader
+INFO 2025-05-04 23:14:15,771 wsgi 30008 9208 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-04 23:14:15,771 wsgi 30008 9208 Environment: config.settings
+INFO 2025-05-04 23:14:15,772 wsgi 30008 9208 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-04 23:14:15,775 wsgi 30008 9208 Application initialized successfully
+INFO 2025-05-04 23:15:13,754 autoreload 30008 3148 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\users\serializers.py changed, reloading.
+INFO 2025-05-04 23:15:14,360 autoreload 34964 18268 Watching for file changes with StatReloader
+INFO 2025-05-04 23:15:14,578 wsgi 34964 35224 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-04 23:15:14,578 wsgi 34964 35224 Environment: config.settings
+INFO 2025-05-04 23:15:14,578 wsgi 34964 35224 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-04 23:15:14,581 wsgi 34964 35224 Application initialized successfully
+INFO 2025-05-04 23:15:43,814 autoreload 34964 18268 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\users\serializers.py changed, reloading.
+INFO 2025-05-04 23:15:45,014 autoreload 23492 36748 Watching for file changes with StatReloader
+INFO 2025-05-04 23:15:45,274 wsgi 23492 33636 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-04 23:15:45,274 wsgi 23492 33636 Environment: config.settings
+INFO 2025-05-04 23:15:45,275 wsgi 23492 33636 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-04 23:15:45,281 wsgi 23492 33636 Application initialized successfully
+INFO 2025-05-04 23:16:09,440 autoreload 23492 36748 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\users\views.py changed, reloading.
+INFO 2025-05-04 23:16:10,278 autoreload 32312 11868 Watching for file changes with StatReloader
+INFO 2025-05-04 23:16:10,572 wsgi 32312 33904 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-04 23:16:10,574 wsgi 32312 33904 Environment: config.settings
+INFO 2025-05-04 23:16:10,574 wsgi 32312 33904 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-04 23:16:10,579 wsgi 32312 33904 Application initialized successfully
+INFO 2025-05-04 23:16:39,118 autoreload 32012 4664 Watching for file changes with StatReloader
+INFO 2025-05-04 23:16:39,295 wsgi 32012 34012 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-04 23:16:39,295 wsgi 32012 34012 Environment: config.settings
+INFO 2025-05-04 23:16:39,295 wsgi 32012 34012 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-04 23:16:39,298 wsgi 32012 34012 Application initialized successfully
+INFO 2025-05-04 23:17:17,516 views 32012 20620 Profile accessed: user_id=66
+INFO 2025-05-04 23:17:17,568 basehttp 32012 20620 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-04 23:17:17,706 ingredient 32012 20620 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-04 23:17:17,714 meal_plan 32012 30236 Getting current meal plan for user_id=66, date=2025-05-04
+WARNING 2025-05-04 23:17:17,720 meal_plan 32012 30236 No current meal plan found for user_id=66, time=0.01s
+INFO 2025-05-04 23:17:17,727 ingredient 32012 20620 Retrieved 0 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-04 23:17:17,778 basehttp 32012 20620 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-04 23:17:17,799 basehttp 32012 37528 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-04 23:17:17,818 basehttp 32012 27512 "GET /api/favorites/ HTTP/1.1" 200 52
+WARNING 2025-05-04 23:17:17,831 basehttp 32012 30236 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-04 23:17:23,500 views 32012 27512 Profile update attempt: user_id=66
+INFO 2025-05-04 23:17:23,559 views 32012 27512 Profile updated successfully: user_id=66, time=0.06s
+INFO 2025-05-04 23:17:23,577 basehttp 32012 27512 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-04 23:18:48,416 views 32012 37264 Profile update attempt: user_id=66
+INFO 2025-05-04 23:18:48,424 views 32012 37264 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-04 23:18:48,442 basehttp 32012 37264 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-04 23:19:47,506 views 32012 9980 Profile accessed: user_id=66
+INFO 2025-05-04 23:19:47,518 basehttp 32012 9980 "GET /api/users/profile/ HTTP/1.1" 200 153
+WARNING 2025-05-04 23:19:47,690 basehttp 32012 9980 "GET /api/users/allergies/ HTTP/1.1" 404 38591
+INFO 2025-05-04 23:19:48,761 views 32012 9980 Profile accessed: user_id=66
+INFO 2025-05-04 23:19:48,775 basehttp 32012 9980 "GET /api/users/profile/ HTTP/1.1" 200 153
+WARNING 2025-05-04 23:19:48,824 basehttp 32012 9980 "GET /api/users/allergies/ HTTP/1.1" 404 38590
+INFO 2025-05-04 23:20:06,306 views 32012 35872 Profile update attempt: user_id=66
+INFO 2025-05-04 23:20:06,319 views 32012 35872 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-04 23:20:06,346 basehttp 32012 35872 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-04 23:20:54,437 views 32012 4228 Profile update attempt: user_id=66
+INFO 2025-05-04 23:20:54,446 views 32012 4228 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-04 23:20:54,472 basehttp 32012 4228 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-04 23:26:39,209 views 32012 24140 Profile accessed: user_id=66
+INFO 2025-05-04 23:26:39,227 basehttp 32012 24140 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-04 23:26:39,364 ingredient 32012 24140 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-04 23:26:39,367 ingredient 32012 24140 Retrieved 0 refrigerator ingredients for user_id=66, time=0.00s
+INFO 2025-05-04 23:26:39,392 basehttp 32012 24140 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-04 23:26:39,481 meal_plan 32012 31672 Getting current meal plan for user_id=66, date=2025-05-04
+WARNING 2025-05-04 23:26:39,485 meal_plan 32012 31672 No current meal plan found for user_id=66, time=0.00s
+INFO 2025-05-04 23:26:39,503 basehttp 32012 32340 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-04 23:26:39,528 basehttp 32012 27972 "GET /api/shopping-list/ HTTP/1.1" 200 52
+WARNING 2025-05-04 23:26:39,538 basehttp 32012 31672 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-04 23:26:59,908 views 32012 21128 Profile update attempt: user_id=66
+INFO 2025-05-04 23:26:59,920 views 32012 21128 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-04 23:26:59,943 basehttp 32012 21128 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-04 23:29:18,975 views 32012 6136 Profile accessed: user_id=66
+INFO 2025-05-04 23:29:18,993 basehttp 32012 6136 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-04 23:29:19,150 meal_plan 32012 22068 Getting current meal plan for user_id=66, date=2025-05-04
+WARNING 2025-05-04 23:29:19,154 meal_plan 32012 22068 No current meal plan found for user_id=66, time=0.00s
+INFO 2025-05-04 23:29:19,163 ingredient 32012 36940 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-04 23:29:19,169 ingredient 32012 36940 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-04 23:29:19,225 basehttp 32012 22512 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-04 23:29:19,241 basehttp 32012 6136 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-04 23:29:19,242 basehttp 32012 36940 "GET /api/refrigerator/ HTTP/1.1" 200 52
+WARNING 2025-05-04 23:29:19,253 basehttp 32012 22068 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-04 23:29:30,211 views 32012 36940 Profile update attempt: user_id=66
+INFO 2025-05-04 23:29:30,222 views 32012 36940 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-04 23:29:30,245 basehttp 32012 36940 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-04 23:31:43,377 views 32012 22916 Profile accessed: user_id=66
+INFO 2025-05-04 23:31:43,396 basehttp 32012 22916 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-04 23:31:43,540 ingredient 32012 33324 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-04 23:31:43,543 meal_plan 32012 29660 Getting current meal plan for user_id=66, date=2025-05-04
+INFO 2025-05-04 23:31:43,546 ingredient 32012 33324 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+WARNING 2025-05-04 23:31:43,548 meal_plan 32012 29660 No current meal plan found for user_id=66, time=0.01s
+INFO 2025-05-04 23:31:43,577 basehttp 32012 22916 "GET /api/favorites/ HTTP/1.1" 200 52
+WARNING 2025-05-04 23:31:43,601 basehttp 32012 29660 "GET /api/meal-plans/current/ HTTP/1.1" 404 68
+INFO 2025-05-04 23:31:43,613 basehttp 32012 23996 "GET /api/shopping-list/ HTTP/1.1" 200 52
+INFO 2025-05-04 23:31:43,623 basehttp 32012 33324 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-04 23:31:46,813 allergen 32012 33324 Listing all allergens: user_id=66
+INFO 2025-05-04 23:31:46,820 equipment 32012 23996 Listing all equipment: user_id=66
+INFO 2025-05-04 23:31:46,828 ingredient 32012 29660 Listing ingredient types: user_id=66, params=<QueryDict: {}>
+INFO 2025-05-04 23:31:46,843 allergen 32012 33324 Retrieved 50 allergens, user_id=66, time=0.03s
+INFO 2025-05-04 23:31:46,853 equipment 32012 23996 Retrieved 73 equipment items, user_id=66, time=0.03s
+INFO 2025-05-04 23:31:46,877 views 32012 30924 Profile accessed: user_id=66
+INFO 2025-05-04 23:31:46,934 recipe 32012 22916 Listing recipes: user_id=66, params=<QueryDict: {}>
+INFO 2025-05-04 23:31:46,952 basehttp 32012 30924 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-04 23:31:46,994 basehttp 32012 23996 "GET /api/equipment/ HTTP/1.1" 200 3963
+INFO 2025-05-04 23:31:47,030 basehttp 32012 33324 "GET /api/allergens/ HTTP/1.1" 200 766
+ERROR 2025-05-04 23:31:47,155 basehttp 32012 29660 "GET /api/ingredient-types/ HTTP/1.1" 500 27895
+INFO 2025-05-04 23:31:47,290 basehttp 32012 22916 "GET /api/recipes/ HTTP/1.1" 200 3102
+INFO 2025-05-04 23:31:47,452 recipe 32012 33324 Recipe viewed: recipe_id=1, title='Classic Spaghetti Carbonara', user_id=66
+ERROR 2025-05-04 23:31:47,611 basehttp 32012 33324 "GET /api/recipes/1/ HTTP/1.1" 500 30627
+INFO 2025-05-04 23:31:47,689 recipe 32012 33324 Recipe viewed: recipe_id=2, title='Vegetarian Lentil Curry', user_id=66
+ERROR 2025-05-04 23:31:47,902 basehttp 32012 33324 "GET /api/recipes/2/ HTTP/1.1" 500 30627
+INFO 2025-05-04 23:31:48,026 recipe 32012 33324 Recipe viewed: recipe_id=3, title='Banana Pancakes', user_id=66
+ERROR 2025-05-04 23:31:48,140 basehttp 32012 33324 "GET /api/recipes/3/ HTTP/1.1" 500 30627
+INFO 2025-05-04 23:31:48,232 recipe 32012 33324 Recipe viewed: recipe_id=4, title='Greek Salad', user_id=66
+ERROR 2025-05-04 23:31:48,369 basehttp 32012 33324 "GET /api/recipes/4/ HTTP/1.1" 500 30627
+INFO 2025-05-04 23:31:48,450 recipe 32012 33324 Recipe viewed: recipe_id=5, title='Beef Chili', user_id=66
+ERROR 2025-05-04 23:31:48,591 basehttp 32012 33324 "GET /api/recipes/5/ HTTP/1.1" 500 30627
+INFO 2025-05-04 23:31:48,674 recipe 32012 33324 Recipe viewed: recipe_id=6, title='Tiramisu', user_id=66
+ERROR 2025-05-04 23:31:48,829 basehttp 32012 33324 "GET /api/recipes/6/ HTTP/1.1" 500 30627
+INFO 2025-05-04 23:31:48,914 recipe 32012 33324 Recipe viewed: recipe_id=7, title='Chicken Stir-Fry', user_id=66
+ERROR 2025-05-04 23:31:49,028 basehttp 32012 33324 "GET /api/recipes/7/ HTTP/1.1" 500 30627
+INFO 2025-05-04 23:31:49,114 recipe 32012 33324 Recipe viewed: recipe_id=8, title='Vegetable Soup', user_id=66
+ERROR 2025-05-04 23:31:49,232 basehttp 32012 33324 "GET /api/recipes/8/ HTTP/1.1" 500 30627
+INFO 2025-05-04 23:31:49,316 recipe 32012 33324 Recipe viewed: recipe_id=9, title='Homemade Pizza', user_id=66
+ERROR 2025-05-04 23:31:49,433 basehttp 32012 33324 "GET /api/recipes/9/ HTTP/1.1" 500 30627
+INFO 2025-05-04 23:31:49,536 recipe 32012 33324 Recipe viewed: recipe_id=10, title='Chocolate Mousse', user_id=66
+ERROR 2025-05-04 23:31:49,649 basehttp 32012 33324 "GET /api/recipes/10/ HTTP/1.1" 500 30631
+INFO 2025-05-04 23:31:49,739 recipe 32012 33324 Recipe viewed: recipe_id=11, title='Salmon Teriyaki', user_id=66
+ERROR 2025-05-04 23:31:49,858 basehttp 32012 33324 "GET /api/recipes/11/ HTTP/1.1" 500 30631
+INFO 2025-05-04 23:31:49,943 recipe 32012 33324 Recipe viewed: recipe_id=12, title='Ratatouille', user_id=66
+ERROR 2025-05-04 23:31:50,067 basehttp 32012 33324 "GET /api/recipes/12/ HTTP/1.1" 500 30631
+INFO 2025-05-04 23:31:50,143 recipe 32012 33324 Recipe viewed: recipe_id=13, title='Caesar Salad', user_id=66
+ERROR 2025-05-04 23:31:50,253 basehttp 32012 33324 "GET /api/recipes/13/ HTTP/1.1" 500 30631
+INFO 2025-05-04 23:31:50,334 recipe 32012 33324 Recipe viewed: recipe_id=14, title='Beef Bourguignon', user_id=66
+ERROR 2025-05-04 23:31:50,454 basehttp 32012 33324 "GET /api/recipes/14/ HTTP/1.1" 500 30631
+INFO 2025-05-04 23:31:50,560 recipe 32012 33324 Recipe viewed: recipe_id=15, title='Apple Pie', user_id=66
+ERROR 2025-05-04 23:31:50,677 basehttp 32012 33324 "GET /api/recipes/15/ HTTP/1.1" 500 30631
+INFO 2025-05-04 23:31:50,775 recipe 32012 33324 Recipe viewed: recipe_id=16, title='Shrimp Scampi', user_id=66
+INFO 2025-05-04 23:31:50,869 basehttp 32012 33324 "GET /api/recipes/16/ HTTP/1.1" 200 941
+INFO 2025-05-04 23:31:50,968 recipe 32012 33324 Recipe viewed: recipe_id=17, title='Caprese Salad', user_id=66
+INFO 2025-05-04 23:31:51,086 basehttp 32012 33324 "GET /api/recipes/17/ HTTP/1.1" 200 952
+INFO 2025-05-04 23:31:51,177 recipe 32012 33324 Recipe viewed: recipe_id=18, title='Chicken Curry', user_id=66
+INFO 2025-05-04 23:31:51,243 basehttp 32012 33324 "GET /api/recipes/18/ HTTP/1.1" 200 936
+INFO 2025-05-04 23:31:51,311 recipe 32012 33324 Recipe viewed: recipe_id=19, title='Guacamole', user_id=66
+INFO 2025-05-04 23:31:51,411 basehttp 32012 33324 "GET /api/recipes/19/ HTTP/1.1" 200 867
+INFO 2025-05-04 23:31:51,496 recipe 32012 33324 Recipe viewed: recipe_id=20, title='Beef Tacos', user_id=66
+INFO 2025-05-04 23:31:51,549 basehttp 32012 33324 "GET /api/recipes/20/ HTTP/1.1" 200 907
+INFO 2025-05-04 23:32:20,310 views 32012 34032 Profile update attempt: user_id=66
+INFO 2025-05-04 23:32:20,316 views 32012 34032 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-04 23:32:20,338 basehttp 32012 34032 "PUT /api/users/profile/ HTTP/1.1" 200 141
+WARNING 2025-05-04 23:32:20,392 basehttp 32012 34032 "PUT /api/users/allergies/ HTTP/1.1" 404 38590
+INFO 2025-05-04 23:32:54,191 views 32012 5704 Profile update attempt: user_id=66
+INFO 2025-05-04 23:32:54,198 views 32012 5704 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-04 23:32:54,221 basehttp 32012 5704 "PUT /api/users/profile/ HTTP/1.1" 200 141
+WARNING 2025-05-04 23:32:54,279 basehttp 32012 5704 "PUT /api/users/allergies/ HTTP/1.1" 404 38590
+INFO 2025-05-04 23:33:54,962 autoreload 32012 4664 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\users\views.py changed, reloading.
+INFO 2025-05-04 23:33:56,330 autoreload 20660 24940 Watching for file changes with StatReloader
+INFO 2025-05-04 23:33:56,782 wsgi 20660 16636 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-04 23:33:56,782 wsgi 20660 16636 Environment: config.settings
+INFO 2025-05-04 23:33:56,782 wsgi 20660 16636 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-04 23:33:56,789 wsgi 20660 16636 Application initialized successfully

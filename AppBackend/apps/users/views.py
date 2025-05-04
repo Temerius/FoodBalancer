@@ -136,13 +136,24 @@ def profile(request):
 
     elif request.method == 'PUT':
         logger.info(f"Profile update attempt: user_id={user.usr_id}")
+
+        data = request.data.copy()
+
+        # Обработка поля gender - преобразуем к формату, ожидаемому PostgreSQL
+        if 'usr_gender' in data:
+            gender_value = data['usr_gender']
+            # Преобразуем к формату с заглавной буквы
+            if gender_value.lower() == 'male':
+                data['usr_gender'] = 'Male'
+            elif gender_value.lower() == 'female':
+                data['usr_gender'] = 'Female'
+
         serializer = UserProfileSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             logger.info(f"Profile updated successfully: user_id={user.usr_id}, time={time.time() - start_time:.2f}s")
             return Response(serializer.data)
 
-        # Логирование ошибок валидации при обновлении профиля
         logger.warning(f"Profile update validation error: user_id={user.usr_id}, errors={serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

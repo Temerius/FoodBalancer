@@ -48,6 +48,10 @@ class ApiService {
     _token = token;
   }
 
+  String? getCurrentToken() {
+    return _token;
+  }
+
   // Clear token
   void clearToken() {
     _token = null;
@@ -115,6 +119,12 @@ class ApiService {
       );
     }
 
+    if (DEBUG) {
+      print('API Request: PUT $baseUrl$endpoint');
+      print('Headers: $_headers');
+      print('Body: ${jsonEncode(data)}');
+    }
+
     try {
       final response = await _client.post(
         Uri.parse('$baseUrl$endpoint'),
@@ -144,6 +154,11 @@ class ApiService {
       throw NoConnectionException(
           'Нет подключения к интернету. Запрос: PUT $endpoint'
       );
+    }
+    if (DEBUG) {
+      print('API Request: PUT $baseUrl$endpoint');
+      print('Headers: $_headers');
+      print('Body: ${jsonEncode(data)}');
     }
 
     try {
@@ -175,6 +190,11 @@ class ApiService {
       throw NoConnectionException(
           'Нет подключения к интернету. Запрос: DELETE $endpoint'
       );
+    }
+
+    if (DEBUG) {
+      print('API Request: PUT $baseUrl$endpoint');
+      print('Headers: $_headers');
     }
 
     try {
@@ -269,6 +289,12 @@ class ApiService {
         },
         'token': 'mock_token_12345',
       };
+    }
+
+    if (DEBUG) {
+      print('API Request: PUT $baseUrl$endpoint');
+      print('Headers: $_headers');
+      print('Body: ${jsonEncode(data)}');
     }
 
     // Mock for login

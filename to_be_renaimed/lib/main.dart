@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:to_be_renaimed/services/api_service.dart';
+import 'package:to_be_renaimed/services/auth_service.dart';
 import 'config/theme.dart';
 import 'config/routes.dart';
 import 'providers/auth_provider.dart';
@@ -9,9 +11,16 @@ import 'screens/loading_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Create providers without initialization
-  final authProvider = AuthProvider();
-  final dataRepository = DataRepository();
+  // Создаем один экземпляр ApiService для всего приложения
+  final apiService = ApiService();
+
+  // Инициализация ApiService для получения сохраненного токена
+  await apiService.initialize();
+
+  // Создаем провайдеры
+  final authService = AuthService(apiService: apiService);
+  final authProvider = AuthProvider(authService: authService);
+  final dataRepository = DataRepository(apiService: apiService);
 
   runApp(
     MultiProvider(

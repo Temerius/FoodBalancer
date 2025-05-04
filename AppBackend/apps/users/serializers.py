@@ -18,6 +18,15 @@ class UserSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ['usr_id']
 
+    def validate_usr_gender(self, value):
+        """Преобразуем значение gender к формату PostgreSQL"""
+        if value:
+            if value.lower() == 'male':
+                return 'Male'
+            elif value.lower() == 'female':
+                return 'Female'
+        return value
+
     def validate_usr_mail(self, value):
         """Валидация email на уникальность"""
         if User.objects.filter(usr_mail=value).exists():
