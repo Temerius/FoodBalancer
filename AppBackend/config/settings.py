@@ -20,14 +20,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    # Сторонние приложения
+
     'rest_framework',
-    'rest_framework.authtoken',  # Добавляем это
+    'rest_framework.authtoken',
     'corsheaders',
-    
-    # Наши приложения
-    'apps.users',
+
+    'apps.users'
 ]
 
 # Обновленные ALLOWED_HOSTS

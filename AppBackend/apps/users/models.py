@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.db import models
 import hashlib
-
+from apps.core.enums import GenderChoices
 
 class UserManager(BaseUserManager):
     def create_user(self, usr_mail, password=None, **extra_fields):
@@ -45,8 +45,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     usr_height = models.SmallIntegerField(null=True, blank=True)
     usr_weight = models.SmallIntegerField(null=True, blank=True)
     usr_age = models.SmallIntegerField(null=True, blank=True)
-    usr_gender = models.CharField(max_length=10, null=True, blank=True)
+
     usr_cal_day = models.IntegerField(null=True, blank=True)
+
+    usr_gender = models.CharField(
+        max_length=10,
+        choices=GenderChoices.choices,
+        null=True,
+        blank=True
+    )
 
     # Поля требуемые для Django
     is_staff = models.BooleanField(default=False)

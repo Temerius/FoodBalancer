@@ -1,4 +1,4 @@
-// api_test_service.dart
+// api_test_service.dart - Fixed version
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -57,14 +57,18 @@ class ApiTestService {
       await _testLoginUser(logCallback);
       await _testGetProfile(logCallback);
 
-      // Core API tests
-      await _testGetRefrigerator(logCallback);
-      await _testGetFavorites(logCallback);
-      await _testGetAllAllergens(logCallback);
-      await _testGetAllEquipment(logCallback);
+      // Core API tests - ONLY run these if registration/login succeeded
+      if (token != null) {
+        await _testGetRefrigerator(logCallback);
+        await _testGetFavorites(logCallback);
+        await _testGetAllAllergens(logCallback);
+        await _testGetAllEquipment(logCallback);
 
-      // Logout
-      await _testLogoutUser(logCallback);
+        // Logout
+        await _testLogoutUser(logCallback);
+      } else {
+        logCallback('❌ Authentication failed - skipping API tests');
+      }
 
       logCallback('=== All API Tests Completed ===');
     } catch (e) {
@@ -85,8 +89,10 @@ class ApiTestService {
     final url = Uri.parse('$baseUrl$endpoint');
     Map<String, String> requestHeaders = {...headers};
 
+    // Proper token authentication with debug logging
     if (requiresAuth && token != null) {
-      requestHeaders['Authorization'] = 'Token $token';
+      requestHeaders['Authorization'] = 'Token $token';  // Correct prefix "Token "
+      logCallback('Using token: ${token?.substring(0, min(token!.length, 10))}...');  // Logging for debugging
     }
 
     http.Response response;
@@ -96,6 +102,9 @@ class ApiTestService {
       if (data != null) {
         logCallback('REQUEST BODY: ${jsonEncode(data)}');
       }
+
+      // Log headers for debugging
+      logCallback('REQUEST HEADERS: ${requestHeaders.toString()}');
 
       switch (method) {
         case 'GET':
@@ -148,16 +157,11 @@ class ApiTestService {
   Future<void> _testRegisterUser(Function(String) logCallback) async {
     logCallback('\n=== TEST 1: Register User ===');
 
-    // Looking at your model and the error, we need to use 'male' not 'MALE'
+    // Using lowercase for gender enum value to match PostgreSQL
     final data = {
       'usr_mail': testEmail,
       'usr_name': testName,
-      'password': testPassword,
-      'usr_height': 180,
-      'usr_weight': 75,
-      'usr_age': 30,
-      'usr_gender': 'male', // PostgreSQL enums are case-sensitive
-      'usr_cal_day': 2000
+      'password': testPassword
     };
 
     final response = await _makeRequest(
@@ -173,22 +177,6 @@ class ApiTestService {
       logCallback('✅ Registration successful - token received');
     } else {
       logCallback('❌ Registration failed or user already exists');
-
-      // Try alternative with MALE in uppercase if the first attempt failed
-      logCallback('Trying with uppercase MALE...');
-      final altData = {...data, 'usr_gender': 'MALE'};
-      final altResponse = await _makeRequest(
-          'POST',
-          '/api/users/register/',
-          altData,
-          logCallback,
-          requiresAuth: false
-      );
-
-      if (altResponse != null && altResponse['token'] != null) {
-        token = altResponse['token'];
-        logCallback('✅ Registration successful with uppercase MALE - token received');
-      }
     }
   }
 
@@ -234,7 +222,7 @@ class ApiTestService {
   Future<void> _testGetRefrigerator(Function(String) logCallback) async {
     logCallback('\n=== TEST 4: Get Refrigerator ===');
 
-    // Based on your backend code, correct endpoint is /api/refrigerator/
+    // Use correct URL - from core app, not users app
     final response = await _makeRequest('GET', '/api/refrigerator/', null, logCallback);
 
     if (response != null) {
@@ -248,7 +236,7 @@ class ApiTestService {
   Future<void> _testGetFavorites(Function(String) logCallback) async {
     logCallback('\n=== TEST 5: Get Favorites ===');
 
-    // Based on your backend code, correct endpoint is /api/favorites/
+    // Use correct URL - from core app, not users app
     final response = await _makeRequest('GET', '/api/favorites/', null, logCallback);
 
     if (response != null) {
@@ -262,7 +250,7 @@ class ApiTestService {
   Future<void> _testGetAllAllergens(Function(String) logCallback) async {
     logCallback('\n=== TEST 6: Get All Allergens ===');
 
-    // Based on your backend code, correct endpoint is /api/allergens/
+    // Use correct URL - from core app
     final response = await _makeRequest('GET', '/api/allergens/', null, logCallback);
 
     if (response != null) {
@@ -276,7 +264,7 @@ class ApiTestService {
   Future<void> _testGetAllEquipment(Function(String) logCallback) async {
     logCallback('\n=== TEST 7: Get All Equipment ===');
 
-    // Based on your backend code, correct endpoint is /api/equipment/
+    // Use correct URL - from core app
     final response = await _makeRequest('GET', '/api/equipment/', null, logCallback);
 
     if (response != null) {

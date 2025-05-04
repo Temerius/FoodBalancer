@@ -74,6 +74,14 @@ class RefrigeratorViewSet(CacheInvalidationMixin, viewsets.ModelViewSet):
 
     def get_queryset(self):
         """Возвращает ингредиенты текущего пользователя"""
+        # Прямой вывод всей информации о запросе
+        print("\n==== REFRIGERATOR REQUEST ====")
+        print(f"User: {self.request.user}, authenticated: {self.request.user.is_authenticated}")
+        print(f"Headers: {dict(self.request.headers)}")
+        print(f"Method: {self.request.method}")
+        print(f"Path: {self.request.path}")
+        print("==== END REQUEST INFO ====\n")
+
         return M2MUsrIng.objects.filter(mui_usr_id=self.request.user)
 
     def create(self, request, *args, **kwargs):

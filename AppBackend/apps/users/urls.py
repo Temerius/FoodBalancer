@@ -6,17 +6,11 @@ from apps.core.views import RefrigeratorViewSet, FavoriteRecipeViewSet
 
 app_name = 'users'
 
-# Создаем роутер для API эндпоинтов
-router = DefaultRouter()
-router.register(r'refrigerator', RefrigeratorViewSet, basename='refrigerator')
-router.register(r'favorites', FavoriteRecipeViewSet, basename='favorites')
-
 urlpatterns = [
     path('register/', register, name='register'),
     path('login/', login, name='login'),
     path('profile/', profile, name='profile'),
     path('password-reset/', password_reset_request, name='password_reset_request'),
     path('password-reset/confirm/', password_reset_confirm, name='password_reset_confirm'),
-    path('logout/', logout, name='logout'),
-    path('', include(router.urls)),  # Добавляем маршруты из router
+    path('logout/', logout, name='logout')
 ]

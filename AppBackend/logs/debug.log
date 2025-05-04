@@ -1,0 +1,263 @@
+DEBUG 2025-05-04 01:22:49,068 utils 35044 24656 (0.016) 
+            SELECT
+                c.relname,
+                CASE
+                    WHEN c.relispartition THEN 'p'
+                    WHEN c.relkind IN ('m', 'v') THEN 'v'
+                    ELSE 't'
+                END,
+                obj_description(c.oid, 'pg_class')
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('f', 'm', 'p', 'r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid)
+        ; args=None; alias=default
+DEBUG 2025-05-04 01:22:49,075 utils 35044 24656 (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+DEBUG 2025-05-04 01:22:54,906 utils 32240 1124 (0.015) 
+            SELECT
+                c.relname,
+                CASE
+                    WHEN c.relispartition THEN 'p'
+                    WHEN c.relkind IN ('m', 'v') THEN 'v'
+                    ELSE 't'
+                END,
+                obj_description(c.oid, 'pg_class')
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('f', 'm', 'p', 'r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid)
+        ; args=None; alias=default
+DEBUG 2025-05-04 01:22:54,909 utils 32240 1124 (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+DEBUG 2025-05-04 01:24:22,822 utils 8032 34804 (0.000) 
+            SELECT
+                c.relname,
+                CASE
+                    WHEN c.relispartition THEN 'p'
+                    WHEN c.relkind IN ('m', 'v') THEN 'v'
+                    ELSE 't'
+                END,
+                obj_description(c.oid, 'pg_class')
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('f', 'm', 'p', 'r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid)
+        ; args=None; alias=default
+DEBUG 2025-05-04 01:24:22,825 utils 8032 34804 (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+DEBUG 2025-05-04 01:24:23,608 utils 8032 6116 (0.032) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_anon_192.168.100.2'); args=[':1:throttle_anon_192.168.100.2']; alias=default
+DEBUG 2025-05-04 01:24:23,821 utils 8032 6116 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 01:24:23,821 utils 8032 6116 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 01:24:23,823 utils 8032 6116 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_anon_192.168.100.2'; args=[':1:throttle_anon_192.168.100.2']; alias=default
+DEBUG 2025-05-04 01:24:23,833 utils 8032 6116 (0.015) INSERT INTO "cache_table" ("cache_key", "value", "expires") VALUES (':1:throttle_anon_192.168.100.2', 'gAWVDQAAAAAAAABdlEdB2gWl5fPwomEu', '2025-05-04T22:24:23+00:00'::timestamptz); args=[':1:throttle_anon_192.168.100.2', 'gAWVDQAAAAAAAABdlEdB2gWl5fPwomEu', datetime.datetime(2025, 5, 4, 22, 24, 23, tzinfo=datetime.timezone.utc)]; alias=default
+DEBUG 2025-05-04 01:24:23,837 utils 8032 6116 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 01:24:23,838 utils 8032 6116 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_192.168.100.2'); args=[':1:throttle_user_192.168.100.2']; alias=default
+DEBUG 2025-05-04 01:24:23,839 utils 8032 6116 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 01:24:23,839 utils 8032 6116 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 01:24:23,840 utils 8032 6116 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_192.168.100.2'; args=[':1:throttle_user_192.168.100.2']; alias=default
+DEBUG 2025-05-04 01:24:23,841 utils 8032 6116 (0.000) INSERT INTO "cache_table" ("cache_key", "value", "expires") VALUES (':1:throttle_user_192.168.100.2', 'gAWVDQAAAAAAAABdlEdB2gWl5fW/uGEu', '2025-05-04T22:24:23+00:00'::timestamptz); args=[':1:throttle_user_192.168.100.2', 'gAWVDQAAAAAAAABdlEdB2gWl5fW/uGEu', datetime.datetime(2025, 5, 4, 22, 24, 23, tzinfo=datetime.timezone.utc)]; alias=default
+DEBUG 2025-05-04 01:24:23,843 utils 8032 6116 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 01:24:23,849 utils 8032 6116 (0.000) SELECT "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "user" WHERE "user"."usr_mail" = 'test_iut3fq6q@example.com' LIMIT 21; args=('test_iut3fq6q@example.com',); alias=default
+DEBUG 2025-05-04 01:24:32,220 utils 8032 33984 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created", "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "authtoken_token" INNER JOIN "user" ON ("authtoken_token"."user_id" = "user"."usr_id") WHERE "authtoken_token"."key" = 'a9ea6fe0828dfa95b41b048a4e0327b9a4ff78a6' LIMIT 21; args=('a9ea6fe0828dfa95b41b048a4e0327b9a4ff78a6',); alias=default
+DEBUG 2025-05-04 01:24:32,258 utils 8032 33984 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_66'); args=[':1:throttle_user_66']; alias=default
+DEBUG 2025-05-04 01:24:32,262 utils 8032 33984 (0.000) DELETE FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_66'); args=[':1:throttle_user_66']; alias=default
+DEBUG 2025-05-04 01:24:32,263 utils 8032 33984 (0.016) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 01:24:32,264 utils 8032 33984 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 01:24:32,264 utils 8032 33984 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_66'; args=[':1:throttle_user_66']; alias=default
+DEBUG 2025-05-04 01:24:32,266 utils 8032 33984 (0.000) INSERT INTO "cache_table" ("cache_key", "value", "expires") VALUES (':1:throttle_user_66', 'gAWVDQAAAAAAAABdlEdB2gWl6BDKrGEu', '2025-05-04T22:24:32+00:00'::timestamptz); args=[':1:throttle_user_66', 'gAWVDQAAAAAAAABdlEdB2gWl6BDKrGEu', datetime.datetime(2025, 5, 4, 22, 24, 32, tzinfo=datetime.timezone.utc)]; alias=default
+DEBUG 2025-05-04 01:24:32,269 utils 8032 33984 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 01:24:32,271 utils 8032 33984 (0.000) SELECT "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "user" WHERE "user"."usr_mail" = 'w0rkma1lmoc@gmail.com' LIMIT 21; args=('w0rkma1lmoc@gmail.com',); alias=default
+DEBUG 2025-05-04 01:24:32,854 utils 8032 33984 (0.000) UPDATE "user" SET "password" = 'pbkdf2_sha256$600000$GiMo4N4j8s8N1Q2Ni7GK2e$krHa0VeMnUuqC+X9wMmytac0eyqPnIChsGrfGSGCt7I=' WHERE "user"."usr_id" = 66; args=('pbkdf2_sha256$600000$GiMo4N4j8s8N1Q2Ni7GK2e$krHa0VeMnUuqC+X9wMmytac0eyqPnIChsGrfGSGCt7I=', 66); alias=default
+DEBUG 2025-05-04 01:24:32,873 utils 8032 33984 (0.015) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created" FROM "authtoken_token" WHERE "authtoken_token"."user_id" = 66 LIMIT 21; args=(66,); alias=default
+DEBUG 2025-05-04 01:24:52,632 utils 8032 33504 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_anon_192.168.100.2'); args=[':1:throttle_anon_192.168.100.2']; alias=default
+DEBUG 2025-05-04 01:24:52,633 utils 8032 33504 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 01:24:52,635 utils 8032 33504 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 01:24:52,635 utils 8032 33504 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_anon_192.168.100.2'; args=[':1:throttle_anon_192.168.100.2']; alias=default
+DEBUG 2025-05-04 01:24:52,636 utils 8032 33504 (0.000) UPDATE "cache_table" SET "value" = 'gAWVFwAAAAAAAABdlChHQdoFpe0okD5HQdoFpeXz8KJlLg==', "expires" = '2025-05-04T22:24:52+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_anon_192.168.100.2'; args=['gAWVFwAAAAAAAABdlChHQdoFpe0okD5HQdoFpeXz8KJlLg==', datetime.datetime(2025, 5, 4, 22, 24, 52, tzinfo=datetime.timezone.utc), ':1:throttle_anon_192.168.100.2']; alias=default
+DEBUG 2025-05-04 01:24:52,639 utils 8032 33504 (0.016) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 01:24:52,640 utils 8032 33504 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_192.168.100.2'); args=[':1:throttle_user_192.168.100.2']; alias=default
+DEBUG 2025-05-04 01:24:52,642 utils 8032 33504 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 01:24:52,642 utils 8032 33504 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 01:24:52,643 utils 8032 33504 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_192.168.100.2'; args=[':1:throttle_user_192.168.100.2']; alias=default
+DEBUG 2025-05-04 01:24:52,644 utils 8032 33504 (0.000) UPDATE "cache_table" SET "value" = 'gAWVFwAAAAAAAABdlChHQdoFpe0pAedHQdoFpeX1v7hlLg==', "expires" = '2025-05-04T22:24:52+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_user_192.168.100.2'; args=['gAWVFwAAAAAAAABdlChHQdoFpe0pAedHQdoFpeX1v7hlLg==', datetime.datetime(2025, 5, 4, 22, 24, 52, tzinfo=datetime.timezone.utc), ':1:throttle_user_192.168.100.2']; alias=default
+DEBUG 2025-05-04 01:24:52,647 utils 8032 33504 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 01:24:52,649 utils 8032 33504 (0.000) SELECT 1 AS "a" FROM "user" WHERE "user"."usr_mail" = 'test_yryhczt3@example.com' LIMIT 1; args=(1, 'test_yryhczt3@example.com'); alias=default
+DEBUG 2025-05-04 01:24:52,650 utils 8032 33504 (0.000) SELECT 1 AS "a" FROM "user" WHERE "user"."usr_mail" = 'test_yryhczt3@example.com' LIMIT 1; args=(1, 'test_yryhczt3@example.com'); alias=default
+DEBUG 2025-05-04 01:24:52,689 utils 8032 33504 (0.000) SELECT 1 AS "a" FROM "user" WHERE "user"."usr_mail" = 'test_yryhczt3@example.com' LIMIT 1; args=(1, 'test_yryhczt3@example.com'); alias=default
+DEBUG 2025-05-04 01:24:52,916 utils 8032 33504 (0.000) INSERT INTO "user" ("password", "usr_name", "usr_pas_hash", "usr_mail", "usr_height", "usr_weight", "usr_age", "usr_cal_day", "usr_gender", "is_staff", "is_active", "is_superuser", "last_login", "date_joined") VALUES ('pbkdf2_sha256$600000$mlmbnAT9KkHAYHVY9UmDOj$YdMoYLpopFe8rErCQPalMR4rMlRhJqsFk7meC+NGpm4=', 'Test User yryhczt3', '9b599faac222a0dfcfab49148ce40c26', 'test_yryhczt3@example.com', NULL, NULL, NULL, NULL, NULL, false, true, false, NULL, '2025-05-03T22:24:52.910604+00:00'::timestamptz) RETURNING "user"."usr_id"; args=('pbkdf2_sha256$600000$mlmbnAT9KkHAYHVY9UmDOj$YdMoYLpopFe8rErCQPalMR4rMlRhJqsFk7meC+NGpm4=', 'Test User yryhczt3', '9b599faac222a0dfcfab49148ce40c26', 'test_yryhczt3@example.com', None, None, None, None, None, False, True, False, None, datetime.datetime(2025, 5, 3, 22, 24, 52, 910604, tzinfo=datetime.timezone.utc)); alias=default
+DEBUG 2025-05-04 01:24:52,918 utils 8032 33504 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created" FROM "authtoken_token" WHERE "authtoken_token"."user_id" = 87 LIMIT 21; args=(87,); alias=default
+DEBUG 2025-05-04 01:24:52,918 utils 8032 33504 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 01:24:52,920 utils 8032 33504 (0.016) INSERT INTO "authtoken_token" ("key", "user_id", "created") VALUES ('480ef211aa2d871fc08b31f97032186ea07c6971', 87, '2025-05-03T22:24:52.919023+00:00'::timestamptz); args=('480ef211aa2d871fc08b31f97032186ea07c6971', 87, datetime.datetime(2025, 5, 3, 22, 24, 52, 919023, tzinfo=datetime.timezone.utc)); alias=default
+DEBUG 2025-05-04 01:24:52,937 utils 8032 33504 (0.016) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,169 utils 8032 4908 (0.016) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_anon_192.168.100.2'); args=[':1:throttle_anon_192.168.100.2']; alias=default
+DEBUG 2025-05-04 01:24:53,170 utils 8032 4908 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,171 utils 8032 4908 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,172 utils 8032 4908 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_anon_192.168.100.2'; args=[':1:throttle_anon_192.168.100.2']; alias=default
+DEBUG 2025-05-04 01:24:53,173 utils 8032 4908 (0.000) UPDATE "cache_table" SET "value" = 'gAWVIAAAAAAAAABdlChHQdoFpe1K7/dHQdoFpe0okD5HQdoFpeXz8KJlLg==', "expires" = '2025-05-04T22:24:53+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_anon_192.168.100.2'; args=['gAWVIAAAAAAAAABdlChHQdoFpe1K7/dHQdoFpe0okD5HQdoFpeXz8KJlLg==', datetime.datetime(2025, 5, 4, 22, 24, 53, tzinfo=datetime.timezone.utc), ':1:throttle_anon_192.168.100.2']; alias=default
+DEBUG 2025-05-04 01:24:53,177 utils 8032 4908 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,179 utils 8032 4908 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_192.168.100.2'); args=[':1:throttle_user_192.168.100.2']; alias=default
+DEBUG 2025-05-04 01:24:53,180 utils 8032 4908 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,180 utils 8032 4908 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,181 utils 8032 4908 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_192.168.100.2'; args=[':1:throttle_user_192.168.100.2']; alias=default
+DEBUG 2025-05-04 01:24:53,182 utils 8032 4908 (0.000) UPDATE "cache_table" SET "value" = 'gAWVIAAAAAAAAABdlChHQdoFpe1Le25HQdoFpe0pAedHQdoFpeX1v7hlLg==', "expires" = '2025-05-04T22:24:53+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_user_192.168.100.2'; args=['gAWVIAAAAAAAAABdlChHQdoFpe1Le25HQdoFpe0pAedHQdoFpeX1v7hlLg==', datetime.datetime(2025, 5, 4, 22, 24, 53, tzinfo=datetime.timezone.utc), ':1:throttle_user_192.168.100.2']; alias=default
+DEBUG 2025-05-04 01:24:53,185 utils 8032 4908 (0.016) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,189 utils 8032 4908 (0.000) SELECT "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "user" WHERE "user"."usr_mail" = 'test_yryhczt3@example.com' LIMIT 21; args=('test_yryhczt3@example.com',); alias=default
+DEBUG 2025-05-04 01:24:53,407 utils 8032 4908 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created" FROM "authtoken_token" WHERE "authtoken_token"."user_id" = 87 LIMIT 21; args=(87,); alias=default
+DEBUG 2025-05-04 01:24:53,473 utils 8032 26120 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created", "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "authtoken_token" INNER JOIN "user" ON ("authtoken_token"."user_id" = "user"."usr_id") WHERE "authtoken_token"."key" = '480ef211aa2d871fc08b31f97032186ea07c6971' LIMIT 21; args=('480ef211aa2d871fc08b31f97032186ea07c6971',); alias=default
+DEBUG 2025-05-04 01:24:53,474 utils 8032 26120 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_87'); args=[':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:53,476 utils 8032 26120 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,476 utils 8032 26120 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,477 utils 8032 26120 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_87'; args=[':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:53,478 utils 8032 26120 (0.000) INSERT INTO "cache_table" ("cache_key", "value", "expires") VALUES (':1:throttle_user_87', 'gAWVDQAAAAAAAABdlEdB2gWl7V5w9GEu', '2025-05-04T22:24:53+00:00'::timestamptz); args=[':1:throttle_user_87', 'gAWVDQAAAAAAAABdlEdB2gWl7V5w9GEu', datetime.datetime(2025, 5, 4, 22, 24, 53, tzinfo=datetime.timezone.utc)]; alias=default
+DEBUG 2025-05-04 01:24:53,482 utils 8032 26120 (0.016) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,538 utils 8032 11236 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created", "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "authtoken_token" INNER JOIN "user" ON ("authtoken_token"."user_id" = "user"."usr_id") WHERE "authtoken_token"."key" = '480ef211aa2d871fc08b31f97032186ea07c6971' LIMIT 21; args=('480ef211aa2d871fc08b31f97032186ea07c6971',); alias=default
+DEBUG 2025-05-04 01:24:53,551 utils 8032 11236 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_87'); args=[':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:53,553 utils 8032 11236 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,553 utils 8032 11236 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,554 utils 8032 11236 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_87'; args=[':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:53,556 utils 8032 11236 (0.000) UPDATE "cache_table" SET "value" = 'gAWVFwAAAAAAAABdlChHQdoFpe1jYDhHQdoFpe1ecPRlLg==', "expires" = '2025-05-04T22:24:53+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_user_87'; args=['gAWVFwAAAAAAAABdlChHQdoFpe1jYDhHQdoFpe1ecPRlLg==', datetime.datetime(2025, 5, 4, 22, 24, 53, tzinfo=datetime.timezone.utc), ':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:53,560 utils 8032 11236 (0.016) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,584 utils 8032 11236 (0.015) SELECT COUNT(*) AS "__count" FROM "m2m_usr_ing" WHERE "m2m_usr_ing"."mui_usr_id" = 87; args=(87,); alias=default
+DEBUG 2025-05-04 01:24:53,687 utils 8032 32888 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created", "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "authtoken_token" INNER JOIN "user" ON ("authtoken_token"."user_id" = "user"."usr_id") WHERE "authtoken_token"."key" = '480ef211aa2d871fc08b31f97032186ea07c6971' LIMIT 21; args=('480ef211aa2d871fc08b31f97032186ea07c6971',); alias=default
+DEBUG 2025-05-04 01:24:53,690 utils 8032 32888 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_87'); args=[':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:53,691 utils 8032 32888 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,691 utils 8032 32888 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,692 utils 8032 32888 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_87'; args=[':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:53,693 utils 8032 32888 (0.000) UPDATE "cache_table" SET "value" = 'gAWVIAAAAAAAAABdlChHQdoFpe1sNGdHQdoFpe1jYDhHQdoFpe1ecPRlLg==', "expires" = '2025-05-04T22:24:53+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_user_87'; args=['gAWVIAAAAAAAAABdlChHQdoFpe1sNGdHQdoFpe1jYDhHQdoFpe1ecPRlLg==', datetime.datetime(2025, 5, 4, 22, 24, 53, tzinfo=datetime.timezone.utc), ':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:53,696 utils 8032 32888 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,702 utils 8032 32888 (0.015) SELECT COUNT(*) AS "__count" FROM "favorite_recipe" WHERE "favorite_recipe"."fvr_usr_id" = 87; args=(87,); alias=default
+DEBUG 2025-05-04 01:24:53,949 utils 8032 37768 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created", "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "authtoken_token" INNER JOIN "user" ON ("authtoken_token"."user_id" = "user"."usr_id") WHERE "authtoken_token"."key" = '480ef211aa2d871fc08b31f97032186ea07c6971' LIMIT 21; args=('480ef211aa2d871fc08b31f97032186ea07c6971',); alias=default
+DEBUG 2025-05-04 01:24:53,950 utils 8032 37768 (0.015) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_87'); args=[':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:53,951 utils 8032 37768 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,952 utils 8032 37768 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,953 utils 8032 37768 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_87'; args=[':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:53,954 utils 8032 37768 (0.000) UPDATE "cache_table" SET "value" = 'gAWVKQAAAAAAAABdlChHQdoFpe185G1HQdoFpe1sNGdHQdoFpe1jYDhHQdoFpe1ecPRlLg==', "expires" = '2025-05-04T22:24:53+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_user_87'; args=['gAWVKQAAAAAAAABdlChHQdoFpe185G1HQdoFpe1sNGdHQdoFpe1jYDhHQdoFpe1ecPRlLg==', datetime.datetime(2025, 5, 4, 22, 24, 53, tzinfo=datetime.timezone.utc), ':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:53,957 utils 8032 37768 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 01:24:53,961 utils 8032 37768 (0.000) SELECT COUNT(*) AS "__count" FROM "allergen"; args=(); alias=default
+DEBUG 2025-05-04 01:24:53,962 utils 8032 37768 (0.000) SELECT "allergen"."alg_id", "allergen"."alg_name" FROM "allergen" LIMIT 20; args=(); alias=default
+DEBUG 2025-05-04 01:24:54,026 utils 8032 1124 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created", "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "authtoken_token" INNER JOIN "user" ON ("authtoken_token"."user_id" = "user"."usr_id") WHERE "authtoken_token"."key" = '480ef211aa2d871fc08b31f97032186ea07c6971' LIMIT 21; args=('480ef211aa2d871fc08b31f97032186ea07c6971',); alias=default
+DEBUG 2025-05-04 01:24:54,028 utils 8032 1124 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_87'); args=[':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:54,029 utils 8032 1124 (0.015) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 01:24:54,029 utils 8032 1124 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 01:24:54,030 utils 8032 1124 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_87'; args=[':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:54,031 utils 8032 1124 (0.000) UPDATE "cache_table" SET "value" = 'gAWVMgAAAAAAAABdlChHQdoFpe2B04lHQdoFpe185G1HQdoFpe1sNGdHQdoFpe1jYDhHQdoFpe1ecPRlLg==', "expires" = '2025-05-04T22:24:54+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_user_87'; args=['gAWVMgAAAAAAAABdlChHQdoFpe2B04lHQdoFpe185G1HQdoFpe1sNGdHQdoFpe1jYDhHQdoFpe1ecPRlLg==', datetime.datetime(2025, 5, 4, 22, 24, 54, tzinfo=datetime.timezone.utc), ':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:54,034 utils 8032 1124 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 01:24:54,037 utils 8032 1124 (0.000) SELECT COUNT(*) AS "__count" FROM "equipment"; args=(); alias=default
+DEBUG 2025-05-04 01:24:54,039 utils 8032 1124 (0.000) SELECT "equipment"."eqp_id", "equipment"."eqp_type", "equipment"."eqp_power", "equipment"."eqp_capacity", "equipment"."eqp_img_url" FROM "equipment" LIMIT 20; args=(); alias=default
+DEBUG 2025-05-04 01:24:54,118 utils 8032 13328 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created", "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "authtoken_token" INNER JOIN "user" ON ("authtoken_token"."user_id" = "user"."usr_id") WHERE "authtoken_token"."key" = '480ef211aa2d871fc08b31f97032186ea07c6971' LIMIT 21; args=('480ef211aa2d871fc08b31f97032186ea07c6971',); alias=default
+DEBUG 2025-05-04 01:24:54,120 utils 8032 13328 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_87'); args=[':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:54,121 utils 8032 13328 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 01:24:54,121 utils 8032 13328 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 01:24:54,123 utils 8032 13328 (0.015) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_87'; args=[':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:54,125 utils 8032 13328 (0.000) UPDATE "cache_table" SET "value" = 'gAWVOwAAAAAAAABdlChHQdoFpe2HvOtHQdoFpe2B04lHQdoFpe185G1HQdoFpe1sNGdHQdoFpe1jYDhHQdoFpe1ecPRlLg==', "expires" = '2025-05-04T22:24:54+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_user_87'; args=['gAWVOwAAAAAAAABdlChHQdoFpe2HvOtHQdoFpe2B04lHQdoFpe185G1HQdoFpe1sNGdHQdoFpe1jYDhHQdoFpe1ecPRlLg==', datetime.datetime(2025, 5, 4, 22, 24, 54, tzinfo=datetime.timezone.utc), ':1:throttle_user_87']; alias=default
+DEBUG 2025-05-04 01:24:54,127 utils 8032 13328 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 01:24:54,129 utils 8032 13328 (0.000) DELETE FROM "authtoken_token" WHERE "authtoken_token"."key" IN ('480ef211aa2d871fc08b31f97032186ea07c6971'); args=('480ef211aa2d871fc08b31f97032186ea07c6971',); alias=default
+DEBUG 2025-05-04 12:02:42,923 utils 10312 18644 (0.016) 
+            SELECT
+                c.relname,
+                CASE
+                    WHEN c.relispartition THEN 'p'
+                    WHEN c.relkind IN ('m', 'v') THEN 'v'
+                    ELSE 't'
+                END,
+                obj_description(c.oid, 'pg_class')
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('f', 'm', 'p', 'r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid)
+        ; args=None; alias=default
+DEBUG 2025-05-04 12:02:42,931 utils 10312 18644 (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+DEBUG 2025-05-04 12:03:05,461 utils 10312 13916 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_anon_192.168.100.2'); args=[':1:throttle_anon_192.168.100.2']; alias=default
+DEBUG 2025-05-04 12:03:05,666 utils 10312 13916 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 12:03:05,667 utils 10312 13916 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 12:03:05,668 utils 10312 13916 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_anon_192.168.100.2'; args=[':1:throttle_anon_192.168.100.2']; alias=default
+DEBUG 2025-05-04 12:03:05,674 utils 10312 13916 (0.016) UPDATE "cache_table" SET "value" = 'gAWVKQAAAAAAAABdlChHQdoFy1JqhQ1HQdoFpe1K7/dHQdoFpe0okD5HQdoFpeXz8KJlLg==', "expires" = '2025-05-05T09:03:05+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_anon_192.168.100.2'; args=['gAWVKQAAAAAAAABdlChHQdoFy1JqhQ1HQdoFpe1K7/dHQdoFpe0okD5HQdoFpeXz8KJlLg==', datetime.datetime(2025, 5, 5, 9, 3, 5, tzinfo=datetime.timezone.utc), ':1:throttle_anon_192.168.100.2']; alias=default
+DEBUG 2025-05-04 12:03:05,681 utils 10312 13916 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 12:03:05,683 utils 10312 13916 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_192.168.100.2'); args=[':1:throttle_user_192.168.100.2']; alias=default
+DEBUG 2025-05-04 12:03:05,684 utils 10312 13916 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 12:03:05,684 utils 10312 13916 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 12:03:05,686 utils 10312 13916 (0.016) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_192.168.100.2'; args=[':1:throttle_user_192.168.100.2']; alias=default
+DEBUG 2025-05-04 12:03:05,686 utils 10312 13916 (0.000) UPDATE "cache_table" SET "value" = 'gAWVKQAAAAAAAABdlChHQdoFy1JruW1HQdoFpe1Le25HQdoFpe0pAedHQdoFpeX1v7hlLg==', "expires" = '2025-05-05T09:03:05+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_user_192.168.100.2'; args=['gAWVKQAAAAAAAABdlChHQdoFy1JruW1HQdoFpe1Le25HQdoFpe0pAedHQdoFpeX1v7hlLg==', datetime.datetime(2025, 5, 5, 9, 3, 5, tzinfo=datetime.timezone.utc), ':1:throttle_user_192.168.100.2']; alias=default
+DEBUG 2025-05-04 12:03:05,689 utils 10312 13916 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 12:03:05,693 utils 10312 13916 (0.000) SELECT 1 AS "a" FROM "user" WHERE "user"."usr_mail" = 'test_4cicfqjy@example.com' LIMIT 1; args=(1, 'test_4cicfqjy@example.com'); alias=default
+DEBUG 2025-05-04 12:03:05,717 utils 10312 13916 (0.016) SELECT 1 AS "a" FROM "user" WHERE "user"."usr_mail" = 'test_4cicfqjy@example.com' LIMIT 1; args=(1, 'test_4cicfqjy@example.com'); alias=default
+DEBUG 2025-05-04 12:03:05,753 utils 10312 13916 (0.000) SELECT 1 AS "a" FROM "user" WHERE "user"."usr_mail" = 'test_4cicfqjy@example.com' LIMIT 1; args=(1, 'test_4cicfqjy@example.com'); alias=default
+DEBUG 2025-05-04 12:03:06,012 utils 10312 13916 (0.015) INSERT INTO "user" ("password", "usr_name", "usr_pas_hash", "usr_mail", "usr_height", "usr_weight", "usr_age", "usr_cal_day", "usr_gender", "is_staff", "is_active", "is_superuser", "last_login", "date_joined") VALUES ('pbkdf2_sha256$600000$8bnIQ6NkOjo8mA8vFsPhd0$0qV6U/FZUiaB2KGBtrP7zW6i6Aukyt+R5Xz22MZOBd8=', 'Test User 4cicfqjy', '9b599faac222a0dfcfab49148ce40c26', 'test_4cicfqjy@example.com', NULL, NULL, NULL, NULL, NULL, false, true, false, NULL, '2025-05-04T09:03:05.989979+00:00'::timestamptz) RETURNING "user"."usr_id"; args=('pbkdf2_sha256$600000$8bnIQ6NkOjo8mA8vFsPhd0$0qV6U/FZUiaB2KGBtrP7zW6i6Aukyt+R5Xz22MZOBd8=', 'Test User 4cicfqjy', '9b599faac222a0dfcfab49148ce40c26', 'test_4cicfqjy@example.com', None, None, None, None, None, False, True, False, None, datetime.datetime(2025, 5, 4, 9, 3, 5, 989979, tzinfo=datetime.timezone.utc)); alias=default
+DEBUG 2025-05-04 12:03:06,026 utils 10312 13916 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created" FROM "authtoken_token" WHERE "authtoken_token"."user_id" = 88 LIMIT 21; args=(88,); alias=default
+DEBUG 2025-05-04 12:03:06,028 utils 10312 13916 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 12:03:06,029 utils 10312 13916 (0.015) INSERT INTO "authtoken_token" ("key", "user_id", "created") VALUES ('eb1092a94511c8e96a9179963c3edbeb618369a3', 88, '2025-05-04T09:03:06.028275+00:00'::timestamptz); args=('eb1092a94511c8e96a9179963c3edbeb618369a3', 88, datetime.datetime(2025, 5, 4, 9, 3, 6, 28275, tzinfo=datetime.timezone.utc)); alias=default
+DEBUG 2025-05-04 12:03:06,046 utils 10312 13916 (0.016) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 12:03:06,355 utils 10312 3124 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_anon_192.168.100.2'); args=[':1:throttle_anon_192.168.100.2']; alias=default
+DEBUG 2025-05-04 12:03:06,356 utils 10312 3124 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 12:03:06,356 utils 10312 3124 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 12:03:06,357 utils 10312 3124 (0.016) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_anon_192.168.100.2'; args=[':1:throttle_anon_192.168.100.2']; alias=default
+DEBUG 2025-05-04 12:03:06,358 utils 10312 3124 (0.000) UPDATE "cache_table" SET "value" = 'gAWVMgAAAAAAAABdlChHQdoFy1KWwJRHQdoFy1JqhQ1HQdoFpe1K7/dHQdoFpe0okD5HQdoFpeXz8KJlLg==', "expires" = '2025-05-05T09:03:06+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_anon_192.168.100.2'; args=['gAWVMgAAAAAAAABdlChHQdoFy1KWwJRHQdoFy1JqhQ1HQdoFpe1K7/dHQdoFpe0okD5HQdoFpeXz8KJlLg==', datetime.datetime(2025, 5, 5, 9, 3, 6, tzinfo=datetime.timezone.utc), ':1:throttle_anon_192.168.100.2']; alias=default
+DEBUG 2025-05-04 12:03:06,361 utils 10312 3124 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 12:03:06,362 utils 10312 3124 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_192.168.100.2'); args=[':1:throttle_user_192.168.100.2']; alias=default
+DEBUG 2025-05-04 12:03:06,363 utils 10312 3124 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 12:03:06,364 utils 10312 3124 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 12:03:06,365 utils 10312 3124 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_192.168.100.2'; args=[':1:throttle_user_192.168.100.2']; alias=default
+DEBUG 2025-05-04 12:03:06,365 utils 10312 3124 (0.000) UPDATE "cache_table" SET "value" = 'gAWVMgAAAAAAAABdlChHQdoFy1KXQItHQdoFy1JruW1HQdoFpe1Le25HQdoFpe0pAedHQdoFpeX1v7hlLg==', "expires" = '2025-05-05T09:03:06+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_user_192.168.100.2'; args=['gAWVMgAAAAAAAABdlChHQdoFy1KXQItHQdoFy1JruW1HQdoFpe1Le25HQdoFpe0pAedHQdoFpeX1v7hlLg==', datetime.datetime(2025, 5, 5, 9, 3, 6, tzinfo=datetime.timezone.utc), ':1:throttle_user_192.168.100.2']; alias=default
+DEBUG 2025-05-04 12:03:06,368 utils 10312 3124 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 12:03:06,371 utils 10312 3124 (0.000) SELECT "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "user" WHERE "user"."usr_mail" = 'test_4cicfqjy@example.com' LIMIT 21; args=('test_4cicfqjy@example.com',); alias=default
+DEBUG 2025-05-04 12:03:06,652 utils 10312 3124 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created" FROM "authtoken_token" WHERE "authtoken_token"."user_id" = 88 LIMIT 21; args=(88,); alias=default
+DEBUG 2025-05-04 12:03:06,733 utils 10312 27796 (0.016) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created", "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "authtoken_token" INNER JOIN "user" ON ("authtoken_token"."user_id" = "user"."usr_id") WHERE "authtoken_token"."key" = 'eb1092a94511c8e96a9179963c3edbeb618369a3' LIMIT 21; args=('eb1092a94511c8e96a9179963c3edbeb618369a3',); alias=default
+DEBUG 2025-05-04 12:03:06,775 utils 10312 27796 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_88'); args=[':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:06,776 utils 10312 27796 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 12:03:06,776 utils 10312 27796 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 12:03:06,778 utils 10312 27796 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_88'; args=[':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:06,779 utils 10312 27796 (0.015) INSERT INTO "cache_table" ("cache_key", "value", "expires") VALUES (':1:throttle_user_88', 'gAWVDQAAAAAAAABdlEdB2gXLUrGj1mEu', '2025-05-05T09:03:06+00:00'::timestamptz); args=[':1:throttle_user_88', 'gAWVDQAAAAAAAABdlEdB2gXLUrGj1mEu', datetime.datetime(2025, 5, 5, 9, 3, 6, tzinfo=datetime.timezone.utc)]; alias=default
+DEBUG 2025-05-04 12:03:06,783 utils 10312 27796 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 12:03:06,867 utils 10312 33816 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created", "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "authtoken_token" INNER JOIN "user" ON ("authtoken_token"."user_id" = "user"."usr_id") WHERE "authtoken_token"."key" = 'eb1092a94511c8e96a9179963c3edbeb618369a3' LIMIT 21; args=('eb1092a94511c8e96a9179963c3edbeb618369a3',); alias=default
+DEBUG 2025-05-04 12:03:06,882 utils 10312 33816 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_88'); args=[':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:06,884 utils 10312 33816 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 12:03:06,884 utils 10312 33816 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 12:03:06,885 utils 10312 33816 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_88'; args=[':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:06,886 utils 10312 33816 (0.000) UPDATE "cache_table" SET "value" = 'gAWVFwAAAAAAAABdlChHQdoFy1K4ixJHQdoFy1Kxo9ZlLg==', "expires" = '2025-05-05T09:03:06+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_user_88'; args=['gAWVFwAAAAAAAABdlChHQdoFy1K4ixJHQdoFy1Kxo9ZlLg==', datetime.datetime(2025, 5, 5, 9, 3, 6, tzinfo=datetime.timezone.utc), ':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:06,890 utils 10312 33816 (0.016) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 12:03:06,908 utils 10312 33816 (0.000) SELECT COUNT(*) AS "__count" FROM "m2m_usr_ing" WHERE "m2m_usr_ing"."mui_usr_id" = 88; args=(88,); alias=default
+DEBUG 2025-05-04 12:03:07,004 utils 10312 6564 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created", "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "authtoken_token" INNER JOIN "user" ON ("authtoken_token"."user_id" = "user"."usr_id") WHERE "authtoken_token"."key" = 'eb1092a94511c8e96a9179963c3edbeb618369a3' LIMIT 21; args=('eb1092a94511c8e96a9179963c3edbeb618369a3',); alias=default
+DEBUG 2025-05-04 12:03:07,006 utils 10312 6564 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_88'); args=[':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:07,008 utils 10312 6564 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 12:03:07,008 utils 10312 6564 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 12:03:07,009 utils 10312 6564 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_88'; args=[':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:07,010 utils 10312 6564 (0.000) UPDATE "cache_table" SET "value" = 'gAWVIAAAAAAAAABdlChHQdoFy1LAZ/hHQdoFy1K4ixJHQdoFy1Kxo9ZlLg==', "expires" = '2025-05-05T09:03:07+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_user_88'; args=['gAWVIAAAAAAAAABdlChHQdoFy1LAZ/hHQdoFy1K4ixJHQdoFy1Kxo9ZlLg==', datetime.datetime(2025, 5, 5, 9, 3, 7, tzinfo=datetime.timezone.utc), ':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:07,012 utils 10312 6564 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 12:03:07,017 utils 10312 6564 (0.000) SELECT COUNT(*) AS "__count" FROM "favorite_recipe" WHERE "favorite_recipe"."fvr_usr_id" = 88; args=(88,); alias=default
+DEBUG 2025-05-04 12:03:07,081 utils 10312 32564 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created", "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "authtoken_token" INNER JOIN "user" ON ("authtoken_token"."user_id" = "user"."usr_id") WHERE "authtoken_token"."key" = 'eb1092a94511c8e96a9179963c3edbeb618369a3' LIMIT 21; args=('eb1092a94511c8e96a9179963c3edbeb618369a3',); alias=default
+DEBUG 2025-05-04 12:03:07,083 utils 10312 32564 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_88'); args=[':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:07,084 utils 10312 32564 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 12:03:07,085 utils 10312 32564 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 12:03:07,086 utils 10312 32564 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_88'; args=[':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:07,087 utils 10312 32564 (0.000) UPDATE "cache_table" SET "value" = 'gAWVKQAAAAAAAABdlChHQdoFy1LFVK1HQdoFy1LAZ/hHQdoFy1K4ixJHQdoFy1Kxo9ZlLg==', "expires" = '2025-05-05T09:03:07+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_user_88'; args=['gAWVKQAAAAAAAABdlChHQdoFy1LFVK1HQdoFy1LAZ/hHQdoFy1K4ixJHQdoFy1Kxo9ZlLg==', datetime.datetime(2025, 5, 5, 9, 3, 7, tzinfo=datetime.timezone.utc), ':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:07,090 utils 10312 32564 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 12:03:07,092 utils 10312 32564 (0.000) SELECT COUNT(*) AS "__count" FROM "allergen"; args=(); alias=default
+DEBUG 2025-05-04 12:03:07,093 utils 10312 32564 (0.000) SELECT "allergen"."alg_id", "allergen"."alg_name" FROM "allergen" LIMIT 20; args=(); alias=default
+DEBUG 2025-05-04 12:03:07,161 utils 10312 25788 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created", "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "authtoken_token" INNER JOIN "user" ON ("authtoken_token"."user_id" = "user"."usr_id") WHERE "authtoken_token"."key" = 'eb1092a94511c8e96a9179963c3edbeb618369a3' LIMIT 21; args=('eb1092a94511c8e96a9179963c3edbeb618369a3',); alias=default
+DEBUG 2025-05-04 12:03:07,163 utils 10312 25788 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_88'); args=[':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:07,164 utils 10312 25788 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 12:03:07,164 utils 10312 25788 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 12:03:07,165 utils 10312 25788 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_88'; args=[':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:07,167 utils 10312 25788 (0.000) UPDATE "cache_table" SET "value" = 'gAWVMgAAAAAAAABdlChHQdoFy1LKefdHQdoFy1LFVK1HQdoFy1LAZ/hHQdoFy1K4ixJHQdoFy1Kxo9ZlLg==', "expires" = '2025-05-05T09:03:07+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_user_88'; args=['gAWVMgAAAAAAAABdlChHQdoFy1LKefdHQdoFy1LFVK1HQdoFy1LAZ/hHQdoFy1K4ixJHQdoFy1Kxo9ZlLg==', datetime.datetime(2025, 5, 5, 9, 3, 7, tzinfo=datetime.timezone.utc), ':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:07,171 utils 10312 25788 (0.016) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 12:03:07,173 utils 10312 25788 (0.000) SELECT COUNT(*) AS "__count" FROM "equipment"; args=(); alias=default
+DEBUG 2025-05-04 12:03:07,175 utils 10312 25788 (0.000) SELECT "equipment"."eqp_id", "equipment"."eqp_type", "equipment"."eqp_power", "equipment"."eqp_capacity", "equipment"."eqp_img_url" FROM "equipment" LIMIT 20; args=(); alias=default
+DEBUG 2025-05-04 12:03:07,237 utils 10312 35572 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created", "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "authtoken_token" INNER JOIN "user" ON ("authtoken_token"."user_id" = "user"."usr_id") WHERE "authtoken_token"."key" = 'eb1092a94511c8e96a9179963c3edbeb618369a3' LIMIT 21; args=('eb1092a94511c8e96a9179963c3edbeb618369a3',); alias=default
+DEBUG 2025-05-04 12:03:07,239 utils 10312 35572 (0.000) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_88'); args=[':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:07,240 utils 10312 35572 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 12:03:07,241 utils 10312 35572 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 12:03:07,241 utils 10312 35572 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_88'; args=[':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:07,242 utils 10312 35572 (0.000) UPDATE "cache_table" SET "value" = 'gAWVOwAAAAAAAABdlChHQdoFy1LPWslHQdoFy1LKefdHQdoFy1LFVK1HQdoFy1LAZ/hHQdoFy1K4ixJHQdoFy1Kxo9ZlLg==', "expires" = '2025-05-05T09:03:07+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_user_88'; args=['gAWVOwAAAAAAAABdlChHQdoFy1LPWslHQdoFy1LKefdHQdoFy1LFVK1HQdoFy1LAZ/hHQdoFy1K4ixJHQdoFy1Kxo9ZlLg==', datetime.datetime(2025, 5, 5, 9, 3, 7, tzinfo=datetime.timezone.utc), ':1:throttle_user_88']; alias=default
+DEBUG 2025-05-04 12:03:07,245 utils 10312 35572 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 12:03:07,249 utils 10312 35572 (0.015) DELETE FROM "authtoken_token" WHERE "authtoken_token"."key" IN ('eb1092a94511c8e96a9179963c3edbeb618369a3'); args=('eb1092a94511c8e96a9179963c3edbeb618369a3',); alias=default
+DEBUG 2025-05-04 12:07:54,323 utils 10312 23784 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created", "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "authtoken_token" INNER JOIN "user" ON ("authtoken_token"."user_id" = "user"."usr_id") WHERE "authtoken_token"."key" = 'a9ea6fe0828dfa95b41b048a4e0327b9a4ff78a6' LIMIT 21; args=('a9ea6fe0828dfa95b41b048a4e0327b9a4ff78a6',); alias=default
+DEBUG 2025-05-04 12:07:54,326 utils 10312 23784 (0.015) SELECT "cache_key", "value", "expires" FROM "cache_table" WHERE "cache_key" IN (':1:throttle_user_66'); args=[':1:throttle_user_66']; alias=default
+DEBUG 2025-05-04 12:07:54,327 utils 10312 23784 (0.000) SELECT COUNT(*) FROM "cache_table"; args=None; alias=default
+DEBUG 2025-05-04 12:07:54,328 utils 10312 23784 (0.000) BEGIN; args=None; alias=default
+DEBUG 2025-05-04 12:07:54,328 utils 10312 23784 (0.000) SELECT "cache_key", "expires" FROM "cache_table" WHERE "cache_key" = ':1:throttle_user_66'; args=[':1:throttle_user_66']; alias=default
+DEBUG 2025-05-04 12:07:54,331 utils 10312 23784 (0.000) UPDATE "cache_table" SET "value" = 'gAWVFwAAAAAAAABdlChHQdoFy5qU+rZHQdoFpegQyqxlLg==', "expires" = '2025-05-05T09:07:54+00:00'::timestamptz WHERE "cache_key" = ':1:throttle_user_66'; args=['gAWVFwAAAAAAAABdlChHQdoFy5qU+rZHQdoFpegQyqxlLg==', datetime.datetime(2025, 5, 5, 9, 7, 54, tzinfo=datetime.timezone.utc), ':1:throttle_user_66']; alias=default
+DEBUG 2025-05-04 12:07:54,335 utils 10312 23784 (0.000) COMMIT; args=None; alias=default
+DEBUG 2025-05-04 12:07:54,338 utils 10312 23784 (0.000) SELECT "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "user" WHERE "user"."usr_mail" = 'w0rkma1lmoc@gmail.com' LIMIT 21; args=('w0rkma1lmoc@gmail.com',); alias=default
+DEBUG 2025-05-04 12:07:54,570 utils 10312 23784 (0.000) SELECT "authtoken_token"."key", "authtoken_token"."user_id", "authtoken_token"."created" FROM "authtoken_token" WHERE "authtoken_token"."user_id" = 66 LIMIT 21; args=(66,); alias=default

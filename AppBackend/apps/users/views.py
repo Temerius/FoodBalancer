@@ -18,6 +18,10 @@ from .serializers import (
     PasswordResetConfirmSerializer
 )
 
+import logging
+
+logger = logging.getLogger('django')
+
 User = get_user_model()
 
 
@@ -70,6 +74,11 @@ def register(request):
 @permission_classes([AllowAny])
 def login(request):
     """Авторизация пользователя"""
+    logger.debug("Debug message - Login endpoint called")
+    logger.info("Info message - Login endpoint called")
+    logger.warning("Warning message - Login endpoint called")
+    logger.error("Error message - Login endpoint called")
+    print("GG")
     serializer = LoginSerializer(data=request.data)
     if serializer.is_valid():
         email = serializer.validated_data['email']

@@ -18,14 +18,13 @@ CACHES = {
     }
 }
 
-# Время жизни кэша по умолчанию - 24 часа
 CACHE_MIDDLEWARE_SECONDS = 86400
 
 # Ключ для префикса кэша
 CACHE_MIDDLEWARE_KEY_PREFIX = 'cookhelper'
 
 # Режим отладки
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 

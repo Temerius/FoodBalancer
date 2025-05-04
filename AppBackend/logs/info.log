@@ -1,0 +1,45 @@
+INFO 2025-05-04 01:20:52,828 autoreload 31776 19760 Watching for file changes with StatReloader
+INFO 2025-05-04 01:21:18,192 autoreload 31776 19760 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\manage.py changed, reloading.
+INFO 2025-05-04 01:21:18,723 autoreload 26488 14348 Watching for file changes with StatReloader
+INFO 2025-05-04 01:21:34,526 autoreload 16300 27596 Watching for file changes with StatReloader
+INFO 2025-05-04 01:22:06,270 autoreload 33968 26096 Watching for file changes with StatReloader
+INFO 2025-05-04 01:22:47,739 autoreload 33968 26096 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\config\settings\development.py changed, reloading.
+INFO 2025-05-04 01:22:48,683 autoreload 35044 17272 Watching for file changes with StatReloader
+INFO 2025-05-04 01:22:54,713 autoreload 32240 8612 Watching for file changes with StatReloader
+INFO 2025-05-04 01:24:22,645 autoreload 8032 30632 Watching for file changes with StatReloader
+INFO 2025-05-04 01:24:23,845 views 8032 6116 Info message - Login endpoint called
+WARNING 2025-05-04 01:24:23,845 views 8032 6116 Warning message - Login endpoint called
+ERROR 2025-05-04 01:24:23,845 views 8032 6116 Error message - Login endpoint called
+WARNING 2025-05-04 01:24:24,366 basehttp 8032 6116 "POST /api/users/login/ HTTP/1.1" 401 54
+WARNING 2025-05-04 01:24:24,652 basehttp 8032 32012 "GET /api/users/profile/ HTTP/1.1" 401 82
+INFO 2025-05-04 01:24:32,269 views 8032 33984 Info message - Login endpoint called
+WARNING 2025-05-04 01:24:32,269 views 8032 33984 Warning message - Login endpoint called
+ERROR 2025-05-04 01:24:32,269 views 8032 33984 Error message - Login endpoint called
+INFO 2025-05-04 01:24:32,897 basehttp 8032 33984 "POST /api/users/login/ HTTP/1.1" 200 216
+INFO 2025-05-04 01:24:52,962 basehttp 8032 33504 "POST /api/users/register/ HTTP/1.1" 201 232
+INFO 2025-05-04 01:24:53,185 views 8032 4908 Info message - Login endpoint called
+WARNING 2025-05-04 01:24:53,185 views 8032 4908 Warning message - Login endpoint called
+ERROR 2025-05-04 01:24:53,185 views 8032 4908 Error message - Login endpoint called
+INFO 2025-05-04 01:24:53,425 basehttp 8032 4908 "POST /api/users/login/ HTTP/1.1" 200 232
+INFO 2025-05-04 01:24:53,498 basehttp 8032 26120 "GET /api/users/profile/ HTTP/1.1" 200 172
+INFO 2025-05-04 01:24:53,624 basehttp 8032 11236 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-04 01:24:53,718 basehttp 8032 32888 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-04 01:24:53,978 basehttp 8032 37768 "GET /api/allergens/ HTTP/1.1" 200 766
+INFO 2025-05-04 01:24:54,055 basehttp 8032 1124 "GET /api/equipment/ HTTP/1.1" 200 3963
+INFO 2025-05-04 01:24:54,142 basehttp 8032 13328 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-04 12:02:42,568 autoreload 10312 9988 Watching for file changes with StatReloader
+INFO 2025-05-04 12:03:06,273 basehttp 10312 13916 "POST /api/users/register/ HTTP/1.1" 201 232
+INFO 2025-05-04 12:03:06,368 views 10312 3124 Info message - Login endpoint called
+WARNING 2025-05-04 12:03:06,368 views 10312 3124 Warning message - Login endpoint called
+ERROR 2025-05-04 12:03:06,368 views 10312 3124 Error message - Login endpoint called
+INFO 2025-05-04 12:03:06,680 basehttp 10312 3124 "POST /api/users/login/ HTTP/1.1" 200 232
+INFO 2025-05-04 12:03:06,803 basehttp 10312 27796 "GET /api/users/profile/ HTTP/1.1" 200 172
+INFO 2025-05-04 12:03:06,953 basehttp 10312 33816 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-04 12:03:07,030 basehttp 10312 6564 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-04 12:03:07,108 basehttp 10312 32564 "GET /api/allergens/ HTTP/1.1" 200 766
+INFO 2025-05-04 12:03:07,191 basehttp 10312 25788 "GET /api/equipment/ HTTP/1.1" 200 3963
+INFO 2025-05-04 12:03:07,264 basehttp 10312 35572 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-04 12:07:54,335 views 10312 23784 Info message - Login endpoint called
+WARNING 2025-05-04 12:07:54,335 views 10312 23784 Warning message - Login endpoint called
+ERROR 2025-05-04 12:07:54,335 views 10312 23784 Error message - Login endpoint called
+INFO 2025-05-04 12:07:54,592 basehttp 10312 23784 "POST /api/users/login/ HTTP/1.1" 200 216

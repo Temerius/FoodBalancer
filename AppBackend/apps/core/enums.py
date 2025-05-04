@@ -4,8 +4,8 @@ from django.utils.translation import gettext_lazy as _
 
 class GenderChoices(models.TextChoices):
     """Перечисление для пола"""
-    MALE = 'male', _('Мужской')
-    FEMALE = 'female', _('Женский')
+    MALE = 'male', _('Мужской')  # Value MUST match PostgreSQL enum value: 'male'
+    FEMALE = 'female', _('Женский')  # Value MUST match PostgreSQL enum value: 'female'
 
 class QuantityTypeChoices(models.TextChoices):
     """Перечисление для типов количества"""
