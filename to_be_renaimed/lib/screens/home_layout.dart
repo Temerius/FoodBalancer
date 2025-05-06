@@ -1,3 +1,4 @@
+// lib/screens/home_layout.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../repositories/data_repository.dart';
@@ -65,7 +66,7 @@ class _HomeLayoutState extends State<HomeLayout> {
           ),
         ],
       ),
-      // Add a refresh button in the app bar that appears when scrolling up
+      // Добавляем кнопку обновления данных на главном экране
       floatingActionButton: _currentIndex == 0 ? FloatingActionButton(
         mini: true,
         onPressed: () {
@@ -93,9 +94,10 @@ class _HomeLayoutState extends State<HomeLayout> {
     });
 
     try {
-      await dataRepository.refreshAllData();
+      // Обновляем данные через репозиторий
+      await dataRepository.refreshUserData();
 
-      // Если мы успешно обновили данные
+      // Если обновление успешно
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Данные успешно обновлены'),

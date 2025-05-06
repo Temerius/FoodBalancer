@@ -72,6 +72,58 @@ class ApiService {
     }
   }
 
+  Future<List<dynamic>> getAllPaginatedResults(String endpoint, {int pageSize = 1000}) async {
+    List<dynamic> allResults = [];
+    String nextUrl = endpoint;
+
+    while (nextUrl.isNotEmpty) {
+      final hasConnection = await _networkUtil.checkConnection();
+      if (!hasConnection) {
+        throw NoConnectionException(
+            'Нет подключения к интернету. Запрос: GET $nextUrl'
+        );
+      }
+
+      try {
+        if (DEBUG) {
+          print('API Request (Paginated): GET $baseUrl$nextUrl');
+        }
+
+        final response = await _client.get(
+          Uri.parse(nextUrl.startsWith('http') ? nextUrl : '$baseUrl$nextUrl'),
+          headers: _headers,
+        ).timeout(const Duration(seconds: 15));
+
+        final data = _handleResponse(response);
+
+        if (data.containsKey('results')) {
+          final results = data['results'] as List<dynamic>;
+          allResults.addAll(results);
+
+          // Проверяем наличие следующей страницы
+          if (data.containsKey('next') && data['next'] != null) {
+            nextUrl = data['next'];
+          } else {
+            nextUrl = ''; // прекращаем цикл
+          }
+        } else {
+          nextUrl = ''; // прекращаем цикл, если нет results
+        }
+
+        if (DEBUG) {
+          print('Retrieved ${allResults.length} results so far');
+        }
+
+      } catch (e) {
+        if (DEBUG) {
+          print('API Error in pagination: $e');
+        }
+        throw ApiException('Ошибка при запросе: $e. Запрос: GET $nextUrl');
+      }
+    }
+
+    return allResults;
+  }
   // GET request
   Future<Map<String, dynamic>> get(String endpoint) async {
     // Check connection before making request

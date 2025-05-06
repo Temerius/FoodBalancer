@@ -1,3 +1,4 @@
+// lib/screens/profile/allergies_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
@@ -32,11 +33,10 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Get all allergens
-      // Force fetch from API with limit=1000 to avoid pagination
-      _allergens = await dataRepository.getAllAllergens();
+      // Загружаем все аллергены, принудительно обновляя их если это первый запуск
+      _allergens = await dataRepository.getAllAllergens(forceRefresh: _allergens.isEmpty);
 
-      // Get user's selected allergens
+      // Получаем выбранные аллергены пользователя
       final user = dataRepository.user ??
           Provider.of<AuthProvider>(context, listen: false).currentUser;
 
@@ -72,16 +72,17 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
         return;
       }
 
-      // Create updated user with new allergen IDs
+      // Создаем обновленного пользователя с новыми ID аллергенов
       final updatedUser = user.copyWith(
         allergenIds: _selectedAllergenIds.toList(),
       );
 
-      // Update profile
+      // Обновляем профиль
       final success = await dataRepository.updateUserProfile(updatedUser);
 
       if (success) {
-        Navigator.pop(context, true); // Pass true to indicate success
+        // Возвращаемся на предыдущий экран с сигналом успеха
+        Navigator.pop(context, true);
       } else {
         setState(() {
           _errorMessage = dataRepository.error ?? 'Ошибка обновления аллергий';
@@ -143,6 +144,31 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
+
+          // Индикатор количества аллергенов
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Всего аллергенов: ${_allergens.length}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                Text(
+                  'Выбрано: ${_selectedAllergenIds.length}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 8),
 
           Expanded(
             child: _allergens.isEmpty
@@ -216,5 +242,4 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
       ),
     );
   }
-
 }

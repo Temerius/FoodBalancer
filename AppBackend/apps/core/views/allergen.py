@@ -50,9 +50,7 @@ class AllergenViewSet(viewsets.ReadOnlyModelViewSet):
         return response
 
 
-@method_decorator(cache_page(60 * 60 * 10), name='list')
-class UserAllergenViewSet(CacheInvalidationMixin, viewsets.ModelViewSet):
-    cache_prefix = 'user_allergen'
+class UserAllergenViewSet(viewsets.ModelViewSet):
     """API для управления аллергенами пользователя"""
     serializer_class = UserAllergenSerializer
     permission_classes = [IsAuthenticated]
@@ -99,6 +97,21 @@ class UserAllergenViewSet(CacheInvalidationMixin, viewsets.ModelViewSet):
 
             logger.info(f"Successfully updated allergens for user {user.usr_id}: {created_allergens}")
 
+            # Принудительно очищаем кэш для list метода
+            from django.core.cache import cache
+            cache_key = f"views.decorators.cache.cache_page.{self.request.build_absolute_uri()}"
+            cache.delete(cache_key)
+
+            # Очистка всего кэша, связанного с аллергенами пользователя
+            user_id = request.user.usr_id
+            pattern = f"*user_allergen*{user_id}*"
+
+            # Для cache_page кэшей
+            for key in cache._cache.keys():
+                if pattern in key or f"/api/user-allergens/" in key:
+                    cache.delete(key)
+                    logger.info(f"Deleted cache key: {key}")
+
             return Response({
                 'success': True,
                 'message': 'Allergens updated successfully'
@@ -113,6 +126,7 @@ class UserAllergenViewSet(CacheInvalidationMixin, viewsets.ModelViewSet):
                 {'error': str(e)},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
     def get_queryset(self):
         """Возвращает аллергены текущего пользователя"""
         user_id = self.request.user.usr_id

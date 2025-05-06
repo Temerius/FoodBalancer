@@ -1,9 +1,7 @@
+// lib/providers/auth_provider.dart
 import 'package:flutter/foundation.dart';
 import '../models/user.dart';
-import '../models/enums.dart';
 import '../services/auth_service.dart';
-import '../repositories/data_repository.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -19,7 +17,6 @@ class AuthProvider with ChangeNotifier {
 
   // Геттеры
   User? get user => _user;
-  // Добавляем дополнительный геттер для совместимости со скринами
   User? get currentUser => _user;
   bool get isLoading => _isLoading;
   String? get error => _error;
@@ -58,8 +55,6 @@ class AuthProvider with ChangeNotifier {
     try {
       _user = await _authService.register(name, email, password);
       _isAuthenticated = true;
-
-      // After successful registration, initialize user data in DataRepository
       notifyListeners();
       return true;
     } catch (e) {
@@ -71,7 +66,6 @@ class AuthProvider with ChangeNotifier {
   }
 
   // Вход
-  // В классе AuthProvider (providers/auth_provider.dart), после успешной авторизации:
   Future<bool> login(String email, String password, {bool rememberMe = false}) async {
     _setLoading(true);
     _clearError();
@@ -79,10 +73,6 @@ class AuthProvider with ChangeNotifier {
     try {
       _user = await _authService.login(email, password);
       _isAuthenticated = true;
-
-      // Убедимся, что ApiService знает о токене
-      // Добавьте отладочный код, чтобы увидеть, что токен установлен
-      print("Токен авторизации успешно установлен: ${_authService.getToken()}");
 
       if (rememberMe) {
         await _authService.saveLoginStatus(true);
@@ -115,20 +105,6 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  // Load user data in DataRepository
-  void loadUserDataInRepository(BuildContext context) {
-    if (!_isAuthenticated || _user == null) return;
-
-    final dataRepository = Provider.of<DataRepository>(context, listen: false);
-    if (!dataRepository.isInitialized) {
-      dataRepository.initialize().then((_) {
-        dataRepository.loadUserData();
-      });
-    } else {
-      dataRepository.loadUserData();
-    }
-  }
-
   // Восстановление пароля
   Future<bool> resetPassword(String email) async {
     _setLoading(true);
@@ -136,25 +112,6 @@ class AuthProvider with ChangeNotifier {
 
     try {
       await _authService.resetPassword(email);
-      return true;
-    } catch (e) {
-      _setError(e.toString());
-      return false;
-    } finally {
-      _setLoading(false);
-    }
-  }
-
-  // Обновление профиля пользователя
-  Future<bool> updateUserProfile(User updatedUser) async {
-    _setLoading(true);
-    _clearError();
-
-    try {
-      // Здесь будет запрос к API для обновления профиля
-      // TODO: Добавить метод updateProfile в AuthService
-      _user = updatedUser;
-      notifyListeners();
       return true;
     } catch (e) {
       _setError(e.toString());

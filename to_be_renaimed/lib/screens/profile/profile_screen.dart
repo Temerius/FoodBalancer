@@ -16,6 +16,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _isLoading = false;
 
   @override
+  void initState() {
+    super.initState();
+
+    // Загружаем данные при отображении экрана
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _refreshData();
+    });
+  }
+
+  Future<void> _refreshData() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      // Обновляем данные пользователя
+      final dataRepository = Provider.of<DataRepository>(context, listen: false);
+      await dataRepository.refreshUserData();
+    } catch (e) {
+      // Ошибки уже обрабатываются в репозитории
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     final dataRepository = Provider.of<DataRepository>(context);
@@ -29,8 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             icon: const Icon(Icons.edit),
             onPressed: () {
               Navigator.pushNamed(context, '/profile/edit').then((_) {
-                // Обновляем состояние при возврате с экрана редактирования
-                setState(() {});
+                _refreshData();
               });
             },
           ),
@@ -39,19 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
-        onRefresh: () async {
-          setState(() {
-            _isLoading = true;
-          });
-          try {
-            // Обновляем данные профиля с сервера
-            await dataRepository.refreshUserData();
-          } finally {
-            setState(() {
-              _isLoading = false;
-            });
-          }
-        },
+        onRefresh: _refreshData,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -141,9 +156,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(height: 16),
 
               // Аллергии
-              // In the ProfileScreen build method where it displays allergies:
-
-// Allergies section
               Card(
                 margin: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -162,20 +174,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           IconButton(
                             icon: const Icon(Icons.edit),
                             onPressed: () async {
-                              await Navigator.pushNamed(context, '/profile/allergies');
-
-                              // Force refresh data when returning
-                              setState(() {
-                                _isLoading = true;
-                              });
-
-                              try {
-                                final dataRepository = Provider.of<DataRepository>(context, listen: false);
-                                await dataRepository.refreshUserData();
-                              } finally {
-                                setState(() {
-                                  _isLoading = false;
-                                });
+                              final result = await Navigator.pushNamed(context, '/profile/allergies');
+                              if (result == true) {
+                                _refreshData();
                               }
                             },
                           ),
@@ -183,33 +184,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       const SizedBox(height: 8),
 
-                      // Display the user's allergies
-                      Builder(
-                        builder: (context) {
-                          // Get fresh data each time this widget builds
-                          final dataRepository = Provider.of<DataRepository>(context);
-                          final user = dataRepository.user;
-
-                          // Debugging output
-                          print("Current user allergens: ${user?.allergens?.map((a) => a.name).toList()}");
-                          print("Current user allergen IDs: ${user?.allergenIds}");
-
-                          if (user?.allergens == null || user!.allergens.isEmpty) {
-                            return const Text('Аллергии не указаны');
-                          } else {
-                            return Wrap(
-                              spacing: 8,
-                              runSpacing: 8,
-                              children: user.allergens.map((allergen) {
-                                return Chip(
-                                  label: Text(allergen.name),
-                                  backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
-                                );
-                              }).toList(),
-                            );
-                          }
-                        },
-                      ),
+                      // Отображение аллергенов пользователя
+                      _buildAllergensSection(context, user),
                     ],
                   ),
                 ),
@@ -237,42 +213,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             icon: const Icon(Icons.edit),
                             onPressed: () {
                               Navigator.pushNamed(context, '/profile/equipment').then((_) {
-                                setState(() {});
+                                _refreshData();
                               });
                             },
                           ),
                         ],
                       ),
                       const SizedBox(height: 8),
-                      if (user?.equipment.isEmpty ?? true)
-                        const Text('Оборудование не указано')
-                      else
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: user!.equipment.length,
-                          itemBuilder: (context, index) {
-                            final equipment = user.equipment[index];
-                            return ListTile(
-                              leading: Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Icon(
-                                  Icons.kitchen,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                              title: Text(equipment.displayName),
-                              subtitle: Text('${equipment.power} Вт, ${equipment.capacity} л'),
-                              dense: true,
-                              visualDensity: VisualDensity.compact,
-                            );
-                          },
-                        ),
+                      _buildEquipmentSection(context, user),
                     ],
                   ),
                 ),
@@ -307,6 +255,90 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  // Виджет для отображения аллергенов
+  Widget _buildAllergensSection(BuildContext context, User? user) {
+    // Получаем текущие аллергены из репозитория
+    final dataRepository = Provider.of<DataRepository>(context);
+    final allergens = dataRepository.allergens;
+
+    // Получаем ID аллергенов пользователя
+    final userAllergenIds = user?.allergenIds ?? [];
+
+    // Если у пользователя нет аллергенов или список аллергенов пуст
+    if (userAllergenIds.isEmpty) {
+      return const Text('Аллергии не указаны');
+    }
+
+    // Находим аллергены пользователя по ID
+    final userAllergens = allergens.where(
+            (allergen) => userAllergenIds.contains(allergen.id)
+    ).toList();
+
+    // Если у пользователя нет аллергенов после фильтрации
+    if (userAllergens.isEmpty) {
+      return const Text('Аллергии не указаны');
+    }
+
+    // Отображаем аллергены
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: userAllergens.map((allergen) {
+        return Chip(
+          label: Text(allergen.name),
+          backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+        );
+      }).toList(),
+    );
+  }
+
+  // Виджет для отображения оборудования
+  Widget _buildEquipmentSection(BuildContext context, User? user) {
+    final dataRepository = Provider.of<DataRepository>(context);
+    final equipment = dataRepository.equipment;
+
+    final userEquipmentIds = user?.equipmentIds ?? [];
+
+    if (userEquipmentIds.isEmpty) {
+      return const Text('Оборудование не указано');
+    }
+
+    final userEquipment = equipment.where(
+            (item) => userEquipmentIds.contains(item.id)
+    ).toList();
+
+    if (userEquipment.isEmpty) {
+      return const Text('Оборудование не указано');
+    }
+
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: userEquipment.length,
+      itemBuilder: (context, index) {
+        final equipment = userEquipment[index];
+        return ListTile(
+          leading: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(
+              Icons.kitchen,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+          title: Text(equipment.displayName),
+          subtitle: Text('${equipment.power} Вт, ${equipment.capacity} л'),
+          dense: true,
+          visualDensity: VisualDensity.compact,
+        );
+      },
     );
   }
 

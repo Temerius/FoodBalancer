@@ -230,11 +230,9 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                       color: recipe.isFavorite ? Colors.red : null,
                     ),
                     onPressed: () {
-                      // Здесь мы должны обновить статус избранного через репозиторий
-                      // Но для демонстрации просто обновим состояние
-                      setState(() {
-                        recipe.isFavorite = !recipe.isFavorite;
-                      });
+                      // Обновление статуса "избранное" через репозиторий
+                      final dataRepository = Provider.of<DataRepository>(context, listen: false);
+                      dataRepository.toggleFavoriteRecipe(recipe.id);
                     },
                   ),
                 ],

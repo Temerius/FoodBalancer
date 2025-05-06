@@ -125,11 +125,19 @@ class CacheManager {
 
   // Аллергены
   static Future<bool> saveAllergens(List<Map<String, dynamic>> allergensData) async {
-    return saveData(_allergensKey, allergensData);
+    final result = await saveData(_allergensKey, allergensData);
+    if (result) {
+      await saveUpdateTime(_allergensKey);
+    }
+    return result;
   }
 
-  static Future<List<Map<String, dynamic>>?> getAllergens() async {
-    final data = await getData(_allergensKey);
+  static Future<List<Map<String, dynamic>>?> getAllergens({bool checkExpiry = true, Duration lifetime = const Duration(hours: 24)}) async {
+    if (checkExpiry && await isCacheStale(_allergensKey, lifetime: lifetime)) {
+      return null;
+    }
+
+    final data = await getData(_allergensKey, checkExpiry: false);
     if (data == null) return null;
 
     return List<Map<String, dynamic>>.from(
@@ -208,4 +216,29 @@ class CacheManager {
     final data = await getData(_shoppingListKey);
     return data != null ? Map<String, dynamic>.from(data) : null;
   }
+
+
+  static Future<DateTime?> getLastUpdateTime(String key) async {
+    final prefs = await _prefs;
+    final timestamp = prefs.getInt('${key}_timestamp');
+    if (timestamp != null) {
+      return DateTime.fromMillisecondsSinceEpoch(timestamp);
+    }
+    return null;
+  }
+
+  static Future<void> saveUpdateTime(String key) async {
+    final prefs = await _prefs;
+    await prefs.setInt('${key}_timestamp', DateTime.now().millisecondsSinceEpoch);
+  }
+
+  static Future<bool> isCacheStale(String key, {Duration lifetime = const Duration(hours: 24)}) async {
+    final lastUpdate = await getLastUpdateTime(key);
+    if (lastUpdate == null) {
+      return true;
+    }
+    return DateTime.now().difference(lastUpdate) > lifetime;
+  }
+
+
 }

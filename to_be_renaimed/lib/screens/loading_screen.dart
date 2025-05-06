@@ -1,3 +1,4 @@
+// lib/screens/loading_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
@@ -44,7 +45,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
       });
 
       if (authProvider.isAuthenticated) {
-        // Если пользователь авторизован, загружаем базовые данные
+        // Если пользователь авторизован, инициализируем репозитории
         setState(() {
           _statusMessage = "Загрузка базовых данных...";
           _progress = 0.5;
@@ -58,7 +59,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         });
 
         // Загружаем данные пользователя
-        await dataRepository.loadUserData();
+        await dataRepository.refreshUserData();
       }
 
       setState(() {
