@@ -1415,3 +1415,109 @@ INFO 2025-05-05 01:53:31,515 allergen 21388 8596 Listing all allergens: user_id=
 INFO 2025-05-05 01:53:31,519 allergen 21388 8596 Retrieved 50 allergens, user_id=66, time=0.00s
 INFO 2025-05-05 01:53:31,541 basehttp 21388 8596 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
 INFO 2025-05-05 01:53:31,635 basehttp 21388 8596 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 205
+INFO 2025-05-05 21:23:34,550 autoreload 23332 19844 Watching for file changes with StatReloader
+INFO 2025-05-05 21:23:35,043 wsgi 23332 26540 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 21:23:35,044 wsgi 23332 26540 Environment: config.settings
+INFO 2025-05-05 21:23:35,044 wsgi 23332 26540 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 21:23:35,048 wsgi 23332 26540 Application initialized successfully
+INFO 2025-05-05 21:24:21,568 autoreload 23332 19844 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\config\settings\development.py changed, reloading.
+INFO 2025-05-05 21:24:44,510 autoreload 31668 11252 Watching for file changes with StatReloader
+INFO 2025-05-05 21:24:44,778 wsgi 31668 25848 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 21:24:44,778 wsgi 31668 25848 Environment: config.settings
+INFO 2025-05-05 21:24:44,778 wsgi 31668 25848 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 21:24:44,783 wsgi 31668 25848 Application initialized successfully
+INFO 2025-05-05 21:29:10,138 autoreload 9256 24616 Watching for file changes with StatReloader
+INFO 2025-05-05 21:29:10,451 wsgi 9256 21888 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 21:29:10,451 wsgi 9256 21888 Environment: config.settings
+INFO 2025-05-05 21:29:10,451 wsgi 9256 21888 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 21:29:10,456 wsgi 9256 21888 Application initialized successfully
+INFO 2025-05-05 21:31:20,410 autoreload 36464 30632 Watching for file changes with StatReloader
+INFO 2025-05-05 21:31:20,670 wsgi 36464 28256 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-05 21:31:20,670 wsgi 36464 28256 Environment: config.settings
+INFO 2025-05-05 21:31:20,670 wsgi 36464 28256 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-05 21:31:20,675 wsgi 36464 28256 Application initialized successfully
+WARNING 2025-05-05 21:33:12,777 basehttp 36464 29664 "GET /api/users/login/ HTTP/1.1" 405 15553
+INFO 2025-05-05 21:33:12,865 basehttp 36464 31468 "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 200 3385
+INFO 2025-05-05 21:33:12,867 basehttp 36464 23204 "GET /static/rest_framework/css/prettify.css HTTP/1.1" 200 817
+INFO 2025-05-05 21:33:12,870 basehttp 36464 29664 "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 200 121457
+INFO 2025-05-05 21:33:12,870 basehttp 36464 9288 "GET /static/rest_framework/css/default.css HTTP/1.1" 200 1152
+INFO 2025-05-05 21:33:12,887 basehttp 36464 31468 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 200 12621
+INFO 2025-05-05 21:33:12,903 basehttp 36464 23204 "GET /static/rest_framework/js/csrf.js HTTP/1.1" 200 1719
+INFO 2025-05-05 21:33:12,906 basehttp 36464 30704 "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 200 3597
+INFO 2025-05-05 21:33:12,919 basehttp 36464 31468 "GET /static/rest_framework/js/default.js HTTP/1.1" 200 1268
+INFO 2025-05-05 21:33:12,921 basehttp 36464 30704 "GET /static/rest_framework/img/grid.png HTTP/1.1" 200 1458
+INFO 2025-05-05 21:33:12,928 basehttp 36464 9288 "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 200 13632
+INFO 2025-05-05 21:33:12,935 basehttp 36464 29664 "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 200 39680
+INFO 2025-05-05 21:33:12,950 basehttp 36464 23204 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 200 13404
+INFO 2025-05-05 21:33:12,957 basehttp 36464 4176 "GET /static/rest_framework/js/jquery-3.5.1.min.js HTTP/1.1" 200 89476
+INFO 2025-05-05 21:33:13,005 basehttp 36464 4176 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 200 43
+INFO 2025-05-05 21:33:13,024 basehttp 36464 23204 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 200 4527
+WARNING 2025-05-05 21:33:13,216 basehttp 36464 23204 "GET /favicon.ico HTTP/1.1" 404 12454
+WARNING 2025-05-05 21:37:02,316 basehttp 36464 31424 "GET /api/users/login/ HTTP/1.1" 405 15552
+INFO 2025-05-06 22:36:26,328 autoreload 27856 27152 Watching for file changes with StatReloader
+INFO 2025-05-06 22:36:26,828 wsgi 27856 36664 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-06 22:36:26,828 wsgi 27856 36664 Environment: config.settings
+INFO 2025-05-06 22:36:26,828 wsgi 27856 36664 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-06 22:36:26,833 wsgi 27856 36664 Application initialized successfully
+INFO 2025-05-06 22:39:35,164 views 27856 6964 Registration attempt: email=test_rzdat1kl@example.com
+INFO 2025-05-06 22:39:35,722 views 27856 6964 User registered successfully: user_id=95, email=test_rzdat1kl@example.com, time=0.56s
+INFO 2025-05-06 22:39:35,993 basehttp 27856 6964 "POST /api/users/register/ HTTP/1.1" 201 232
+INFO 2025-05-06 22:39:36,127 views 27856 25608 Login attempt: email=test_rzdat1kl@example.com
+INFO 2025-05-06 22:39:36,550 views 27856 25608 User login successful: user_id=95, email=test_rzdat1kl@example.com, time=0.42s
+INFO 2025-05-06 22:39:36,583 basehttp 27856 25608 "POST /api/users/login/ HTTP/1.1" 200 232
+INFO 2025-05-06 22:39:36,734 views 27856 7108 Profile accessed: user_id=95
+INFO 2025-05-06 22:39:36,788 basehttp 27856 7108 "GET /api/users/profile/ HTTP/1.1" 200 172
+INFO 2025-05-06 22:39:36,923 ingredient 27856 35740 Listing refrigerator ingredients: user_id=95
+INFO 2025-05-06 22:39:37,009 ingredient 27856 35740 Retrieved 0 refrigerator ingredients for user_id=95, time=0.09s
+INFO 2025-05-06 22:39:37,033 basehttp 27856 35740 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-06 22:39:37,146 basehttp 27856 36184 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-06 22:39:37,407 allergen 27856 25164 Listing all allergens: user_id=95
+INFO 2025-05-06 22:39:37,429 allergen 27856 25164 Retrieved 50 allergens, user_id=95, time=0.02s
+INFO 2025-05-06 22:39:37,451 basehttp 27856 25164 "GET /api/allergens/ HTTP/1.1" 200 766
+INFO 2025-05-06 22:39:37,533 equipment 27856 33452 Listing all equipment: user_id=95
+INFO 2025-05-06 22:39:37,556 equipment 27856 33452 Retrieved 73 equipment items, user_id=95, time=0.02s
+INFO 2025-05-06 22:39:37,581 basehttp 27856 33452 "GET /api/equipment/ HTTP/1.1" 200 3963
+INFO 2025-05-06 22:39:37,651 views 27856 26208 Logout attempt: user_id=95
+INFO 2025-05-06 22:39:37,655 views 27856 26208 User logged out successfully: user_id=95
+INFO 2025-05-06 22:39:37,674 basehttp 27856 26208 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-06 22:40:07,026 views 27856 36872 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-06 22:40:07,431 views 27856 36872 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.41s
+INFO 2025-05-06 22:40:07,474 basehttp 27856 36872 "POST /api/users/login/ HTTP/1.1" 200 213
+INFO 2025-05-06 22:43:10,382 views 27856 30644 Profile update attempt: user_id=66
+INFO 2025-05-06 22:43:10,456 views 27856 30644 Profile updated successfully: user_id=66, time=0.07s
+INFO 2025-05-06 22:43:10,479 basehttp 27856 30644 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-06 22:43:10,584 views 27856 30644 Profile accessed: user_id=66
+INFO 2025-05-06 22:43:10,601 basehttp 27856 30644 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-06 22:43:10,670 allergen 27856 30644 Listing all allergens: user_id=66
+INFO 2025-05-06 22:43:10,674 allergen 27856 30644 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-06 22:43:10,693 basehttp 27856 30644 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-06 22:43:10,807 allergen 27856 30644 Listing user allergens: user_id=66
+INFO 2025-05-06 22:43:10,833 allergen 27856 30644 Retrieved unknown user allergens, user_id=66, time=0.03s
+INFO 2025-05-06 22:43:10,918 basehttp 27856 30644 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 112
+INFO 2025-05-06 22:43:16,244 allergen 27856 30644 Listing all allergens: user_id=66
+INFO 2025-05-06 22:43:16,249 allergen 27856 30644 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-06 22:43:16,267 basehttp 27856 30644 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-06 22:43:19,722 views 27856 30644 Profile update attempt: user_id=66
+INFO 2025-05-06 22:43:19,729 views 27856 30644 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-06 22:43:19,752 basehttp 27856 30644 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-06 22:43:19,815 allergen 27856 30644 Starting user allergens update for user ID: 66
+INFO 2025-05-06 22:43:19,815 allergen 27856 30644 Request data: {'allergen_ids': [4, 3, 2]}
+INFO 2025-05-06 22:43:19,815 allergen 27856 30644 Allergen IDs to update: [4, 3, 2]
+INFO 2025-05-06 22:43:19,825 allergen 27856 30644 Deleted (2, {'core.M2MUsrAlg': 2}) existing allergen records
+INFO 2025-05-06 22:43:19,834 allergen 27856 30644 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-06 22:43:19,840 allergen 27856 30644 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-06 22:43:19,846 allergen 27856 30644 Created allergen mapping: user 66 - allergen 2
+INFO 2025-05-06 22:43:19,847 allergen 27856 30644 Successfully updated allergens for user 66: [4, 3, 2]
+INFO 2025-05-06 22:43:19,877 basehttp 27856 30644 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-06 22:43:20,001 views 27856 30644 Profile accessed: user_id=66
+INFO 2025-05-06 22:43:20,020 basehttp 27856 30644 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-06 22:43:20,105 allergen 27856 30644 Listing all allergens: user_id=66
+INFO 2025-05-06 22:43:20,110 allergen 27856 30644 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-06 22:43:20,128 basehttp 27856 30644 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-06 22:43:20,221 basehttp 27856 30644 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 112
+INFO 2025-05-06 22:43:20,431 views 27856 30644 Profile accessed: user_id=66
+INFO 2025-05-06 22:43:20,448 basehttp 27856 30644 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-06 22:43:20,522 allergen 27856 30644 Listing all allergens: user_id=66
+INFO 2025-05-06 22:43:20,525 allergen 27856 30644 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-06 22:43:20,544 basehttp 27856 30644 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-06 22:43:20,636 basehttp 27856 30644 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 112
