@@ -298,7 +298,143 @@ class UserRepository {
     }
   }
 
-  // Обновление аллергенов пользователя
+  // Получение ID оборудования пользователя
+  Future<List<int>> getUserEquipmentIds({CacheConfig? config}) async {
+    final cacheConfig = config ?? CacheConfig.defaultConfig;
+    print("\n===== GETTING USER EQUIPMENT IDS (forceRefresh: ${cacheConfig.forceRefresh}) =====");
+
+    // Если пользователь уже в памяти
+    if (_user != null && !cacheConfig.forceRefresh) {
+      print("USER EQUIPMENT IDS FROM MEMORY: ${_user!.equipmentIds}");
+      return _user!.equipmentIds;
+    }
+
+    // Пробуем загрузить из кэша
+    if (!cacheConfig.forceRefresh) {
+      final cachedData = await CacheService.get(_equipmentIdsKey, cacheConfig);
+
+      if (cachedData != null) {
+        try {
+          print("RAW EQUIPMENT IDS FROM CACHE: $cachedData (${cachedData.runtimeType})");
+          List<int> equipmentIds = [];
+
+          if (cachedData is List) {
+            for (var id in cachedData) {
+              if (id is int) {
+                equipmentIds.add(id);
+              } else if (id is String) {
+                int? parsedId = int.tryParse(id);
+                if (parsedId != null) {
+                  equipmentIds.add(parsedId);
+                }
+              }
+            }
+          }
+
+          print("CONVERTED EQUIPMENT IDS FROM CACHE: $equipmentIds");
+          return equipmentIds;
+        } catch (e) {
+          print("ERROR PARSING EQUIPMENT IDS FROM CACHE: $e");
+          // Если произошла ошибка, продолжаем загрузку из API
+        }
+      }
+    }
+
+    // Загружаем из API
+    try {
+      print("FETCHING USER EQUIPMENT IDS FROM API...");
+
+      // Получаем данные, теперь API может вернуть список напрямую
+      final response = await _apiService.get('/api/user-equipment/');
+      print("USER EQUIPMENT RESPONSE FROM API: $response");
+
+      List<int> equipmentIds = [];
+
+      // Проверяем, вернулся ли список в поле results или напрямую
+      if (response.containsKey('results')) {
+        final List<dynamic> userEquipmentJson = response['results'];
+        print("USER EQUIPMENT JSON FROM API (results field): ${userEquipmentJson.length} items");
+
+        for (var item in userEquipmentJson) {
+          _extractEquipmentId(item, equipmentIds);
+        }
+      } else {
+        // Если в ответе нет поля results, проверяем, может быть ответ сам по себе список
+        final rawData = response['raw_data'] ?? response;
+
+        if (rawData is List) {
+          print("USER EQUIPMENT JSON FROM API (direct list): ${rawData.length} items");
+          for (var item in rawData) {
+            _extractEquipmentId(item, equipmentIds);
+          }
+        }
+      }
+
+      print("EXTRACTED USER EQUIPMENT IDS FROM API: $equipmentIds");
+
+      // Сохраняем в кэш
+      await CacheService.save(_equipmentIdsKey, equipmentIds);
+
+      // Обновляем пользователя в памяти, если он существует
+      if (_user != null) {
+        print("UPDATING USER EQUIPMENT IDS IN MEMORY: ${_user!.equipmentIds} -> $equipmentIds");
+        _user = _user!.copyWith(equipmentIds: equipmentIds);
+        await CacheService.save(_cacheKey, _user!.toJson());
+      }
+
+      return equipmentIds;
+    } catch (e) {
+      print("ERROR FETCHING USER EQUIPMENT IDS: $e");
+      if (_user != null) {
+        return _user!.equipmentIds; // Возвращаем данные из памяти в случае ошибки
+      }
+      return [];
+    }
+  }
+
+  // Вспомогательный метод для извлечения ID оборудования из элемента JSON
+  void _extractEquipmentId(dynamic item, List<int> equipmentIds) {
+    if (item is Map<String, dynamic>) {
+      // Проверяем разные возможные ключи для ID оборудования
+      dynamic eqpId;
+
+      if (item.containsKey('mue_eqp_id')) {
+        eqpId = item['mue_eqp_id'];
+      } else if (item.containsKey('eqp_id')) {
+        eqpId = item['eqp_id'];
+      } else if (item.containsKey('id')) {
+        eqpId = item['id'];
+      }
+
+      // Если нашли ID, конвертируем его в int
+      if (eqpId != null) {
+        if (eqpId is int) {
+          equipmentIds.add(eqpId);
+        } else if (eqpId is String) {
+          int? parsedId = int.tryParse(eqpId);
+          if (parsedId != null) {
+            equipmentIds.add(parsedId);
+          } else {
+            print("WARNING: Could not parse equipment ID: $eqpId");
+          }
+        } else {
+          print("WARNING: Unexpected equipment ID type: ${eqpId.runtimeType} for value: $eqpId");
+        }
+      }
+    } else if (item is int) {
+      // Если элемент сам является числом, это может быть прямой ID
+      equipmentIds.add(item);
+    } else if (item is String) {
+      // Если элемент сам является строкой, пробуем преобразовать в число
+      int? parsedId = int.tryParse(item);
+      if (parsedId != null) {
+        equipmentIds.add(parsedId);
+      } else {
+        print("WARNING: Could not parse equipment ID string: $item");
+      }
+    }
+  }
+
   // Обновление аллергенов пользователя
   Future<bool> updateUserAllergens(List<int> allergenIds) async {
     print("\n===== UPDATING USER ALLERGENS: $allergenIds =====");
@@ -351,6 +487,58 @@ class UserRepository {
     _user = _user!.copyWith(allergenIds: allergenIds);
   }
 
+  // Обновление оборудования пользователя
+  Future<bool> updateUserEquipment(List<int> equipmentIds) async {
+    print("\n===== UPDATING USER EQUIPMENT: $equipmentIds =====");
+    if (_user == null) {
+      await getUserProfile();
+
+      if (_user == null) {
+        print("ERROR: No user found to update equipment");
+        return false;
+      }
+    }
+
+    try {
+      // Отправляем запрос на сервер
+      print("SENDING EQUIPMENT UPDATE TO SERVER...");
+
+      // Always send an object with an array, even if empty
+      final requestData = {
+        'equipment_ids': equipmentIds,
+      };
+
+      print("REQUEST DATA: $requestData");
+      await _apiService.post('/api/user-equipment/update/', requestData);
+
+      // Обновляем пользователя в памяти
+      updateUserEquipmentInMemory(equipmentIds);
+
+      // Обновляем кэш
+      final userJson = _user!.toJson();
+      print("UPDATED USER JSON: $userJson");
+      await CacheService.save(_cacheKey, userJson);
+      await CacheService.save(_equipmentIdsKey, equipmentIds);
+
+      print("USER EQUIPMENT UPDATE SUCCESSFUL");
+      return true;
+    } catch (e) {
+      print("ERROR UPDATING USER EQUIPMENT: $e");
+      return false;
+    }
+  }
+
+  // Обновление оборудования пользователя только в памяти (без запроса на сервер)
+  void updateUserEquipmentInMemory(List<int> equipmentIds) {
+    if (_user == null) {
+      print("ERROR: Cannot update equipment in memory - user is null");
+      return;
+    }
+
+    print("UPDATING USER EQUIPMENT IN MEMORY: ${_user!.equipmentIds} -> $equipmentIds");
+    _user = _user!.copyWith(equipmentIds: equipmentIds);
+  }
+
   // Обновление профиля пользователя
   Future<bool> updateUserProfile(User updatedUser) async {
     print("\n===== UPDATING USER PROFILE =====");
@@ -377,26 +565,13 @@ class UserRepository {
 
       print("SERVER RESPONSE: $response");
 
-      // Обновляем аллергены, если они указаны
-
+      // Обновляем аллергены
       print("UPDATING USER ALLERGENS: ${updatedUser.allergenIds}");
       await updateUserAllergens(updatedUser.allergenIds);
 
-      // Обновляем оборудование, если оно указано
-      if (updatedUser.equipmentIds.isNotEmpty) {
-        print("UPDATING USER EQUIPMENT: ${updatedUser.equipmentIds}");
-        try {
-          await _apiService.post('/api/user-equipment/update/', {
-            'equipment_ids': updatedUser.equipmentIds,
-          });
-
-          // Сохраняем ID оборудования в кэш
-          await CacheService.save(_equipmentIdsKey, updatedUser.equipmentIds);
-        } catch (e) {
-          print("ERROR UPDATING USER EQUIPMENT: $e");
-          // Продолжаем выполнение, чтобы сохранить остальные данные
-        }
-      }
+      // Обновляем оборудование
+      print("UPDATING USER EQUIPMENT: ${updatedUser.equipmentIds}");
+      await updateUserEquipment(updatedUser.equipmentIds);
 
       // Обновляем пользователя в памяти
       if (response.containsKey('usr_id')) {

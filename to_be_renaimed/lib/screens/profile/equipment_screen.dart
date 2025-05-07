@@ -16,7 +16,7 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
   bool _isLoading = false;
   String? _errorMessage;
   List<Equipment> _equipment = [];
-  List<int> _userEquipmentIds = [];
+  List<int> _selectedEquipmentIds = [];
 
   @override
   void initState() {
@@ -33,20 +33,23 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
       // Получаем все оборудование из репозитория
-      _equipment = dataRepository.equipment;
+      _equipment = await dataRepository.getEquipment(forceRefresh: true);
 
       // Получаем оборудование текущего пользователя
       final user = dataRepository.user ??
           Provider.of<AuthProvider>(context, listen: false).currentUser;
 
       if (user != null) {
-        _userEquipmentIds = List<int>.from(user.equipmentIds);
+        _selectedEquipmentIds = List<int>.from(user.equipmentIds);
 
         // Обновляем статусы выбора в списке оборудования
         for (var equip in _equipment) {
-          equip.isSelected = _userEquipmentIds.contains(equip.id);
+          equip.isSelected = _selectedEquipmentIds.contains(equip.id);
         }
       }
+
+      print("Loaded ${_equipment.length} equipment items");
+      print("User has ${_selectedEquipmentIds.length} selected equipment items: $_selectedEquipmentIds");
     } catch (e) {
       setState(() {
         _errorMessage = 'Ошибка загрузки данных: ${e.toString()}';
@@ -76,17 +79,22 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
         return;
       }
 
+      print("Saving equipment IDs: $_selectedEquipmentIds");
+
       // Создаем копию пользователя с обновленным оборудованием
       final updatedUser = user.copyWith(
-        equipmentIds: _userEquipmentIds,
+        equipmentIds: _selectedEquipmentIds,
       );
 
       // Обновляем профиль в репозитории
       final success = await dataRepository.updateUserProfile(updatedUser);
 
       if (success) {
+        // Обновляем кэш оборудования
+        await dataRepository.getEquipment(forceRefresh: true);
+
         if (mounted) {
-          Navigator.pop(context);
+          Navigator.pop(context, true);
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Оборудование успешно обновлено')),
           );
@@ -148,6 +156,7 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
             ),
           ),
 
+          // Список оборудования с индикатором загрузки
           Expanded(
             child: _equipment.isEmpty
                 ? Center(
@@ -184,18 +193,16 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
                     subtitle: Text(
                       'Тип: ${equip.type}\nМощность: ${equip.power} Вт, Объем: ${equip.capacity} л',
                     ),
-                    value: equip.isSelected,
+                    value: _selectedEquipmentIds.contains(equip.id),
                     onChanged: (bool? value) {
                       if (value != null) {
                         setState(() {
-                          equip.isSelected = value;
-
                           if (value) {
-                            if (!_userEquipmentIds.contains(equip.id)) {
-                              _userEquipmentIds.add(equip.id);
+                            if (!_selectedEquipmentIds.contains(equip.id)) {
+                              _selectedEquipmentIds.add(equip.id);
                             }
                           } else {
-                            _userEquipmentIds.remove(equip.id);
+                            _selectedEquipmentIds.remove(equip.id);
                           }
                         });
                       }
@@ -224,25 +231,13 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Выбрано: ${_userEquipmentIds.length} из ${_equipment.length}',
+                'Выбрано: ${_selectedEquipmentIds.length} из ${_equipment.length}',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),
-
-          // Кнопка добавления нового оборудования
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: OutlinedButton.icon(
-              onPressed: () {
-                _showAddEquipmentDialog(context);
-              },
-              icon: const Icon(Icons.add),
-              label: const Text('Добавить свое оборудование'),
-            ),
-          ),
 
           // Кнопка сохранения
           Padding(
@@ -256,135 +251,6 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  void _showAddEquipmentDialog(BuildContext context) {
-    final nameController = TextEditingController();
-    final typeController = TextEditingController();
-    final powerController = TextEditingController(text: '800');
-    final capacityController = TextEditingController(text: '5');
-    String? errorMessage;
-
-    showDialog(
-      context: context,
-      builder: (context) => StatefulBuilder(
-          builder: (context, setDialogState) {
-            return AlertDialog(
-              title: Text('Добавить оборудование'),
-              content: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Сообщение об ошибке (если есть)
-                    if (errorMessage != null) ...[
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.red.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          errorMessage!,
-                          style: TextStyle(color: Colors.red, fontSize: 12),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                    ],
-
-                    TextField(
-                      controller: nameController,
-                      decoration: const InputDecoration(
-                        labelText: 'Название',
-                        helperText: 'Обязательное поле',
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: typeController,
-                      decoration: const InputDecoration(
-                        labelText: 'Тип',
-                        helperText: 'Например: Плита, Микроволновка и т.д.',
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: powerController,
-                      decoration: const InputDecoration(labelText: 'Мощность (Вт)'),
-                      keyboardType: TextInputType.number,
-                    ),
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: capacityController,
-                      decoration: const InputDecoration(labelText: 'Объем (л)'),
-                      keyboardType: TextInputType.number,
-                    ),
-                  ],
-                ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Отмена'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    // Валидация
-                    if (nameController.text.isEmpty) {
-                      setDialogState(() {
-                        errorMessage = 'Пожалуйста, введите название оборудования';
-                      });
-                      return;
-                    }
-
-                    final power = int.tryParse(powerController.text) ?? 0;
-                    final capacity = int.tryParse(capacityController.text) ?? 0;
-
-                    if (power < 0 || power > 10000) {
-                      setDialogState(() {
-                        errorMessage = 'Мощность должна быть в диапазоне 0-10000 Вт';
-                      });
-                      return;
-                    }
-
-                    if (capacity < 0 || capacity > 1000) {
-                      setDialogState(() {
-                        errorMessage = 'Объем должен быть в диапазоне 0-1000 л';
-                      });
-                      return;
-                    }
-
-                    // Создаем новое оборудование
-                    final dataRepository = Provider.of<DataRepository>(context, listen: false);
-                    final maxId = _equipment.isEmpty ? 0 : _equipment.map((e) => e.id).reduce((a, b) => a > b ? a : b);
-
-                    final newEquipment = Equipment(
-                      id: maxId + 1, // Временный ID (должен быть заменен сервером)
-                      type: typeController.text.isNotEmpty ? typeController.text : 'Не указан',
-                      power: power,
-                      capacity: capacity,
-                      customName: nameController.text,
-                      isSelected: true, // Автоматически выбираем новое оборудование
-                    );
-
-                    setState(() {
-                      _equipment.add(newEquipment);
-                      _userEquipmentIds.add(newEquipment.id);
-                    });
-
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Оборудование добавлено')),
-                    );
-                  },
-                  child: const Text('Добавить'),
-                ),
-              ],
-            );
-          }
       ),
     );
   }
