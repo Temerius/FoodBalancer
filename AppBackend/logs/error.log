@@ -541,3 +541,33 @@ ERROR 2025-05-07 01:28:47,591 allergen 14608 34440 Traceback: Traceback (most re
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AttributeError: 'DatabaseCache' object has no attribute '_cache'
 
+ERROR 2025-05-07 02:19:27,288 allergen 24372 27912 Error updating allergens: 'DatabaseCache' object has no attribute '_cache'
+ERROR 2025-05-07 02:19:27,288 allergen 24372 27912 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 110, in update_user_allergens
+    for key in cache._cache.keys():
+               ^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\utils\connection.py", line 15, in __getattr__
+    return getattr(self._connections[self._alias], item)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DatabaseCache' object has no attribute '_cache'
+
+ERROR 2025-05-07 02:22:35,035 allergen 24372 1460 Error updating allergens: 'DatabaseCache' object has no attribute '_cache'
+ERROR 2025-05-07 02:22:35,037 allergen 24372 1460 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 110, in update_user_allergens
+    for key in cache._cache.keys():
+               ^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\utils\connection.py", line 15, in __getattr__
+    return getattr(self._connections[self._alias], item)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DatabaseCache' object has no attribute '_cache'
+
+ERROR 2025-05-07 02:25:39,594 allergen 24372 34164 Error updating allergens: 'DatabaseCache' object has no attribute '_cache'
+ERROR 2025-05-07 02:25:39,595 allergen 24372 34164 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 110, in update_user_allergens
+    for key in cache._cache.keys():
+               ^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\utils\connection.py", line 15, in __getattr__
+    return getattr(self._connections[self._alias], item)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DatabaseCache' object has no attribute '_cache'
+

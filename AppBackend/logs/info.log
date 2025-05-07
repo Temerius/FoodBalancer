@@ -510,3 +510,299 @@ INFO 2025-05-07 01:28:48,930 basehttp 14608 34440 "GET /api/users/profile/ HTTP/
 INFO 2025-05-07 01:28:48,995 allergen 14608 34440 Listing user allergens: user_id=66
 INFO 2025-05-07 01:28:49,007 allergen 14608 34440 Retrieved unknown user allergens, user_id=66, time=0.01s
 INFO 2025-05-07 01:28:49,026 basehttp 14608 34440 "GET /api/user-allergens/?limit=100 HTTP/1.1" 200 216
+INFO 2025-05-07 02:19:06,953 autoreload 24372 18528 Watching for file changes with StatReloader
+INFO 2025-05-07 02:19:07,315 wsgi 24372 18024 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 02:19:07,315 wsgi 24372 18024 Environment: config.settings
+INFO 2025-05-07 02:19:07,315 wsgi 24372 18024 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 02:19:07,320 wsgi 24372 18024 Application initialized successfully
+INFO 2025-05-07 02:19:10,976 views 24372 23132 Registration attempt: email=test_1htc0d9q@example.com
+INFO 2025-05-07 02:19:11,352 views 24372 23132 User registered successfully: user_id=99, email=test_1htc0d9q@example.com, time=0.37s
+INFO 2025-05-07 02:19:11,420 basehttp 24372 23132 "POST /api/users/register/ HTTP/1.1" 201 232
+INFO 2025-05-07 02:19:11,514 views 24372 27112 Login attempt: email=test_1htc0d9q@example.com
+INFO 2025-05-07 02:19:11,861 views 24372 27112 User login successful: user_id=99, email=test_1htc0d9q@example.com, time=0.35s
+INFO 2025-05-07 02:19:11,885 basehttp 24372 27112 "POST /api/users/login/ HTTP/1.1" 200 232
+INFO 2025-05-07 02:19:11,948 views 24372 36028 Profile accessed: user_id=99
+INFO 2025-05-07 02:19:11,968 basehttp 24372 36028 "GET /api/users/profile/ HTTP/1.1" 200 172
+INFO 2025-05-07 02:19:12,022 ingredient 24372 26452 Listing refrigerator ingredients: user_id=99
+INFO 2025-05-07 02:19:12,031 ingredient 24372 26452 Retrieved 0 refrigerator ingredients for user_id=99, time=0.01s
+INFO 2025-05-07 02:19:12,047 basehttp 24372 26452 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-07 02:19:12,120 basehttp 24372 31692 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-07 02:19:12,190 allergen 24372 32112 Listing all allergens: user_id=99
+INFO 2025-05-07 02:19:12,197 allergen 24372 32112 Retrieved 50 allergens, user_id=99, time=0.01s
+INFO 2025-05-07 02:19:12,219 basehttp 24372 32112 "GET /api/allergens/ HTTP/1.1" 200 766
+INFO 2025-05-07 02:19:12,273 equipment 24372 1988 Listing all equipment: user_id=99
+INFO 2025-05-07 02:19:12,297 equipment 24372 1988 Retrieved 73 equipment items, user_id=99, time=0.02s
+INFO 2025-05-07 02:19:12,316 basehttp 24372 1988 "GET /api/equipment/ HTTP/1.1" 200 3963
+INFO 2025-05-07 02:19:12,410 views 24372 32288 Logout attempt: user_id=99
+INFO 2025-05-07 02:19:12,414 views 24372 32288 User logged out successfully: user_id=99
+INFO 2025-05-07 02:19:12,433 basehttp 24372 32288 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-07 02:19:19,037 views 24372 27912 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-07 02:19:19,262 views 24372 27912 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.23s
+INFO 2025-05-07 02:19:19,289 basehttp 24372 27912 "POST /api/users/login/ HTTP/1.1" 200 213
+INFO 2025-05-07 02:19:21,148 views 24372 27912 Profile accessed: user_id=66
+INFO 2025-05-07 02:19:21,161 basehttp 24372 27912 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-07 02:19:21,301 allergen 24372 27912 Listing all allergens: user_id=66
+INFO 2025-05-07 02:19:21,306 allergen 24372 27912 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 02:19:21,320 basehttp 24372 27912 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-07 02:19:21,378 equipment 24372 27912 Listing all equipment: user_id=66
+INFO 2025-05-07 02:19:21,382 equipment 24372 27912 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 02:19:21,395 basehttp 24372 27912 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 3974
+INFO 2025-05-07 02:19:24,367 allergen 24372 27912 Listing all allergens: user_id=66
+INFO 2025-05-07 02:19:24,376 allergen 24372 27912 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 02:19:24,410 basehttp 24372 27912 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-07 02:19:27,150 views 24372 27912 Profile update attempt: user_id=66
+INFO 2025-05-07 02:19:27,173 views 24372 27912 Profile updated successfully: user_id=66, time=0.02s
+INFO 2025-05-07 02:19:27,190 basehttp 24372 27912 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-07 02:19:27,262 allergen 24372 27912 Starting user allergens update for user ID: 66
+INFO 2025-05-07 02:19:27,262 allergen 24372 27912 Request data: {'allergen_ids': [1, 2, 3]}
+INFO 2025-05-07 02:19:27,262 allergen 24372 27912 Allergen IDs to update: [1, 2, 3]
+INFO 2025-05-07 02:19:27,270 allergen 24372 27912 Deleted (5, {'core.M2MUsrAlg': 5}) existing allergen records
+INFO 2025-05-07 02:19:27,275 allergen 24372 27912 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-07 02:19:27,279 allergen 24372 27912 Created allergen mapping: user 66 - allergen 2
+INFO 2025-05-07 02:19:27,285 allergen 24372 27912 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-07 02:19:27,285 allergen 24372 27912 Successfully updated allergens for user 66: [1, 2, 3]
+ERROR 2025-05-07 02:19:27,288 allergen 24372 27912 Error updating allergens: 'DatabaseCache' object has no attribute '_cache'
+ERROR 2025-05-07 02:19:27,288 allergen 24372 27912 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 110, in update_user_allergens
+    for key in cache._cache.keys():
+               ^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\utils\connection.py", line 15, in __getattr__
+    return getattr(self._connections[self._alias], item)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DatabaseCache' object has no attribute '_cache'
+
+WARNING 2025-05-07 02:19:27,327 basehttp 24372 27912 "POST /api/user-allergens/update/ HTTP/1.1" 400 60
+INFO 2025-05-07 02:19:27,527 views 24372 27912 Profile accessed: user_id=66
+INFO 2025-05-07 02:19:27,541 basehttp 24372 27912 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-07 02:20:25,439 views 24372 25024 Profile accessed: user_id=66
+INFO 2025-05-07 02:20:25,461 basehttp 24372 25024 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-07 02:22:30,241 allergen 24372 1460 Listing all allergens: user_id=66
+INFO 2025-05-07 02:22:30,250 allergen 24372 1460 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 02:22:30,282 basehttp 24372 1460 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-07 02:22:34,792 views 24372 1460 Profile update attempt: user_id=66
+INFO 2025-05-07 02:22:34,809 views 24372 1460 Profile updated successfully: user_id=66, time=0.02s
+INFO 2025-05-07 02:22:34,832 basehttp 24372 1460 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-07 02:22:35,005 allergen 24372 1460 Starting user allergens update for user ID: 66
+INFO 2025-05-07 02:22:35,006 allergen 24372 1460 Request data: {'allergen_ids': [4, 5, 6]}
+INFO 2025-05-07 02:22:35,006 allergen 24372 1460 Allergen IDs to update: [4, 5, 6]
+INFO 2025-05-07 02:22:35,015 allergen 24372 1460 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-07 02:22:35,021 allergen 24372 1460 Created allergen mapping: user 66 - allergen 4
+INFO 2025-05-07 02:22:35,027 allergen 24372 1460 Created allergen mapping: user 66 - allergen 5
+INFO 2025-05-07 02:22:35,032 allergen 24372 1460 Created allergen mapping: user 66 - allergen 6
+INFO 2025-05-07 02:22:35,032 allergen 24372 1460 Successfully updated allergens for user 66: [4, 5, 6]
+ERROR 2025-05-07 02:22:35,035 allergen 24372 1460 Error updating allergens: 'DatabaseCache' object has no attribute '_cache'
+ERROR 2025-05-07 02:22:35,037 allergen 24372 1460 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 110, in update_user_allergens
+    for key in cache._cache.keys():
+               ^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\utils\connection.py", line 15, in __getattr__
+    return getattr(self._connections[self._alias], item)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DatabaseCache' object has no attribute '_cache'
+
+WARNING 2025-05-07 02:22:35,069 basehttp 24372 1460 "POST /api/user-allergens/update/ HTTP/1.1" 400 60
+INFO 2025-05-07 02:22:35,181 allergen 24372 1460 Listing user allergens: user_id=66
+INFO 2025-05-07 02:22:35,206 allergen 24372 1460 Retrieved unknown user allergens, user_id=66, time=0.02s
+INFO 2025-05-07 02:22:35,251 basehttp 24372 1460 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 148
+INFO 2025-05-07 02:22:35,441 views 24372 1460 Profile accessed: user_id=66
+INFO 2025-05-07 02:22:35,469 basehttp 24372 1460 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-07 02:24:42,367 views 24372 32476 Registration attempt: email=test_l3xuf3pu@example.com
+INFO 2025-05-07 02:24:42,726 views 24372 32476 User registered successfully: user_id=100, email=test_l3xuf3pu@example.com, time=0.36s
+INFO 2025-05-07 02:24:42,769 basehttp 24372 32476 "POST /api/users/register/ HTTP/1.1" 201 233
+INFO 2025-05-07 02:24:42,889 views 24372 28852 Login attempt: email=test_l3xuf3pu@example.com
+INFO 2025-05-07 02:24:43,202 views 24372 28852 User login successful: user_id=100, email=test_l3xuf3pu@example.com, time=0.31s
+INFO 2025-05-07 02:24:43,230 basehttp 24372 28852 "POST /api/users/login/ HTTP/1.1" 200 233
+INFO 2025-05-07 02:24:43,302 views 24372 35516 Profile accessed: user_id=100
+INFO 2025-05-07 02:24:43,332 basehttp 24372 35516 "GET /api/users/profile/ HTTP/1.1" 200 173
+INFO 2025-05-07 02:24:43,396 ingredient 24372 27964 Listing refrigerator ingredients: user_id=100
+INFO 2025-05-07 02:24:43,400 ingredient 24372 27964 Retrieved 0 refrigerator ingredients for user_id=100, time=0.00s
+INFO 2025-05-07 02:24:43,420 basehttp 24372 27964 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-07 02:24:43,512 basehttp 24372 23024 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-07 02:24:43,581 allergen 24372 3360 Listing all allergens: user_id=100
+INFO 2025-05-07 02:24:43,586 allergen 24372 3360 Retrieved 50 allergens, user_id=100, time=0.00s
+INFO 2025-05-07 02:24:43,603 basehttp 24372 3360 "GET /api/allergens/ HTTP/1.1" 200 766
+INFO 2025-05-07 02:24:43,704 equipment 24372 19964 Listing all equipment: user_id=100
+INFO 2025-05-07 02:24:43,709 equipment 24372 19964 Retrieved 73 equipment items, user_id=100, time=0.01s
+INFO 2025-05-07 02:24:43,727 basehttp 24372 19964 "GET /api/equipment/ HTTP/1.1" 200 3963
+INFO 2025-05-07 02:24:43,948 views 24372 37348 Logout attempt: user_id=100
+INFO 2025-05-07 02:24:43,953 views 24372 37348 User logged out successfully: user_id=100
+INFO 2025-05-07 02:24:43,971 basehttp 24372 37348 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-07 02:24:53,446 views 24372 13040 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-07 02:24:53,749 views 24372 13040 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.30s
+INFO 2025-05-07 02:24:53,776 basehttp 24372 13040 "POST /api/users/login/ HTTP/1.1" 200 213
+INFO 2025-05-07 02:24:54,968 allergen 24372 13040 Listing all allergens: user_id=66
+INFO 2025-05-07 02:24:54,972 allergen 24372 13040 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 02:24:54,991 basehttp 24372 13040 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-07 02:24:55,106 views 24372 13040 Profile accessed: user_id=66
+INFO 2025-05-07 02:24:55,129 basehttp 24372 13040 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-07 02:25:36,660 allergen 24372 34164 Listing all allergens: user_id=66
+INFO 2025-05-07 02:25:36,665 allergen 24372 34164 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 02:25:36,694 basehttp 24372 34164 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-07 02:25:39,397 views 24372 34164 Profile update attempt: user_id=66
+INFO 2025-05-07 02:25:39,408 views 24372 34164 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-07 02:25:39,457 basehttp 24372 34164 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-07 02:25:39,555 allergen 24372 34164 Starting user allergens update for user ID: 66
+INFO 2025-05-07 02:25:39,555 allergen 24372 34164 Request data: {'allergen_ids': [2, 1, 3]}
+INFO 2025-05-07 02:25:39,556 allergen 24372 34164 Allergen IDs to update: [2, 1, 3]
+INFO 2025-05-07 02:25:39,567 allergen 24372 34164 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-07 02:25:39,575 allergen 24372 34164 Created allergen mapping: user 66 - allergen 2
+INFO 2025-05-07 02:25:39,582 allergen 24372 34164 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-07 02:25:39,589 allergen 24372 34164 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-07 02:25:39,589 allergen 24372 34164 Successfully updated allergens for user 66: [2, 1, 3]
+ERROR 2025-05-07 02:25:39,594 allergen 24372 34164 Error updating allergens: 'DatabaseCache' object has no attribute '_cache'
+ERROR 2025-05-07 02:25:39,595 allergen 24372 34164 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 110, in update_user_allergens
+    for key in cache._cache.keys():
+               ^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\utils\connection.py", line 15, in __getattr__
+    return getattr(self._connections[self._alias], item)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DatabaseCache' object has no attribute '_cache'
+
+WARNING 2025-05-07 02:25:39,662 basehttp 24372 34164 "POST /api/user-allergens/update/ HTTP/1.1" 400 60
+INFO 2025-05-07 02:25:39,763 allergen 24372 34164 Listing user allergens: user_id=66
+INFO 2025-05-07 02:25:39,779 allergen 24372 34164 Retrieved unknown user allergens, user_id=66, time=0.02s
+INFO 2025-05-07 02:25:39,816 basehttp 24372 34164 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 200 150
+INFO 2025-05-07 02:25:39,965 allergen 24372 34164 Listing all allergens: user_id=66
+INFO 2025-05-07 02:25:39,972 allergen 24372 34164 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 02:25:40,003 basehttp 24372 34164 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-07 02:25:40,093 views 24372 34164 Profile accessed: user_id=66
+INFO 2025-05-07 02:25:40,125 basehttp 24372 34164 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-07 02:26:41,733 allergen 24372 12208 Listing all allergens: user_id=66
+INFO 2025-05-07 02:26:41,739 allergen 24372 12208 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 02:26:41,761 basehttp 24372 12208 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-07 02:26:41,843 views 24372 12208 Profile accessed: user_id=66
+INFO 2025-05-07 02:26:41,865 basehttp 24372 12208 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-07 02:26:45,752 views 24372 12208 Profile update attempt: user_id=66
+INFO 2025-05-07 02:26:45,761 views 24372 12208 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-07 02:26:45,786 basehttp 24372 12208 "PUT /api/users/profile/ HTTP/1.1" 200 141
+INFO 2025-05-07 02:26:45,975 allergen 24372 12208 Listing all allergens: user_id=66
+INFO 2025-05-07 02:26:45,982 allergen 24372 12208 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 02:26:46,007 basehttp 24372 12208 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-07 02:26:46,109 views 24372 12208 Profile accessed: user_id=66
+INFO 2025-05-07 02:26:46,305 basehttp 24372 12208 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-07 02:26:56,229 views 24372 12208 Profile update attempt: user_id=66
+INFO 2025-05-07 02:26:56,237 views 24372 12208 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-07 02:26:56,263 basehttp 24372 12208 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-07 02:26:56,459 allergen 24372 12208 Listing all allergens: user_id=66
+INFO 2025-05-07 02:26:56,465 allergen 24372 12208 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 02:26:56,484 basehttp 24372 12208 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-07 02:26:56,583 views 24372 12208 Profile accessed: user_id=66
+INFO 2025-05-07 02:26:56,603 basehttp 24372 12208 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 02:27:01,086 allergen 24372 12208 Listing all allergens: user_id=66
+INFO 2025-05-07 02:27:01,092 allergen 24372 12208 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 02:27:01,113 basehttp 24372 12208 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-07 02:27:01,227 views 24372 12208 Profile accessed: user_id=66
+INFO 2025-05-07 02:27:01,251 basehttp 24372 12208 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 02:27:03,330 views 24372 12208 Profile accessed: user_id=66
+INFO 2025-05-07 02:27:03,351 basehttp 24372 12208 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 02:27:06,584 allergen 24372 12208 Listing all allergens: user_id=66
+INFO 2025-05-07 02:27:06,589 allergen 24372 12208 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 02:27:06,611 basehttp 24372 12208 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-07 02:27:06,728 views 24372 12208 Profile accessed: user_id=66
+INFO 2025-05-07 02:27:06,751 basehttp 24372 12208 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 02:32:47,988 allergen 24372 27748 Listing all allergens: user_id=66
+INFO 2025-05-07 02:32:47,993 allergen 24372 27748 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 02:32:48,018 basehttp 24372 27748 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-07 02:32:48,104 views 24372 27748 Profile accessed: user_id=66
+INFO 2025-05-07 02:32:48,122 basehttp 24372 27748 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 02:33:43,961 allergen 24372 19448 Listing all allergens: user_id=66
+INFO 2025-05-07 02:33:43,965 allergen 24372 19448 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 02:33:43,984 basehttp 24372 19448 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-07 02:33:44,097 views 24372 19448 Profile accessed: user_id=66
+INFO 2025-05-07 02:33:44,114 basehttp 24372 19448 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 02:34:02,427 allergen 24372 30668 Listing all allergens: user_id=66
+INFO 2025-05-07 02:34:02,431 allergen 24372 30668 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 02:34:02,450 basehttp 24372 30668 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 777
+INFO 2025-05-07 18:58:31,914 autoreload 38260 24528 Watching for file changes with StatReloader
+INFO 2025-05-07 18:58:32,445 wsgi 38260 29200 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 18:58:32,445 wsgi 38260 29200 Environment: config.settings
+INFO 2025-05-07 18:58:32,445 wsgi 38260 29200 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 18:58:32,448 wsgi 38260 29200 Application initialized successfully
+INFO 2025-05-07 19:01:14,345 autoreload 38260 24528 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\config\settings\development.py changed, reloading.
+INFO 2025-05-07 19:01:15,832 autoreload 15216 23392 Watching for file changes with StatReloader
+INFO 2025-05-07 19:01:16,139 wsgi 15216 20548 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 19:01:16,140 wsgi 15216 20548 Environment: config.settings
+INFO 2025-05-07 19:01:16,140 wsgi 15216 20548 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 19:01:16,144 wsgi 15216 20548 Application initialized successfully
+INFO 2025-05-07 19:01:19,354 autoreload 12760 36976 Watching for file changes with StatReloader
+INFO 2025-05-07 19:01:19,553 wsgi 12760 23352 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 19:01:19,553 wsgi 12760 23352 Environment: config.settings
+INFO 2025-05-07 19:01:19,553 wsgi 12760 23352 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 19:01:19,557 wsgi 12760 23352 Application initialized successfully
+INFO 2025-05-07 19:03:35,972 views 12760 10892 Registration attempt: email=test_uj4ncv0y@example.com
+INFO 2025-05-07 19:03:36,489 views 12760 10892 User registered successfully: user_id=101, email=test_uj4ncv0y@example.com, time=0.52s
+INFO 2025-05-07 19:03:36,746 basehttp 12760 10892 "POST /api/users/register/ HTTP/1.1" 201 233
+INFO 2025-05-07 19:03:36,911 views 12760 33984 Login attempt: email=test_uj4ncv0y@example.com
+INFO 2025-05-07 19:03:37,228 views 12760 33984 User login successful: user_id=101, email=test_uj4ncv0y@example.com, time=0.32s
+INFO 2025-05-07 19:03:37,255 basehttp 12760 33984 "POST /api/users/login/ HTTP/1.1" 200 233
+INFO 2025-05-07 19:03:37,444 views 12760 34236 Profile accessed: user_id=101
+INFO 2025-05-07 19:03:37,471 basehttp 12760 34236 "GET /api/users/profile/ HTTP/1.1" 200 173
+INFO 2025-05-07 19:03:37,552 ingredient 12760 2624 Listing refrigerator ingredients: user_id=101
+INFO 2025-05-07 19:03:37,615 ingredient 12760 2624 Retrieved 0 refrigerator ingredients for user_id=101, time=0.06s
+INFO 2025-05-07 19:03:37,631 basehttp 12760 2624 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-07 19:03:37,771 basehttp 12760 12208 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-07 19:03:37,873 allergen 12760 27152 Listing all allergens: user_id=101
+INFO 2025-05-07 19:03:37,908 allergen 12760 27152 Retrieved 50 allergens, user_id=101, time=0.04s
+INFO 2025-05-07 19:03:37,946 basehttp 12760 27152 "GET /api/allergens/ HTTP/1.1" 200 764
+INFO 2025-05-07 19:03:38,057 equipment 12760 12172 Listing all equipment: user_id=101
+INFO 2025-05-07 19:03:38,096 equipment 12760 12172 Retrieved 73 equipment items, user_id=101, time=0.04s
+INFO 2025-05-07 19:03:38,143 basehttp 12760 12172 "GET /api/equipment/ HTTP/1.1" 200 3961
+INFO 2025-05-07 19:03:38,232 views 12760 28584 Logout attempt: user_id=101
+INFO 2025-05-07 19:03:38,237 views 12760 28584 User logged out successfully: user_id=101
+INFO 2025-05-07 19:03:38,265 basehttp 12760 28584 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-07 19:03:48,931 views 12760 31512 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-07 19:03:49,186 views 12760 31512 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.25s
+INFO 2025-05-07 19:03:49,219 basehttp 12760 31512 "POST /api/users/login/ HTTP/1.1" 200 211
+INFO 2025-05-07 19:03:50,858 allergen 12760 31512 Listing all allergens: user_id=66
+INFO 2025-05-07 19:03:50,865 allergen 12760 31512 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 19:03:50,893 basehttp 12760 31512 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 19:03:51,090 views 12760 31512 Profile accessed: user_id=66
+INFO 2025-05-07 19:03:51,118 basehttp 12760 31512 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 19:03:52,184 allergen 12760 31512 Listing all allergens: user_id=66
+INFO 2025-05-07 19:03:52,190 allergen 12760 31512 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 19:03:52,220 basehttp 12760 31512 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 19:03:52,316 views 12760 31512 Profile accessed: user_id=66
+INFO 2025-05-07 19:03:52,336 basehttp 12760 31512 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 19:04:09,806 allergen 12760 27016 Listing all allergens: user_id=66
+INFO 2025-05-07 19:04:09,811 allergen 12760 27016 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 19:04:09,825 basehttp 12760 27016 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 19:04:09,931 views 12760 27016 Profile accessed: user_id=66
+INFO 2025-05-07 19:04:09,946 basehttp 12760 27016 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 19:06:10,548 views 12760 11424 Registration attempt: email=test_ptwolptc@example.com
+INFO 2025-05-07 19:06:10,858 views 12760 11424 User registered successfully: user_id=102, email=test_ptwolptc@example.com, time=0.31s
+INFO 2025-05-07 19:06:10,897 basehttp 12760 11424 "POST /api/users/register/ HTTP/1.1" 201 233
+INFO 2025-05-07 19:06:11,133 views 12760 19024 Login attempt: email=test_ptwolptc@example.com
+INFO 2025-05-07 19:06:11,365 views 12760 19024 User login successful: user_id=102, email=test_ptwolptc@example.com, time=0.23s
+INFO 2025-05-07 19:06:11,387 basehttp 12760 19024 "POST /api/users/login/ HTTP/1.1" 200 233
+INFO 2025-05-07 19:06:11,453 views 12760 28096 Profile accessed: user_id=102
+INFO 2025-05-07 19:06:11,476 basehttp 12760 28096 "GET /api/users/profile/ HTTP/1.1" 200 173
+INFO 2025-05-07 19:06:11,555 ingredient 12760 21912 Listing refrigerator ingredients: user_id=102
+INFO 2025-05-07 19:06:11,558 ingredient 12760 21912 Retrieved 0 refrigerator ingredients for user_id=102, time=0.00s
+INFO 2025-05-07 19:06:11,572 basehttp 12760 21912 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-07 19:06:11,639 basehttp 12760 38788 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-07 19:06:11,711 allergen 12760 30460 Listing all allergens: user_id=102
+INFO 2025-05-07 19:06:11,715 allergen 12760 30460 Retrieved 50 allergens, user_id=102, time=0.00s
+INFO 2025-05-07 19:06:11,730 basehttp 12760 30460 "GET /api/allergens/ HTTP/1.1" 200 764
+INFO 2025-05-07 19:06:11,804 equipment 12760 20216 Listing all equipment: user_id=102
+INFO 2025-05-07 19:06:11,809 equipment 12760 20216 Retrieved 73 equipment items, user_id=102, time=0.01s
+INFO 2025-05-07 19:06:11,835 basehttp 12760 20216 "GET /api/equipment/ HTTP/1.1" 200 3961
+INFO 2025-05-07 19:06:11,945 views 12760 28352 Logout attempt: user_id=102
+INFO 2025-05-07 19:06:11,949 views 12760 28352 User logged out successfully: user_id=102
+INFO 2025-05-07 19:06:11,975 basehttp 12760 28352 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-07 19:06:25,741 views 12760 16700 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-07 19:06:25,965 views 12760 16700 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.23s
+INFO 2025-05-07 19:06:25,980 basehttp 12760 16700 "POST /api/users/login/ HTTP/1.1" 200 211
+INFO 2025-05-07 19:06:27,347 allergen 12760 16700 Listing all allergens: user_id=66
+INFO 2025-05-07 19:06:27,351 allergen 12760 16700 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 19:06:27,364 basehttp 12760 16700 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 19:06:27,517 views 12760 16700 Profile accessed: user_id=66
+INFO 2025-05-07 19:06:27,529 basehttp 12760 16700 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 19:06:39,105 allergen 12760 16700 Listing all allergens: user_id=66
+INFO 2025-05-07 19:06:39,110 allergen 12760 16700 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 19:06:39,123 basehttp 12760 16700 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 19:06:39,188 views 12760 16700 Profile accessed: user_id=66
+INFO 2025-05-07 19:06:39,202 basehttp 12760 16700 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 19:06:43,867 allergen 12760 16700 Listing all allergens: user_id=66
+INFO 2025-05-07 19:06:43,872 allergen 12760 16700 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 19:06:43,885 basehttp 12760 16700 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775

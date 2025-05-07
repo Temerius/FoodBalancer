@@ -7,7 +7,7 @@ import '../utils/network_util.dart';
 
 class ApiService {
   // For your real server
-  static const String baseUrl = 'http://192.168.100.6:8000';
+  static const String baseUrl = 'http://10.10.1.165:8000';
 
   // Test whether we should use mock responses
   static const bool useMockResponses = false;

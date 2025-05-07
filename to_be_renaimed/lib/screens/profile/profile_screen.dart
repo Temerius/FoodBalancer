@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../repositories/data_repository.dart';
 import '../../models/user.dart';
+import '../../repositories/models/cache_config.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -31,10 +32,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
 
     try {
-      // Обновляем данные пользователя
+      // Обновляем данные пользователя и принудительно обновляем кэш аллергенов и оборудования
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
+
+      // Сначала загружаем аллергены и оборудование, чтобы они были доступны для отображения
+      await dataRepository.getAllAllergens(forceRefresh: true);
       await dataRepository.refreshUserData();
+
+      // Выводим отладочную информацию
+      final user = dataRepository.user;
+      final allergens = dataRepository.allergens;
+      print("USER ALLERGEN IDS: ${user?.allergenIds ?? []}");
+      print("LOADED ALLERGENS: ${allergens.length} items");
     } catch (e) {
+      print("ERROR REFRESHING DATA: $e");
       // Ошибки уже обрабатываются в репозитории
     } finally {
       setState(() {
@@ -185,7 +196,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(height: 8),
 
                       // Отображение аллергенов пользователя
-                      _buildAllergensSection(context, user),
+                      _buildAllergensSection(context, user, dataRepository),
                     ],
                   ),
                 ),
@@ -220,7 +231,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ],
                       ),
                       const SizedBox(height: 8),
-                      _buildEquipmentSection(context, user),
+                      _buildEquipmentSection(context, user, dataRepository),
                     ],
                   ),
                 ),
@@ -251,21 +262,66 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(color: Colors.red),
                 ),
               ),
+              // Add this to the bottom of your ProfileScreen build method, just above the closing bracket
+// Right before the end of the build method
+
+// Добавляем отладочную кнопку в самом низу экрана
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                color: Colors.grey[200],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Отладка',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Icon(Icons.bug_report, size: 14, color: Colors.grey[600]),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/debug/cache');
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                          child: Text(
+                            'Просмотр кэша',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Theme.of(context).colorScheme.primary,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
+
   }
 
   // Виджет для отображения аллергенов
-  Widget _buildAllergensSection(BuildContext context, User? user) {
-    // Получаем текущие аллергены из репозитория
-    final dataRepository = Provider.of<DataRepository>(context);
-    final allergens = dataRepository.allergens;
+  Widget _buildAllergensSection(BuildContext context, User? user, DataRepository dataRepository) {
+    // Получаем все аллергены из репозитория
+    final allAllergens = dataRepository.allergens;
 
     // Получаем ID аллергенов пользователя
     final userAllergenIds = user?.allergenIds ?? [];
+
+    // Выводим отладочную информацию
+    print("DISPLAYING ALLERGENS - User IDs: $userAllergenIds, All allergens: ${allAllergens.length}");
 
     // Если у пользователя нет аллергенов или список аллергенов пуст
     if (userAllergenIds.isEmpty) {
@@ -273,13 +329,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     // Находим аллергены пользователя по ID
-    final userAllergens = allergens.where(
+    final userAllergens = allAllergens.where(
             (allergen) => userAllergenIds.contains(allergen.id)
     ).toList();
 
+    // Выводим информацию о найденных аллергенах
+    print("Found ${userAllergens.length} matching allergens for user");
+
     // Если у пользователя нет аллергенов после фильтрации
     if (userAllergens.isEmpty) {
-      return const Text('Аллергии не указаны');
+      return const Text('Аллергии не указаны (проверьте настройки)');
     }
 
     // Отображаем аллергены
@@ -296,22 +355,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   // Виджет для отображения оборудования
-  Widget _buildEquipmentSection(BuildContext context, User? user) {
-    final dataRepository = Provider.of<DataRepository>(context);
-    final equipment = dataRepository.equipment;
-
+  Widget _buildEquipmentSection(BuildContext context, User? user, DataRepository dataRepository) {
+    final allEquipment = dataRepository.equipment;
     final userEquipmentIds = user?.equipmentIds ?? [];
 
     if (userEquipmentIds.isEmpty) {
       return const Text('Оборудование не указано');
     }
 
-    final userEquipment = equipment.where(
+    final userEquipment = allEquipment.where(
             (item) => userEquipmentIds.contains(item.id)
     ).toList();
 
     if (userEquipment.isEmpty) {
-      return const Text('Оборудование не указано');
+      return const Text('Оборудование не указано (проверьте настройки)');
     }
 
     return ListView.builder(
@@ -368,4 +425,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+
 }
