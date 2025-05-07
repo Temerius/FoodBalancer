@@ -1,4 +1,3 @@
-// lib/repositories/repositories/allergen_repository.dart
 import '../../models/allergen.dart';
 import '../services/cache_service.dart';
 import '../models/cache_config.dart';
@@ -19,14 +18,11 @@ class AllergenRepository {
   // Загрузка всех аллергенов
   Future<List<Allergen>> getAllAllergens({CacheConfig? config}) async {
     final cacheConfig = config ?? CacheConfig.defaultConfig;
-    print("\n===== GETTING ALL ALLERGENS (forceRefresh: ${cacheConfig.forceRefresh}) =====");
+    print("\nё (forceRefresh: ${cacheConfig.forceRefresh}) =====");
 
     // Если аллергены уже в памяти и не требуется обновление
     if (_allergens.isNotEmpty && !cacheConfig.forceRefresh) {
       print("ALLERGENS ALREADY IN MEMORY: ${_allergens.length} items");
-      for (int i = 0; i < _allergens.length; i++) {
-        print("${i + 1}. ID: ${_allergens[i].id}, Name: ${_allergens[i].name}");
-      }
       return _allergens;
     }
 
@@ -41,9 +37,6 @@ class AllergenRepository {
         try {
           _allergens = allergensJson.map((json) => Allergen.fromJson(json)).toList();
           print("ALLERGENS LOADED FROM CACHE SUCCESSFULLY: ${_allergens.length} items");
-          for (int i = 0; i < _allergens.length; i++) {
-            print("${i + 1}. ID: ${_allergens[i].id}, Name: ${_allergens[i].name}");
-          }
           return _allergens;
         } catch (e) {
           print("ERROR PARSING ALLERGENS FROM CACHE: $e");
@@ -62,24 +55,16 @@ class AllergenRepository {
         final List<dynamic> allergensJson = response['results'];
         print("ALLERGENS JSON FROM API: ${allergensJson.length} items");
 
-        try {
-          _allergens = allergensJson.map((json) => Allergen.fromJson(json)).toList();
+        _allergens = allergensJson.map((json) => Allergen.fromJson(json)).toList();
 
-          // Выводим список загруженных аллергенов
-          print("ALLERGENS LOADED FROM API: ${_allergens.length} items");
-          for (int i = 0; i < _allergens.length; i++) {
-            print("${i + 1}. ID: ${_allergens[i].id}, Name: ${_allergens[i].name}");
-          }
+        // Выводим список загруженных аллергенов
+        print("ALLERGENS LOADED FROM API: ${_allergens.length} items");
 
-          // Сохраняем в кэш
-          print("SAVING ALLERGENS TO CACHE...");
-          await CacheService.save(_cacheKey, allergensJson);
+        // Сохраняем в кэш
+        print("SAVING ALLERGENS TO CACHE...");
+        await CacheService.save(_cacheKey, allergensJson);
 
-          return _allergens;
-        } catch (e) {
-          print("ERROR PARSING ALLERGENS FROM API: $e");
-          throw Exception('Ошибка при обработке данных аллергенов: $e');
-        }
+        return _allergens;
       } else {
         print("NO RESULTS FIELD IN API RESPONSE");
         return [];
@@ -98,12 +83,7 @@ class AllergenRepository {
   List<Allergen> filterByIds(List<int> ids) {
     print("\n===== FILTERING ALLERGENS BY IDS: $ids =====");
     final filteredAllergens = _allergens.where((allergen) => ids.contains(allergen.id)).toList();
-
-    print("FOUND ${filteredAllergens.length} MATCHING ALLERGENS:");
-    for (int i = 0; i < filteredAllergens.length; i++) {
-      print("${i + 1}. ID: ${filteredAllergens[i].id}, Name: ${filteredAllergens[i].name}");
-    }
-
+    print("FOUND ${filteredAllergens.length} MATCHING ALLERGENS");
     return filteredAllergens;
   }
 

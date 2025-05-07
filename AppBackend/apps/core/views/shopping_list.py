@@ -7,8 +7,6 @@ from rest_framework.response import Response
 from ..models import ShoppingList, M2MIngSpl, IngredientType
 from ..serializers import ShoppingListSerializer, ShoppingListItemSerializer
 
-from ..mixins import CacheInvalidationMixin
-
 import logging
 import time
 
@@ -16,7 +14,7 @@ import time
 logger = logging.getLogger('apps.core.shopping')
 
 
-class ShoppingListViewSet(CacheInvalidationMixin, viewsets.ModelViewSet):
+class ShoppingListViewSet(viewsets.ModelViewSet):
     cache_prefix = 'shopping_list'
     """API для доступа к списку покупок"""
     serializer_class = ShoppingListSerializer

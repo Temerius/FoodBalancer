@@ -806,3 +806,414 @@ INFO 2025-05-07 19:06:39,202 basehttp 12760 16700 "GET /api/users/profile/ HTTP/
 INFO 2025-05-07 19:06:43,867 allergen 12760 16700 Listing all allergens: user_id=66
 INFO 2025-05-07 19:06:43,872 allergen 12760 16700 Retrieved 50 allergens, user_id=66, time=0.00s
 INFO 2025-05-07 19:06:43,885 basehttp 12760 16700 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 19:08:17,684 autoreload 23872 17312 Watching for file changes with StatReloader
+INFO 2025-05-07 19:08:17,955 wsgi 23872 34192 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 19:08:17,955 wsgi 23872 34192 Environment: config.settings
+INFO 2025-05-07 19:08:17,955 wsgi 23872 34192 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 19:08:17,962 wsgi 23872 34192 Application initialized successfully
+INFO 2025-05-07 19:21:04,286 views 23872 20400 Registration attempt: email=test_uvujn73l@example.com
+INFO 2025-05-07 19:21:04,713 views 23872 20400 User registered successfully: user_id=103, email=test_uvujn73l@example.com, time=0.43s
+INFO 2025-05-07 19:21:04,792 basehttp 23872 20400 "POST /api/users/register/ HTTP/1.1" 201 233
+INFO 2025-05-07 19:21:04,970 views 23872 11676 Login attempt: email=test_uvujn73l@example.com
+INFO 2025-05-07 19:21:05,347 views 23872 11676 User login successful: user_id=103, email=test_uvujn73l@example.com, time=0.38s
+INFO 2025-05-07 19:21:05,377 basehttp 23872 11676 "POST /api/users/login/ HTTP/1.1" 200 233
+INFO 2025-05-07 19:21:05,489 views 23872 24380 Profile accessed: user_id=103
+INFO 2025-05-07 19:21:05,524 basehttp 23872 24380 "GET /api/users/profile/ HTTP/1.1" 200 173
+INFO 2025-05-07 19:21:05,608 ingredient 23872 6116 Listing refrigerator ingredients: user_id=103
+INFO 2025-05-07 19:21:05,618 ingredient 23872 6116 Retrieved 0 refrigerator ingredients for user_id=103, time=0.01s
+INFO 2025-05-07 19:21:05,642 basehttp 23872 6116 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-07 19:21:05,742 basehttp 23872 14668 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-07 19:21:05,798 allergen 23872 3920 Listing all allergens: user_id=103
+INFO 2025-05-07 19:21:05,806 allergen 23872 3920 Retrieved 50 allergens, user_id=103, time=0.01s
+INFO 2025-05-07 19:21:05,836 basehttp 23872 3920 "GET /api/allergens/ HTTP/1.1" 200 764
+INFO 2025-05-07 19:21:05,934 equipment 23872 10580 Listing all equipment: user_id=103
+INFO 2025-05-07 19:21:05,939 equipment 23872 10580 Retrieved 73 equipment items, user_id=103, time=0.01s
+INFO 2025-05-07 19:21:05,962 basehttp 23872 10580 "GET /api/equipment/ HTTP/1.1" 200 3961
+INFO 2025-05-07 19:21:06,059 views 23872 10324 Logout attempt: user_id=103
+INFO 2025-05-07 19:21:06,064 views 23872 10324 User logged out successfully: user_id=103
+INFO 2025-05-07 19:21:06,084 basehttp 23872 10324 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-07 19:21:16,933 views 23872 34016 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-07 19:21:17,231 views 23872 34016 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.30s
+INFO 2025-05-07 19:21:17,266 basehttp 23872 34016 "POST /api/users/login/ HTTP/1.1" 200 211
+INFO 2025-05-07 19:21:17,419 allergen 23872 34016 Listing all allergens: user_id=66
+INFO 2025-05-07 19:21:17,424 allergen 23872 34016 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 19:21:17,450 basehttp 23872 34016 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 19:21:17,553 equipment 23872 34016 Listing all equipment: user_id=66
+INFO 2025-05-07 19:21:17,559 equipment 23872 34016 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 19:21:17,584 basehttp 23872 34016 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 3972
+INFO 2025-05-07 19:21:19,853 allergen 23872 34016 Listing all allergens: user_id=66
+INFO 2025-05-07 19:21:19,857 allergen 23872 34016 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 19:21:19,876 basehttp 23872 34016 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 19:21:19,985 views 23872 34016 Profile accessed: user_id=66
+INFO 2025-05-07 19:21:20,002 basehttp 23872 34016 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 19:21:20,087 equipment 23872 34016 Listing all equipment: user_id=66
+INFO 2025-05-07 19:21:20,091 equipment 23872 34016 Retrieved 73 equipment items, user_id=66, time=0.00s
+INFO 2025-05-07 19:21:20,109 basehttp 23872 34016 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 3972
+INFO 2025-05-07 19:21:33,768 allergen 23872 34016 Listing all allergens: user_id=66
+INFO 2025-05-07 19:21:33,774 allergen 23872 34016 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 19:21:33,793 basehttp 23872 34016 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 19:21:33,949 views 23872 34016 Profile accessed: user_id=66
+INFO 2025-05-07 19:21:33,967 basehttp 23872 34016 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 19:21:34,055 equipment 23872 34016 Listing all equipment: user_id=66
+INFO 2025-05-07 19:21:34,060 equipment 23872 34016 Retrieved 73 equipment items, user_id=66, time=0.00s
+INFO 2025-05-07 19:21:34,083 basehttp 23872 34016 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 3972
+INFO 2025-05-07 19:21:58,199 allergen 23872 12004 Listing all allergens: user_id=66
+INFO 2025-05-07 19:21:58,204 allergen 23872 12004 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 19:21:58,223 basehttp 23872 12004 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 19:21:58,313 views 23872 12004 Profile accessed: user_id=66
+INFO 2025-05-07 19:21:58,333 basehttp 23872 12004 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 19:21:58,413 equipment 23872 12004 Listing all equipment: user_id=66
+INFO 2025-05-07 19:21:58,418 equipment 23872 12004 Retrieved 73 equipment items, user_id=66, time=0.00s
+INFO 2025-05-07 19:21:58,437 basehttp 23872 12004 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 3972
+INFO 2025-05-07 19:25:20,787 allergen 23872 30448 Listing all allergens: user_id=66
+INFO 2025-05-07 19:25:20,794 allergen 23872 30448 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 19:25:20,827 basehttp 23872 30448 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 19:25:20,917 views 23872 30448 Profile accessed: user_id=66
+INFO 2025-05-07 19:25:20,938 basehttp 23872 30448 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 19:25:21,025 equipment 23872 30448 Listing all equipment: user_id=66
+INFO 2025-05-07 19:25:21,031 equipment 23872 30448 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 19:25:21,056 basehttp 23872 30448 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 3972
+INFO 2025-05-07 19:25:47,361 views 23872 19968 Registration attempt: email=test_xodczpvk@example.com
+INFO 2025-05-07 19:25:47,684 views 23872 19968 User registered successfully: user_id=104, email=test_xodczpvk@example.com, time=0.32s
+INFO 2025-05-07 19:25:47,722 basehttp 23872 19968 "POST /api/users/register/ HTTP/1.1" 201 233
+INFO 2025-05-07 19:25:47,894 views 23872 36768 Login attempt: email=test_xodczpvk@example.com
+INFO 2025-05-07 19:25:48,202 views 23872 36768 User login successful: user_id=104, email=test_xodczpvk@example.com, time=0.31s
+INFO 2025-05-07 19:25:48,242 basehttp 23872 36768 "POST /api/users/login/ HTTP/1.1" 200 233
+INFO 2025-05-07 19:25:48,372 views 23872 17152 Profile accessed: user_id=104
+INFO 2025-05-07 19:25:48,402 basehttp 23872 17152 "GET /api/users/profile/ HTTP/1.1" 200 173
+INFO 2025-05-07 19:25:48,494 ingredient 23872 33852 Listing refrigerator ingredients: user_id=104
+INFO 2025-05-07 19:25:48,498 ingredient 23872 33852 Retrieved 0 refrigerator ingredients for user_id=104, time=0.00s
+INFO 2025-05-07 19:25:48,518 basehttp 23872 33852 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-07 19:25:48,613 basehttp 23872 25072 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-07 19:25:48,707 allergen 23872 33912 Listing all allergens: user_id=104
+INFO 2025-05-07 19:25:48,712 allergen 23872 33912 Retrieved 50 allergens, user_id=104, time=0.00s
+INFO 2025-05-07 19:25:48,731 basehttp 23872 33912 "GET /api/allergens/ HTTP/1.1" 200 764
+INFO 2025-05-07 19:25:48,850 equipment 23872 17524 Listing all equipment: user_id=104
+INFO 2025-05-07 19:25:48,859 equipment 23872 17524 Retrieved 73 equipment items, user_id=104, time=0.01s
+INFO 2025-05-07 19:25:48,893 basehttp 23872 17524 "GET /api/equipment/ HTTP/1.1" 200 3961
+INFO 2025-05-07 19:25:49,013 views 23872 29144 Logout attempt: user_id=104
+INFO 2025-05-07 19:25:49,020 views 23872 29144 User logged out successfully: user_id=104
+INFO 2025-05-07 19:25:49,053 basehttp 23872 29144 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-07 19:26:22,914 views 23872 23716 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-07 19:26:23,271 views 23872 23716 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.36s
+INFO 2025-05-07 19:26:23,292 basehttp 23872 23716 "POST /api/users/login/ HTTP/1.1" 200 211
+INFO 2025-05-07 19:26:23,415 allergen 23872 23716 Listing all allergens: user_id=66
+INFO 2025-05-07 19:26:23,420 allergen 23872 23716 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 19:26:23,447 basehttp 23872 23716 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 19:26:23,588 equipment 23872 23716 Listing all equipment: user_id=66
+INFO 2025-05-07 19:26:23,596 equipment 23872 23716 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 19:26:23,622 basehttp 23872 23716 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 3972
+INFO 2025-05-07 19:56:15,788 views 23872 11300 Registration attempt: email=test_hsc4agv9@example.com
+INFO 2025-05-07 19:56:16,214 views 23872 11300 User registered successfully: user_id=105, email=test_hsc4agv9@example.com, time=0.43s
+INFO 2025-05-07 19:56:16,300 basehttp 23872 11300 "POST /api/users/register/ HTTP/1.1" 201 233
+INFO 2025-05-07 19:56:16,461 views 23872 11428 Login attempt: email=test_hsc4agv9@example.com
+INFO 2025-05-07 19:56:16,790 views 23872 11428 User login successful: user_id=105, email=test_hsc4agv9@example.com, time=0.33s
+INFO 2025-05-07 19:56:16,821 basehttp 23872 11428 "POST /api/users/login/ HTTP/1.1" 200 233
+INFO 2025-05-07 19:56:16,935 views 23872 21772 Profile accessed: user_id=105
+INFO 2025-05-07 19:56:16,965 basehttp 23872 21772 "GET /api/users/profile/ HTTP/1.1" 200 173
+INFO 2025-05-07 19:56:17,041 ingredient 23872 836 Listing refrigerator ingredients: user_id=105
+INFO 2025-05-07 19:56:17,049 ingredient 23872 836 Retrieved 0 refrigerator ingredients for user_id=105, time=0.01s
+INFO 2025-05-07 19:56:17,073 basehttp 23872 836 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-07 19:56:17,176 basehttp 23872 17856 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-07 19:56:17,246 allergen 23872 33500 Listing all allergens: user_id=105
+INFO 2025-05-07 19:56:17,253 allergen 23872 33500 Retrieved 50 allergens, user_id=105, time=0.01s
+INFO 2025-05-07 19:56:17,277 basehttp 23872 33500 "GET /api/allergens/ HTTP/1.1" 200 764
+INFO 2025-05-07 19:56:17,352 equipment 23872 9860 Listing all equipment: user_id=105
+INFO 2025-05-07 19:56:17,359 equipment 23872 9860 Retrieved 73 equipment items, user_id=105, time=0.01s
+INFO 2025-05-07 19:56:17,378 basehttp 23872 9860 "GET /api/equipment/ HTTP/1.1" 200 3961
+INFO 2025-05-07 19:56:17,441 views 23872 36348 Logout attempt: user_id=105
+INFO 2025-05-07 19:56:17,446 views 23872 36348 User logged out successfully: user_id=105
+INFO 2025-05-07 19:56:17,465 basehttp 23872 36348 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-07 19:56:34,605 views 23872 11220 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-07 19:56:34,954 views 23872 11220 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.35s
+INFO 2025-05-07 19:56:34,978 basehttp 23872 11220 "POST /api/users/login/ HTTP/1.1" 200 211
+INFO 2025-05-07 19:56:35,231 allergen 23872 11220 Listing all allergens: user_id=66
+INFO 2025-05-07 19:56:35,235 allergen 23872 11220 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 19:56:35,257 basehttp 23872 11220 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 19:56:35,429 equipment 23872 11220 Listing all equipment: user_id=66
+INFO 2025-05-07 19:56:35,436 equipment 23872 11220 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 19:56:35,472 basehttp 23872 11220 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 3972
+INFO 2025-05-07 19:56:35,539 equipment 23872 11220 Listing all equipment: user_id=66
+INFO 2025-05-07 19:56:35,545 equipment 23872 11220 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 19:56:35,567 basehttp 23872 11220 "GET /api/equipment/?limit=1000&page=2 HTTP/1.1" 200 4087
+INFO 2025-05-07 19:56:35,668 equipment 23872 11220 Listing all equipment: user_id=66
+INFO 2025-05-07 19:56:35,675 equipment 23872 11220 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 19:56:35,697 basehttp 23872 11220 "GET /api/equipment/?limit=1000&page=3 HTTP/1.1" 200 3783
+INFO 2025-05-07 19:56:35,757 equipment 23872 11220 Listing all equipment: user_id=66
+INFO 2025-05-07 19:56:35,761 equipment 23872 11220 Retrieved 73 equipment items, user_id=66, time=0.00s
+INFO 2025-05-07 19:56:35,783 basehttp 23872 11220 "GET /api/equipment/?limit=1000&page=4 HTTP/1.1" 200 2596
+INFO 2025-05-07 19:56:37,474 allergen 23872 11220 Listing all allergens: user_id=66
+INFO 2025-05-07 19:56:37,478 allergen 23872 11220 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 19:56:37,498 basehttp 23872 11220 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 19:56:37,860 views 23872 11220 Profile accessed: user_id=66
+INFO 2025-05-07 19:56:37,881 basehttp 23872 11220 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 19:56:37,992 equipment 23872 11220 Listing all equipment: user_id=66
+INFO 2025-05-07 19:56:37,997 equipment 23872 11220 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 19:56:38,016 basehttp 23872 11220 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 3972
+INFO 2025-05-07 19:56:38,116 equipment 23872 11220 Listing all equipment: user_id=66
+INFO 2025-05-07 19:56:38,123 equipment 23872 11220 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 19:56:38,146 basehttp 23872 11220 "GET /api/equipment/?limit=1000&page=2 HTTP/1.1" 200 4087
+INFO 2025-05-07 19:56:38,211 equipment 23872 11220 Listing all equipment: user_id=66
+INFO 2025-05-07 19:56:38,218 equipment 23872 11220 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 19:56:38,238 basehttp 23872 11220 "GET /api/equipment/?limit=1000&page=3 HTTP/1.1" 200 3783
+INFO 2025-05-07 19:56:38,299 equipment 23872 11220 Listing all equipment: user_id=66
+INFO 2025-05-07 19:56:38,304 equipment 23872 11220 Retrieved 73 equipment items, user_id=66, time=0.00s
+INFO 2025-05-07 19:56:38,324 basehttp 23872 11220 "GET /api/equipment/?limit=1000&page=4 HTTP/1.1" 200 2596
+INFO 2025-05-07 19:57:01,873 allergen 23872 10336 Listing all allergens: user_id=66
+INFO 2025-05-07 19:57:01,877 allergen 23872 10336 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 19:57:01,895 basehttp 23872 10336 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 19:57:01,996 views 23872 10336 Profile accessed: user_id=66
+INFO 2025-05-07 19:57:02,014 basehttp 23872 10336 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 19:57:02,154 equipment 23872 10336 Listing all equipment: user_id=66
+INFO 2025-05-07 19:57:02,158 equipment 23872 10336 Retrieved 73 equipment items, user_id=66, time=0.00s
+INFO 2025-05-07 19:57:02,179 basehttp 23872 10336 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 3972
+INFO 2025-05-07 19:57:02,246 equipment 23872 10336 Listing all equipment: user_id=66
+INFO 2025-05-07 19:57:02,254 equipment 23872 10336 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 19:57:02,272 basehttp 23872 10336 "GET /api/equipment/?limit=1000&page=2 HTTP/1.1" 200 4087
+INFO 2025-05-07 19:57:02,373 equipment 23872 10336 Listing all equipment: user_id=66
+INFO 2025-05-07 19:57:02,378 equipment 23872 10336 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 19:57:02,400 basehttp 23872 10336 "GET /api/equipment/?limit=1000&page=3 HTTP/1.1" 200 3783
+INFO 2025-05-07 19:57:02,508 equipment 23872 10336 Listing all equipment: user_id=66
+INFO 2025-05-07 19:57:02,514 equipment 23872 10336 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 19:57:02,538 basehttp 23872 10336 "GET /api/equipment/?limit=1000&page=4 HTTP/1.1" 200 2596
+INFO 2025-05-07 19:58:09,717 allergen 23872 34800 Listing all allergens: user_id=66
+INFO 2025-05-07 19:58:09,720 allergen 23872 34800 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 19:58:09,740 basehttp 23872 34800 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 19:59:30,925 views 23872 20256 Registration attempt: email=test_axcbozj7@example.com
+INFO 2025-05-07 19:59:31,376 views 23872 20256 User registered successfully: user_id=106, email=test_axcbozj7@example.com, time=0.45s
+INFO 2025-05-07 19:59:31,426 basehttp 23872 20256 "POST /api/users/register/ HTTP/1.1" 201 233
+INFO 2025-05-07 19:59:31,610 views 23872 38376 Login attempt: email=test_axcbozj7@example.com
+INFO 2025-05-07 19:59:32,071 views 23872 38376 User login successful: user_id=106, email=test_axcbozj7@example.com, time=0.46s
+INFO 2025-05-07 19:59:32,111 basehttp 23872 38376 "POST /api/users/login/ HTTP/1.1" 200 233
+INFO 2025-05-07 19:59:32,227 views 23872 3924 Profile accessed: user_id=106
+INFO 2025-05-07 19:59:32,254 basehttp 23872 3924 "GET /api/users/profile/ HTTP/1.1" 200 173
+INFO 2025-05-07 19:59:32,421 ingredient 23872 26052 Listing refrigerator ingredients: user_id=106
+INFO 2025-05-07 19:59:32,426 ingredient 23872 26052 Retrieved 0 refrigerator ingredients for user_id=106, time=0.01s
+INFO 2025-05-07 19:59:32,446 basehttp 23872 26052 "GET /api/refrigerator/ HTTP/1.1" 200 52
+INFO 2025-05-07 19:59:32,563 basehttp 23872 36080 "GET /api/favorites/ HTTP/1.1" 200 52
+INFO 2025-05-07 19:59:32,653 allergen 23872 7240 Listing all allergens: user_id=106
+INFO 2025-05-07 19:59:32,659 allergen 23872 7240 Retrieved 50 allergens, user_id=106, time=0.01s
+INFO 2025-05-07 19:59:32,678 basehttp 23872 7240 "GET /api/allergens/ HTTP/1.1" 200 764
+INFO 2025-05-07 19:59:32,743 equipment 23872 24652 Listing all equipment: user_id=106
+INFO 2025-05-07 19:59:32,749 equipment 23872 24652 Retrieved 73 equipment items, user_id=106, time=0.01s
+INFO 2025-05-07 19:59:32,767 basehttp 23872 24652 "GET /api/equipment/ HTTP/1.1" 200 3961
+INFO 2025-05-07 19:59:32,841 views 23872 19104 Logout attempt: user_id=106
+INFO 2025-05-07 19:59:32,847 views 23872 19104 User logged out successfully: user_id=106
+INFO 2025-05-07 19:59:32,871 basehttp 23872 19104 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-07 20:00:23,390 views 23872 22252 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-07 20:00:23,736 views 23872 22252 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.35s
+INFO 2025-05-07 20:00:23,761 basehttp 23872 22252 "POST /api/users/login/ HTTP/1.1" 200 211
+INFO 2025-05-07 20:00:24,023 allergen 23872 22252 Listing all allergens: user_id=66
+INFO 2025-05-07 20:00:24,028 allergen 23872 22252 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 20:00:24,047 basehttp 23872 22252 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 20:00:24,151 equipment 23872 22252 Listing all equipment: user_id=66
+INFO 2025-05-07 20:00:24,158 equipment 23872 22252 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:00:24,178 basehttp 23872 22252 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 3972
+INFO 2025-05-07 20:00:24,278 equipment 23872 22252 Listing all equipment: user_id=66
+INFO 2025-05-07 20:00:24,284 equipment 23872 22252 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:00:24,313 basehttp 23872 22252 "GET /api/equipment/?limit=1000&page=2 HTTP/1.1" 200 4087
+INFO 2025-05-07 20:00:24,384 equipment 23872 22252 Listing all equipment: user_id=66
+INFO 2025-05-07 20:00:24,390 equipment 23872 22252 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:00:24,412 basehttp 23872 22252 "GET /api/equipment/?limit=1000&page=3 HTTP/1.1" 200 3783
+INFO 2025-05-07 20:00:24,490 equipment 23872 22252 Listing all equipment: user_id=66
+INFO 2025-05-07 20:00:24,497 equipment 23872 22252 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:00:24,523 basehttp 23872 22252 "GET /api/equipment/?limit=1000&page=4 HTTP/1.1" 200 2596
+INFO 2025-05-07 20:00:26,484 allergen 23872 22252 Listing all allergens: user_id=66
+INFO 2025-05-07 20:00:26,490 allergen 23872 22252 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 20:00:26,509 basehttp 23872 22252 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 20:00:26,609 views 23872 22252 Profile accessed: user_id=66
+INFO 2025-05-07 20:00:26,627 basehttp 23872 22252 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 20:00:26,712 equipment 23872 22252 Listing all equipment: user_id=66
+INFO 2025-05-07 20:00:26,717 equipment 23872 22252 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:00:26,737 basehttp 23872 22252 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 3972
+INFO 2025-05-07 20:00:26,808 equipment 23872 22252 Listing all equipment: user_id=66
+INFO 2025-05-07 20:00:26,815 equipment 23872 22252 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:00:26,836 basehttp 23872 22252 "GET /api/equipment/?limit=1000&page=2 HTTP/1.1" 200 4087
+INFO 2025-05-07 20:00:26,896 equipment 23872 22252 Listing all equipment: user_id=66
+INFO 2025-05-07 20:00:26,901 equipment 23872 22252 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:00:26,920 basehttp 23872 22252 "GET /api/equipment/?limit=1000&page=3 HTTP/1.1" 200 3783
+INFO 2025-05-07 20:00:26,983 equipment 23872 22252 Listing all equipment: user_id=66
+INFO 2025-05-07 20:00:26,989 equipment 23872 22252 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:00:27,014 basehttp 23872 22252 "GET /api/equipment/?limit=1000&page=4 HTTP/1.1" 200 2596
+INFO 2025-05-07 20:03:08,603 views 23872 30328 Profile accessed: user_id=66
+INFO 2025-05-07 20:03:08,622 basehttp 23872 30328 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 20:03:08,790 views 23872 30328 Profile accessed: user_id=66
+INFO 2025-05-07 20:03:08,817 basehttp 23872 30328 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 20:03:26,660 allergen 23872 23128 Listing all allergens: user_id=66
+INFO 2025-05-07 20:03:26,664 allergen 23872 23128 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 20:03:26,683 basehttp 23872 23128 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 20:03:26,787 equipment 23872 23128 Listing all equipment: user_id=66
+INFO 2025-05-07 20:03:26,792 equipment 23872 23128 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:03:26,811 basehttp 23872 23128 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 3972
+INFO 2025-05-07 20:03:26,911 equipment 23872 23128 Listing all equipment: user_id=66
+INFO 2025-05-07 20:03:26,916 equipment 23872 23128 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:03:26,938 basehttp 23872 23128 "GET /api/equipment/?limit=1000&page=2 HTTP/1.1" 200 4087
+INFO 2025-05-07 20:03:27,024 equipment 23872 23128 Listing all equipment: user_id=66
+INFO 2025-05-07 20:03:27,032 equipment 23872 23128 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:03:27,054 basehttp 23872 23128 "GET /api/equipment/?limit=1000&page=3 HTTP/1.1" 200 3783
+INFO 2025-05-07 20:03:27,127 equipment 23872 23128 Listing all equipment: user_id=66
+INFO 2025-05-07 20:03:27,132 equipment 23872 23128 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:03:27,150 basehttp 23872 23128 "GET /api/equipment/?limit=1000&page=4 HTTP/1.1" 200 2596
+INFO 2025-05-07 20:03:38,124 allergen 23872 23128 Listing all allergens: user_id=66
+INFO 2025-05-07 20:03:38,129 allergen 23872 23128 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 20:03:38,148 basehttp 23872 23128 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 20:04:15,318 views 23872 21148 Profile accessed: user_id=66
+INFO 2025-05-07 20:04:15,341 basehttp 23872 21148 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 20:04:15,374 basehttp 23872 21148 - Broken pipe from ('10.10.1.164', 38810)
+INFO 2025-05-07 20:04:33,838 views 23872 22108 Profile accessed: user_id=66
+INFO 2025-05-07 20:04:33,883 basehttp 23872 22108 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 20:04:34,072 views 23872 22108 Profile accessed: user_id=66
+INFO 2025-05-07 20:04:34,103 basehttp 23872 22108 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 20:05:17,036 allergen 23872 16864 Listing all allergens: user_id=66
+INFO 2025-05-07 20:05:17,041 allergen 23872 16864 Retrieved 50 allergens, user_id=66, time=0.01s
+INFO 2025-05-07 20:05:17,061 basehttp 23872 16864 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 20:06:58,683 views 23872 32484 Profile accessed: user_id=66
+INFO 2025-05-07 20:06:58,704 basehttp 23872 32484 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 20:07:16,895 views 23872 37716 Profile accessed: user_id=66
+INFO 2025-05-07 20:07:16,915 basehttp 23872 37716 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 20:07:21,054 allergen 23872 37716 Listing all allergens: user_id=66
+INFO 2025-05-07 20:07:21,058 allergen 23872 37716 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 20:07:21,078 basehttp 23872 37716 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 20:07:23,394 equipment 23872 37716 Listing all equipment: user_id=66
+INFO 2025-05-07 20:07:23,398 equipment 23872 37716 Retrieved 73 equipment items, user_id=66, time=0.00s
+INFO 2025-05-07 20:07:23,423 basehttp 23872 37716 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 3972
+INFO 2025-05-07 20:07:24,887 equipment 23872 37716 Listing all equipment: user_id=66
+INFO 2025-05-07 20:07:24,893 equipment 23872 37716 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:07:24,912 basehttp 23872 37716 "GET /api/equipment/?limit=1000&page=2 HTTP/1.1" 200 4087
+INFO 2025-05-07 20:07:27,237 equipment 23872 37716 Listing all equipment: user_id=66
+INFO 2025-05-07 20:07:27,241 equipment 23872 37716 Retrieved 73 equipment items, user_id=66, time=0.00s
+INFO 2025-05-07 20:07:27,261 basehttp 23872 37716 "GET /api/equipment/?limit=1000&page=3 HTTP/1.1" 200 3783
+INFO 2025-05-07 20:07:28,383 equipment 23872 37716 Listing all equipment: user_id=66
+INFO 2025-05-07 20:07:28,388 equipment 23872 37716 Retrieved 73 equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:07:28,406 basehttp 23872 37716 "GET /api/equipment/?limit=1000&page=4 HTTP/1.1" 200 2596
+INFO 2025-05-07 20:07:40,221 allergen 23872 37716 Listing all allergens: user_id=66
+INFO 2025-05-07 20:07:40,225 allergen 23872 37716 Retrieved 50 allergens, user_id=66, time=0.00s
+INFO 2025-05-07 20:07:40,246 basehttp 23872 37716 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 775
+INFO 2025-05-07 20:09:07,259 views 23872 30044 Profile accessed: user_id=66
+INFO 2025-05-07 20:09:07,296 basehttp 23872 30044 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 20:17:23,551 autoreload 23872 17312 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\config\settings\base.py changed, reloading.
+INFO 2025-05-07 20:17:25,591 autoreload 13036 27560 Watching for file changes with StatReloader
+INFO 2025-05-07 20:17:25,915 wsgi 13036 23180 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 20:17:25,915 wsgi 13036 23180 Environment: config.settings
+INFO 2025-05-07 20:17:25,916 wsgi 13036 23180 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 20:17:25,919 wsgi 13036 23180 Application initialized successfully
+INFO 2025-05-07 20:19:14,022 autoreload 13036 27560 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\equipment.py changed, reloading.
+INFO 2025-05-07 20:19:15,887 autoreload 17568 24844 Watching for file changes with StatReloader
+INFO 2025-05-07 20:19:31,191 autoreload 17568 24844 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\equipment.py changed, reloading.
+INFO 2025-05-07 20:19:32,681 autoreload 26232 29768 Watching for file changes with StatReloader
+INFO 2025-05-07 20:19:32,937 wsgi 26232 28816 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 20:19:32,937 wsgi 26232 28816 Environment: config.settings
+INFO 2025-05-07 20:19:32,937 wsgi 26232 28816 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 20:19:32,941 wsgi 26232 28816 Application initialized successfully
+INFO 2025-05-07 20:19:57,719 autoreload 26232 29768 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\shopping_list.py changed, reloading.
+INFO 2025-05-07 20:19:58,461 autoreload 4092 13148 Watching for file changes with StatReloader
+INFO 2025-05-07 20:19:58,701 wsgi 4092 24060 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 20:19:58,701 wsgi 4092 24060 Environment: config.settings
+INFO 2025-05-07 20:19:58,701 wsgi 4092 24060 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 20:19:58,705 wsgi 4092 24060 Application initialized successfully
+INFO 2025-05-07 20:20:20,385 autoreload 4092 13148 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\recipe.py changed, reloading.
+INFO 2025-05-07 20:20:21,347 autoreload 14168 37880 Watching for file changes with StatReloader
+INFO 2025-05-07 20:20:28,769 autoreload 14168 37880 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\recipe.py changed, reloading.
+INFO 2025-05-07 20:20:29,812 autoreload 34424 11288 Watching for file changes with StatReloader
+INFO 2025-05-07 20:20:30,071 wsgi 34424 33336 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 20:20:30,072 wsgi 34424 33336 Environment: config.settings
+INFO 2025-05-07 20:20:30,072 wsgi 34424 33336 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 20:20:30,077 wsgi 34424 33336 Application initialized successfully
+INFO 2025-05-07 20:20:48,182 autoreload 34424 11288 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\recipe.py changed, reloading.
+INFO 2025-05-07 20:20:49,683 autoreload 15168 456 Watching for file changes with StatReloader
+INFO 2025-05-07 20:20:49,929 wsgi 15168 25756 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 20:20:49,929 wsgi 15168 25756 Environment: config.settings
+INFO 2025-05-07 20:20:49,929 wsgi 15168 25756 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 20:20:49,932 wsgi 15168 25756 Application initialized successfully
+INFO 2025-05-07 20:21:00,821 autoreload 15168 456 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\meal_plan.py changed, reloading.
+INFO 2025-05-07 20:21:02,547 autoreload 31060 26640 Watching for file changes with StatReloader
+INFO 2025-05-07 20:21:06,168 autoreload 31060 26640 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\meal_plan.py changed, reloading.
+INFO 2025-05-07 20:21:07,737 autoreload 12216 34444 Watching for file changes with StatReloader
+INFO 2025-05-07 20:21:16,777 autoreload 12216 34444 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\meal_plan.py changed, reloading.
+INFO 2025-05-07 20:21:18,529 autoreload 29304 32056 Watching for file changes with StatReloader
+INFO 2025-05-07 20:21:30,649 autoreload 29304 32056 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\meal_plan.py changed, reloading.
+INFO 2025-05-07 20:21:31,351 autoreload 35688 23264 Watching for file changes with StatReloader
+INFO 2025-05-07 20:21:31,848 wsgi 35688 27024 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 20:21:31,849 wsgi 35688 27024 Environment: config.settings
+INFO 2025-05-07 20:21:31,850 wsgi 35688 27024 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 20:21:31,860 wsgi 35688 27024 Application initialized successfully
+INFO 2025-05-07 20:21:41,065 autoreload 35688 23264 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\ingredient.py changed, reloading.
+INFO 2025-05-07 20:21:42,701 autoreload 30188 3384 Watching for file changes with StatReloader
+INFO 2025-05-07 20:22:00,603 autoreload 30188 3384 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\ingredient.py changed, reloading.
+INFO 2025-05-07 20:22:02,028 autoreload 10556 1288 Watching for file changes with StatReloader
+INFO 2025-05-07 20:22:02,902 wsgi 10556 22380 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 20:22:02,902 wsgi 10556 22380 Environment: config.settings
+INFO 2025-05-07 20:22:02,903 wsgi 10556 22380 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 20:22:02,912 wsgi 10556 22380 Application initialized successfully
+INFO 2025-05-07 20:22:26,061 autoreload 10556 1288 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py changed, reloading.
+INFO 2025-05-07 20:22:27,168 autoreload 36672 1892 Watching for file changes with StatReloader
+INFO 2025-05-07 20:22:27,426 wsgi 36672 6152 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 20:22:27,427 wsgi 36672 6152 Environment: config.settings
+INFO 2025-05-07 20:22:27,427 wsgi 36672 6152 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 20:22:27,433 wsgi 36672 6152 Application initialized successfully
+INFO 2025-05-07 20:22:57,165 autoreload 36672 1892 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py changed, reloading.
+INFO 2025-05-07 20:22:58,069 autoreload 15520 5220 Watching for file changes with StatReloader
+INFO 2025-05-07 20:22:58,301 wsgi 15520 27272 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 20:22:58,301 wsgi 15520 27272 Environment: config.settings
+INFO 2025-05-07 20:22:58,301 wsgi 15520 27272 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 20:22:58,305 wsgi 15520 27272 Application initialized successfully
+INFO 2025-05-07 20:23:14,264 autoreload 15520 5220 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py changed, reloading.
+INFO 2025-05-07 20:23:15,966 autoreload 26784 15560 Watching for file changes with StatReloader
+INFO 2025-05-07 20:23:16,277 wsgi 26784 31572 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 20:23:16,277 wsgi 26784 31572 Environment: config.settings
+INFO 2025-05-07 20:23:16,278 wsgi 26784 31572 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 20:23:16,282 wsgi 26784 31572 Application initialized successfully
+INFO 2025-05-07 20:23:22,869 autoreload 26784 15560 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py changed, reloading.
+INFO 2025-05-07 20:23:24,364 autoreload 27872 36824 Watching for file changes with StatReloader
+INFO 2025-05-07 20:23:24,874 wsgi 27872 24776 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 20:23:24,875 wsgi 27872 24776 Environment: config.settings
+INFO 2025-05-07 20:23:24,875 wsgi 27872 24776 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 20:23:24,886 wsgi 27872 24776 Application initialized successfully
+INFO 2025-05-07 20:23:56,841 autoreload 27872 36824 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\config\settings\base.py changed, reloading.
+INFO 2025-05-07 20:23:58,092 autoreload 19216 16276 Watching for file changes with StatReloader
+INFO 2025-05-07 20:23:58,347 wsgi 19216 37640 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 20:23:58,348 wsgi 19216 37640 Environment: config.settings
+INFO 2025-05-07 20:23:58,348 wsgi 19216 37640 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 20:23:58,352 wsgi 19216 37640 Application initialized successfully
+INFO 2025-05-07 20:24:53,806 autoreload 24560 19564 Watching for file changes with StatReloader
+INFO 2025-05-07 20:24:54,061 wsgi 24560 13036 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-07 20:24:54,062 wsgi 24560 13036 Environment: config.settings
+INFO 2025-05-07 20:24:54,062 wsgi 24560 13036 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-07 20:24:54,067 wsgi 24560 13036 Application initialized successfully
+INFO 2025-05-07 20:25:32,998 views 24560 19968 Profile accessed: user_id=66
+INFO 2025-05-07 20:25:33,075 basehttp 24560 19968 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 20:25:33,261 views 24560 19968 Profile accessed: user_id=66
+INFO 2025-05-07 20:25:33,276 basehttp 24560 19968 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 20:25:33,437 allergen 24560 19968 Listing all allergens: user_id=66
+INFO 2025-05-07 20:25:33,458 allergen 24560 19968 Retrieved unknown allergens, user_id=66, time=0.02s
+INFO 2025-05-07 20:25:33,488 basehttp 24560 19968 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-07 20:25:33,580 equipment 24560 19968 Listing all equipment: user_id=66
+INFO 2025-05-07 20:25:33,588 equipment 24560 19968 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:25:33,621 basehttp 24560 19968 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-07 20:25:39,343 allergen 24560 19968 Listing all allergens: user_id=66
+INFO 2025-05-07 20:25:39,346 allergen 24560 19968 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-07 20:25:39,362 basehttp 24560 19968 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-07 20:25:39,438 views 24560 19968 Profile accessed: user_id=66
+INFO 2025-05-07 20:25:39,453 basehttp 24560 19968 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 20:25:39,570 equipment 24560 19968 Listing all equipment: user_id=66
+INFO 2025-05-07 20:25:39,578 equipment 24560 19968 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:25:39,608 basehttp 24560 19968 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-07 20:25:42,497 allergen 24560 19968 Listing all allergens: user_id=66
+INFO 2025-05-07 20:25:42,500 allergen 24560 19968 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-07 20:25:42,512 basehttp 24560 19968 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-07 20:26:24,376 allergen 24560 18248 Listing all allergens: user_id=66
+INFO 2025-05-07 20:26:24,378 allergen 24560 18248 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-07 20:26:24,391 basehttp 24560 18248 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-07 20:26:24,469 views 24560 18248 Profile accessed: user_id=66
+INFO 2025-05-07 20:26:24,481 basehttp 24560 18248 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 20:26:24,561 equipment 24560 18248 Listing all equipment: user_id=66
+INFO 2025-05-07 20:26:24,567 equipment 24560 18248 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-07 20:26:24,579 basehttp 24560 18248 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-07 20:26:31,052 allergen 24560 18248 Listing all allergens: user_id=66
+INFO 2025-05-07 20:26:31,054 allergen 24560 18248 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-07 20:26:31,067 basehttp 24560 18248 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-07 20:26:31,274 views 24560 18248 Profile accessed: user_id=66
+INFO 2025-05-07 20:26:31,285 basehttp 24560 18248 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-07 20:26:31,366 equipment 24560 18248 Listing all equipment: user_id=66
+INFO 2025-05-07 20:26:31,370 equipment 24560 18248 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-07 20:26:31,381 basehttp 24560 18248 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914

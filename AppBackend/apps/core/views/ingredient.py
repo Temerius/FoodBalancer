@@ -6,10 +6,6 @@ from rest_framework.response import Response
 from django.db.models import Q
 from datetime import datetime, timedelta
 
-from ..mixins import CacheInvalidationMixin
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
-
 from ..models import IngredientType, Ingredient, M2MUsrIng
 from ..serializers import IngredientTypeSerializer, IngredientSerializer, IngredientDetailSerializer, \
     UserIngredientSerializer
@@ -124,7 +120,7 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
         return response
 
 
-class RefrigeratorViewSet(CacheInvalidationMixin, viewsets.ModelViewSet):
+class RefrigeratorViewSet(viewsets.ModelViewSet):
     cache_prefix = 'refrigerator'
     """API для доступа к холодильнику пользователя (ингредиенты пользователя)"""
     serializer_class = UserIngredientSerializer

@@ -6,10 +6,6 @@ from rest_framework.response import Response
 from django.db.models import Q, Prefetch
 from datetime import datetime, timedelta
 
-from ..mixins import CacheInvalidationMixin
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
-
 from ..models import (
     WeaklyMealPlan, DailyMealPlan, ActualDayMeal,
     M2MRcpDmp, M2MRcpAdm, M2MIngDmp, M2MIngAdm
@@ -26,7 +22,7 @@ import time
 logger = logging.getLogger('apps.core.meal_plan')
 
 
-class MealPlanViewSet(CacheInvalidationMixin, viewsets.ModelViewSet):
+class MealPlanViewSet(viewsets.ModelViewSet):
     cache_prefix = 'meal_plan'
     """API для доступа к недельным планам питания"""
     serializer_class = WeaklyMealPlanSerializer
@@ -173,7 +169,7 @@ class MealPlanViewSet(CacheInvalidationMixin, viewsets.ModelViewSet):
         })
 
 
-class DailyMealPlanViewSet(CacheInvalidationMixin, viewsets.ModelViewSet):
+class DailyMealPlanViewSet(viewsets.ModelViewSet):
     cache_prefix = 'daily_plan'
     """API для доступа к дневным планам питания"""
     serializer_class = DailyMealPlanSerializer
@@ -240,7 +236,7 @@ class DailyMealPlanViewSet(CacheInvalidationMixin, viewsets.ModelViewSet):
         })
 
 
-class ActualMealViewSet(CacheInvalidationMixin, viewsets.ModelViewSet):
+class ActualMealViewSet(viewsets.ModelViewSet):
     cache_prefix = 'actual_meal'
     """API для доступа к фактическим приемам пищи"""
     serializer_class = ActualDayMealSerializer

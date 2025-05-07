@@ -7,8 +7,6 @@ from django.db.models import Q, Exists, OuterRef
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 
-from ..mixins import CacheInvalidationMixin
-
 from ..models import (
     Recipe, Step, M2MStpIgt, FavoriteRecipe,
     IngredientType, Ingredient, M2MUsrIng,
@@ -25,8 +23,6 @@ import time
 # Создадим логгер для рецептов
 logger = logging.getLogger('apps.core.recipes')
 
-
-@method_decorator(cache_page(60 * 60 * 10), name='list')
 class RecipeViewSet(viewsets.ReadOnlyModelViewSet):
     """API для доступа к рецептам"""
     queryset = Recipe.objects.all()
@@ -233,7 +229,7 @@ class StepViewSet(viewsets.ReadOnlyModelViewSet):
         return response
 
 
-class FavoriteRecipeViewSet(CacheInvalidationMixin, viewsets.ModelViewSet):
+class FavoriteRecipeViewSet(viewsets.ModelViewSet):
     cache_prefix = 'favorite_recipe'
     """API для управления избранными рецептами"""
     serializer_class = FavoriteRecipeSerializer

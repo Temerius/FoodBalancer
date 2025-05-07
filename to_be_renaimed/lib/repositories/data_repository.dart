@@ -1,6 +1,5 @@
 // lib/repositories/data_repository.dart
 import 'package:flutter/foundation.dart';
-import 'package:to_be_renaimed/repositories/services/cache_service.dart';
 import '../models/user.dart';
 import '../models/allergen.dart';
 import '../models/equipment.dart';
@@ -10,6 +9,7 @@ import 'repositories/user_repository.dart';
 import 'repositories/allergen_repository.dart';
 import 'repositories/equipment_repository.dart';
 import 'models/cache_config.dart';
+import 'services/cache_service.dart';
 
 class DataRepository with ChangeNotifier {
   final ApiService _apiService;
@@ -132,6 +132,11 @@ class DataRepository with ChangeNotifier {
   Future<void> initialize() async {
     _setLoading(true);
     try {
+      print("\n===== INITIALIZING DATA REPOSITORY =====");
+      // Проверяем состояние кэша
+      print("CHECKING CACHE STATE...");
+      await CacheService.listAllKeys();
+
       // Загрузка данных из кэша
       await _userRepository.getUserProfile();
       await _allergenRepository.getAllAllergens();
@@ -139,8 +144,53 @@ class DataRepository with ChangeNotifier {
       await getRecipes();
 
       _isInitialized = true;
+      print("===== DATA REPOSITORY INITIALIZED =====");
     } catch (e) {
+      print("ERROR DURING REPOSITORY INITIALIZATION: $e");
       _setError(e.toString());
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  // Получение профиля пользователя
+  Future<User?> getUserProfile({CacheConfig? config}) async {
+    _setLoading(true);
+    try {
+      print("\n===== GETTING USER PROFILE =====");
+      final user = await _userRepository.getUserProfile(config: config);
+      notifyListeners();
+      return user;
+    } catch (e) {
+      print("ERROR GETTING USER PROFILE: $e");
+      _setError(e.toString());
+      return null;
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  // Получение оборудования
+  Future<List<Equipment>> getEquipment({bool forceRefresh = false}) async {
+    _setLoading(true);
+    try {
+      print("\n===== GETTING EQUIPMENT (forceRefresh: $forceRefresh) =====");
+      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
+      final equipmentList = await _equipmentRepository.getAllEquipment(config: config);
+
+      // Если у пользователя есть оборудование, отмечаем его в списке
+      if (user != null && user!.equipmentIds.isNotEmpty) {
+        for (var equipment in equipmentList) {
+          equipment.isSelected = user!.equipmentIds.contains(equipment.id);
+        }
+      }
+
+      notifyListeners();
+      return equipmentList;
+    } catch (e) {
+      print("ERROR GETTING EQUIPMENT: $e");
+      _setError(e.toString());
+      return [];
     } finally {
       _setLoading(false);
     }
@@ -150,14 +200,22 @@ class DataRepository with ChangeNotifier {
   Future<void> refreshUserData() async {
     _setLoading(true);
     try {
+      print("\n===== REFRESHING USER DATA =====");
+
       // Загрузка пользователя с принудительным обновлением
       await _userRepository.getUserProfile(config: CacheConfig.refresh);
-      await _allergenRepository.getAllAllergens();
-      await _equipmentRepository.getAllEquipment();
+
+      // Обновляем аллергены и оборудование пользователя
+      await refreshUserAllergens();
+      await getEquipment(forceRefresh: true);
+
+      // Обновляем рецепты
       await getRecipes(forceRefresh: true);
 
+      print("===== USER DATA REFRESHED =====");
       notifyListeners();
     } catch (e) {
+      print("ERROR REFRESHING USER DATA: $e");
       _setError(e.toString());
     } finally {
       _setLoading(false);
@@ -165,9 +223,6 @@ class DataRepository with ChangeNotifier {
   }
 
   // Получение всех аллергенов
-  // Enhanced allergen methods for DataRepository class
-
-// Получение всех аллергенов
   Future<List<Allergen>> getAllAllergens({bool forceRefresh = false}) async {
     print("\n===== GETTING ALL ALLERGENS (forceRefresh: $forceRefresh) =====");
     try {
@@ -180,10 +235,15 @@ class DataRepository with ChangeNotifier {
       final allergens = await _allergenRepository.getAllAllergens(config: config);
 
       print("===== ALLERGENS LOADED: ${allergens.length} items =====");
-      for (int i = 0; i < allergens.length; i++) {
-        print("${i + 1}. ID: ${allergens[i].id}, Name: ${allergens[i].name}, Selected: ${allergens[i].isSelected}");
+
+      // Если у пользователя есть аллергены, отмечаем их в списке
+      if (user != null && user!.allergenIds.isNotEmpty) {
+        for (var allergen in allergens) {
+          allergen.isSelected = user!.allergenIds.contains(allergen.id);
+        }
       }
 
+      notifyListeners();
       return allergens;
     } catch (e) {
       print("===== ERROR LOADING ALLERGENS: $e =====");
@@ -192,7 +252,7 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-// Обновление аллергенов пользователя
+  // Обновление аллергенов пользователя
   Future<void> refreshUserAllergens() async {
     print("\n===== REFRESHING USER ALLERGENS =====");
     try {
@@ -212,6 +272,11 @@ class DataRepository with ChangeNotifier {
         // Обновляем список аллергенов в объекте пользователя
         _userRepository.updateUserAllergensInMemory(allergenIds);
 
+        // Обновляем флаги "выбрано" в списке аллергенов
+        for (var allergen in _allergenRepository.allergens) {
+          allergen.isSelected = allergenIds.contains(allergen.id);
+        }
+
         notifyListeners();
       }
 
@@ -226,7 +291,7 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-// Обновление профиля пользователя
+  // Обновление профиля пользователя
   Future<bool> updateUserProfile(User updatedUser) async {
     _setLoading(true);
     print("\n===== UPDATING USER PROFILE =====");
@@ -254,6 +319,10 @@ class DataRepository with ChangeNotifier {
         // Принудительно обновляем кэш аллергенов
         print("REFRESHING ALLERGENS CACHE...");
         await refreshUserAllergens();
+
+        // Обновляем оборудование
+        print("REFRESHING EQUIPMENT CACHE...");
+        await getEquipment(forceRefresh: true);
 
         notifyListeners();
       } else {

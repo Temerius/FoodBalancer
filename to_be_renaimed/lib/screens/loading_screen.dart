@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../repositories/data_repository.dart';
+import '../repositories/models/cache_config.dart';
 import 'auth/onboarding_screen.dart';
 import 'home_layout.dart';
 
@@ -51,15 +52,43 @@ class _LoadingScreenState extends State<LoadingScreen> {
           _progress = 0.5;
         });
 
+        // Инициализация репозиториев и загрузка базовых данных
         await dataRepository.initialize();
 
         setState(() {
-          _statusMessage = "Загрузка данных пользователя...";
+          _statusMessage = "Загрузка профиля пользователя...";
+          _progress = 0.6;
+        });
+
+        // Обязательная загрузка профиля пользователя после авторизации
+        await dataRepository.getUserProfile(config: CacheConfig.refresh);
+
+        setState(() {
+          _statusMessage = "Загрузка аллергенов...";
+          _progress = 0.7;
+        });
+
+        // Загружаем полный список аллергенов
+        await dataRepository.getAllAllergens(forceRefresh: true);
+
+        setState(() {
+          _statusMessage = "Загрузка оборудования...";
           _progress = 0.8;
         });
 
-        // Загружаем данные пользователя
-        await dataRepository.refreshUserData();
+        // Загружаем полный список оборудования
+        await dataRepository.getEquipment(forceRefresh: true);
+
+        setState(() {
+          _statusMessage = "Обновление данных пользователя...";
+          _progress = 0.9;
+        });
+
+        // Принудительно обновляем аллергены пользователя
+        await dataRepository.refreshUserAllergens();
+
+        // Загружаем рецепты и другие данные
+        await dataRepository.getRecipes();
       }
 
       setState(() {

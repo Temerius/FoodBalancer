@@ -1,8 +1,10 @@
+// lib/screens/auth/login_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../config/theme.dart';
 import '../../config/routes.dart';
 import '../../providers/auth_provider.dart';
+import '../../repositories/data_repository.dart';
 import '../../utils/validators.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_field.dart';
@@ -30,13 +32,75 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
-      final success = await Provider.of<AuthProvider>(context, listen: false)
-          .login(_emailController.text, _passwordController.text, rememberMe: _rememberMe);
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      final dataRepository = Provider.of<DataRepository>(context, listen: false);
+
+      final success = await authProvider.login(
+          _emailController.text,
+          _passwordController.text,
+          rememberMe: _rememberMe
+      );
 
       if (success) {
         // Очищаем ошибки перед навигацией
-        Provider.of<AuthProvider>(context, listen: false).clearError();
-        Navigator.pushReplacementNamed(context, AppRoutes.home);
+        authProvider.clearError();
+
+        // После успешного входа инициализируем данные пользователя
+        try {
+          // Показываем индикатор загрузки
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => const AlertDialog(
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text('Загрузка данных...'),
+                ],
+              ),
+            ),
+          );
+
+          // Инициализируем репозитории
+          await dataRepository.initialize();
+
+          // Загружаем профиль пользователя
+          await dataRepository.getUserProfile();
+
+          // Загружаем полный список аллергенов
+          await dataRepository.getAllAllergens(forceRefresh: true);
+
+          // Загружаем полный список оборудования
+          await dataRepository.getEquipment(forceRefresh: true);
+
+          // Обновляем аллергены пользователя
+          await dataRepository.refreshUserAllergens();
+
+          // Закрываем диалог с индикатором загрузки
+          if (mounted) {
+            Navigator.pop(context);
+          }
+        } catch (e) {
+          // Закрываем диалог с индикатором загрузки в случае ошибки
+          if (mounted) {
+            Navigator.pop(context);
+          }
+
+          // Показываем сообщение об ошибке
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Ошибка при загрузке данных: ${e.toString()}'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+
+        // Переходим на главный экран
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, AppRoutes.home);
+        }
       }
     }
   }

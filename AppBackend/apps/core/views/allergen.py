@@ -5,10 +5,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.models import Q
 
-from ..mixins import CacheInvalidationMixin
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
-
 from ..models import Allergen, M2MUsrAlg
 from ..serializers import AllergenSerializer, UserAllergenSerializer
 
@@ -96,21 +92,6 @@ class UserAllergenViewSet(viewsets.ModelViewSet):
                 logger.info(f"Created allergen mapping: user {user.usr_id} - allergen {allergen_id}")
 
             logger.info(f"Successfully updated allergens for user {user.usr_id}: {created_allergens}")
-
-            # Принудительно очищаем кэш для list метода
-            from django.core.cache import cache
-            cache_key = f"views.decorators.cache.cache_page.{self.request.build_absolute_uri()}"
-            cache.delete(cache_key)
-
-            # Очистка всего кэша, связанного с аллергенами пользователя
-            user_id = request.user.usr_id
-            pattern = f"*user_allergen*{user_id}*"
-
-            # Для cache_page кэшей
-            for key in cache._cache.keys():
-                if pattern in key or f"/api/user-allergens/" in key:
-                    cache.delete(key)
-                    logger.info(f"Deleted cache key: {key}")
 
             return Response({
                 'success': True,
