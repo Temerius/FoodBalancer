@@ -571,3 +571,5 @@ ERROR 2025-05-07 02:25:39,595 allergen 24372 34164 Traceback: Traceback (most re
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AttributeError: 'DatabaseCache' object has no attribute '_cache'
 
+ERROR 2025-05-08 01:29:44,760 middleware 8816 20640 404 Not Found: DELETE /api/favorites/7/
+ERROR 2025-05-08 01:29:45,612 middleware 8816 20640 404 Not Found: DELETE /api/favorites/4/

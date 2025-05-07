@@ -34,7 +34,6 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Принудительно обновляем кэш аллергенов
       _allergens = await dataRepository.getAllAllergens(forceRefresh: true);
 
       // Получаем выбранные аллергены пользователя
@@ -55,7 +54,6 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
         print("WARNING: Allergies list is empty, trying to load from cache");
         _allergens = await dataRepository.getAllAllergens(forceRefresh: false);
 
-        // Установка флажков "выбрано" для аллергенов
         for (var allergen in _allergens) {
           allergen.isSelected = _selectedAllergenIds.contains(allergen.id);
         }

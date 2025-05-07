@@ -11,7 +11,7 @@ class AppInitializer {
     _testsRun = true;
 
     // Create the test service
-    final apiTestService = ApiTestService(baseUrl: 'http://10.10.1.165:8000');
+    final apiTestService = ApiTestService(baseUrl: 'http://192.168.100.5:8000');
 
     // Run the tests
     final logs = await apiTestService.runAllTests();

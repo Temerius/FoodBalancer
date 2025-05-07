@@ -7,7 +7,7 @@ import '../utils/network_util.dart';
 
 class ApiService {
   // For your real server
-  static const String baseUrl = 'http://10.10.1.165:8000';
+  static const String baseUrl = 'http://192.168.100.5:8000';
 
   // Test whether we should use mock responses
   static const bool useMockResponses = false;
@@ -72,58 +72,76 @@ class ApiService {
     }
   }
 
+  // Get all results (no pagination now)
   Future<List<dynamic>> getAllPaginatedResults(String endpoint, {int pageSize = 1000}) async {
-    List<dynamic> allResults = [];
-    String nextUrl = endpoint;
+    // Since there's no pagination, we'll just do a regular get request
+    try {
+      if (DEBUG) {
+        print('API Request (No Pagination): GET $baseUrl$endpoint');
+      }
 
-    while (nextUrl.isNotEmpty) {
       final hasConnection = await _networkUtil.checkConnection();
       if (!hasConnection) {
         throw NoConnectionException(
-            'Нет подключения к интернету. Запрос: GET $nextUrl'
+            'Нет подключения к интернету. Запрос: GET $endpoint'
         );
       }
 
-      try {
-        if (DEBUG) {
-          print('API Request (Paginated): GET $baseUrl$nextUrl');
-        }
+      final response = await _client.get(
+        Uri.parse('$baseUrl$endpoint'),
+        headers: _headers,
+      ).timeout(const Duration(seconds: 15));
 
-        final response = await _client.get(
-          Uri.parse(nextUrl.startsWith('http') ? nextUrl : '$baseUrl$nextUrl'),
-          headers: _headers,
-        ).timeout(const Duration(seconds: 15));
-
-        final data = _handleResponse(response);
-
-        if (data.containsKey('results')) {
-          final results = data['results'] as List<dynamic>;
-          allResults.addAll(results);
-
-          // Проверяем наличие следующей страницы
-          if (data.containsKey('next') && data['next'] != null) {
-            nextUrl = data['next'];
-          } else {
-            nextUrl = ''; // прекращаем цикл
-          }
-        } else {
-          nextUrl = ''; // прекращаем цикл, если нет results
-        }
-
-        if (DEBUG) {
-          print('Retrieved ${allResults.length} results so far');
-        }
-
-      } catch (e) {
-        if (DEBUG) {
-          print('API Error in pagination: $e');
-        }
-        throw ApiException('Ошибка при запросе: $e. Запрос: GET $nextUrl');
+      if (DEBUG) {
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body.substring(0,
+            response.body.length > 200 ? 200 : response.body.length)}...');
       }
-    }
 
-    return allResults;
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        if (response.body.isEmpty) return [];
+
+        try {
+          final decoded = jsonDecode(utf8.decode(response.bodyBytes));
+
+          // Check if it's a list or a map with 'results'
+          if (decoded is List) {
+            // Direct list response
+            return decoded;
+          } else if (decoded is Map<String, dynamic> && decoded.containsKey('results')) {
+            // Map with results key
+            return decoded['results'] as List<dynamic>;
+          } else {
+            // Unknown format
+            throw FormatException('Неожиданный формат ответа: ${decoded.runtimeType}');
+          }
+        } catch (e) {
+          throw FormatException('Ошибка при декодировании ответа: $e');
+        }
+      } else {
+        // Error handling similar to _handleResponse
+        String errorMessage = 'Ошибка сервера: ${response.statusCode}';
+
+        // Try to decode error response
+        try {
+          var errorData = jsonDecode(utf8.decode(response.bodyBytes));
+          if (errorData is Map<String, dynamic> && errorData.containsKey('error')) {
+            errorMessage = errorData['error'];
+          }
+        } catch (_) {
+          // Keep the default error message if parsing fails
+        }
+
+        throw ApiException(errorMessage);
+      }
+    } catch (e) {
+      if (DEBUG) {
+        print('API Error getting results: $e');
+      }
+      rethrow;
+    }
   }
+
   // GET request
   Future<Map<String, dynamic>> get(String endpoint) async {
     // Check connection before making request
@@ -245,7 +263,7 @@ class ApiService {
     }
 
     if (DEBUG) {
-      print('API Request: PUT $baseUrl$endpoint');
+      print('API Request: DELETE $baseUrl$endpoint');
       print('Headers: $_headers');
     }
 
@@ -275,7 +293,16 @@ class ApiService {
       if (response.body.isEmpty) return {};
 
       try {
-        return jsonDecode(utf8.decode(response.bodyBytes));
+        dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
+
+        // If we got a list instead of a map, convert it to a map with a 'results' key
+        if (decoded is List) {
+          return {'results': decoded};
+        } else if (decoded is Map<String, dynamic>) {
+          return decoded;
+        } else {
+          throw FormatException('Неожиданный формат ответа: ${decoded.runtimeType}');
+        }
       } catch (e) {
         throw FormatException('Ошибка при декодировании ответа: $e');
       }
@@ -296,7 +323,14 @@ class ApiService {
         // Пытаемся парсить как JSON, как и раньше
         try {
           var errorData = jsonDecode(utf8.decode(response.bodyBytes));
-          // ... остальной код обработки JSON-ошибок
+          // Обработка ошибок в JSON формате
+          if (errorData is Map<String, dynamic>) {
+            if (errorData.containsKey('error')) {
+              errorMessage = errorData['error'];
+            } else if (errorData.containsKey('detail')) {
+              errorMessage = errorData['detail'];
+            }
+          }
         } catch (e) {
           // Если парсинг не удался, используем текстовое содержимое
           if (response.bodyBytes.isNotEmpty) {

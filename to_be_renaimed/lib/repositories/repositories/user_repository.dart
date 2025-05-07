@@ -206,51 +206,46 @@ class UserRepository {
     // Загружаем из API
     try {
       print("FETCHING USER ALLERGEN IDS FROM API...");
-      final response = await _apiService.get('/api/user-allergens/?limit=1000');
+
+      // Получаем данные, теперь API может вернуть список напрямую
+      final response = await _apiService.get('/api/user-allergens/');
       print("USER ALLERGENS RESPONSE FROM API: $response");
 
       List<int> allergenIds = [];
 
+      // Проверяем, вернулся ли список в поле results или напрямую
       if (response.containsKey('results')) {
         final List<dynamic> userAllergensJson = response['results'];
-        print("USER ALLERGENS JSON FROM API: ${userAllergensJson.length} items");
+        print("USER ALLERGENS JSON FROM API (results field): ${userAllergensJson.length} items");
 
         for (var item in userAllergensJson) {
-          if (item.containsKey('mua_alg_id')) {
-            // Безопасное преобразование в int
-            var algId = item['mua_alg_id'];
-            if (algId is int) {
-              allergenIds.add(algId);
-            } else if (algId is String) {
-              int? parsedId = int.tryParse(algId);
-              if (parsedId != null) {
-                allergenIds.add(parsedId);
-              } else {
-                print("WARNING: Could not parse allergen ID: $algId");
-              }
-            } else {
-              print("WARNING: Unexpected allergen ID type: ${algId.runtimeType} for value: $algId");
-            }
+          _extractAllergenId(item, allergenIds);
+        }
+      } else {
+        // Если в ответе нет поля results, проверяем, может быть ответ сам по себе список
+        final rawData = response['raw_data'] ?? response;
+
+        if (rawData is List) {
+          print("USER ALLERGENS JSON FROM API (direct list): ${rawData.length} items");
+          for (var item in rawData) {
+            _extractAllergenId(item, allergenIds);
           }
         }
-
-        print("EXTRACTED USER ALLERGEN IDS FROM API: $allergenIds");
-
-        // Сохраняем в кэш
-        await CacheService.save(_allergenIdsKey, allergenIds);
-
-        // Обновляем пользователя в памяти, если он существует
-        if (_user != null) {
-          print("UPDATING USER ALLERGEN IDS IN MEMORY: ${_user!.allergenIds} -> $allergenIds");
-          _user = _user!.copyWith(allergenIds: allergenIds);
-          await CacheService.save(_cacheKey, _user!.toJson());
-        }
-
-        return allergenIds;
       }
 
-      print("NO ALLERGEN IDS FOUND IN API RESPONSE");
-      return [];
+      print("EXTRACTED USER ALLERGEN IDS FROM API: $allergenIds");
+
+      // Сохраняем в кэш
+      await CacheService.save(_allergenIdsKey, allergenIds);
+
+      // Обновляем пользователя в памяти, если он существует
+      if (_user != null) {
+        print("UPDATING USER ALLERGEN IDS IN MEMORY: ${_user!.allergenIds} -> $allergenIds");
+        _user = _user!.copyWith(allergenIds: allergenIds);
+        await CacheService.save(_cacheKey, _user!.toJson());
+      }
+
+      return allergenIds;
     } catch (e) {
       print("ERROR FETCHING USER ALLERGEN IDS: $e");
       if (_user != null) {
@@ -260,6 +255,50 @@ class UserRepository {
     }
   }
 
+  // Вспомогательный метод для извлечения ID аллергена из элемента JSON
+  void _extractAllergenId(dynamic item, List<int> allergenIds) {
+    if (item is Map<String, dynamic>) {
+      // Проверяем разные возможные ключи для ID аллергена
+      dynamic algId;
+
+      if (item.containsKey('mua_alg_id')) {
+        algId = item['mua_alg_id'];
+      } else if (item.containsKey('alg_id')) {
+        algId = item['alg_id'];
+      } else if (item.containsKey('id')) {
+        algId = item['id'];
+      }
+
+      // Если нашли ID, конвертируем его в int
+      if (algId != null) {
+        if (algId is int) {
+          allergenIds.add(algId);
+        } else if (algId is String) {
+          int? parsedId = int.tryParse(algId);
+          if (parsedId != null) {
+            allergenIds.add(parsedId);
+          } else {
+            print("WARNING: Could not parse allergen ID: $algId");
+          }
+        } else {
+          print("WARNING: Unexpected allergen ID type: ${algId.runtimeType} for value: $algId");
+        }
+      }
+    } else if (item is int) {
+      // Если элемент сам является числом, это может быть прямой ID
+      allergenIds.add(item);
+    } else if (item is String) {
+      // Если элемент сам является строкой, пробуем преобразовать в число
+      int? parsedId = int.tryParse(item);
+      if (parsedId != null) {
+        allergenIds.add(parsedId);
+      } else {
+        print("WARNING: Could not parse allergen ID string: $item");
+      }
+    }
+  }
+
+  // Обновление аллергенов пользователя
   // Обновление аллергенов пользователя
   Future<bool> updateUserAllergens(List<int> allergenIds) async {
     print("\n===== UPDATING USER ALLERGENS: $allergenIds =====");
@@ -275,9 +314,14 @@ class UserRepository {
     try {
       // Отправляем запрос на сервер
       print("SENDING ALLERGEN UPDATE TO SERVER...");
-      await _apiService.post('/api/user-allergens/update/', {
+
+      // Always send an object with an array, even if empty
+      final requestData = {
         'allergen_ids': allergenIds,
-      });
+      };
+
+      print("REQUEST DATA: $requestData");
+      await _apiService.post('/api/user-allergens/update/', requestData);
 
       // Обновляем пользователя в памяти
       updateUserAllergensInMemory(allergenIds);
@@ -334,16 +378,15 @@ class UserRepository {
       print("SERVER RESPONSE: $response");
 
       // Обновляем аллергены, если они указаны
-      if (updatedUser.allergenIds.isNotEmpty) {
-        print("UPDATING USER ALLERGENS: ${updatedUser.allergenIds}");
-        await updateUserAllergens(updatedUser.allergenIds);
-      }
+
+      print("UPDATING USER ALLERGENS: ${updatedUser.allergenIds}");
+      await updateUserAllergens(updatedUser.allergenIds);
 
       // Обновляем оборудование, если оно указано
       if (updatedUser.equipmentIds.isNotEmpty) {
         print("UPDATING USER EQUIPMENT: ${updatedUser.equipmentIds}");
         try {
-          await _apiService.post('/api/user-equipment/user_equipment/', {
+          await _apiService.post('/api/user-equipment/update/', {
             'equipment_ids': updatedUser.equipmentIds,
           });
 
