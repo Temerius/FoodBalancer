@@ -35,17 +35,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // Обновляем данные пользователя и принудительно обновляем кэш аллергенов и оборудования
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Сначала загружаем аллергены и оборудование, чтобы они были доступны для отображения
+      // Загружаем аллергены и оборудование с сервера
       await dataRepository.getAllAllergens(forceRefresh: true);
-      await dataRepository.refreshUserData();
+      await dataRepository.getEquipment(forceRefresh: true);
 
-      // Выводим отладочную информацию
-      final user = dataRepository.user;
-      final allergens = dataRepository.allergens;
-      print("USER ALLERGEN IDS: ${user?.allergenIds ?? []}");
-      print("LOADED ALLERGENS: ${allergens.length} items");
+      // Обновляем данные пользователя, что также обновит его аллергены и оборудование
+      await dataRepository.refreshUserData();
     } catch (e) {
-      print("ERROR REFRESHING DATA: $e");
       // Ошибки уже обрабатываются в репозитории
     } finally {
       setState(() {

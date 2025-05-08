@@ -179,7 +179,7 @@ class DataRepository with ChangeNotifier {
       final equipmentList = await _equipmentRepository.getAllEquipment(config: config);
 
       // Если у пользователя есть оборудование, отмечаем его в списке
-      if (user != null && user!.equipmentIds.isNotEmpty) {
+      if (user != null) {
         for (var equipment in equipmentList) {
           equipment.isSelected = user!.equipmentIds.contains(equipment.id);
         }
@@ -292,53 +292,23 @@ class DataRepository with ChangeNotifier {
   }
 
   // Обновление профиля пользователя
+  // Исправленный метод обновления профиля пользователя в DataRepository
   Future<bool> updateUserProfile(User updatedUser) async {
-    _setLoading(true);
-    print("\n===== UPDATING USER PROFILE =====");
-    print("UPDATED USER DATA:");
-    print("Name: ${updatedUser.name}");
-    print("Email: ${updatedUser.email}");
-    print("Height: ${updatedUser.height}");
-    print("Weight: ${updatedUser.weight}");
-    print("Age: ${updatedUser.age}");
-    print("Gender: ${updatedUser.gender}");
-    print("Calories: ${updatedUser.caloriesPerDay}");
-    print("Allergen IDs: ${updatedUser.allergenIds}");
-    print("Equipment IDs: ${updatedUser.equipmentIds}");
-
     try {
-      // Выводим дамп кэша до обновления
-      print("CACHE BEFORE UPDATE:");
-      await CacheService.dumpCache();
-
       final success = await _userRepository.updateUserProfile(updatedUser);
 
       if (success) {
-        print("PROFILE UPDATE SUCCESSFUL");
+        // Форсированное обновление кэша оборудования и аллергенов после обновления профиля
+        await _userRepository.getUserAllergenIds(config: CacheConfig(forceRefresh: true));
+        await _userRepository.getUserEquipmentIds(config: CacheConfig(forceRefresh: true));
 
-        // Принудительно обновляем кэш аллергенов
-        print("REFRESHING ALLERGENS CACHE...");
-        await refreshUserAllergens();
-
-        // Обновляем оборудование
-        print("REFRESHING EQUIPMENT CACHE...");
-        await getEquipment(forceRefresh: true);
-
+        // Обновляем все, что зависит от профиля пользователя
         notifyListeners();
-      } else {
-        print("PROFILE UPDATE FAILED");
       }
 
-      // Выводим дамп кэша после обновления
-      print("CACHE AFTER UPDATE:");
-      await CacheService.dumpCache();
-
-      _setLoading(false);
       return success;
     } catch (e) {
-      print("===== ERROR UPDATING USER PROFILE: $e =====");
-      _setError(e.toString());
-      _setLoading(false);
+      _error = 'Ошибка обновления профиля: $e';
       return false;
     }
   }

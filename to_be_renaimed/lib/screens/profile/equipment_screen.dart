@@ -47,9 +47,6 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
           equip.isSelected = _selectedEquipmentIds.contains(equip.id);
         }
       }
-
-      print("Loaded ${_equipment.length} equipment items");
-      print("User has ${_selectedEquipmentIds.length} selected equipment items: $_selectedEquipmentIds");
     } catch (e) {
       setState(() {
         _errorMessage = 'Ошибка загрузки данных: ${e.toString()}';
@@ -78,8 +75,6 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
         });
         return;
       }
-
-      print("Saving equipment IDs: $_selectedEquipmentIds");
 
       // Создаем копию пользователя с обновленным оборудованием
       final updatedUser = user.copyWith(

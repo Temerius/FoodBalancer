@@ -13,16 +13,11 @@ class CacheService {
     final prefs = await SharedPreferences.getInstance();
 
     try {
-      // Выводим текущие данные до изменения
-      final currentData = await getAnyType(key);
-      _logCacheOperation('BEFORE SAVE', key, currentData);
-
       bool result;
       // Сохраняем данные в правильном формате
       if (key == _lastUpdateKey || key.endsWith(_timestamp) || key.endsWith(_expireTimeKey)) {
         // Для временных меток сохраняем как int
         if (data is! int) {
-          print("WARNING: Expected int for key $key but got ${data.runtimeType}. Converting to int.");
           final intValue = data is String ? int.tryParse(data) ?? 0 : 0;
           result = await prefs.setInt(key, intValue);
         } else {
@@ -51,13 +46,8 @@ class CacheService {
         await prefs.setInt(_lastUpdateKey, DateTime.now().millisecondsSinceEpoch);
       }
 
-      // Выводим данные после изменения
-      final updatedData = await getAnyType(key);
-      _logCacheOperation('AFTER SAVE', key, updatedData);
-
       return result;
     } catch (e) {
-      print("ERROR SAVING CACHE FOR KEY $key: $e");
       return false;
     }
   }
@@ -136,7 +126,6 @@ class CacheService {
       // If all attempts failed, return null
       return null;
     } catch (e) {
-      print("ERROR READING KEY $key: $e");
       return null;
     }
   }
@@ -148,7 +137,6 @@ class CacheService {
 
       // Если требуется принудительное обновление
       if (config.forceRefresh) {
-        _logCacheOperation('GET (FORCE REFRESH)', key, null);
         return null;
       }
 
@@ -158,8 +146,8 @@ class CacheService {
 
       try {
         timestamp = prefs.getInt(timestampKey);
-      } catch (e) {
-        print("ERROR GETTING TIMESTAMP FOR $key: $e");
+      } catch (_) {
+        // Игнорируем ошибку
       }
 
       if (timestamp != null) {
@@ -168,7 +156,6 @@ class CacheService {
 
         // Если кэш истек
         if (now.difference(lastUpdate) > config.expireTime) {
-          _logCacheOperation('GET (EXPIRED)', key, null);
           return null;
         }
       }
@@ -176,35 +163,13 @@ class CacheService {
       // Получаем данные с учетом типа
       final data = await getAnyType(key);
 
-      if (data == null) {
-        _logCacheOperation('GET (NOT FOUND)', key, null);
-        return null;
-      }
-
-      _logCacheOperation('GET (SUCCESS)', key, data);
       return data;
-    } catch (e) {
-      print("ERROR GETTING CACHE FOR KEY $key: $e");
+    } catch (_) {
       return null;
     }
   }
 
-  // Вывод информации о кэше в удобочитаемом формате
-  static void _logCacheOperation(String operation, String key, dynamic data) {
-    print('\n======= CACHE $operation: $key =======');
-
-    if (data == null) {
-      print('DATA: null');
-    } else {
-      // Форматируем JSON для удобного чтения
-      final formattedJson = _formatJson(data);
-      print('DATA: $formattedJson');
-    }
-
-    print('===============================================\n');
-  }
-
-  // Форматирование JSON для удобного чтения
+  // Форматирование JSON для удобного чтения (используется только для DebugCacheScreen)
   static String _formatJson(dynamic data) {
     try {
       if (data is List) {
@@ -240,7 +205,7 @@ class CacheService {
     }
   }
 
-  // Форматирование отдельного элемента
+  // Форматирование отдельного элемента (используется только для DebugCacheScreen)
   static String _formatItem(dynamic item) {
     if (item is String) {
       return '"$item"';
@@ -261,19 +226,12 @@ class CacheService {
     final prefs = await SharedPreferences.getInstance();
 
     try {
-      // Выводим текущие данные до удаления
-      final currentData = await getAnyType(key);
-      _logCacheOperation('BEFORE CLEAR', key, currentData);
-
       // Удаление данных и временной метки
       await prefs.remove('$key$_timestamp');
       final result = await prefs.remove(key);
 
-      _logCacheOperation('AFTER CLEAR', key, null);
-
       return result;
-    } catch (e) {
-      print("ERROR CLEARING CACHE FOR KEY $key: $e");
+    } catch (_) {
       return false;
     }
   }
@@ -283,8 +241,7 @@ class CacheService {
     try {
       final prefs = await SharedPreferences.getInstance();
       return await prefs.clear();
-    } catch (e) {
-      print("ERROR CLEARING ALL CACHE: $e");
+    } catch (_) {
       return false;
     }
   }
@@ -293,38 +250,9 @@ class CacheService {
   static Future<bool> exists(String key) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final exists = prefs.containsKey(key);
-
-      if (exists) {
-        final data = await getAnyType(key);
-        _logCacheOperation('EXISTS CHECK (TRUE)', key, data);
-      } else {
-        _logCacheOperation('EXISTS CHECK (FALSE)', key, null);
-      }
-
-      return exists;
-    } catch (e) {
-      print("ERROR CHECKING IF KEY $key EXISTS: $e");
+      return prefs.containsKey(key);
+    } catch (_) {
       return false;
-    }
-  }
-
-  // Вывод списка всех ключей в кэше
-  static Future<void> listAllKeys() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final keys = prefs.getKeys();
-
-      print('\n======= CACHE ALL KEYS =======');
-      print('Total keys: ${keys.length}');
-
-      // Отфильтровываем временные метки
-      final dataKeys = keys.where((key) => !key.endsWith(_timestamp)).toList();
-      print('Data keys (${dataKeys.length}): $dataKeys');
-
-      print('===============================================\n');
-    } catch (e) {
-      print("ERROR LISTING CACHE KEYS: $e");
     }
   }
 
@@ -357,6 +285,35 @@ class CacheService {
       print('\n===============================================\n');
     } catch (e) {
       print("ERROR DUMPING CACHE: $e");
+    }
+  }
+
+  // Вывод списка всех ключей в кэше (используется только для DebugCacheScreen)
+  static Future<List<String>> listAllKeys() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getKeys().toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  // Получение всех данных кэша для отображения на экране отладки
+  static Future<Map<String, dynamic>> getAllCacheData() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final keys = prefs.getKeys();
+
+      Map<String, dynamic> result = {};
+
+      for (var key in keys) {
+        final data = await getAnyType(key);
+        result[key] = data;
+      }
+
+      return result;
+    } catch (_) {
+      return {};
     }
   }
 }

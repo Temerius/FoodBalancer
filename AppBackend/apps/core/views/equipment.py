@@ -1,4 +1,5 @@
 # AppBackend/apps/core/views/equipment.py
+
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -50,6 +51,68 @@ class UserEquipmentViewSet(viewsets.ModelViewSet):
     """API для управления оборудованием пользователя"""
     serializer_class = UserEquipmentSerializer
     permission_classes = [IsAuthenticated]
+
+    @action(detail=False, methods=['post'], url_path='update')
+    def update_user_equipment(self, request):
+        """Update user's equipment"""
+        import logging
+        logger = logging.getLogger('apps.core')
+
+        logger.info(f"Starting user equipment update for user ID: {request.user.usr_id}")
+        logger.info(f"Request data: {request.data}")
+
+        try:
+            equipment_ids = request.data.get('equipment_ids', [])
+            user = request.user
+
+            logger.info(f"Equipment IDs to update: {equipment_ids}")
+
+            # Get your M2M model and Equipment model
+            from apps.core.models import M2MUsrEqp, Equipment
+            from django.contrib.auth import get_user_model
+
+            User = get_user_model()
+            user_obj = User.objects.get(usr_id=user.usr_id)
+
+            # Clear existing user equipment
+            delete_count = M2MUsrEqp.objects.filter(mue_usr_id=user.usr_id).delete()
+            logger.info(f"Deleted {delete_count} existing equipment records")
+
+            # Add new equipment
+            created_equipment = []
+            for equipment_id in equipment_ids:
+                try:
+                    # Get the Equipment instance
+                    equipment_obj = Equipment.objects.get(eqp_id=equipment_id)
+
+                    # Create the relationship with proper objects
+                    M2MUsrEqp.objects.create(
+                        mue_usr_id=user_obj,  # User instance
+                        mue_eqp_id=equipment_obj  # Equipment instance
+                    )
+                    created_equipment.append(equipment_id)
+                    logger.info(f"Created equipment mapping: user {user.usr_id} - equipment {equipment_id}")
+                except Equipment.DoesNotExist:
+                    logger.warning(f"Equipment ID {equipment_id} not found")
+                except Exception as eq_error:
+                    logger.error(f"Error creating equipment mapping: {str(eq_error)}")
+
+            logger.info(f"Successfully updated equipment for user {user.usr_id}: {created_equipment}")
+
+            return Response({
+                'success': True,
+                'message': 'Equipment updated successfully'
+            })
+        except Exception as e:
+            import traceback
+            error_traceback = traceback.format_exc()
+            logger.error(f"Error updating equipment: {str(e)}")
+            logger.error(f"Traceback: {error_traceback}")
+
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
     def get_queryset(self):
         """Возвращает оборудование текущего пользователя"""

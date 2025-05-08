@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 
 User = get_user_model()
 
@@ -29,21 +30,25 @@ class M2MUsrEqp(models.Model):
         on_delete=models.CASCADE,
         db_column='mue_eqp_id',
         related_name='user_equipment',
-        verbose_name=_('Оборудование')
+        verbose_name=_('Оборудование'),
+        primary_key=True  # Часть составного ключа
     )
     mue_usr_id = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         db_column='mue_usr_id',
         related_name='user_equipment',
-        verbose_name=_('Пользователь')
+        verbose_name=_('Пользователь'),
+        primary_key=False  # Не отмечаем как primary key в Django
     )
 
     class Meta:
         db_table = 'm2m_usr_eqp'
-        unique_together = ('mue_eqp_id', 'mue_usr_id')
-        verbose_name = _('Оборудование пользователя')
-        verbose_name_plural = _('Оборудование пользователей')
+        unique_together = ('mue_eqp_id', 'mue_usr_id')  # Это создает составной первичный ключ
+        managed = True  # Позволяем Django управлять этой моделью
+
+    def __str__(self):
+        return f"User {self.mue_usr_id_id} - Equipment {self.mue_eqp_id_id}"
 
 
 class M2MRcpEqp(models.Model):
