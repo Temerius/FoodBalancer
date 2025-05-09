@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../repositories/data_repository.dart';
 import '../../models/allergen.dart';
-import '../../repositories/models/cache_config.dart';
 
 class AllergiesScreen extends StatefulWidget {
   const AllergiesScreen({Key? key}) : super(key: key);
@@ -34,7 +33,8 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      _allergens = await dataRepository.getAllAllergens(forceRefresh: true);
+      // Загружаем аллергены (используем кэшированные данные, если они есть и актуальны)
+      _allergens = await dataRepository.getAllAllergens();
 
       // Получаем выбранные аллергены пользователя
       final user = dataRepository.user ??
@@ -44,16 +44,6 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
         _selectedAllergenIds = Set<int>.from(user.allergenIds);
 
         // Установка флажков "выбрано" для аллергенов
-        for (var allergen in _allergens) {
-          allergen.isSelected = _selectedAllergenIds.contains(allergen.id);
-        }
-      }
-
-      // Если аллергены не загрузились, попробуем загрузить из кэша
-      if (_allergens.isEmpty) {
-        print("WARNING: Allergies list is empty, trying to load from cache");
-        _allergens = await dataRepository.getAllAllergens(forceRefresh: false);
-
         for (var allergen in _allergens) {
           allergen.isSelected = _selectedAllergenIds.contains(allergen.id);
         }
@@ -101,9 +91,6 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
       final success = await dataRepository.updateUserProfile(updatedUser);
 
       if (success) {
-        // Обновляем кэш аллергенов
-        await dataRepository.refreshUserAllergens();
-
         // Возвращаемся на предыдущий экран с сигналом успеха
         Navigator.pop(context, true);
       } else {

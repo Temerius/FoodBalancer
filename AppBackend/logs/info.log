@@ -4320,3 +4320,193 @@ INFO 2025-05-09 15:10:02,654 basehttp 28956 4436 "GET /api/user-allergens/ HTTP/
 INFO 2025-05-09 15:10:02,775 equipment 28956 4436 Listing user equipment: user_id=66
 INFO 2025-05-09 15:10:02,778 equipment 28956 4436 Retrieved 0 user equipment items, user_id=66, time=0.00s
 INFO 2025-05-09 15:10:02,791 basehttp 28956 4436 "GET /api/user-equipment/ HTTP/1.1" 200 2
+INFO 2025-05-09 15:11:32,599 autoreload 12904 18068 Watching for file changes with StatReloader
+INFO 2025-05-09 15:11:32,911 wsgi 12904 23108 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-09 15:11:32,911 wsgi 12904 23108 Environment: config.settings
+INFO 2025-05-09 15:11:32,913 wsgi 12904 23108 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-09 15:11:32,919 wsgi 12904 23108 Application initialized successfully
+INFO 2025-05-09 15:37:46,838 views 12904 27512 Registration attempt: email=test_ta7ki7j7@example.com
+INFO 2025-05-09 15:37:47,456 views 12904 27512 User registered successfully: user_id=111, email=test_ta7ki7j7@example.com, time=0.62s
+INFO 2025-05-09 15:37:47,560 basehttp 12904 27512 "POST /api/users/register/ HTTP/1.1" 201 233
+INFO 2025-05-09 15:37:47,623 views 12904 1460 Login attempt: email=test_ta7ki7j7@example.com
+INFO 2025-05-09 15:37:48,269 views 12904 1460 User login successful: user_id=111, email=test_ta7ki7j7@example.com, time=0.65s
+INFO 2025-05-09 15:37:48,318 basehttp 12904 1460 "POST /api/users/login/ HTTP/1.1" 200 233
+INFO 2025-05-09 15:37:48,455 views 12904 29528 Profile accessed: user_id=111
+INFO 2025-05-09 15:37:48,520 basehttp 12904 29528 "GET /api/users/profile/ HTTP/1.1" 200 173
+INFO 2025-05-09 15:37:48,650 ingredient 12904 27520 Listing refrigerator ingredients: user_id=111
+INFO 2025-05-09 15:37:48,669 ingredient 12904 27520 Retrieved unknown refrigerator ingredients for user_id=111, time=0.02s
+INFO 2025-05-09 15:37:48,757 basehttp 12904 27520 "GET /api/refrigerator/ HTTP/1.1" 200 2
+INFO 2025-05-09 15:37:48,889 basehttp 12904 11624 "GET /api/favorites/ HTTP/1.1" 200 2
+INFO 2025-05-09 15:37:48,959 allergen 12904 22560 Listing all allergens: user_id=111
+INFO 2025-05-09 15:37:48,965 allergen 12904 22560 Retrieved unknown allergens, user_id=111, time=0.01s
+INFO 2025-05-09 15:37:48,992 basehttp 12904 22560 "GET /api/allergens/ HTTP/1.1" 200 1711
+INFO 2025-05-09 15:37:49,067 equipment 12904 2968 Listing all equipment: user_id=111
+INFO 2025-05-09 15:37:49,077 equipment 12904 2968 Retrieved unknown equipment items, user_id=111, time=0.01s
+INFO 2025-05-09 15:37:49,116 basehttp 12904 2968 "GET /api/equipment/ HTTP/1.1" 200 13914
+INFO 2025-05-09 15:37:49,190 views 12904 31580 Logout attempt: user_id=111
+INFO 2025-05-09 15:37:49,197 views 12904 31580 User logged out successfully: user_id=111
+INFO 2025-05-09 15:37:49,213 basehttp 12904 31580 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-09 15:38:01,440 views 12904 31704 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-09 15:38:01,825 views 12904 31704 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.38s
+INFO 2025-05-09 15:38:01,852 basehttp 12904 31704 "POST /api/users/login/ HTTP/1.1" 200 211
+INFO 2025-05-09 15:38:02,027 allergen 12904 31704 Listing all allergens: user_id=66
+INFO 2025-05-09 15:38:02,030 allergen 12904 31704 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-09 15:38:02,042 basehttp 12904 31704 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-09 15:38:02,138 equipment 12904 31704 Listing all equipment: user_id=66
+INFO 2025-05-09 15:38:02,142 equipment 12904 31704 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:38:02,157 basehttp 12904 31704 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-09 15:38:02,774 allergen 12904 31704 Listing all allergens: user_id=66
+INFO 2025-05-09 15:38:02,778 allergen 12904 31704 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-09 15:38:02,792 basehttp 12904 31704 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-09 15:38:02,862 equipment 12904 31704 Listing all equipment: user_id=66
+INFO 2025-05-09 15:38:02,869 equipment 12904 31704 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-09 15:38:02,891 basehttp 12904 31704 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-09 15:38:02,975 allergen 12904 31704 Listing user allergens: user_id=66
+INFO 2025-05-09 15:38:03,000 allergen 12904 31704 Retrieved 3 user allergens, user_id=66, time=0.03s
+INFO 2025-05-09 15:38:03,053 basehttp 12904 31704 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:38:10,866 views 12904 31704 Profile update attempt: user_id=66
+INFO 2025-05-09 15:38:10,908 views 12904 31704 Profile updated successfully: user_id=66, time=0.04s
+INFO 2025-05-09 15:38:10,937 basehttp 12904 31704 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-09 15:38:10,995 allergen 12904 31704 Starting user allergens update for user ID: 66
+INFO 2025-05-09 15:38:10,996 allergen 12904 31704 Request data: {'allergen_ids': [8, 9, 10]}
+INFO 2025-05-09 15:38:10,996 allergen 12904 31704 Allergen IDs to update: [8, 9, 10]
+INFO 2025-05-09 15:38:11,008 allergen 12904 31704 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-09 15:38:11,018 allergen 12904 31704 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-09 15:38:11,025 allergen 12904 31704 Created allergen mapping: user 66 - allergen 9
+INFO 2025-05-09 15:38:11,032 allergen 12904 31704 Created allergen mapping: user 66 - allergen 10
+INFO 2025-05-09 15:38:11,033 allergen 12904 31704 Successfully updated allergens for user 66: [8, 9, 10]
+INFO 2025-05-09 15:38:11,085 basehttp 12904 31704 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:38:11,198 equipment 12904 31704 Starting user equipment update for user ID: 66
+INFO 2025-05-09 15:38:11,199 equipment 12904 31704 Request data: {'equipment_ids': [1, 2]}
+INFO 2025-05-09 15:38:11,199 equipment 12904 31704 Equipment IDs to update: [1, 2]
+INFO 2025-05-09 15:38:11,210 equipment 12904 31704 Deleted (0, {}) existing equipment records
+INFO 2025-05-09 15:38:11,221 equipment 12904 31704 Created equipment mapping: user 66 - equipment 1
+INFO 2025-05-09 15:38:11,231 equipment 12904 31704 Created equipment mapping: user 66 - equipment 2
+INFO 2025-05-09 15:38:11,231 equipment 12904 31704 Successfully updated equipment for user 66: [1, 2]
+INFO 2025-05-09 15:38:11,301 basehttp 12904 31704 "POST /api/user-equipment/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:38:24,672 views 12904 31704 Profile update attempt: user_id=66
+INFO 2025-05-09 15:38:24,683 views 12904 31704 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-09 15:38:24,709 basehttp 12904 31704 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-09 15:38:24,773 allergen 12904 31704 Starting user allergens update for user ID: 66
+INFO 2025-05-09 15:38:24,774 allergen 12904 31704 Request data: {'allergen_ids': [8, 9, 10]}
+INFO 2025-05-09 15:38:24,774 allergen 12904 31704 Allergen IDs to update: [8, 9, 10]
+INFO 2025-05-09 15:38:24,787 allergen 12904 31704 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-09 15:38:24,796 allergen 12904 31704 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-09 15:38:24,805 allergen 12904 31704 Created allergen mapping: user 66 - allergen 9
+INFO 2025-05-09 15:38:24,815 allergen 12904 31704 Created allergen mapping: user 66 - allergen 10
+INFO 2025-05-09 15:38:24,815 allergen 12904 31704 Successfully updated allergens for user 66: [8, 9, 10]
+INFO 2025-05-09 15:38:24,845 basehttp 12904 31704 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:38:24,940 equipment 12904 31704 Starting user equipment update for user ID: 66
+INFO 2025-05-09 15:38:24,941 equipment 12904 31704 Request data: {'equipment_ids': [1, 2]}
+INFO 2025-05-09 15:38:24,941 equipment 12904 31704 Equipment IDs to update: [1, 2]
+INFO 2025-05-09 15:38:24,952 equipment 12904 31704 Deleted (2, {'core.M2MUsrEqp': 2}) existing equipment records
+INFO 2025-05-09 15:38:24,961 equipment 12904 31704 Created equipment mapping: user 66 - equipment 1
+INFO 2025-05-09 15:38:24,971 equipment 12904 31704 Created equipment mapping: user 66 - equipment 2
+INFO 2025-05-09 15:38:24,972 equipment 12904 31704 Successfully updated equipment for user 66: [1, 2]
+INFO 2025-05-09 15:38:25,008 basehttp 12904 31704 "POST /api/user-equipment/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:38:31,637 views 12904 31704 Profile accessed: user_id=66
+INFO 2025-05-09 15:38:31,651 basehttp 12904 31704 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-09 15:38:31,720 allergen 12904 31704 Listing user allergens: user_id=66
+INFO 2025-05-09 15:38:31,729 allergen 12904 31704 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:38:31,748 basehttp 12904 31704 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:38:31,882 equipment 12904 31704 Listing user equipment: user_id=66
+INFO 2025-05-09 15:38:31,898 equipment 12904 31704 Retrieved 2 user equipment items, user_id=66, time=0.02s
+INFO 2025-05-09 15:38:31,927 basehttp 12904 31704 "GET /api/user-equipment/ HTTP/1.1" 200 375
+INFO 2025-05-09 15:38:34,481 views 12904 31704 Profile accessed: user_id=66
+INFO 2025-05-09 15:38:34,494 basehttp 12904 31704 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-09 15:38:34,539 allergen 12904 31704 Listing user allergens: user_id=66
+INFO 2025-05-09 15:38:34,545 allergen 12904 31704 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:38:34,561 basehttp 12904 31704 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:38:34,653 equipment 12904 31704 Listing user equipment: user_id=66
+INFO 2025-05-09 15:38:34,661 equipment 12904 31704 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-09 15:38:34,676 basehttp 12904 31704 "GET /api/user-equipment/ HTTP/1.1" 200 375
+INFO 2025-05-09 15:38:37,930 views 12904 31704 Profile accessed: user_id=66
+INFO 2025-05-09 15:38:37,955 basehttp 12904 31704 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-09 15:38:38,075 allergen 12904 31704 Listing user allergens: user_id=66
+INFO 2025-05-09 15:38:38,100 allergen 12904 31704 Retrieved 3 user allergens, user_id=66, time=0.03s
+INFO 2025-05-09 15:38:38,147 basehttp 12904 31704 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:38:38,302 equipment 12904 31704 Listing user equipment: user_id=66
+INFO 2025-05-09 15:38:38,319 equipment 12904 31704 Retrieved 2 user equipment items, user_id=66, time=0.02s
+INFO 2025-05-09 15:38:38,361 basehttp 12904 31704 "GET /api/user-equipment/ HTTP/1.1" 200 375
+INFO 2025-05-09 15:38:40,293 views 12904 31704 Profile accessed: user_id=66
+INFO 2025-05-09 15:38:40,306 basehttp 12904 31704 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-09 15:38:40,387 allergen 12904 31704 Listing user allergens: user_id=66
+INFO 2025-05-09 15:38:40,394 allergen 12904 31704 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:38:40,415 basehttp 12904 31704 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:38:40,483 equipment 12904 31704 Listing user equipment: user_id=66
+INFO 2025-05-09 15:38:40,493 equipment 12904 31704 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-09 15:38:40,510 basehttp 12904 31704 "GET /api/user-equipment/ HTTP/1.1" 200 375
+INFO 2025-05-09 15:38:47,452 views 12904 31704 Profile update attempt: user_id=66
+INFO 2025-05-09 15:38:47,458 views 12904 31704 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-09 15:38:47,477 basehttp 12904 31704 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-09 15:38:47,592 allergen 12904 31704 Starting user allergens update for user ID: 66
+INFO 2025-05-09 15:38:47,593 allergen 12904 31704 Request data: {'allergen_ids': [8, 9, 10]}
+INFO 2025-05-09 15:38:47,593 allergen 12904 31704 Allergen IDs to update: [8, 9, 10]
+INFO 2025-05-09 15:38:47,604 allergen 12904 31704 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-09 15:38:47,610 allergen 12904 31704 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-09 15:38:47,615 allergen 12904 31704 Created allergen mapping: user 66 - allergen 9
+INFO 2025-05-09 15:38:47,621 allergen 12904 31704 Created allergen mapping: user 66 - allergen 10
+INFO 2025-05-09 15:38:47,621 allergen 12904 31704 Successfully updated allergens for user 66: [8, 9, 10]
+INFO 2025-05-09 15:38:47,639 basehttp 12904 31704 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:38:47,763 equipment 12904 31704 Starting user equipment update for user ID: 66
+INFO 2025-05-09 15:38:47,764 equipment 12904 31704 Request data: {'equipment_ids': []}
+INFO 2025-05-09 15:38:47,764 equipment 12904 31704 Equipment IDs to update: []
+INFO 2025-05-09 15:38:47,772 equipment 12904 31704 Deleted (2, {'core.M2MUsrEqp': 2}) existing equipment records
+INFO 2025-05-09 15:38:47,772 equipment 12904 31704 Successfully updated equipment for user 66: []
+INFO 2025-05-09 15:38:47,786 basehttp 12904 31704 "POST /api/user-equipment/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:39:32,779 views 12904 404 Profile update attempt: user_id=66
+INFO 2025-05-09 15:39:32,789 views 12904 404 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-09 15:39:32,818 basehttp 12904 404 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-09 15:39:32,888 allergen 12904 404 Starting user allergens update for user ID: 66
+INFO 2025-05-09 15:39:32,889 allergen 12904 404 Request data: {'allergen_ids': [8, 9, 10]}
+INFO 2025-05-09 15:39:32,889 allergen 12904 404 Allergen IDs to update: [8, 9, 10]
+INFO 2025-05-09 15:39:32,899 allergen 12904 404 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-09 15:39:32,907 allergen 12904 404 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-09 15:39:32,915 allergen 12904 404 Created allergen mapping: user 66 - allergen 9
+INFO 2025-05-09 15:39:32,922 allergen 12904 404 Created allergen mapping: user 66 - allergen 10
+INFO 2025-05-09 15:39:32,923 allergen 12904 404 Successfully updated allergens for user 66: [8, 9, 10]
+INFO 2025-05-09 15:39:32,950 basehttp 12904 404 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:39:33,023 equipment 12904 404 Starting user equipment update for user ID: 66
+INFO 2025-05-09 15:39:33,023 equipment 12904 404 Request data: {'equipment_ids': [1, 2]}
+INFO 2025-05-09 15:39:33,023 equipment 12904 404 Equipment IDs to update: [1, 2]
+INFO 2025-05-09 15:39:33,030 equipment 12904 404 Deleted (0, {}) existing equipment records
+INFO 2025-05-09 15:39:33,037 equipment 12904 404 Created equipment mapping: user 66 - equipment 1
+INFO 2025-05-09 15:39:33,044 equipment 12904 404 Created equipment mapping: user 66 - equipment 2
+INFO 2025-05-09 15:39:33,044 equipment 12904 404 Successfully updated equipment for user 66: [1, 2]
+INFO 2025-05-09 15:39:33,064 basehttp 12904 404 "POST /api/user-equipment/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:48:41,231 views 12904 5648 Profile accessed: user_id=66
+INFO 2025-05-09 15:48:41,247 basehttp 12904 5648 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-09 15:48:41,331 allergen 12904 5648 Listing user allergens: user_id=66
+INFO 2025-05-09 15:48:41,339 allergen 12904 5648 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:48:41,356 basehttp 12904 5648 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:48:41,489 equipment 12904 5648 Listing user equipment: user_id=66
+INFO 2025-05-09 15:48:41,496 equipment 12904 5648 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-09 15:48:41,513 basehttp 12904 5648 "GET /api/user-equipment/ HTTP/1.1" 200 375
+INFO 2025-05-09 15:48:43,211 views 12904 5648 Profile accessed: user_id=66
+INFO 2025-05-09 15:48:43,225 basehttp 12904 5648 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-09 15:48:43,286 allergen 12904 5648 Listing user allergens: user_id=66
+INFO 2025-05-09 15:48:43,295 allergen 12904 5648 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:48:43,310 basehttp 12904 5648 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:48:43,432 equipment 12904 5648 Listing user equipment: user_id=66
+INFO 2025-05-09 15:48:43,441 equipment 12904 5648 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-09 15:48:43,466 basehttp 12904 5648 "GET /api/user-equipment/ HTTP/1.1" 200 375
+INFO 2025-05-09 15:49:16,108 views 12904 16232 Profile update attempt: user_id=66
+INFO 2025-05-09 15:49:16,118 views 12904 16232 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-09 15:49:16,154 basehttp 12904 16232 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-09 15:49:16,300 allergen 12904 16232 Starting user allergens update for user ID: 66
+INFO 2025-05-09 15:49:16,301 allergen 12904 16232 Request data: {'allergen_ids': [8, 9, 10]}
+INFO 2025-05-09 15:49:16,301 allergen 12904 16232 Allergen IDs to update: [8, 9, 10]
+INFO 2025-05-09 15:49:16,313 allergen 12904 16232 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-09 15:49:16,321 allergen 12904 16232 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-09 15:49:16,328 allergen 12904 16232 Created allergen mapping: user 66 - allergen 9
+INFO 2025-05-09 15:49:16,335 allergen 12904 16232 Created allergen mapping: user 66 - allergen 10
+INFO 2025-05-09 15:49:16,336 allergen 12904 16232 Successfully updated allergens for user 66: [8, 9, 10]
+INFO 2025-05-09 15:49:16,381 basehttp 12904 16232 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:49:16,473 equipment 12904 16232 Starting user equipment update for user ID: 66
+INFO 2025-05-09 15:49:16,474 equipment 12904 16232 Request data: {'equipment_ids': [1, 2]}
+INFO 2025-05-09 15:49:16,474 equipment 12904 16232 Equipment IDs to update: [1, 2]
+INFO 2025-05-09 15:49:16,488 equipment 12904 16232 Deleted (2, {'core.M2MUsrEqp': 2}) existing equipment records
+INFO 2025-05-09 15:49:16,500 equipment 12904 16232 Created equipment mapping: user 66 - equipment 1
+INFO 2025-05-09 15:49:16,510 equipment 12904 16232 Created equipment mapping: user 66 - equipment 2
+INFO 2025-05-09 15:49:16,511 equipment 12904 16232 Successfully updated equipment for user 66: [1, 2]
+INFO 2025-05-09 15:49:16,559 basehttp 12904 16232 "POST /api/user-equipment/update/ HTTP/1.1" 200 59

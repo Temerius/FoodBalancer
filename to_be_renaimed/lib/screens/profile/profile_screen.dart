@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../repositories/data_repository.dart';
 import '../../models/user.dart';
-import '../../repositories/models/cache_config.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -14,39 +13,67 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool _isLoading = false;
+  bool _isManuallyRefreshing = false;
 
   @override
   void initState() {
     super.initState();
 
-    // Загружаем данные при отображении экрана
+    // Легкая синхронизация данных при создании экрана (не делаем тяжелых запросов)
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _refreshData();
+      _syncData();
     });
   }
 
+  // Легкая синхронизация - только локальные данные, без запросов к серверу
+  void _syncData() {
+    final dataRepository = Provider.of<DataRepository>(context, listen: false);
+    // Этот метод синхронизирует только локальные данные без обращения к серверу
+    dataRepository.refreshUserData();
+  }
+
+  // Полное обновление данных с сервера
   Future<void> _refreshData() async {
     setState(() {
-      _isLoading = true;
+      _isManuallyRefreshing = true;
     });
 
     try {
-      // Обновляем данные пользователя и принудительно обновляем кэш аллергенов и оборудования
+      // Обновляем данные через репозиторий с форсированной загрузкой с сервера
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Загружаем аллергены и оборудование с сервера
-      await dataRepository.getAllAllergens(forceRefresh: true);
-      await dataRepository.getEquipment(forceRefresh: true);
+      // Загружаем профиль пользователя с сервера
+      await dataRepository.getUserProfile(forceRefresh: true);
 
-      // Обновляем данные пользователя, что также обновит его аллергены и оборудование
-      await dataRepository.refreshUserData();
+      // Обновляем аллергены и оборудование
+      await dataRepository.refreshUserAllergens();
+      await dataRepository.refreshUserEquipment();
+
+      // Показываем успешное обновление
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Данные успешно обновлены'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
     } catch (e) {
-      // Ошибки уже обрабатываются в репозитории
+      // Показываем ошибку
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Ошибка обновления данных: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isManuallyRefreshing = false;
+        });
+      }
     }
   }
 
@@ -56,6 +83,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final dataRepository = Provider.of<DataRepository>(context);
     final user = dataRepository.user ?? authProvider.currentUser;
 
+    final bool isLoading = dataRepository.isLoading ||
+        dataRepository.isLoadingProfile ||
+        _isManuallyRefreshing;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Профиль'),
@@ -64,21 +95,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
             icon: const Icon(Icons.edit),
             onPressed: () {
               Navigator.pushNamed(context, '/profile/edit').then((_) {
-                _refreshData();
+                // После редактирования только синхронизируем локальные данные
+                _syncData();
               });
             },
           ),
         ],
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : RefreshIndicator(
+      body: RefreshIndicator(
         onRefresh: _refreshData,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // Индикатор загрузки, если идёт обновление профиля
+              if (isLoading)
+                const LinearProgressIndicator(),
+
               // Аватар и имя пользователя
               CircleAvatar(
                 radius: 50,
@@ -178,14 +212,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             'Аллергии',
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
-                          IconButton(
-                            icon: const Icon(Icons.edit),
-                            onPressed: () async {
-                              final result = await Navigator.pushNamed(context, '/profile/allergies');
-                              if (result == true) {
-                                _refreshData();
-                              }
-                            },
+                          Row(
+                            children: [
+                              if (dataRepository.isLoadingAllergens)
+                                Container(
+                                  width: 16,
+                                  height: 16,
+                                  margin: const EdgeInsets.only(right: 8),
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                              IconButton(
+                                icon: const Icon(Icons.edit),
+                                onPressed: () async {
+                                  final result = await Navigator.pushNamed(context, '/profile/allergies');
+                                  if (result == true && mounted) {
+                                    // После редактирования только синхронизируем локальные данные
+                                    _syncData();
+                                  }
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -216,13 +265,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             'Кухонное оборудование',
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
-                          IconButton(
-                            icon: const Icon(Icons.edit),
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/profile/equipment').then((_) {
-                                _refreshData();
-                              });
-                            },
+                          Row(
+                            children: [
+                              if (dataRepository.isLoadingEquipment)
+                                Container(
+                                  width: 16,
+                                  height: 16,
+                                  margin: const EdgeInsets.only(right: 8),
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                              IconButton(
+                                icon: const Icon(Icons.edit),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/profile/equipment').then((_) {
+                                    // После редактирования только синхронизируем локальные данные
+                                    _syncData();
+                                  });
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -239,7 +303,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               TextButton.icon(
                 onPressed: () async {
                   setState(() {
-                    _isLoading = true;
+                    _isManuallyRefreshing = true;
                   });
                   try {
                     await authProvider.logout();
@@ -248,7 +312,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     }
                   } finally {
                     setState(() {
-                      _isLoading = false;
+                      _isManuallyRefreshing = false;
                     });
                   }
                 },
@@ -258,10 +322,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(color: Colors.red),
                 ),
               ),
-              // Add this to the bottom of your ProfileScreen build method, just above the closing bracket
-// Right before the end of the build method
 
-// Добавляем отладочную кнопку в самом низу экрана
+              // Отладочный блок
               const SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -305,7 +367,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
-
   }
 
   // Виджет для отображения аллергенов
@@ -316,9 +377,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // Получаем ID аллергенов пользователя
     final userAllergenIds = user?.allergenIds ?? [];
 
-    // Выводим отладочную информацию
-    print("DISPLAYING ALLERGENS - User IDs: $userAllergenIds, All allergens: ${allAllergens.length}");
-
     // Если у пользователя нет аллергенов или список аллергенов пуст
     if (userAllergenIds.isEmpty) {
       return const Text('Аллергии не указаны');
@@ -328,9 +386,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final userAllergens = allAllergens.where(
             (allergen) => userAllergenIds.contains(allergen.id)
     ).toList();
-
-    // Выводим информацию о найденных аллергенах
-    print("Found ${userAllergens.length} matching allergens for user");
 
     // Если у пользователя нет аллергенов после фильтрации
     if (userAllergens.isEmpty) {
@@ -421,5 +476,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-
 }

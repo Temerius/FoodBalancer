@@ -61,7 +61,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         });
 
         // Обязательная загрузка профиля пользователя после авторизации
-        await dataRepository.getUserProfile(config: CacheConfig.refresh);
+        await dataRepository.getUserProfile(forceRefresh: true);
 
         setState(() {
           _statusMessage = "Загрузка аллергенов...";

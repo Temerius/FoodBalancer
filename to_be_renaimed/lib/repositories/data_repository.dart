@@ -22,10 +22,22 @@ class DataRepository with ChangeNotifier {
   // Данные
   List<Recipe> _recipes = [];
 
+  // Время последнего обновления
+  DateTime? _lastProfileUpdate;
+  DateTime? _lastAllergensUpdate;
+  DateTime? _lastEquipmentUpdate;
+  DateTime? _lastRecipesUpdate;
+
+  // Интервал обновления (по умолчанию 5 минут)
+  final Duration _updateInterval = const Duration(minutes: 5);
+
   // Состояние загрузки
   bool _isLoading = false;
   String? _error;
   bool _isInitialized = false;
+  bool _isLoadingProfile = false;
+  bool _isLoadingAllergens = false;
+  bool _isLoadingEquipment = false;
 
   // Геттеры
   bool get isLoading => _isLoading;
@@ -35,6 +47,9 @@ class DataRepository with ChangeNotifier {
   List<Allergen> get allergens => _allergenRepository.allergens;
   List<Equipment> get equipment => _equipmentRepository.equipment;
   List<Recipe> get recipes => _recipes;
+  bool get isLoadingProfile => _isLoadingProfile;
+  bool get isLoadingAllergens => _isLoadingAllergens;
+  bool get isLoadingEquipment => _isLoadingEquipment;
 
   DataRepository({ApiService? apiService})
       : _apiService = apiService ?? ApiService() {
@@ -95,9 +110,16 @@ class DataRepository with ChangeNotifier {
     }
   }
 
+  // Проверка необходимости обновления данных по временной метке
+  bool _needsUpdate(DateTime? lastUpdate) {
+    if (lastUpdate == null) return true;
+    return DateTime.now().difference(lastUpdate) > _updateInterval;
+  }
+
   // Получение рецептов
   Future<List<Recipe>> getRecipes({bool forceRefresh = false}) async {
-    if (!forceRefresh && _recipes.isNotEmpty) {
+    // Проверяем, нужно ли обновлять данные
+    if (!forceRefresh && _recipes.isNotEmpty && !_needsUpdate(_lastRecipesUpdate)) {
       return _recipes;
     }
 
@@ -112,6 +134,9 @@ class DataRepository with ChangeNotifier {
       // Пока используем моковые данные
       await Future.delayed(const Duration(milliseconds: 500)); // Симуляция задержки API
       _initializeMockRecipes();
+
+      // Обновляем время последнего обновления
+      _lastRecipesUpdate = DateTime.now();
 
       notifyListeners();
       return _recipes;
@@ -137,11 +162,17 @@ class DataRepository with ChangeNotifier {
       print("CHECKING CACHE STATE...");
       await CacheService.listAllKeys();
 
-      // Загрузка данных из кэша
+      // Загрузка данных из кэша без принудительного обновления
       await _userRepository.getUserProfile();
       await _allergenRepository.getAllAllergens();
       await _equipmentRepository.getAllEquipment();
       await getRecipes();
+
+      // Устанавливаем время последнего обновления
+      _lastProfileUpdate = DateTime.now();
+      _lastAllergensUpdate = DateTime.now();
+      _lastEquipmentUpdate = DateTime.now();
+      _lastRecipesUpdate = DateTime.now();
 
       _isInitialized = true;
       print("===== DATA REPOSITORY INITIALIZED =====");
@@ -154,25 +185,53 @@ class DataRepository with ChangeNotifier {
   }
 
   // Получение профиля пользователя
-  Future<User?> getUserProfile({CacheConfig? config}) async {
-    _setLoading(true);
-    try {
-      print("\n===== GETTING USER PROFILE =====");
-      final user = await _userRepository.getUserProfile(config: config);
-      notifyListeners();
+  Future<User?> getUserProfile({bool forceRefresh = false}) async {
+    // Проверяем, нужно ли обновлять данные
+    if (!forceRefresh && user != null && !_needsUpdate(_lastProfileUpdate)) {
       return user;
+    }
+
+    _isLoadingProfile = true;
+    notifyListeners();
+
+    try {
+      print("\n===== GETTING USER PROFILE (forceRefresh: $forceRefresh) =====");
+      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
+      final userObj = await _userRepository.getUserProfile(config: config);
+
+      // Обновляем время последнего обновления
+      if (userObj != null) {
+        _lastProfileUpdate = DateTime.now();
+      }
+
+      notifyListeners();
+      return userObj;
     } catch (e) {
       print("ERROR GETTING USER PROFILE: $e");
       _setError(e.toString());
       return null;
     } finally {
-      _setLoading(false);
+      _isLoadingProfile = false;
+      notifyListeners();
     }
   }
 
   // Получение оборудования
   Future<List<Equipment>> getEquipment({bool forceRefresh = false}) async {
-    _setLoading(true);
+    // Проверяем, нужно ли обновлять данные
+    if (!forceRefresh && _equipmentRepository.equipment.isNotEmpty && !_needsUpdate(_lastEquipmentUpdate)) {
+      // Обновляем флаги isSelected для имеющихся данных
+      if (user != null) {
+        for (var equipment in _equipmentRepository.equipment) {
+          equipment.isSelected = user!.equipmentIds.contains(equipment.id);
+        }
+      }
+      return _equipmentRepository.equipment;
+    }
+
+    _isLoadingEquipment = true;
+    notifyListeners();
+
     try {
       print("\n===== GETTING EQUIPMENT (forceRefresh: $forceRefresh) =====");
       final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
@@ -185,6 +244,9 @@ class DataRepository with ChangeNotifier {
         }
       }
 
+      // Обновляем время последнего обновления
+      _lastEquipmentUpdate = DateTime.now();
+
       notifyListeners();
       return equipmentList;
     } catch (e) {
@@ -192,7 +254,8 @@ class DataRepository with ChangeNotifier {
       _setError(e.toString());
       return [];
     } finally {
-      _setLoading(false);
+      _isLoadingEquipment = false;
+      notifyListeners();
     }
   }
 
@@ -202,15 +265,32 @@ class DataRepository with ChangeNotifier {
     try {
       print("\n===== REFRESHING USER DATA =====");
 
-      // Загрузка пользователя с принудительным обновлением
-      await _userRepository.getUserProfile(config: CacheConfig.refresh);
+      // Загрузка пользователя с принудительным обновлением только если прошло достаточно времени
+      if (_needsUpdate(_lastProfileUpdate)) {
+        await _userRepository.getUserProfile(config: CacheConfig.refresh);
+        _lastProfileUpdate = DateTime.now();
+      }
 
-      // Обновляем аллергены и оборудование пользователя
-      await refreshUserAllergens();
-      await refreshUserEquipment();
+      // Обновляем аллергены и оборудование пользователя только если нужно
+      if (_needsUpdate(_lastAllergensUpdate)) {
+        await refreshUserAllergens(silent: true);
+        _lastAllergensUpdate = DateTime.now();
+      } else {
+        await _syncUserAllergens();
+      }
 
-      // Обновляем рецепты
-      await getRecipes(forceRefresh: true);
+      if (_needsUpdate(_lastEquipmentUpdate)) {
+        await refreshUserEquipment(silent: true);
+        _lastEquipmentUpdate = DateTime.now();
+      } else {
+        await _syncUserEquipment();
+      }
+
+      // Обновляем рецепты только если нужно
+      if (_needsUpdate(_lastRecipesUpdate)) {
+        await getRecipes(forceRefresh: true);
+        _lastRecipesUpdate = DateTime.now();
+      }
 
       print("===== USER DATA REFRESHED =====");
       notifyListeners();
@@ -224,51 +304,92 @@ class DataRepository with ChangeNotifier {
 
   // Получение всех аллергенов
   Future<List<Allergen>> getAllAllergens({bool forceRefresh = false}) async {
-    print("\n===== GETTING ALL ALLERGENS (forceRefresh: $forceRefresh) =====");
+    // Проверяем, нужно ли обновлять данные
+    if (!forceRefresh && _allergenRepository.allergens.isNotEmpty && !_needsUpdate(_lastAllergensUpdate)) {
+      // Обновляем флаги isSelected для имеющихся данных
+      if (user != null) {
+        for (var allergen in _allergenRepository.allergens) {
+          allergen.isSelected = user!.allergenIds.contains(allergen.id);
+        }
+      }
+      return _allergenRepository.allergens;
+    }
+
+    _isLoadingAllergens = true;
+    notifyListeners();
+
     try {
+      print("\n===== GETTING ALL ALLERGENS (forceRefresh: $forceRefresh) =====");
       final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
 
-      // Выводим список всех ключей кэша
-      await CacheService.listAllKeys();
-
       // Получаем аллергены
-      final allergens = await _allergenRepository.getAllAllergens(config: config);
-
-      print("===== ALLERGENS LOADED: ${allergens.length} items =====");
+      final allergensData = await _allergenRepository.getAllAllergens(config: config);
 
       // Если у пользователя есть аллергены, отмечаем их в списке
       if (user != null && user!.allergenIds.isNotEmpty) {
-        for (var allergen in allergens) {
+        for (var allergen in allergensData) {
           allergen.isSelected = user!.allergenIds.contains(allergen.id);
         }
       }
 
+      // Обновляем время последнего обновления
+      _lastAllergensUpdate = DateTime.now();
+
       notifyListeners();
-      return allergens;
+      return allergensData;
     } catch (e) {
       print("===== ERROR LOADING ALLERGENS: $e =====");
       _setError(e.toString());
       return [];
+    } finally {
+      _isLoadingAllergens = false;
+      notifyListeners();
+    }
+  }
+
+  // Синхронизация аллергенов пользователя с локальными данными (без загрузки с сервера)
+  Future<void> _syncUserAllergens() async {
+    if (user == null || _allergenRepository.allergens.isEmpty) return;
+
+    try {
+      // Обновляем флаги "выбрано" в списке аллергенов
+      for (var allergen in _allergenRepository.allergens) {
+        allergen.isSelected = user!.allergenIds.contains(allergen.id);
+      }
+    } catch (e) {
+      print("ERROR SYNCING USER ALLERGENS: $e");
+    }
+  }
+
+  // Синхронизация оборудования пользователя с локальными данными (без загрузки с сервера)
+  Future<void> _syncUserEquipment() async {
+    if (user == null || _equipmentRepository.equipment.isEmpty) return;
+
+    try {
+      // Обновляем флаги "выбрано" в списке оборудования
+      for (var equipment in _equipmentRepository.equipment) {
+        equipment.isSelected = user!.equipmentIds.contains(equipment.id);
+      }
+    } catch (e) {
+      print("ERROR SYNCING USER EQUIPMENT: $e");
     }
   }
 
   // Обновление аллергенов пользователя
-  Future<void> refreshUserAllergens() async {
-    print("\n===== REFRESHING USER ALLERGENS =====");
+  Future<void> refreshUserAllergens({bool silent = false}) async {
+    if (!silent) {
+      _isLoadingAllergens = true;
+      notifyListeners();
+    }
+
     try {
-      // Выводим дамп кэша до обновления
-      print("CACHE BEFORE REFRESH:");
-      await CacheService.dumpCache();
+      print("\n===== REFRESHING USER ALLERGENS =====");
 
-      // Получаем ID аллергенов пользователя
+      // Получаем ID аллергенов пользователя с пометкой принудительного обновления
       final allergenIds = await _userRepository.getUserAllergenIds(config: CacheConfig.refresh);
-
-      print("USER ALLERGEN IDS FROM SERVER: $allergenIds");
 
       // Обновляем пользователя в памяти, если он существует
       if (user != null) {
-        print("UPDATING USER ALLERGEN IDS IN MEMORY: ${user!.allergenIds} -> $allergenIds");
-
         // Обновляем список аллергенов в объекте пользователя
         _userRepository.updateUserAllergensInMemory(allergenIds);
 
@@ -276,38 +397,38 @@ class DataRepository with ChangeNotifier {
         for (var allergen in _allergenRepository.allergens) {
           allergen.isSelected = allergenIds.contains(allergen.id);
         }
-
-        notifyListeners();
       }
 
-      // Выводим дамп кэша после обновления
-      print("CACHE AFTER REFRESH:");
-      await CacheService.dumpCache();
+      // Обновляем время последнего обновления
+      _lastAllergensUpdate = DateTime.now();
 
-      print("===== USER ALLERGENS REFRESH COMPLETED =====");
+      if (!silent) notifyListeners();
     } catch (e) {
       print("===== ERROR REFRESHING USER ALLERGENS: $e =====");
-      _setError(e.toString());
+      if (!silent) _setError(e.toString());
+    } finally {
+      if (!silent) {
+        _isLoadingAllergens = false;
+        notifyListeners();
+      }
     }
   }
 
   // Обновление оборудования пользователя
-  Future<void> refreshUserEquipment() async {
-    print("\n===== REFRESHING USER EQUIPMENT =====");
+  Future<void> refreshUserEquipment({bool silent = false}) async {
+    if (!silent) {
+      _isLoadingEquipment = true;
+      notifyListeners();
+    }
+
     try {
-      // Выводим дамп кэша до обновления
-      print("CACHE BEFORE REFRESH:");
-      await CacheService.dumpCache();
+      print("\n===== REFRESHING USER EQUIPMENT =====");
 
-      // Получаем ID оборудования пользователя
+      // Получаем ID оборудования пользователя с пометкой принудительного обновления
       final equipmentIds = await _userRepository.getUserEquipmentIds(config: CacheConfig.refresh);
-
-      print("USER EQUIPMENT IDS FROM SERVER: $equipmentIds");
 
       // Обновляем пользователя в памяти, если он существует
       if (user != null) {
-        print("UPDATING USER EQUIPMENT IDS IN MEMORY: ${user!.equipmentIds} -> $equipmentIds");
-
         // Обновляем список оборудования в объекте пользователя
         _userRepository.updateUserEquipmentInMemory(equipmentIds);
 
@@ -315,30 +436,33 @@ class DataRepository with ChangeNotifier {
         for (var equipment in _equipmentRepository.equipment) {
           equipment.isSelected = equipmentIds.contains(equipment.id);
         }
-
-        notifyListeners();
       }
 
-      // Выводим дамп кэша после обновления
-      print("CACHE AFTER REFRESH:");
-      await CacheService.dumpCache();
+      // Обновляем время последнего обновления
+      _lastEquipmentUpdate = DateTime.now();
 
-      print("===== USER EQUIPMENT REFRESH COMPLETED =====");
+      if (!silent) notifyListeners();
     } catch (e) {
       print("===== ERROR REFRESHING USER EQUIPMENT: $e =====");
-      _setError(e.toString());
+      if (!silent) _setError(e.toString());
+    } finally {
+      if (!silent) {
+        _isLoadingEquipment = false;
+        notifyListeners();
+      }
     }
   }
 
   // Обновление профиля пользователя
   Future<bool> updateUserProfile(User updatedUser) async {
-    try {
-      final success = await _userRepository.updateUserProfile(updatedUser);
+    _isLoadingProfile = true;
+    notifyListeners();
 
-      if (success) {
-        // Форсированное обновление кэша оборудования и аллергенов после обновления профиля
-        await _userRepository.getUserAllergenIds(config: CacheConfig(forceRefresh: true));
-        await _userRepository.getUserEquipmentIds(config: CacheConfig(forceRefresh: true));
+    try {
+      // Сначала устанавливаем данные локально, чтобы UI обновился быстрее
+      if (_userRepository.user != null) {
+        _userRepository.updateUserAllergensInMemory(updatedUser.allergenIds);
+        _userRepository.updateUserEquipmentInMemory(updatedUser.equipmentIds);
 
         // Обновляем флаги выбора в списках аллергенов и оборудования
         for (var allergen in _allergenRepository.allergens) {
@@ -349,7 +473,20 @@ class DataRepository with ChangeNotifier {
           equipment.isSelected = updatedUser.equipmentIds.contains(equipment.id);
         }
 
-        // Обновляем все, что зависит от профиля пользователя
+        // Уведомляем об изменении, чтобы UI обновился
+        notifyListeners();
+      }
+
+      // Затем отправляем данные на сервер
+      final success = await _userRepository.updateUserProfile(updatedUser);
+
+      if (success) {
+        // Обновляем время последнего обновления
+        _lastProfileUpdate = DateTime.now();
+        _lastAllergensUpdate = DateTime.now();
+        _lastEquipmentUpdate = DateTime.now();
+
+        // Уведомляем об изменении
         notifyListeners();
       }
 
@@ -357,6 +494,9 @@ class DataRepository with ChangeNotifier {
     } catch (e) {
       _error = 'Ошибка обновления профиля: $e';
       return false;
+    } finally {
+      _isLoadingProfile = false;
+      notifyListeners();
     }
   }
 
@@ -381,5 +521,11 @@ class DataRepository with ChangeNotifier {
     await _userRepository.clearCache();
     await _allergenRepository.clearCache();
     await _equipmentRepository.clearCache();
+
+    // Сбрасываем временные метки
+    _lastProfileUpdate = null;
+    _lastAllergensUpdate = null;
+    _lastEquipmentUpdate = null;
+    _lastRecipesUpdate = null;
   }
 }

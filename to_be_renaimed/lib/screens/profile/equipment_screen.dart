@@ -32,8 +32,8 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Получаем все оборудование из репозитория
-      _equipment = await dataRepository.getEquipment(forceRefresh: true);
+      // Загружаем оборудование (используем кэшированные данные, если они есть и актуальны)
+      _equipment = await dataRepository.getEquipment();
 
       // Получаем оборудование текущего пользователя
       final user = dataRepository.user ??
@@ -85,9 +85,6 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
       final success = await dataRepository.updateUserProfile(updatedUser);
 
       if (success) {
-        // Обновляем кэш оборудования
-        await dataRepository.refreshUserEquipment();
-
         if (mounted) {
           Navigator.pop(context, true);
           ScaffoldMessenger.of(context).showSnackBar(
