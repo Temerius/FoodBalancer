@@ -1,620 +1,100 @@
-ERROR 2025-05-07 00:36:34,243 middleware 28040 34536 404 Not Found: GET /api/meal-plans/current/
-ERROR 2025-05-07 00:36:34,725 middleware 28040 34536 404 Not Found: GET /api/meal-plans/current/
-ERROR 2025-05-07 00:40:29,675 middleware 35516 21148 Exception in GET /api/user-allergens/: TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator., user_id=66, ip=192.168.100.2
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 00:40:29,806 middleware 35516 8372 Exception in GET /api/user-allergens/: TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator., user_id=66, ip=192.168.100.2
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 00:40:29,845 log 35516 21148 Internal Server Error: /api/user-allergens/
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 00:40:29,848 log 35516 8372 Internal Server Error: /api/user-allergens/
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 00:40:29,877 basehttp 35516 8372 "GET /api/user-allergens/?limit=100 HTTP/1.1" 500 23678
-ERROR 2025-05-07 00:40:29,883 basehttp 35516 21148 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 500 23681
-ERROR 2025-05-07 00:40:29,992 middleware 35516 21148 Exception in GET /api/user-allergens/: TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator., user_id=66, ip=192.168.100.2
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 00:40:30,013 log 35516 21148 Internal Server Error: /api/user-allergens/
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 00:40:30,029 basehttp 35516 21148 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 500 23681
-ERROR 2025-05-07 00:40:30,215 middleware 35516 21148 Exception in GET /api/user-allergens/: TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator., user_id=66, ip=192.168.100.2
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 00:40:30,240 log 35516 21148 Internal Server Error: /api/user-allergens/
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 00:40:30,258 basehttp 35516 21148 "GET /api/user-allergens/?limit=1000 HTTP/1.1" 500 23681
-ERROR 2025-05-07 00:42:22,023 allergen 33712 29948 Error updating allergens: 'UserAllergenViewSet' object has no attribute 'invalidate_cache'
-ERROR 2025-05-07 00:42:22,024 allergen 33712 29948 Traceback: Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 101, in update_user_allergens
-    self.invalidate_cache()
-    ^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'UserAllergenViewSet' object has no attribute 'invalidate_cache'
-
-ERROR 2025-05-07 00:58:50,654 middleware 7108 35644 404 Not Found: GET /api/meal-plans/current/
-ERROR 2025-05-07 00:58:51,091 middleware 7108 25040 404 Not Found: GET /api/meal-plans/current/
-ERROR 2025-05-07 01:15:33,601 middleware 7108 8756 404 Not Found: GET /api/meal-plans/current/
-ERROR 2025-05-07 01:15:33,981 middleware 7108 21436 404 Not Found: GET /api/meal-plans/current/
-ERROR 2025-05-07 01:15:41,115 allergen 7108 8756 Error updating allergens: 'DatabaseCache' object has no attribute '_cache'
-ERROR 2025-05-07 01:15:41,116 allergen 7108 8756 Traceback: Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 110, in update_user_allergens
-    for key in cache._cache.keys():
-               ^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\utils\connection.py", line 15, in __getattr__
-    return getattr(self._connections[self._alias], item)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'DatabaseCache' object has no attribute '_cache'
-
-ERROR 2025-05-07 01:26:11,704 middleware 28236 26804 Exception in GET /api/user-allergens/: TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator., user_id=66, ip=192.168.100.2
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 01:26:11,764 middleware 28236 22916 404 Not Found: GET /api/meal-plans/current/
-ERROR 2025-05-07 01:26:11,986 log 28236 26804 Internal Server Error: /api/user-allergens/
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 01:26:12,107 basehttp 28236 26804 "GET /api/user-allergens/?limit=100 HTTP/1.1" 500 23678
-ERROR 2025-05-07 01:26:12,304 middleware 28236 13076 Exception in GET /api/user-allergens/: TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator., user_id=66, ip=192.168.100.2
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 01:26:12,391 middleware 28236 26804 404 Not Found: GET /api/meal-plans/current/
-ERROR 2025-05-07 01:26:12,431 log 28236 13076 Internal Server Error: /api/user-allergens/
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 01:26:12,519 basehttp 28236 13076 "GET /api/user-allergens/?limit=100 HTTP/1.1" 500 23678
-ERROR 2025-05-07 01:26:19,643 middleware 28236 13076 Exception in GET /api/user-allergens/: TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator., user_id=66, ip=192.168.100.2
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 01:26:19,672 log 28236 13076 Internal Server Error: /api/user-allergens/
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 01:26:19,695 basehttp 28236 13076 "GET /api/user-allergens/?limit=100 HTTP/1.1" 500 23678
-ERROR 2025-05-07 01:26:25,864 middleware 28236 13076 Exception in POST /api/user-allergens/update/: TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator., user_id=66, ip=192.168.100.2
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 01:26:25,894 log 28236 13076 Internal Server Error: /api/user-allergens/update/
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 01:26:25,915 basehttp 28236 13076 "POST /api/user-allergens/update/ HTTP/1.1" 500 23704
-ERROR 2025-05-07 01:26:31,724 middleware 28236 13076 Exception in GET /api/user-allergens/: TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator., user_id=66, ip=192.168.100.2
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 01:26:31,743 log 28236 13076 Internal Server Error: /api/user-allergens/
-Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
-    return view_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\cache.py", line 58, in _wrapper_view_func
-    raise TypeError(
-TypeError: never_cache didn't receive an HttpRequest. If you are decorating a classmethod, be sure to use @method_decorator.
-ERROR 2025-05-07 01:26:31,757 basehttp 28236 13076 "GET /api/user-allergens/?limit=100 HTTP/1.1" 500 23678
-ERROR 2025-05-07 01:26:57,726 allergen 14608 14788 Error updating allergens: 'DatabaseCache' object has no attribute '_cache'
-ERROR 2025-05-07 01:26:57,726 allergen 14608 14788 Traceback: Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 110, in update_user_allergens
-    for key in cache._cache.keys():
-               ^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\utils\connection.py", line 15, in __getattr__
-    return getattr(self._connections[self._alias], item)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'DatabaseCache' object has no attribute '_cache'
-
-ERROR 2025-05-07 01:27:45,976 allergen 14608 34016 Error updating allergens: 'DatabaseCache' object has no attribute '_cache'
-ERROR 2025-05-07 01:27:45,976 allergen 14608 34016 Traceback: Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 110, in update_user_allergens
-    for key in cache._cache.keys():
-               ^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\utils\connection.py", line 15, in __getattr__
-    return getattr(self._connections[self._alias], item)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'DatabaseCache' object has no attribute '_cache'
-
-ERROR 2025-05-07 01:28:12,474 allergen 14608 25072 Error updating allergens: 'DatabaseCache' object has no attribute '_cache'
-ERROR 2025-05-07 01:28:12,474 allergen 14608 25072 Traceback: Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 110, in update_user_allergens
-    for key in cache._cache.keys():
-               ^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\utils\connection.py", line 15, in __getattr__
-    return getattr(self._connections[self._alias], item)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'DatabaseCache' object has no attribute '_cache'
-
-ERROR 2025-05-07 01:28:22,329 allergen 14608 25072 Error updating allergens: 'DatabaseCache' object has no attribute '_cache'
-ERROR 2025-05-07 01:28:22,329 allergen 14608 25072 Traceback: Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 110, in update_user_allergens
-    for key in cache._cache.keys():
-               ^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\utils\connection.py", line 15, in __getattr__
-    return getattr(self._connections[self._alias], item)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'DatabaseCache' object has no attribute '_cache'
-
-ERROR 2025-05-07 01:28:47,590 allergen 14608 34440 Error updating allergens: 'DatabaseCache' object has no attribute '_cache'
-ERROR 2025-05-07 01:28:47,591 allergen 14608 34440 Traceback: Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 110, in update_user_allergens
-    for key in cache._cache.keys():
-               ^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\utils\connection.py", line 15, in __getattr__
-    return getattr(self._connections[self._alias], item)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'DatabaseCache' object has no attribute '_cache'
-
-ERROR 2025-05-07 02:19:27,288 allergen 24372 27912 Error updating allergens: 'DatabaseCache' object has no attribute '_cache'
-ERROR 2025-05-07 02:19:27,288 allergen 24372 27912 Traceback: Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 110, in update_user_allergens
-    for key in cache._cache.keys():
-               ^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\utils\connection.py", line 15, in __getattr__
-    return getattr(self._connections[self._alias], item)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'DatabaseCache' object has no attribute '_cache'
-
-ERROR 2025-05-07 02:22:35,035 allergen 24372 1460 Error updating allergens: 'DatabaseCache' object has no attribute '_cache'
-ERROR 2025-05-07 02:22:35,037 allergen 24372 1460 Traceback: Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 110, in update_user_allergens
-    for key in cache._cache.keys():
-               ^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\utils\connection.py", line 15, in __getattr__
-    return getattr(self._connections[self._alias], item)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'DatabaseCache' object has no attribute '_cache'
-
-ERROR 2025-05-07 02:25:39,594 allergen 24372 34164 Error updating allergens: 'DatabaseCache' object has no attribute '_cache'
-ERROR 2025-05-07 02:25:39,595 allergen 24372 34164 Traceback: Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 110, in update_user_allergens
-    for key in cache._cache.keys():
-               ^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\utils\connection.py", line 15, in __getattr__
-    return getattr(self._connections[self._alias], item)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'DatabaseCache' object has no attribute '_cache'
-
-ERROR 2025-05-08 01:29:44,760 middleware 8816 20640 404 Not Found: DELETE /api/favorites/7/
-ERROR 2025-05-08 01:29:45,612 middleware 8816 20640 404 Not Found: DELETE /api/favorites/4/
-ERROR 2025-05-08 01:51:31,478 equipment 38208 24572 Error updating equipment: column m2m_usr_eqp.id does not exist
-LINE 1: ...e_eqp_id", "mue_usr_id") VALUES (1, 66) RETURNING "m2m_usr_e...
+ERROR 2025-05-09 18:30:40,874 middleware 30464 4388 Exception in GET /api/recipes/1/: ProgrammingError: column ingredient_type.category does not exist
+LINE 1: ...ype"."igt_name", "ingredient_type"."igt_img_url", "ingredien...
                                                              ^
+, user_id=66, ip=192.168.100.2
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 218, in __get__
+    rel_obj = self.field.get_cached_value(instance)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\mixins.py", line 15, in get_cached_value
+    return instance._state.fields_cache[cache_name]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'msi_igt_id'
 
-ERROR 2025-05-08 01:51:31,478 equipment 38208 24572 Traceback: Traceback (most recent call last):
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
   File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
     return self.cursor.execute(sql, params)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-psycopg2.errors.UndefinedColumn: column m2m_usr_eqp.id does not exist
-LINE 1: ...e_eqp_id", "mue_usr_id") VALUES (1, 66) RETURNING "m2m_usr_e...
+psycopg2.errors.UndefinedColumn: column ingredient_type.category does not exist
+LINE 1: ...ype"."igt_name", "ingredient_type"."igt_img_url", "ingredien...
                                                              ^
 
 
 The above exception was the direct cause of the following exception:
 
 Traceback (most recent call last):
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\equipment.py", line 88, in update_user_equipment
-    equipment_relation = M2MUsrEqp.objects.create(
-                         ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 658, in create
-    obj.save(force_insert=True, using=self.db)
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 814, in save
-    self.save_base(
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
-    updated = self._save_table(
-              ^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 1020, in _save_table
-    results = self._do_insert(
-              ^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 1061, in _do_insert
-    return manager._insert(
-           ^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1805, in _insert
-    return query.get_compiler(using=using).execute_sql(returning_fields)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1822, in execute_sql
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\recipe.py", line 78, in retrieve
+    response = super().retrieve(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\mixins.py", line 56, in retrieve
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 555, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 253, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 522, in to_representation
+    ret[field.field_name] = field.to_representation(attribute)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 687, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 522, in to_representation
+    ret[field.field_name] = field.to_representation(attribute)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 687, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 509, in to_representation
+    attribute = field.get_attribute(instance)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\fields.py", line 446, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\fields.py", line 96, in get_attribute
+    instance = getattr(instance, attr)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 236, in __get__
+    rel_obj = self.get_object(instance)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 199, in get_object
+    return qs.get(self.field.get_reverse_related_filter(instance))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+          ^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
     cursor.execute(sql, params)
   File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
     return self._record(super().execute, sql, params)
@@ -639,8 +119,384 @@ Traceback (most recent call last):
   File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
     return self.cursor.execute(sql, params)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-django.db.utils.ProgrammingError: column m2m_usr_eqp.id does not exist
-LINE 1: ...e_eqp_id", "mue_usr_id") VALUES (1, 66) RETURNING "m2m_usr_e...
+django.db.utils.ProgrammingError: column ingredient_type.category does not exist
+LINE 1: ...ype"."igt_name", "ingredient_type"."igt_img_url", "ingredien...
+                                                             ^
+
+ERROR 2025-05-09 18:30:40,988 log 30464 4388 Internal Server Error: /api/recipes/1/
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 218, in __get__
+    rel_obj = self.field.get_cached_value(instance)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\mixins.py", line 15, in get_cached_value
+    return instance._state.fields_cache[cache_name]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'msi_igt_id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column ingredient_type.category does not exist
+LINE 1: ...ype"."igt_name", "ingredient_type"."igt_img_url", "ingredien...
                                                              ^
 
 
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\recipe.py", line 78, in retrieve
+    response = super().retrieve(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\mixins.py", line 56, in retrieve
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 555, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 253, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 522, in to_representation
+    ret[field.field_name] = field.to_representation(attribute)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 687, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 522, in to_representation
+    ret[field.field_name] = field.to_representation(attribute)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 687, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 509, in to_representation
+    attribute = field.get_attribute(instance)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\fields.py", line 446, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\fields.py", line 96, in get_attribute
+    instance = getattr(instance, attr)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 236, in __get__
+    rel_obj = self.get_object(instance)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 199, in get_object
+    return qs.get(self.field.get_reverse_related_filter(instance))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+          ^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column ingredient_type.category does not exist
+LINE 1: ...ype"."igt_name", "ingredient_type"."igt_img_url", "ingredien...
+                                                             ^
+
+ERROR 2025-05-09 18:30:41,065 basehttp 30464 4388 "GET /api/recipes/1/ HTTP/1.1" 500 30539
+ERROR 2025-05-09 19:16:21,180 middleware 30464 7108 Exception in GET /api/recipes/1/: ProgrammingError: column ingredient_type.category does not exist
+LINE 1: ...ype"."igt_name", "ingredient_type"."igt_img_url", "ingredien...
+                                                             ^
+, user_id=66, ip=192.168.100.2
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 218, in __get__
+    rel_obj = self.field.get_cached_value(instance)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\mixins.py", line 15, in get_cached_value
+    return instance._state.fields_cache[cache_name]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'msi_igt_id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column ingredient_type.category does not exist
+LINE 1: ...ype"."igt_name", "ingredient_type"."igt_img_url", "ingredien...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\recipe.py", line 78, in retrieve
+    response = super().retrieve(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\mixins.py", line 56, in retrieve
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 555, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 253, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 522, in to_representation
+    ret[field.field_name] = field.to_representation(attribute)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 687, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 522, in to_representation
+    ret[field.field_name] = field.to_representation(attribute)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 687, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 509, in to_representation
+    attribute = field.get_attribute(instance)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\fields.py", line 446, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\fields.py", line 96, in get_attribute
+    instance = getattr(instance, attr)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 236, in __get__
+    rel_obj = self.get_object(instance)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 199, in get_object
+    return qs.get(self.field.get_reverse_related_filter(instance))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+          ^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column ingredient_type.category does not exist
+LINE 1: ...ype"."igt_name", "ingredient_type"."igt_img_url", "ingredien...
+                                                             ^
+
+ERROR 2025-05-09 19:16:21,326 log 30464 7108 Internal Server Error: /api/recipes/1/
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 218, in __get__
+    rel_obj = self.field.get_cached_value(instance)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\mixins.py", line 15, in get_cached_value
+    return instance._state.fields_cache[cache_name]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'msi_igt_id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column ingredient_type.category does not exist
+LINE 1: ...ype"."igt_name", "ingredient_type"."igt_img_url", "ingredien...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\recipe.py", line 78, in retrieve
+    response = super().retrieve(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\mixins.py", line 56, in retrieve
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 555, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 253, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 522, in to_representation
+    ret[field.field_name] = field.to_representation(attribute)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 687, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 522, in to_representation
+    ret[field.field_name] = field.to_representation(attribute)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 687, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 509, in to_representation
+    attribute = field.get_attribute(instance)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\fields.py", line 446, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\fields.py", line 96, in get_attribute
+    instance = getattr(instance, attr)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 236, in __get__
+    rel_obj = self.get_object(instance)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 199, in get_object
+    return qs.get(self.field.get_reverse_related_filter(instance))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+          ^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column ingredient_type.category does not exist
+LINE 1: ...ype"."igt_name", "ingredient_type"."igt_img_url", "ingredien...
+                                                             ^
+
+ERROR 2025-05-09 19:16:21,356 basehttp 30464 7108 "GET /api/recipes/1/ HTTP/1.1" 500 30539

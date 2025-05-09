@@ -1,10 +1,161 @@
+// lib/screens/home/home_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../models/enums.dart';
 import '../../providers/auth_provider.dart';
+import '../../repositories/data_repository.dart';
+import '../../models/recipe.dart';
+import '../../models/user.dart';
+import '../../models/ingredient.dart';
 
-
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool _isLoadingRecipes = false;
+  bool _isLoadingRefrigerator = false;
+
+  List<Recipe> _recommendedRecipes = [];
+  List<UserIngredient> _expiringProducts = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    _loadRecommendedRecipes();
+    _loadExpiringProducts();
+  }
+
+  Future<void> _loadRecommendedRecipes() async {
+    setState(() {
+      _isLoadingRecipes = true;
+    });
+
+    try {
+      final dataRepository = Provider.of<DataRepository>(context, listen: false);
+      final recipes = await dataRepository.getRecipes();
+
+      // For simplicity, we'll just choose 5 random recipes as recommendations
+      // In a real implementation, this would use a more sophisticated algorithm
+      // considering user preferences, ingredients available, etc.
+      if (recipes.isNotEmpty) {
+        // Sort by most calories (just as an example)
+        final sorted = List<Recipe>.from(recipes);
+        sorted.sort((a, b) => b.calories.compareTo(a.calories));
+
+        // Take up to 5 recipes
+        _recommendedRecipes = sorted.take(sorted.length > 5 ? 5 : sorted.length).toList();
+      }
+    } catch (e) {
+      print('Error loading recommended recipes: $e');
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoadingRecipes = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _loadExpiringProducts() async {
+    setState(() {
+      _isLoadingRefrigerator = true;
+    });
+
+    try {
+      // In a real implementation, this would fetch from the repository
+      // For now, we'll use the mock data from the existing RefrigeratorScreen
+
+      // This is simulating data that would come from a repository
+      final mockProducts = [
+        UserIngredient(
+          id: 1,
+          userId: 1,
+          ingredientId: 1,
+          quantity: 500,
+          quantityType: QuantityType.grams,
+          ingredient: Ingredient(
+            id: 1,
+            name: 'Помидоры',
+            expiryDate: DateTime.now().add(const Duration(days: 2)),
+            weight: 500,
+            calories: 18,
+            protein: 1,
+            fat: 0,
+            carbs: 4,
+            ingredientTypeId: 1,
+          ),
+        ),
+        UserIngredient(
+          id: 2,
+          userId: 1,
+          ingredientId: 2,
+          quantity: 300,
+          quantityType: QuantityType.grams,
+          ingredient: Ingredient(
+            id: 2,
+            name: 'Огурцы',
+            expiryDate: DateTime.now().add(const Duration(days: 1)),
+            weight: 300,
+            calories: 15,
+            protein: 1,
+            fat: 0,
+            carbs: 3,
+            ingredientTypeId: 1,
+          ),
+        ),
+        UserIngredient(
+          id: 3,
+          userId: 1,
+          ingredientId: 3,
+          quantity: 1,
+          quantityType: QuantityType.liters,
+          ingredient: Ingredient(
+            id: 3,
+            name: 'Молоко',
+            expiryDate: DateTime.now().add(const Duration(days: 3)),
+            weight: 1000,
+            calories: 60,
+            protein: 3,
+            fat: 3,
+            carbs: 5,
+            ingredientTypeId: 4,
+          ),
+        ),
+      ];
+
+      // Filter products expiring within 3 days
+      _expiringProducts = mockProducts.where((item) {
+        final ingredient = item.ingredient;
+        if (ingredient?.expiryDate == null) return false;
+
+        final daysLeft = ingredient!.expiryDate!.difference(DateTime.now()).inDays;
+        return daysLeft >= 0 && daysLeft <= 3;
+      }).toList();
+
+      // Sort by expiration date (closest first)
+      _expiringProducts.sort((a, b) {
+        final aDaysLeft = a.ingredient!.expiryDate!.difference(DateTime.now()).inDays;
+        final bDaysLeft = b.ingredient!.expiryDate!.difference(DateTime.now()).inDays;
+        return aDaysLeft.compareTo(bDaysLeft);
+      });
+    } catch (e) {
+      print('Error loading expiring products: $e');
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoadingRefrigerator = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,256 +164,325 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Приветствие пользователя
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Привет, $userName!',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Что будем готовить сегодня?',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ],
-                  ),
-                  CircleAvatar(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    child: Text(
-                      userName.isNotEmpty ? userName[0].toUpperCase() : 'П',
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 24),
-
-              // Рекомендуемые рецепты
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Рекомендуемые рецепты',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/recipes');
-                    },
-                    child: const Text('Все рецепты'),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              SizedBox(
-                height: 180,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          '/recipes/detail',
-                          arguments: {'recipeId': index},
-                        );
-                      },
-                      child: Container(
-                        width: 150,
-                        margin: const EdgeInsets.only(right: 16),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.secondaryContainer,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.secondary.withOpacity(0.3),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(8),
-                                  topRight: Radius.circular(8),
-                                ),
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.restaurant,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Рецепт ${index + 1}',
-                                    style: const TextStyle(fontWeight: FontWeight.bold),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    '${300 + (index * 50)} ккал',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
-              // Срочные продукты
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Срочные продукты',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/refrigerator');
-                    },
-                    child: const Text('Все продукты'),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.orange.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.orange.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Icon(Icons.kitchen, color: Colors.orange),
-                      ),
-                      title: Text('Продукт ${index + 1}'),
-                      subtitle: Text('Истекает через ${index + 1} дн.'),
-                      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/refrigerator');
-                      },
-                    );
-                  },
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
-              // Текущий план питания
-              Text(
-                'Текущий план питания',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 12),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        child: RefreshIndicator(
+          onRefresh: _loadData,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // User greeting
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'План на неделю',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                    const SizedBox(height: 8),
-                    const Text('29 апреля - 5 мая 2025'),
-                    const SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Прогресс: 3/7 дней'),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/meal-plan/weekly');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            minimumSize: Size.zero,
-                          ),
-                          child: const Text('Смотреть'),
+                        Text(
+                          'Привет, $userName!',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Что будем готовить сегодня?',
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
                     ),
+                    CircleAvatar(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      child: Text(
+                        userName.isNotEmpty ? userName[0].toUpperCase() : 'П',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ],
                 ),
-              ),
 
-              const SizedBox(height: 24),
+                const SizedBox(height: 24),
 
-              // Быстрый доступ
-              Text(
-                'Быстрый доступ',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildQuickAccessButton(
-                    context,
-                    Icons.add_shopping_cart,
-                    'Добавить\nпродукт',
-                        () => Navigator.pushNamed(context, '/refrigerator/add-product'),
+                // Recommended recipes
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Рекомендуемые рецепты',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/recipes');
+                      },
+                      child: const Text('Все рецепты'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                _isLoadingRecipes
+                    ? const Center(child: CircularProgressIndicator())
+                    : _recommendedRecipes.isEmpty
+                    ? _buildEmptyRecipesView()
+                    : SizedBox(
+                  height: 180,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _recommendedRecipes.length,
+                    itemBuilder: (context, index) {
+                      final recipe = _recommendedRecipes[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/recipes/detail',
+                            arguments: {'recipeId': recipe.id},
+                          );
+                        },
+                        child: Container(
+                          width: 150,
+                          margin: const EdgeInsets.only(right: 16),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.secondaryContainer,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.secondary.withOpacity(0.3),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(8),
+                                    topRight: Radius.circular(8),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.restaurant,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      recipe.title,
+                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      '${recipe.calories} ккал',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                  _buildQuickAccessButton(
-                    context,
-                    Icons.camera_alt,
-                    'Сканировать\nштрих-код',
-                        () => Navigator.pushNamed(context, '/refrigerator/barcode-scanner'),
+                ),
+
+                const SizedBox(height: 24),
+
+                // Expiring products
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Срочные продукты',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/refrigerator');
+                      },
+                      child: const Text('Все продукты'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                _isLoadingRefrigerator
+                    ? const Center(child: CircularProgressIndicator())
+                    : _expiringProducts.isEmpty
+                    ? _buildEmptyProductsView()
+                    : Container(
+                  decoration: BoxDecoration(
+                    color: Colors.orange.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  _buildQuickAccessButton(
-                    context,
-                    Icons.calendar_today,
-                    'Создать план\nпитания',
-                        () => Navigator.pushNamed(context, '/meal-plan/generate'),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _expiringProducts.length,
+                    itemBuilder: (context, index) {
+                      final product = _expiringProducts[index];
+                      final daysLeft = product.ingredient!.expiryDate!.difference(DateTime.now()).inDays;
+
+                      return ListTile(
+                        leading: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.orange.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Icon(Icons.kitchen, color: Colors.orange),
+                        ),
+                        title: Text(product.ingredient!.name),
+                        subtitle: Text('Истекает через $daysLeft дн.'),
+                        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                        onTap: () {
+                          Navigator.pushNamed(context, '/refrigerator');
+                        },
+                      );
+                    },
                   ),
-                ],
-              ),
-            ],
+                ),
+
+                const SizedBox(height: 24),
+
+                // Current meal plan
+                Text(
+                  'Текущий план питания',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 12),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'План на неделю',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text('29 апреля - 5 мая 2025'),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Прогресс: 3/7 дней'),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/meal-plan/weekly');
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              minimumSize: Size.zero,
+                            ),
+                            child: const Text('Смотреть'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // Quick access
+                Text(
+                  'Быстрый доступ',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildQuickAccessButton(
+                      context,
+                      Icons.add_shopping_cart,
+                      'Добавить\nпродукт',
+                          () => Navigator.pushNamed(context, '/refrigerator/add-product'),
+                    ),
+                    _buildQuickAccessButton(
+                      context,
+                      Icons.camera_alt,
+                      'Сканировать\nштрих-код',
+                          () => Navigator.pushNamed(context, '/refrigerator/barcode-scanner'),
+                    ),
+                    _buildQuickAccessButton(
+                      context,
+                      Icons.calendar_today,
+                      'Создать план\nпитания',
+                          () => Navigator.pushNamed(context, '/meal-plan/generate'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmptyRecipesView() {
+    return Container(
+      height: 180,
+      decoration: BoxDecoration(
+        color: Colors.grey.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.restaurant_menu,
+              size: 48,
+              color: Colors.grey[400],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Нет рекомендуемых рецептов',
+              style: TextStyle(color: Colors.grey[600]),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmptyProductsView() {
+    return Container(
+      height: 100,
+      decoration: BoxDecoration(
+        color: Colors.grey.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.kitchen,
+              size: 32,
+              color: Colors.grey[400],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Нет продуктов с истекающим сроком годности',
+              style: TextStyle(color: Colors.grey[600]),
+            ),
+          ],
         ),
       ),
     );

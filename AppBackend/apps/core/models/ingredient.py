@@ -11,7 +11,6 @@ class IngredientType(models.Model):
     igt_id = models.AutoField(primary_key=True)
     igt_name = models.CharField(_('Название'), max_length=150)
     igt_img_url = models.CharField(_('URL изображения'), max_length=256, null=True, blank=True)
-    category = models.CharField(_('Категория'), max_length=50, null=True, blank=True)
 
     class Meta:
         db_table = 'ingredient_type'

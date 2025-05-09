@@ -3,7 +3,6 @@ from rest_framework import serializers
 from ..models import ShoppingList, M2MIngSpl
 from .ingredient import IngredientTypeSerializer
 
-
 class ShoppingListItemSerializer(serializers.ModelSerializer):
     """Сериализатор для элемента списка покупок"""
     ingredient_type = IngredientTypeSerializer(source='mis_igt_id', read_only=True)

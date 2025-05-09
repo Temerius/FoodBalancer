@@ -1,22 +1,28 @@
+// lib/models/ingredient_type.dart - исправленная версия
 class IngredientType {
   final int id;
   final String name;
   final String? imageUrl;
-  String? category; // Added for categorization (like 'Овощи', 'Фрукты', etc.)
+
+  // Локальное свойство (не приходит с сервера)
+  String? _category;
 
   IngredientType({
     required this.id,
     required this.name,
     this.imageUrl,
-    this.category,
-  });
+    String? category,
+  }) {
+    _category = category;
+  }
 
   factory IngredientType.fromJson(Map<String, dynamic> json) {
     return IngredientType(
       id: json['igt_id'],
       name: json['igt_name'] ?? '',
       imageUrl: json['igt_img_url'],
-      category: json['category'], // May come from external mapping or API extension
+      // Поле category не приходит с сервера, мы определяем его локально
+      category: null,
     );
   }
 
@@ -25,8 +31,56 @@ class IngredientType {
       'igt_id': id,
       'igt_name': name,
       if (imageUrl != null) 'igt_img_url': imageUrl,
-      if (category != null) 'category': category,
+      // Не отправляем category на сервер, так как там нет такого поля
     };
+  }
+
+  // Геттер для категории
+  String? get category => _category;
+
+  // Сеттер для категории
+  set category(String? value) {
+    _category = value;
+  }
+
+  // Метод для определения категории на основе названия типа ингредиента
+  void determineCategory() {
+    final lowerName = name.toLowerCase();
+
+    if (lowerName.contains('овощ') ||
+        lowerName.contains('картош') ||
+        lowerName.contains('морков') ||
+        lowerName.contains('лук') ||
+        lowerName.contains('помидор') ||
+        lowerName.contains('огурец')) {
+      _category = 'Овощи';
+    } else if (lowerName.contains('фрукт') ||
+        lowerName.contains('яблок') ||
+        lowerName.contains('груш') ||
+        lowerName.contains('банан')) {
+      _category = 'Фрукты';
+    } else if (lowerName.contains('мясо') ||
+        lowerName.contains('курица') ||
+        lowerName.contains('говядин') ||
+        lowerName.contains('свинин')) {
+      _category = 'Мясо';
+    } else if (lowerName.contains('молок') ||
+        lowerName.contains('сыр') ||
+        lowerName.contains('творог') ||
+        lowerName.contains('йогурт')) {
+      _category = 'Молочные';
+    } else if (lowerName.contains('крупа') ||
+        lowerName.contains('рис') ||
+        lowerName.contains('гречк') ||
+        lowerName.contains('овес')) {
+      _category = 'Крупы';
+    } else if (lowerName.contains('напит') ||
+        lowerName.contains('вода') ||
+        lowerName.contains('сок')) {
+      _category = 'Напитки';
+    } else {
+      _category = 'Другое';
+    }
   }
 
   IngredientType copyWith({
@@ -39,7 +93,7 @@ class IngredientType {
       id: id ?? this.id,
       name: name ?? this.name,
       imageUrl: imageUrl ?? this.imageUrl,
-      category: category ?? this.category,
+      category: category ?? _category,
     );
   }
 

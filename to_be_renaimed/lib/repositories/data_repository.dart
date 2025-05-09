@@ -8,8 +8,11 @@ import '../services/api_service.dart';
 import 'repositories/user_repository.dart';
 import 'repositories/allergen_repository.dart';
 import 'repositories/equipment_repository.dart';
+import 'repositories/recipe_repository.dart';
+
 import 'models/cache_config.dart';
 import 'services/cache_service.dart';
+
 
 class DataRepository with ChangeNotifier {
   final ApiService _apiService;
@@ -18,6 +21,7 @@ class DataRepository with ChangeNotifier {
   late final UserRepository _userRepository;
   late final AllergenRepository _allergenRepository;
   late final EquipmentRepository _equipmentRepository;
+  late final RecipeRepository _recipeRepository;
 
   // Данные
   List<Recipe> _recipes = [];
@@ -46,7 +50,7 @@ class DataRepository with ChangeNotifier {
   User? get user => _userRepository.user;
   List<Allergen> get allergens => _allergenRepository.allergens;
   List<Equipment> get equipment => _equipmentRepository.equipment;
-  List<Recipe> get recipes => _recipes;
+  List<Recipe> get recipes => _recipeRepository.recipes;
   bool get isLoadingProfile => _isLoadingProfile;
   bool get isLoadingAllergens => _isLoadingAllergens;
   bool get isLoadingEquipment => _isLoadingEquipment;
@@ -56,6 +60,7 @@ class DataRepository with ChangeNotifier {
     _userRepository = UserRepository(apiService: _apiService);
     _allergenRepository = AllergenRepository(apiService: _apiService);
     _equipmentRepository = EquipmentRepository(apiService: _apiService);
+    _recipeRepository = RecipeRepository(apiService: _apiService);
 
     // Инициализация тестовых рецептов для примера
     _initializeMockRecipes();
@@ -77,36 +82,20 @@ class DataRepository with ChangeNotifier {
   }
 
   // Метод для переключения статуса "избранное" у рецепта
-  Future<void> toggleFavoriteRecipe(int recipeId) async {
+  Future<bool> toggleFavoriteRecipe(int recipeId) async {
     try {
-      // Найти рецепт по ID
-      final recipeIndex = _recipes.indexWhere((recipe) => recipe.id == recipeId);
+      print("\n===== TOGGLING FAVORITE STATUS FOR RECIPE ID: $recipeId =====");
+      final success = await _recipeRepository.toggleFavoriteRecipe(recipeId);
 
-      if (recipeIndex != -1) {
-        // Изменить статус избранного
-        final recipe = _recipes[recipeIndex];
-        final isFavorite = !recipe.isFavorite;
-
-        // Обновить рецепт в памяти
-        _recipes[recipeIndex] = recipe.copyWith(isFavorite: isFavorite);
-
-        // Отправить запрос на сервер
-        try {
-          if (isFavorite) {
-            await _apiService.post('/api/favorites/', {'recipe_id': recipeId});
-          } else {
-            await _apiService.delete('/api/favorites/$recipeId/');
-          }
-        } catch (e) {
-          // В случае ошибки API, все равно обновляем локальное состояние
-          print('API error when toggling favorite: $e');
-        }
-
-        // Уведомить подписчиков об изменении
+      if (success) {
         notifyListeners();
       }
+
+      return success;
     } catch (e) {
+      print("ERROR TOGGLING FAVORITE: $e");
       _setError(e.toString());
+      return false;
     }
   }
 
@@ -118,29 +107,24 @@ class DataRepository with ChangeNotifier {
 
   // Получение рецептов
   Future<List<Recipe>> getRecipes({bool forceRefresh = false}) async {
-    // Проверяем, нужно ли обновлять данные
-    if (!forceRefresh && _recipes.isNotEmpty && !_needsUpdate(_lastRecipesUpdate)) {
-      return _recipes;
+    // Check if we need to update data
+    if (!forceRefresh && _recipeRepository.recipes.isNotEmpty && !_needsUpdate(_lastRecipesUpdate)) {
+      return _recipeRepository.recipes;
     }
 
     _setLoading(true);
     try {
-      // В реальном приложении здесь будет запрос к API
-      // final response = await _apiService.get('/api/recipes/?limit=100');
-      // _recipes = List<Map<String, dynamic>>.from(response['results'])
-      //   .map((json) => Recipe.fromJson(json))
-      //   .toList();
+      print("\n===== GETTING RECIPES (forceRefresh: $forceRefresh) =====");
+      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
+      final recipes = await _recipeRepository.getAllRecipes(config: config);
 
-      // Пока используем моковые данные
-      await Future.delayed(const Duration(milliseconds: 500)); // Симуляция задержки API
-      _initializeMockRecipes();
-
-      // Обновляем время последнего обновления
+      // Update last update time
       _lastRecipesUpdate = DateTime.now();
 
       notifyListeners();
-      return _recipes;
+      return recipes;
     } catch (e) {
+      print("ERROR GETTING RECIPES: $e");
       _setError(e.toString());
       return [];
     } finally {
@@ -149,8 +133,34 @@ class DataRepository with ChangeNotifier {
   }
 
   // Получение избранных рецептов
-  List<Recipe> getFavoriteRecipes() {
-    return _recipes.where((recipe) => recipe.isFavorite).toList();
+  Future<List<Recipe>> getFavoriteRecipes({bool forceRefresh = false}) async {
+    _setLoading(true);
+    try {
+      print("\n===== GETTING FAVORITE RECIPES (forceRefresh: $forceRefresh) =====");
+      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
+      final favoriteRecipes = await _recipeRepository.getFavoriteRecipes(config: config);
+
+      notifyListeners();
+      return favoriteRecipes;
+    } catch (e) {
+      print("ERROR GETTING FAVORITE RECIPES: $e");
+      _setError(e.toString());
+      return [];
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  Future<Recipe?> getRecipeDetails(int recipeId, {bool forceRefresh = false}) async {
+    try {
+      print("\n===== GETTING RECIPE DETAILS FOR ID: $recipeId (forceRefresh: $forceRefresh) =====");
+      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
+      return await _recipeRepository.getRecipeDetails(recipeId, config: config);
+    } catch (e) {
+      print("ERROR GETTING RECIPE DETAILS: $e");
+      _setError(e.toString());
+      return null;
+    }
   }
 
   // Инициализация репозитория
@@ -521,6 +531,7 @@ class DataRepository with ChangeNotifier {
     await _userRepository.clearCache();
     await _allergenRepository.clearCache();
     await _equipmentRepository.clearCache();
+    await _recipeRepository.clearCache();
 
     // Сбрасываем временные метки
     _lastProfileUpdate = null;

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../repositories/data_repository.dart';
+import '../../models/recipe.dart';
 
 class RecipesScreen extends StatefulWidget {
   const RecipesScreen({Key? key}) : super(key: key);
@@ -14,11 +15,23 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
+  bool _isRefreshing = false;
+  String? _errorMessage;
+
+  // Lists to store recipes
+  List<Recipe> _allRecipes = [];
+  List<Recipe> _favoriteRecipes = [];
+  List<Recipe> _recommendedRecipes = [];
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+
+    // Load data when screen is created
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadData();
+    });
   }
 
   @override
@@ -28,30 +41,99 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // Получаем данные из репозитория через Provider
-    final dataRepository = Provider.of<DataRepository>(context);
+  // Load recipe data from repository
+  // Обновленная версия метода _loadData в RecipesScreen
 
-    // Используем рецепты из репозитория
-    final recipes = dataRepository.recipes;
+  Future<void> _loadData({bool forceRefresh = false}) async {
+    if (mounted) {
+      setState(() {
+        _isRefreshing = true;
+        _errorMessage = null;
+      });
+    }
 
-    // Фильтрация рецептов по поисковому запросу
-    final filteredRecipes = _searchQuery.isEmpty
-        ? recipes
-        : recipes.where((recipe) =>
+    try {
+      final dataRepository = Provider.of<DataRepository>(context, listen: false);
+
+      // Добавляем обработку ошибок с более подробными сообщениями
+      try {
+        // Load all recipes
+        _allRecipes = await dataRepository.getRecipes(forceRefresh: forceRefresh);
+      } catch (e) {
+        print("Error loading recipes: $e");
+
+        if (e.toString().contains("column ingredient_type.category does not exist")) {
+          throw Exception('Ошибка в структуре данных: поле категории отсутствует в базе данных. Требуется обновление приложения.');
+        } else if (e.toString().contains("SocketException") ||
+            e.toString().contains("Connection")) {
+          throw Exception('Ошибка соединения с сервером. Проверьте подключение к интернету.');
+        } else {
+          throw e; // Пробрасываем другие ошибки
+        }
+      }
+
+      try {
+        // Load favorite recipes
+        _favoriteRecipes = await dataRepository.getFavoriteRecipes(forceRefresh: forceRefresh);
+      } catch (e) {
+        print("Error loading favorite recipes: $e");
+        // Даже если не удалось загрузить избранное, продолжаем работу
+        _favoriteRecipes = [];
+      }
+
+      // Get recommended recipes (for now, just take newest ones or most popular)
+      // In a real implementation, this would use a more sophisticated algorithm
+      try {
+        _recommendedRecipes = List.from(_allRecipes);
+        _recommendedRecipes.sort((a, b) => b.calories.compareTo(a.calories)); // Sort by calories for now
+        if (_recommendedRecipes.length > 5) {
+          _recommendedRecipes = _recommendedRecipes.sublist(0, 5);
+        }
+      } catch (e) {
+        print("Error preparing recommended recipes: $e");
+        // Если не удалось подготовить рекомендации, просто оставляем пустой список
+        _recommendedRecipes = [];
+      }
+
+      if (mounted) {
+        setState(() {});
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _errorMessage = e.toString().startsWith('Exception: ')
+              ? e.toString().substring('Exception: '.length)
+              : 'Ошибка загрузки данных: ${e.toString()}';
+        });
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isRefreshing = false;
+        });
+      }
+    }
+  }
+
+  List<Recipe> _getFilteredRecipes() {
+    if (_searchQuery.isEmpty) return _allRecipes;
+
+    return _allRecipes.where((recipe) =>
         recipe.title.toLowerCase().contains(_searchQuery.toLowerCase())
     ).toList();
+  }
 
-    // Избранные рецепты
-    final favoriteRecipes = recipes.where((recipe) => recipe.isFavorite).toList();
-
-    // Рекомендуемые рецепты (для примера берем первые 5 или менее)
-    final recommendedRecipes = recipes.take(recipes.length < 5 ? recipes.length : 5).toList();
-
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Рецепты'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: _isRefreshing ? null : () => _loadData(forceRefresh: true),
+          ),
+        ],
         bottom: TabBar(
           controller: _tabController,
           tabs: const [
@@ -63,7 +145,32 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
       ),
       body: Column(
         children: [
-          // Поиск
+          // Error message if any
+          if (_errorMessage != null)
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              margin: const EdgeInsets.all(8.0),
+              color: Colors.red.shade100,
+              child: Row(
+                children: [
+                  Icon(Icons.error, color: Colors.red),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(_errorMessage!, style: TextStyle(color: Colors.red)),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () {
+                      setState(() {
+                        _errorMessage = null;
+                      });
+                    },
+                  )
+                ],
+              ),
+            ),
+
+          // Search bar
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
@@ -94,23 +201,23 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
             ),
           ),
 
-          // Список рецептов с индикатором загрузки
+          // Loading indicator
+          if (_isRefreshing)
+            LinearProgressIndicator(),
+
+          // Recipe lists
           Expanded(
-            child: dataRepository.isLoading
-                ? Center(
-              child: CircularProgressIndicator(),
-            )
-                : TabBarView(
+            child: TabBarView(
               controller: _tabController,
               children: [
-                // Вкладка "Все"
-                _buildRecipesList(filteredRecipes),
+                // All recipes tab
+                _buildRecipesList(_getFilteredRecipes()),
 
-                // Вкладка "Рекомендации"
-                _buildRecipesList(recommendedRecipes),
+                // Recommended tab
+                _buildRecipesList(_recommendedRecipes),
 
-                // Вкладка "Избранное"
-                _buildRecipesList(favoriteRecipes),
+                // Favorites tab
+                _buildRecipesList(_favoriteRecipes),
               ],
             ),
           ),
@@ -118,7 +225,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Можно добавить функциональность для добавления своего рецепта
+          // Functionality for adding a custom recipe
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Добавление рецепта будет доступно в будущем')),
           );
@@ -128,26 +235,47 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
     );
   }
 
-  Widget _buildRecipesList(List<dynamic> recipes) {
-    return recipes.isEmpty
-        ? Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.restaurant_menu,
-            size: 64,
-            color: Colors.grey[400],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'Нет доступных рецептов',
-            style: TextStyle(color: Colors.grey[600]),
-          ),
-        ],
-      ),
-    )
-        : ListView.builder(
+  Widget _buildRecipesList(List<Recipe> recipes) {
+    if (_isRefreshing && recipes.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(height: 16),
+            Text('Загрузка рецептов...'),
+          ],
+        ),
+      );
+    }
+
+    if (recipes.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.restaurant_menu,
+              size: 64,
+              color: Colors.grey[400],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Нет доступных рецептов',
+              style: TextStyle(color: Colors.grey[600]),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
+              onPressed: () => _loadData(forceRefresh: true),
+              icon: const Icon(Icons.refresh),
+              label: const Text('Обновить'),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return ListView.builder(
       padding: const EdgeInsets.only(bottom: 80),
       itemCount: recipes.length,
       itemBuilder: (context, index) {
@@ -160,13 +288,16 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                 context,
                 '/recipes/detail',
                 arguments: {'recipeId': recipe.id},
-              );
+              ).then((_) {
+                // Refresh data when returning from details
+                _loadData();
+              });
             },
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: [
-                  // Изображение рецепта
+                  // Recipe image
                   Container(
                     width: 100,
                     height: 100,
@@ -182,7 +313,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                   ),
                   const SizedBox(width: 16),
 
-                  // Информация о рецепте
+                  // Recipe information
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,7 +352,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                     ),
                   ),
 
-                  // Кнопка "Избранное"
+                  // Favorite button
                   IconButton(
                     icon: Icon(
                       recipe.isFavorite
@@ -230,9 +361,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                       color: recipe.isFavorite ? Colors.red : null,
                     ),
                     onPressed: () {
-                      // Обновление статуса "избранное" через репозиторий
-                      final dataRepository = Provider.of<DataRepository>(context, listen: false);
-                      dataRepository.toggleFavoriteRecipe(recipe.id);
+                      _toggleFavorite(recipe.id);
                     },
                   ),
                 ],
@@ -242,5 +371,27 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
         );
       },
     );
+  }
+
+  Future<void> _toggleFavorite(int recipeId) async {
+    final dataRepository = Provider.of<DataRepository>(context, listen: false);
+
+    try {
+      final success = await dataRepository.toggleFavoriteRecipe(recipeId);
+
+      if (success) {
+        // Refresh data after toggling favorite
+        await _loadData();
+      } else {
+        // Show error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Не удалось обновить статус избранного')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Ошибка: ${e.toString()}')),
+      );
+    }
   }
 }

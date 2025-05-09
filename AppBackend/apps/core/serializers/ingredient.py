@@ -1,4 +1,5 @@
-# AppBackend/apps/core/serializers/ingredient.py
+# AppBackend/apps/core/serializers/ingredient.py - исправленная версия
+
 from rest_framework import serializers
 from ..models import IngredientType, Ingredient, M2MUsrIng
 
@@ -8,7 +9,8 @@ class IngredientTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = IngredientType
-        fields = ['igt_id', 'igt_name', 'igt_img_url', 'category']
+        fields = ['igt_id', 'igt_name', 'igt_img_url']
+        # Удалено поле 'category', которого нет в базе данных
 
 
 class IngredientSerializer(serializers.ModelSerializer):
