@@ -4024,3 +4024,299 @@ INFO 2025-05-09 00:03:32,245 basehttp 27380 1684 "GET /api/allergens/?limit=1000
 INFO 2025-05-09 00:03:45,964 equipment 27380 1684 Listing all equipment: user_id=66
 INFO 2025-05-09 00:03:45,969 equipment 27380 1684 Retrieved unknown equipment items, user_id=66, time=0.01s
 INFO 2025-05-09 00:03:45,984 basehttp 27380 1684 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-09 15:06:51,078 autoreload 28956 30628 Watching for file changes with StatReloader
+INFO 2025-05-09 15:06:51,505 wsgi 28956 28560 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-09 15:06:51,505 wsgi 28956 28560 Environment: config.settings
+INFO 2025-05-09 15:06:51,506 wsgi 28956 28560 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-09 15:06:51,511 wsgi 28956 28560 Application initialized successfully
+INFO 2025-05-09 15:06:54,136 views 28956 30212 Profile accessed: user_id=66
+INFO 2025-05-09 15:06:54,138 views 28956 30236 Registration attempt: email=test_x5guxs7f@example.com
+INFO 2025-05-09 15:06:54,201 basehttp 28956 30212 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-09 15:06:54,574 views 28956 30236 User registered successfully: user_id=110, email=test_x5guxs7f@example.com, time=0.44s
+INFO 2025-05-09 15:06:54,599 basehttp 28956 30236 "POST /api/users/register/ HTTP/1.1" 201 233
+INFO 2025-05-09 15:06:54,669 views 28956 9048 Login attempt: email=test_x5guxs7f@example.com
+INFO 2025-05-09 15:06:54,950 views 28956 9048 User login successful: user_id=110, email=test_x5guxs7f@example.com, time=0.28s
+INFO 2025-05-09 15:06:54,966 basehttp 28956 9048 "POST /api/users/login/ HTTP/1.1" 200 233
+INFO 2025-05-09 15:06:55,030 views 28956 24844 Profile accessed: user_id=110
+INFO 2025-05-09 15:06:55,048 basehttp 28956 24844 "GET /api/users/profile/ HTTP/1.1" 200 173
+INFO 2025-05-09 15:06:55,197 ingredient 28956 26160 Listing refrigerator ingredients: user_id=110
+INFO 2025-05-09 15:06:55,203 ingredient 28956 26160 Retrieved unknown refrigerator ingredients for user_id=110, time=0.01s
+INFO 2025-05-09 15:06:55,215 basehttp 28956 26160 "GET /api/refrigerator/ HTTP/1.1" 200 2
+INFO 2025-05-09 15:06:55,281 basehttp 28956 20364 "GET /api/favorites/ HTTP/1.1" 200 2
+INFO 2025-05-09 15:06:55,326 allergen 28956 28820 Listing all allergens: user_id=110
+INFO 2025-05-09 15:06:55,331 allergen 28956 28820 Retrieved unknown allergens, user_id=110, time=0.00s
+INFO 2025-05-09 15:06:55,343 basehttp 28956 28820 "GET /api/allergens/ HTTP/1.1" 200 1711
+INFO 2025-05-09 15:06:55,416 equipment 28956 29380 Listing all equipment: user_id=110
+INFO 2025-05-09 15:06:55,422 equipment 28956 29380 Retrieved unknown equipment items, user_id=110, time=0.01s
+INFO 2025-05-09 15:06:55,437 basehttp 28956 29380 "GET /api/equipment/ HTTP/1.1" 200 13914
+INFO 2025-05-09 15:06:55,519 views 28956 25240 Logout attempt: user_id=110
+INFO 2025-05-09 15:06:55,525 views 28956 25240 User logged out successfully: user_id=110
+INFO 2025-05-09 15:06:55,537 basehttp 28956 25240 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-09 15:07:05,332 views 28956 30212 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-09 15:07:05,614 views 28956 30212 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.28s
+INFO 2025-05-09 15:07:05,632 basehttp 28956 30212 "POST /api/users/login/ HTTP/1.1" 200 211
+INFO 2025-05-09 15:07:05,735 allergen 28956 30212 Listing all allergens: user_id=66
+INFO 2025-05-09 15:07:05,738 allergen 28956 30212 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-09 15:07:05,748 basehttp 28956 30212 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-09 15:07:05,814 equipment 28956 30212 Listing all equipment: user_id=66
+INFO 2025-05-09 15:07:05,818 equipment 28956 30212 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:07:05,829 basehttp 28956 30212 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-09 15:07:05,926 allergen 28956 30212 Listing all allergens: user_id=66
+INFO 2025-05-09 15:07:05,929 allergen 28956 30212 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-09 15:07:05,943 basehttp 28956 30212 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-09 15:07:06,034 equipment 28956 30212 Listing all equipment: user_id=66
+INFO 2025-05-09 15:07:06,038 equipment 28956 30212 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:07:06,051 basehttp 28956 30212 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-09 15:07:06,127 allergen 28956 30212 Listing user allergens: user_id=66
+INFO 2025-05-09 15:07:06,140 allergen 28956 30212 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:07:06,163 basehttp 28956 30212 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:07:07,591 allergen 28956 30212 Listing all allergens: user_id=66
+INFO 2025-05-09 15:07:07,596 allergen 28956 30212 Retrieved unknown allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:07:07,618 basehttp 28956 30212 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-09 15:07:07,708 equipment 28956 30212 Listing all equipment: user_id=66
+INFO 2025-05-09 15:07:07,713 equipment 28956 30212 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-09 15:07:07,732 basehttp 28956 30212 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-09 15:07:07,822 views 28956 30212 Profile accessed: user_id=66
+INFO 2025-05-09 15:07:07,836 basehttp 28956 30212 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-09 15:07:07,934 allergen 28956 30212 Listing user allergens: user_id=66
+INFO 2025-05-09 15:07:07,946 allergen 28956 30212 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:07:07,967 basehttp 28956 30212 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:07:08,030 equipment 28956 30212 Listing user equipment: user_id=66
+INFO 2025-05-09 15:07:08,042 equipment 28956 30212 Retrieved 3 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-09 15:07:08,066 basehttp 28956 30212 "GET /api/user-equipment/ HTTP/1.1" 200 572
+INFO 2025-05-09 15:07:18,947 equipment 28956 30212 Listing all equipment: user_id=66
+INFO 2025-05-09 15:07:18,951 equipment 28956 30212 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:07:18,963 basehttp 28956 30212 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-09 15:07:27,430 views 28956 30212 Profile update attempt: user_id=66
+INFO 2025-05-09 15:07:27,477 views 28956 30212 Profile updated successfully: user_id=66, time=0.05s
+INFO 2025-05-09 15:07:27,497 basehttp 28956 30212 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-09 15:07:27,679 allergen 28956 30212 Starting user allergens update for user ID: 66
+INFO 2025-05-09 15:07:27,679 allergen 28956 30212 Request data: {'allergen_ids': [8, 9, 10]}
+INFO 2025-05-09 15:07:27,679 allergen 28956 30212 Allergen IDs to update: [8, 9, 10]
+INFO 2025-05-09 15:07:27,689 allergen 28956 30212 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-09 15:07:27,699 allergen 28956 30212 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-09 15:07:27,706 allergen 28956 30212 Created allergen mapping: user 66 - allergen 9
+INFO 2025-05-09 15:07:27,712 allergen 28956 30212 Created allergen mapping: user 66 - allergen 10
+INFO 2025-05-09 15:07:27,713 allergen 28956 30212 Successfully updated allergens for user 66: [8, 9, 10]
+INFO 2025-05-09 15:07:27,742 basehttp 28956 30212 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:07:27,867 equipment 28956 30212 Starting user equipment update for user ID: 66
+INFO 2025-05-09 15:07:27,868 equipment 28956 30212 Request data: {'equipment_ids': [1]}
+INFO 2025-05-09 15:07:27,868 equipment 28956 30212 Equipment IDs to update: [1]
+INFO 2025-05-09 15:07:27,877 equipment 28956 30212 Deleted (3, {'core.M2MUsrEqp': 3}) existing equipment records
+INFO 2025-05-09 15:07:27,888 equipment 28956 30212 Created equipment mapping: user 66 - equipment 1
+INFO 2025-05-09 15:07:27,888 equipment 28956 30212 Successfully updated equipment for user 66: [1]
+INFO 2025-05-09 15:07:27,909 basehttp 28956 30212 "POST /api/user-equipment/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:07:28,020 allergen 28956 30212 Listing user allergens: user_id=66
+INFO 2025-05-09 15:07:28,030 allergen 28956 30212 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:07:28,049 basehttp 28956 30212 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:07:28,128 equipment 28956 30212 Listing user equipment: user_id=66
+INFO 2025-05-09 15:07:28,135 equipment 28956 30212 Retrieved 1 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-09 15:07:28,151 basehttp 28956 30212 "GET /api/user-equipment/ HTTP/1.1" 200 185
+INFO 2025-05-09 15:07:28,291 equipment 28956 30212 Listing user equipment: user_id=66
+INFO 2025-05-09 15:07:28,302 equipment 28956 30212 Retrieved 1 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-09 15:07:28,331 basehttp 28956 30212 "GET /api/user-equipment/ HTTP/1.1" 200 185
+INFO 2025-05-09 15:07:28,573 allergen 28956 30212 Listing all allergens: user_id=66
+INFO 2025-05-09 15:07:28,577 allergen 28956 30212 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-09 15:07:28,603 basehttp 28956 30212 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-09 15:07:28,687 equipment 28956 30212 Listing all equipment: user_id=66
+INFO 2025-05-09 15:07:28,692 equipment 28956 30212 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:07:28,710 basehttp 28956 30212 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-09 15:07:28,796 views 28956 30212 Profile accessed: user_id=66
+INFO 2025-05-09 15:07:28,825 basehttp 28956 30212 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-09 15:07:28,940 allergen 28956 30212 Listing user allergens: user_id=66
+INFO 2025-05-09 15:07:28,955 allergen 28956 30212 Retrieved 3 user allergens, user_id=66, time=0.02s
+INFO 2025-05-09 15:07:28,981 basehttp 28956 30212 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:07:29,100 equipment 28956 30212 Listing user equipment: user_id=66
+INFO 2025-05-09 15:07:29,108 equipment 28956 30212 Retrieved 1 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-09 15:07:29,133 basehttp 28956 30212 "GET /api/user-equipment/ HTTP/1.1" 200 185
+INFO 2025-05-09 15:07:31,323 equipment 28956 30212 Listing all equipment: user_id=66
+INFO 2025-05-09 15:07:31,328 equipment 28956 30212 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:07:31,343 basehttp 28956 30212 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-09 15:07:32,859 views 28956 30212 Profile update attempt: user_id=66
+INFO 2025-05-09 15:07:32,868 views 28956 30212 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-09 15:07:32,880 basehttp 28956 30212 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-09 15:07:32,923 allergen 28956 30212 Starting user allergens update for user ID: 66
+INFO 2025-05-09 15:07:32,924 allergen 28956 30212 Request data: {'allergen_ids': [8, 9, 10]}
+INFO 2025-05-09 15:07:32,924 allergen 28956 30212 Allergen IDs to update: [8, 9, 10]
+INFO 2025-05-09 15:07:32,931 allergen 28956 30212 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-09 15:07:32,936 allergen 28956 30212 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-09 15:07:32,942 allergen 28956 30212 Created allergen mapping: user 66 - allergen 9
+INFO 2025-05-09 15:07:32,947 allergen 28956 30212 Created allergen mapping: user 66 - allergen 10
+INFO 2025-05-09 15:07:32,947 allergen 28956 30212 Successfully updated allergens for user 66: [8, 9, 10]
+INFO 2025-05-09 15:07:32,960 basehttp 28956 30212 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:07:33,037 equipment 28956 30212 Starting user equipment update for user ID: 66
+INFO 2025-05-09 15:07:33,037 equipment 28956 30212 Request data: {'equipment_ids': [1, 2]}
+INFO 2025-05-09 15:07:33,037 equipment 28956 30212 Equipment IDs to update: [1, 2]
+INFO 2025-05-09 15:07:33,046 equipment 28956 30212 Deleted (1, {'core.M2MUsrEqp': 1}) existing equipment records
+INFO 2025-05-09 15:07:33,053 equipment 28956 30212 Created equipment mapping: user 66 - equipment 1
+INFO 2025-05-09 15:07:33,058 equipment 28956 30212 Created equipment mapping: user 66 - equipment 2
+INFO 2025-05-09 15:07:33,058 equipment 28956 30212 Successfully updated equipment for user 66: [1, 2]
+INFO 2025-05-09 15:07:33,073 basehttp 28956 30212 "POST /api/user-equipment/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:07:33,174 allergen 28956 30212 Listing user allergens: user_id=66
+INFO 2025-05-09 15:07:33,180 allergen 28956 30212 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:07:33,190 basehttp 28956 30212 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:07:33,249 equipment 28956 30212 Listing user equipment: user_id=66
+INFO 2025-05-09 15:07:33,257 equipment 28956 30212 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-09 15:07:33,269 basehttp 28956 30212 "GET /api/user-equipment/ HTTP/1.1" 200 375
+INFO 2025-05-09 15:07:33,393 equipment 28956 30212 Listing user equipment: user_id=66
+INFO 2025-05-09 15:07:33,398 equipment 28956 30212 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-09 15:07:33,408 basehttp 28956 30212 "GET /api/user-equipment/ HTTP/1.1" 200 375
+INFO 2025-05-09 15:07:33,562 allergen 28956 30212 Listing all allergens: user_id=66
+INFO 2025-05-09 15:07:33,564 allergen 28956 30212 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-09 15:07:33,577 basehttp 28956 30212 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-09 15:07:33,630 equipment 28956 30212 Listing all equipment: user_id=66
+INFO 2025-05-09 15:07:33,635 equipment 28956 30212 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:07:33,650 basehttp 28956 30212 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-09 15:07:33,719 views 28956 30212 Profile accessed: user_id=66
+INFO 2025-05-09 15:07:33,734 basehttp 28956 30212 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-09 15:07:33,832 allergen 28956 30212 Listing user allergens: user_id=66
+INFO 2025-05-09 15:07:33,839 allergen 28956 30212 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:07:33,852 basehttp 28956 30212 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:07:33,934 equipment 28956 30212 Listing user equipment: user_id=66
+INFO 2025-05-09 15:07:33,942 equipment 28956 30212 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-09 15:07:33,956 basehttp 28956 30212 "GET /api/user-equipment/ HTTP/1.1" 200 375
+INFO 2025-05-09 15:07:40,961 equipment 28956 30212 Listing all equipment: user_id=66
+INFO 2025-05-09 15:07:40,964 equipment 28956 30212 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:07:40,977 basehttp 28956 30212 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-09 15:07:42,662 views 28956 30212 Profile update attempt: user_id=66
+INFO 2025-05-09 15:07:42,671 views 28956 30212 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-09 15:07:42,691 basehttp 28956 30212 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-09 15:07:42,740 allergen 28956 30212 Starting user allergens update for user ID: 66
+INFO 2025-05-09 15:07:42,741 allergen 28956 30212 Request data: {'allergen_ids': [8, 9, 10]}
+INFO 2025-05-09 15:07:42,741 allergen 28956 30212 Allergen IDs to update: [8, 9, 10]
+INFO 2025-05-09 15:07:42,750 allergen 28956 30212 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-09 15:07:42,755 allergen 28956 30212 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-09 15:07:42,763 allergen 28956 30212 Created allergen mapping: user 66 - allergen 9
+INFO 2025-05-09 15:07:42,770 allergen 28956 30212 Created allergen mapping: user 66 - allergen 10
+INFO 2025-05-09 15:07:42,770 allergen 28956 30212 Successfully updated allergens for user 66: [8, 9, 10]
+INFO 2025-05-09 15:07:42,794 basehttp 28956 30212 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:07:42,946 equipment 28956 30212 Starting user equipment update for user ID: 66
+INFO 2025-05-09 15:07:42,947 equipment 28956 30212 Request data: {'equipment_ids': []}
+INFO 2025-05-09 15:07:42,947 equipment 28956 30212 Equipment IDs to update: []
+INFO 2025-05-09 15:07:42,956 equipment 28956 30212 Deleted (2, {'core.M2MUsrEqp': 2}) existing equipment records
+INFO 2025-05-09 15:07:42,956 equipment 28956 30212 Successfully updated equipment for user 66: []
+INFO 2025-05-09 15:07:42,970 basehttp 28956 30212 "POST /api/user-equipment/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:07:43,101 allergen 28956 30212 Listing user allergens: user_id=66
+INFO 2025-05-09 15:07:43,110 allergen 28956 30212 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:07:43,126 basehttp 28956 30212 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:07:43,194 equipment 28956 30212 Listing user equipment: user_id=66
+INFO 2025-05-09 15:07:43,198 equipment 28956 30212 Retrieved 0 user equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:07:43,215 basehttp 28956 30212 "GET /api/user-equipment/ HTTP/1.1" 200 2
+INFO 2025-05-09 15:07:43,365 equipment 28956 30212 Listing user equipment: user_id=66
+INFO 2025-05-09 15:07:43,369 equipment 28956 30212 Retrieved 0 user equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:07:43,384 basehttp 28956 30212 "GET /api/user-equipment/ HTTP/1.1" 200 2
+INFO 2025-05-09 15:07:43,601 allergen 28956 30212 Listing all allergens: user_id=66
+INFO 2025-05-09 15:07:43,606 allergen 28956 30212 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-09 15:07:43,621 basehttp 28956 30212 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-09 15:07:43,691 equipment 28956 30212 Listing all equipment: user_id=66
+INFO 2025-05-09 15:07:43,696 equipment 28956 30212 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:07:43,718 basehttp 28956 30212 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-09 15:07:43,789 views 28956 30212 Profile accessed: user_id=66
+INFO 2025-05-09 15:07:43,807 basehttp 28956 30212 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-09 15:07:43,872 allergen 28956 30212 Listing user allergens: user_id=66
+INFO 2025-05-09 15:07:43,883 allergen 28956 30212 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:07:43,902 basehttp 28956 30212 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:07:44,054 equipment 28956 30212 Listing user equipment: user_id=66
+INFO 2025-05-09 15:07:44,058 equipment 28956 30212 Retrieved 0 user equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:07:44,080 basehttp 28956 30212 "GET /api/user-equipment/ HTTP/1.1" 200 2
+INFO 2025-05-09 15:08:43,912 allergen 28956 21976 Listing all allergens: user_id=66
+INFO 2025-05-09 15:08:43,915 allergen 28956 21976 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-09 15:08:43,927 basehttp 28956 21976 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-09 15:08:44,380 views 28956 21976 Profile accessed: user_id=66
+INFO 2025-05-09 15:08:44,391 basehttp 28956 21976 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-09 15:08:44,459 allergen 28956 21976 Listing user allergens: user_id=66
+INFO 2025-05-09 15:08:44,468 allergen 28956 21976 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:08:44,482 basehttp 28956 21976 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:08:44,554 equipment 28956 21976 Listing user equipment: user_id=66
+INFO 2025-05-09 15:08:44,558 equipment 28956 21976 Retrieved 0 user equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:08:44,575 basehttp 28956 21976 "GET /api/user-equipment/ HTTP/1.1" 200 2
+INFO 2025-05-09 15:09:08,487 views 28956 31348 Profile update attempt: user_id=66
+INFO 2025-05-09 15:09:08,496 views 28956 31348 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-09 15:09:08,515 basehttp 28956 31348 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-09 15:09:08,609 allergen 28956 31348 Starting user allergens update for user ID: 66
+INFO 2025-05-09 15:09:08,610 allergen 28956 31348 Request data: {'allergen_ids': [8, 9, 10]}
+INFO 2025-05-09 15:09:08,610 allergen 28956 31348 Allergen IDs to update: [8, 9, 10]
+INFO 2025-05-09 15:09:08,621 allergen 28956 31348 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-09 15:09:08,629 allergen 28956 31348 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-09 15:09:08,639 allergen 28956 31348 Created allergen mapping: user 66 - allergen 9
+INFO 2025-05-09 15:09:08,647 allergen 28956 31348 Created allergen mapping: user 66 - allergen 10
+INFO 2025-05-09 15:09:08,648 allergen 28956 31348 Successfully updated allergens for user 66: [8, 9, 10]
+INFO 2025-05-09 15:09:08,672 basehttp 28956 31348 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:09:08,743 equipment 28956 31348 Starting user equipment update for user ID: 66
+INFO 2025-05-09 15:09:08,745 equipment 28956 31348 Request data: {'equipment_ids': []}
+INFO 2025-05-09 15:09:08,745 equipment 28956 31348 Equipment IDs to update: []
+INFO 2025-05-09 15:09:08,752 equipment 28956 31348 Deleted (0, {}) existing equipment records
+INFO 2025-05-09 15:09:08,752 equipment 28956 31348 Successfully updated equipment for user 66: []
+INFO 2025-05-09 15:09:08,768 basehttp 28956 31348 "POST /api/user-equipment/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:09:09,163 allergen 28956 31348 Listing user allergens: user_id=66
+INFO 2025-05-09 15:09:09,208 allergen 28956 31348 Retrieved 3 user allergens, user_id=66, time=0.04s
+INFO 2025-05-09 15:09:09,224 basehttp 28956 31348 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:09:09,281 equipment 28956 31348 Listing user equipment: user_id=66
+INFO 2025-05-09 15:09:09,284 equipment 28956 31348 Retrieved 0 user equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:09:09,297 basehttp 28956 31348 "GET /api/user-equipment/ HTTP/1.1" 200 2
+INFO 2025-05-09 15:09:09,449 allergen 28956 31348 Listing all allergens: user_id=66
+INFO 2025-05-09 15:09:09,454 allergen 28956 31348 Retrieved unknown allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:09:09,473 basehttp 28956 31348 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-09 15:09:09,526 equipment 28956 31348 Listing all equipment: user_id=66
+INFO 2025-05-09 15:09:09,531 equipment 28956 31348 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-09 15:09:09,554 basehttp 28956 31348 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-09 15:09:09,625 views 28956 31348 Profile accessed: user_id=66
+INFO 2025-05-09 15:09:09,646 basehttp 28956 31348 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-09 15:09:09,748 allergen 28956 31348 Listing user allergens: user_id=66
+INFO 2025-05-09 15:09:09,760 allergen 28956 31348 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:09:09,782 basehttp 28956 31348 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:09:09,861 equipment 28956 31348 Listing user equipment: user_id=66
+INFO 2025-05-09 15:09:09,867 equipment 28956 31348 Retrieved 0 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-09 15:09:09,888 basehttp 28956 31348 "GET /api/user-equipment/ HTTP/1.1" 200 2
+INFO 2025-05-09 15:09:41,697 views 28956 240 Profile update attempt: user_id=66
+INFO 2025-05-09 15:09:41,705 views 28956 240 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-09 15:09:41,725 basehttp 28956 240 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-09 15:09:41,821 allergen 28956 240 Starting user allergens update for user ID: 66
+INFO 2025-05-09 15:09:41,822 allergen 28956 240 Request data: {'allergen_ids': [8, 9, 10]}
+INFO 2025-05-09 15:09:41,822 allergen 28956 240 Allergen IDs to update: [8, 9, 10]
+INFO 2025-05-09 15:09:41,830 allergen 28956 240 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-09 15:09:41,835 allergen 28956 240 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-09 15:09:41,841 allergen 28956 240 Created allergen mapping: user 66 - allergen 9
+INFO 2025-05-09 15:09:41,846 allergen 28956 240 Created allergen mapping: user 66 - allergen 10
+INFO 2025-05-09 15:09:41,846 allergen 28956 240 Successfully updated allergens for user 66: [8, 9, 10]
+INFO 2025-05-09 15:09:41,865 basehttp 28956 240 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:09:41,976 equipment 28956 240 Starting user equipment update for user ID: 66
+INFO 2025-05-09 15:09:41,976 equipment 28956 240 Request data: {'equipment_ids': []}
+INFO 2025-05-09 15:09:41,977 equipment 28956 240 Equipment IDs to update: []
+INFO 2025-05-09 15:09:41,981 equipment 28956 240 Deleted (0, {}) existing equipment records
+INFO 2025-05-09 15:09:41,981 equipment 28956 240 Successfully updated equipment for user 66: []
+INFO 2025-05-09 15:09:41,997 basehttp 28956 240 "POST /api/user-equipment/update/ HTTP/1.1" 200 59
+INFO 2025-05-09 15:09:42,061 allergen 28956 240 Listing user allergens: user_id=66
+INFO 2025-05-09 15:09:42,071 allergen 28956 240 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:09:42,086 basehttp 28956 240 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:09:42,187 equipment 28956 240 Listing user equipment: user_id=66
+INFO 2025-05-09 15:09:42,190 equipment 28956 240 Retrieved 0 user equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:09:42,203 basehttp 28956 240 "GET /api/user-equipment/ HTTP/1.1" 200 2
+INFO 2025-05-09 15:09:42,348 allergen 28956 240 Listing all allergens: user_id=66
+INFO 2025-05-09 15:09:42,351 allergen 28956 240 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-09 15:09:42,363 basehttp 28956 240 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-09 15:09:42,534 equipment 28956 240 Listing all equipment: user_id=66
+INFO 2025-05-09 15:09:42,541 equipment 28956 240 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-09 15:09:42,555 basehttp 28956 240 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-09 15:09:42,611 views 28956 240 Profile accessed: user_id=66
+INFO 2025-05-09 15:09:42,628 basehttp 28956 240 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-09 15:09:42,751 allergen 28956 240 Listing user allergens: user_id=66
+INFO 2025-05-09 15:09:42,759 allergen 28956 240 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:09:42,773 basehttp 28956 240 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:09:42,861 equipment 28956 240 Listing user equipment: user_id=66
+INFO 2025-05-09 15:09:42,863 equipment 28956 240 Retrieved 0 user equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:09:42,881 basehttp 28956 240 "GET /api/user-equipment/ HTTP/1.1" 200 2
+INFO 2025-05-09 15:10:02,355 allergen 28956 4436 Listing all allergens: user_id=66
+INFO 2025-05-09 15:10:02,360 allergen 28956 4436 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-09 15:10:02,372 basehttp 28956 4436 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-09 15:10:02,453 equipment 28956 4436 Listing all equipment: user_id=66
+INFO 2025-05-09 15:10:02,457 equipment 28956 4436 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:10:02,472 basehttp 28956 4436 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-09 15:10:02,543 views 28956 4436 Profile accessed: user_id=66
+INFO 2025-05-09 15:10:02,556 basehttp 28956 4436 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-09 15:10:02,622 allergen 28956 4436 Listing user allergens: user_id=66
+INFO 2025-05-09 15:10:02,631 allergen 28956 4436 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-09 15:10:02,654 basehttp 28956 4436 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-09 15:10:02,775 equipment 28956 4436 Listing user equipment: user_id=66
+INFO 2025-05-09 15:10:02,778 equipment 28956 4436 Retrieved 0 user equipment items, user_id=66, time=0.00s
+INFO 2025-05-09 15:10:02,791 basehttp 28956 4436 "GET /api/user-equipment/ HTTP/1.1" 200 2

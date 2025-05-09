@@ -86,7 +86,7 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
 
       if (success) {
         // Обновляем кэш оборудования
-        await dataRepository.getEquipment(forceRefresh: true);
+        await dataRepository.refreshUserEquipment();
 
         if (mounted) {
           Navigator.pop(context, true);

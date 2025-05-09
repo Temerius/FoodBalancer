@@ -207,7 +207,7 @@ class DataRepository with ChangeNotifier {
 
       // Обновляем аллергены и оборудование пользователя
       await refreshUserAllergens();
-      await getEquipment(forceRefresh: true);
+      await refreshUserEquipment();
 
       // Обновляем рецепты
       await getRecipes(forceRefresh: true);
@@ -291,8 +291,46 @@ class DataRepository with ChangeNotifier {
     }
   }
 
+  // Обновление оборудования пользователя
+  Future<void> refreshUserEquipment() async {
+    print("\n===== REFRESHING USER EQUIPMENT =====");
+    try {
+      // Выводим дамп кэша до обновления
+      print("CACHE BEFORE REFRESH:");
+      await CacheService.dumpCache();
+
+      // Получаем ID оборудования пользователя
+      final equipmentIds = await _userRepository.getUserEquipmentIds(config: CacheConfig.refresh);
+
+      print("USER EQUIPMENT IDS FROM SERVER: $equipmentIds");
+
+      // Обновляем пользователя в памяти, если он существует
+      if (user != null) {
+        print("UPDATING USER EQUIPMENT IDS IN MEMORY: ${user!.equipmentIds} -> $equipmentIds");
+
+        // Обновляем список оборудования в объекте пользователя
+        _userRepository.updateUserEquipmentInMemory(equipmentIds);
+
+        // Обновляем флаги "выбрано" в списке оборудования
+        for (var equipment in _equipmentRepository.equipment) {
+          equipment.isSelected = equipmentIds.contains(equipment.id);
+        }
+
+        notifyListeners();
+      }
+
+      // Выводим дамп кэша после обновления
+      print("CACHE AFTER REFRESH:");
+      await CacheService.dumpCache();
+
+      print("===== USER EQUIPMENT REFRESH COMPLETED =====");
+    } catch (e) {
+      print("===== ERROR REFRESHING USER EQUIPMENT: $e =====");
+      _setError(e.toString());
+    }
+  }
+
   // Обновление профиля пользователя
-  // Исправленный метод обновления профиля пользователя в DataRepository
   Future<bool> updateUserProfile(User updatedUser) async {
     try {
       final success = await _userRepository.updateUserProfile(updatedUser);
@@ -301,6 +339,15 @@ class DataRepository with ChangeNotifier {
         // Форсированное обновление кэша оборудования и аллергенов после обновления профиля
         await _userRepository.getUserAllergenIds(config: CacheConfig(forceRefresh: true));
         await _userRepository.getUserEquipmentIds(config: CacheConfig(forceRefresh: true));
+
+        // Обновляем флаги выбора в списках аллергенов и оборудования
+        for (var allergen in _allergenRepository.allergens) {
+          allergen.isSelected = updatedUser.allergenIds.contains(allergen.id);
+        }
+
+        for (var equipment in _equipmentRepository.equipment) {
+          equipment.isSelected = updatedUser.equipmentIds.contains(equipment.id);
+        }
 
         // Обновляем все, что зависит от профиля пользователя
         notifyListeners();
