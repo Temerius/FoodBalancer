@@ -142,17 +142,29 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   @override
   void dispose() {
+    print('AddProductScreen: dispose called');
     _typeSearchController.dispose();
     _productNameController.dispose();
     _quantityController.dispose();
     super.dispose();
   }
 
+  // Complete build method for AddProductScreen
   @override
   Widget build(BuildContext context) {
+    print('AddProductScreen: build called');
+
     return Scaffold(
       appBar: AppBar(
         title: Text(_isEditing ? 'Редактирование продукта' : 'Добавление продукта'),
+        // Добавляем кнопку закрытия для отладки
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            print('AddProductScreen: Close button pressed');
+            Navigator.of(context).pop(false);
+          },
+        ),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -413,14 +425,21 @@ class _AddProductScreenState extends State<AddProductScreen> {
     }
   }
 
+  // Complete _saveProduct method for AddProductScreen
   Future<void> _saveProduct() async {
+    print('_saveProduct: Starting save process');
+
     if (_formKey.currentState!.validate()) {
+      print('_saveProduct: Form validation passed');
+
       setState(() {
         _isLoading = true;
       });
 
       try {
         if (_isEditing && _currentItem != null) {
+          print('_saveProduct: Updating existing product');
+
           // Обновление существующего продукта
           await _refrigeratorRepository.updateItem(
             itemId: _currentItem!.id,
@@ -429,15 +448,21 @@ class _AddProductScreenState extends State<AddProductScreen> {
           );
 
           if (mounted) {
+            print('_saveProduct: Showing success snackbar for update');
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Продукт обновлен'),
               ),
             );
+            print('_saveProduct: Navigating back with result=true for update');
+            Navigator.pop(context, true);
           }
         } else {
+          print('_saveProduct: Adding new product');
+
           // Добавление нового продукта
           if (_selectedType == null) {
+            print('_saveProduct: Error - no type selected');
             throw Exception('Выберите тип продукта');
           }
 
@@ -472,8 +497,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
           if (exactMatch != null) {
             // Используем существующий ингредиент с таким же сроком годности
             ingredientId = exactMatch.id;
+            print('_saveProduct: Using existing ingredient with id=$ingredientId');
           } else {
             // Создаем новый ингредиент
+            print('_saveProduct: Creating new ingredient');
+
             final newIngredientResponse = await dataRepository.apiService.post('/api/ingredients/', {
               'ing_name': _productNameController.text,
               'ing_exp_date': _expiryDate.toIso8601String().split('T')[0],
@@ -486,9 +514,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
             });
 
             ingredientId = newIngredientResponse['ing_id'];
+            print('_saveProduct: New ingredient created with id=$ingredientId');
           }
 
           // Добавляем продукт в холодильник
+          print('_saveProduct: Adding product to refrigerator');
           await _refrigeratorRepository.addItem(
             ingredientId: ingredientId,
             quantity: int.parse(_quantityController.text),
@@ -496,19 +526,20 @@ class _AddProductScreenState extends State<AddProductScreen> {
           );
 
           if (mounted) {
+            print('_saveProduct: Showing success snackbar for add');
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('${_productNameController.text} добавлен в холодильник'),
               ),
             );
-            Navigator.pop(context);
+            print('_saveProduct: Navigating back with result=true for add');
+            Navigator.pop(context, true);
           }
         }
-
-        if (mounted) {
-          Navigator.pop(context);
-        }
       } catch (e) {
+        print('_saveProduct: Error occurred - $e');
+        print('_saveProduct: Stack trace - ${StackTrace.current}');
+
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -518,10 +549,15 @@ class _AddProductScreenState extends State<AddProductScreen> {
           );
         }
       } finally {
-        setState(() {
-          _isLoading = false;
-        });
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+          print('_saveProduct: Save process completed, _isLoading set to false');
+        }
       }
+    } else {
+      print('_saveProduct: Form validation failed');
     }
   }
 
