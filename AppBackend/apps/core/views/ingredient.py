@@ -121,7 +121,6 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RefrigeratorViewSet(viewsets.ModelViewSet):
-    cache_prefix = 'refrigerator'
     """API для доступа к холодильнику пользователя (ингредиенты пользователя)"""
     serializer_class = UserIngredientSerializer
     permission_classes = [IsAuthenticated]
@@ -130,7 +129,14 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
         """Возвращает ингредиенты текущего пользователя"""
         user_id = self.request.user.usr_id
         logger.debug(f"Accessing refrigerator: user_id={user_id}")
-        return M2MUsrIng.objects.filter(mui_usr_id=self.request.user)
+
+        # Используем select_related для оптимизации запросов
+        return M2MUsrIng.objects.filter(
+            mui_usr_id=self.request.user
+        ).select_related(
+            'mui_ing_id',
+            'mui_ing_id__ing_igt_id'
+        ).order_by('-mui_id')
 
     def list(self, request, *args, **kwargs):
         """Получение списка ингредиентов пользователя"""
@@ -138,11 +144,72 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
         user_id = request.user.usr_id
         logger.info(f"Listing refrigerator ingredients: user_id={user_id}")
 
-        response = super().list(request, *args, **kwargs)
-        count = response.data['count'] if 'count' in response.data else 'unknown'
+        # Получаем параметры для фильтрации
+        search_query = request.query_params.get('search', '')
+        category_filter = request.query_params.get('category', '')
+        expiring_soon = request.query_params.get('expiring_soon', '').lower() == 'true'
+
+        queryset = self.get_queryset()
+
+        # Фильтрация по поиску
+        if search_query:
+            queryset = queryset.filter(
+                Q(mui_ing_id__ing_name__icontains=search_query) |
+                Q(mui_ing_id__ing_igt_id__igt_name__icontains=search_query)
+            )
+
+        # Фильтрация по истекающему сроку годности (в течение 3 дней)
+        if expiring_soon:
+            now = datetime.now().date()
+            future = now + timedelta(days=3)
+            queryset = queryset.filter(
+                mui_ing_id__ing_exp_date__lte=future,
+                mui_ing_id__ing_exp_date__gte=now
+            )
+
+        # Пагинация
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+
+        # Добавляем информацию о количестве и статистике
+        response_data = {
+            'results': serializer.data,
+            'count': len(serializer.data),
+            'stats': self._get_refrigerator_stats(request.user),
+        }
+
         logger.info(
-            f"Retrieved {count} refrigerator ingredients for user_id={user_id}, time={time.time() - start_time:.2f}s")
-        return response
+            f"Retrieved {len(serializer.data)} refrigerator ingredients for user_id={user_id}, time={time.time() - start_time:.2f}s"
+        )
+        return Response(response_data)
+
+    def _get_refrigerator_stats(self, user):
+        """Получение статистики холодильника"""
+        now = datetime.now().date()
+        total_items = M2MUsrIng.objects.filter(mui_usr_id=user).count()
+
+        # Количество продуктов с истекающим сроком
+        expiring_count = M2MUsrIng.objects.filter(
+            mui_usr_id=user,
+            mui_ing_id__ing_exp_date__lte=now + timedelta(days=3),
+            mui_ing_id__ing_exp_date__gte=now
+        ).count()
+
+        # Просроченные продукты
+        expired_count = M2MUsrIng.objects.filter(
+            mui_usr_id=user,
+            mui_ing_id__ing_exp_date__lt=now
+        ).count()
+
+        return {
+            'total_items': total_items,
+            'expiring_soon': expiring_count,
+            'expired': expired_count,
+        }
 
     def create(self, request, *args, **kwargs):
         """Добавление ингредиента в холодильник пользователя"""
@@ -183,7 +250,8 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
 
             logger.info(
                 f"Ingredient added to refrigerator: ingredient_id={ingredient_id}, name='{ingredient.ing_name}', "
-                f"quantity={quantity} {quantity_type}, user_id={user_id}, time={time.time() - start_time:.2f}s")
+                f"quantity={quantity} {quantity_type}, user_id={user_id}, time={time.time() - start_time:.2f}s"
+            )
             serializer = self.get_serializer(refrigerator_item)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -196,7 +264,8 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
         except Exception as e:
             logger.error(
                 f"Error adding ingredient to refrigerator: ingredient_id={ingredient_id}, user_id={user_id}, error: {str(e)}",
-                exc_info=True)
+                exc_info=True
+            )
             return Response(
                 {"error": f"Произошла ошибка: {str(e)}"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -213,7 +282,8 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
         # Проверка, принадлежит ли ингредиент текущему пользователю
         if instance.mui_usr_id != request.user:
             logger.warning(
-                f"Unauthorized refrigerator update attempt: ingredient_id={ingredient_id}, requested_by={user_id}, owner={instance.mui_usr_id.usr_id}")
+                f"Unauthorized refrigerator update attempt: ingredient_id={ingredient_id}, requested_by={user_id}, owner={instance.mui_usr_id.usr_id}"
+            )
             return Response(
                 {"error": "У вас нет прав на редактирование этого ингредиента"},
                 status=status.HTTP_403_FORBIDDEN
@@ -224,7 +294,8 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
         old_quantity_type = instance.mui_quantity_type
 
         logger.info(
-            f"Updating refrigerator ingredient: ingredient_id={ingredient_id}, name='{ingredient_name}', user_id={user_id}")
+            f"Updating refrigerator ingredient: ingredient_id={ingredient_id}, name='{ingredient_name}', user_id={user_id}"
+        )
         response = super().update(request, *args, **kwargs)
 
         # Логируем изменения
@@ -241,13 +312,16 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
             if changes:
                 logger.info(
                     f"Refrigerator ingredient updated: ingredient_id={ingredient_id}, name='{ingredient_name}', "
-                    f"changes: {', '.join(changes)}, user_id={user_id}, time={time.time() - start_time:.2f}s")
+                    f"changes: {', '.join(changes)}, user_id={user_id}, time={time.time() - start_time:.2f}s"
+                )
             else:
                 logger.info(
-                    f"Refrigerator ingredient update called but no changes made: ingredient_id={ingredient_id}, user_id={user_id}")
+                    f"Refrigerator ingredient update called but no changes made: ingredient_id={ingredient_id}, user_id={user_id}"
+                )
         else:
             logger.warning(
-                f"Failed to update refrigerator ingredient: ingredient_id={ingredient_id}, user_id={user_id}, status={response.status_code}")
+                f"Failed to update refrigerator ingredient: ingredient_id={ingredient_id}, user_id={user_id}, status={response.status_code}"
+            )
 
         return response
 
@@ -262,17 +336,20 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
         # Проверка, принадлежит ли ингредиент текущему пользователю
         if instance.mui_usr_id != request.user:
             logger.warning(
-                f"Unauthorized refrigerator delete attempt: ingredient_id={ingredient_id}, requested_by={user_id}, owner={instance.mui_usr_id.usr_id}")
+                f"Unauthorized refrigerator delete attempt: ingredient_id={ingredient_id}, requested_by={user_id}, owner={instance.mui_usr_id.usr_id}"
+            )
             return Response(
                 {"error": "У вас нет прав на удаление этого ингредиента"},
                 status=status.HTTP_403_FORBIDDEN
             )
 
         logger.info(
-            f"Removing ingredient from refrigerator: ingredient_id={ingredient_id}, name='{ingredient_name}', user_id={user_id}")
+            f"Removing ingredient from refrigerator: ingredient_id={ingredient_id}, name='{ingredient_name}', user_id={user_id}"
+        )
         self.perform_destroy(instance)
         logger.info(
-            f"Ingredient removed from refrigerator: ingredient_id={ingredient_id}, name='{ingredient_name}', user_id={user_id}, time={time.time() - start_time:.2f}s")
+            f"Ingredient removed from refrigerator: ingredient_id={ingredient_id}, name='{ingredient_name}', user_id={user_id}, time={time.time() - start_time:.2f}s"
+        )
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(detail=False, methods=['get'])
@@ -287,7 +364,9 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
         future = now + timedelta(days=3)
 
         # Получаем ингредиенты пользователя
-        user_ingredients = M2MUsrIng.objects.filter(mui_usr_id=request.user).select_related('mui_ing_id')
+        user_ingredients = M2MUsrIng.objects.filter(
+            mui_usr_id=request.user
+        ).select_related('mui_ing_id', 'mui_ing_id__ing_igt_id')
 
         # Фильтруем по сроку годности
         expiring_items = []
@@ -300,3 +379,101 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(expiring_items, many=True)
         return Response(serializer.data)
+
+    @action(detail=False, methods=['get'])
+    def categories(self, request):
+        """Получить все категории (типы) ингредиентов в холодильнике пользователя"""
+        start_time = time.time()
+        user_id = request.user.usr_id
+
+        logger.info(f"Getting refrigerator categories: user_id={user_id}")
+
+        # Получаем уникальные типы ингредиентов в холодильнике пользователя
+        ingredient_types = IngredientType.objects.filter(
+            igt_id__in=M2MUsrIng.objects.filter(
+                mui_usr_id=request.user
+            ).values_list('mui_ing_id__ing_igt_id', flat=True).distinct()
+        )
+
+        serializer = IngredientTypeSerializer(ingredient_types, many=True)
+
+        logger.info(
+            f"Found {len(serializer.data)} categories in refrigerator for user_id={user_id}, time={time.time() - start_time:.2f}s"
+        )
+
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['post'])
+    def add_multiple(self, request):
+        """Добавить несколько ингредиентов одновременно"""
+        start_time = time.time()
+        user_id = request.user.usr_id
+
+        logger.info(f"Adding multiple ingredients to refrigerator: user_id={user_id}")
+
+        if 'items' not in request.data or not isinstance(request.data['items'], list):
+            return Response(
+                {"error": "Необходимо передать список ингредиентов в поле 'items'"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        added_items = []
+        errors = []
+
+        for item in request.data['items']:
+            if not all(k in item for k in ('mui_ing_id', 'mui_quantity', 'mui_quantity_type')):
+                errors.append({
+                    'ingredient_id': item.get('mui_ing_id'),
+                    'error': 'Необходимо указать все поля'
+                })
+                continue
+
+            try:
+                # Проверяем, существует ли ингредиент
+                ingredient = Ingredient.objects.get(ing_id=item['mui_ing_id'])
+
+                # Проверяем, нет ли уже такого ингредиента
+                if M2MUsrIng.objects.filter(
+                        mui_usr_id=request.user,
+                        mui_ing_id=item['mui_ing_id']
+                ).exists():
+                    errors.append({
+                        'ingredient_id': item['mui_ing_id'],
+                        'error': 'Ингредиент уже есть в холодильнике'
+                    })
+                    continue
+
+                # Создаем запись
+                refrigerator_item = M2MUsrIng.objects.create(
+                    mui_usr_id=request.user,
+                    mui_ing_id=ingredient,
+                    mui_quantity=item['mui_quantity'],
+                    mui_quantity_type=item['mui_quantity_type']
+                )
+
+                added_items.append(refrigerator_item.mui_id)
+
+            except Ingredient.DoesNotExist:
+                errors.append({
+                    'ingredient_id': item.get('mui_ing_id'),
+                    'error': 'Ингредиент не найден'
+                })
+            except Exception as e:
+                errors.append({
+                    'ingredient_id': item.get('mui_ing_id'),
+                    'error': str(e)
+                })
+
+        logger.info(
+            f"Added {len(added_items)} ingredients, {len(errors)} errors for user_id={user_id}, time={time.time() - start_time:.2f}s"
+        )
+
+        return Response({
+            'added': added_items,
+            'errors': errors,
+            'summary': {
+                'total': len(request.data['items']),
+                'added': len(added_items),
+                'failed': len(errors)
+            }
+        }, status=status.HTTP_201_CREATED if added_items else status.HTTP_400_BAD_REQUEST)

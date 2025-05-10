@@ -1,14 +1,18 @@
 // lib/repositories/data_repository.dart
 import 'package:flutter/foundation.dart';
+import 'package:to_be_renaimed/repositories/repositories/refrigerator_repository.dart';
+import '../models/refrigerator_item.dart';
 import '../models/user.dart';
 import '../models/allergen.dart';
 import '../models/equipment.dart';
 import '../models/recipe.dart';
 import '../services/api_service.dart';
+import '../services/refrigerator_service.dart';
 import 'repositories/user_repository.dart';
 import 'repositories/allergen_repository.dart';
 import 'repositories/equipment_repository.dart';
 import 'repositories/recipe_repository.dart';
+
 
 import 'models/cache_config.dart';
 import 'services/cache_service.dart';
@@ -22,6 +26,7 @@ class DataRepository with ChangeNotifier {
   late final AllergenRepository _allergenRepository;
   late final EquipmentRepository _equipmentRepository;
   late final RecipeRepository _recipeRepository;
+  late final RefrigeratorRepository _refrigeratorRepository;
 
   // Данные
   List<Recipe> _recipes = [];
@@ -55,6 +60,11 @@ class DataRepository with ChangeNotifier {
   bool get isLoadingAllergens => _isLoadingAllergens;
   bool get isLoadingEquipment => _isLoadingEquipment;
 
+  List<RefrigeratorItem> get refrigeratorItems => _refrigeratorRepository.items;
+  RefrigeratorStats? get refrigeratorStats => _refrigeratorRepository.stats;
+
+  ApiService get apiService => _apiService;
+
   DataRepository({ApiService? apiService})
       : _apiService = apiService ?? ApiService() {
     _userRepository = UserRepository(apiService: _apiService);
@@ -62,8 +72,8 @@ class DataRepository with ChangeNotifier {
     _equipmentRepository = EquipmentRepository(apiService: _apiService);
     _recipeRepository = RecipeRepository(apiService: _apiService);
 
-    // Инициализация тестовых рецептов для примера
-    _initializeMockRecipes();
+    final refrigeratorService = RefrigeratorService(apiService: _apiService);
+    _refrigeratorRepository = RefrigeratorRepository(refrigeratorService: refrigeratorService);
   }
 
   // Инициализация тестовых рецептов (пока API не готов)
@@ -532,6 +542,7 @@ class DataRepository with ChangeNotifier {
     await _allergenRepository.clearCache();
     await _equipmentRepository.clearCache();
     await _recipeRepository.clearCache();
+    await _refrigeratorRepository.clearCache();
 
     // Сбрасываем временные метки
     _lastProfileUpdate = null;

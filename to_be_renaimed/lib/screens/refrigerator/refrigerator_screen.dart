@@ -1,4 +1,13 @@
+// lib/screens/refrigerator/refrigerator_screen.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../repositories/data_repository.dart';
+import '../../repositories/repositories/refrigerator_repository.dart';
+import '../../repositories/models/cache_config.dart';
+import '../../models/refrigerator_item.dart';
+import '../../models/ingredient_type.dart';
+import '../../models/enums.dart';
+import '../../services/refrigerator_service.dart';
 
 class RefrigeratorScreen extends StatefulWidget {
   const RefrigeratorScreen({Key? key}) : super(key: key);
@@ -7,94 +16,203 @@ class RefrigeratorScreen extends StatefulWidget {
   State<RefrigeratorScreen> createState() => _RefrigeratorScreenState();
 }
 
-class _RefrigeratorScreenState extends State<RefrigeratorScreen> with SingleTickerProviderStateMixin {
+class _RefrigeratorScreenState extends State<RefrigeratorScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
   String _selectedCategory = 'Все';
 
-  // Симуляция категорий продуктов
-  final List<String> _categories = [
-    'Все',
-    'Овощи',
-    'Фрукты',
-    'Мясо',
-    'Молочные',
-    'Крупы',
-    'Напитки',
-  ];
+  bool _isLoading = false;
+  bool _isLoadingCategories = false;
+  String? _error;
 
-  // Симуляция продуктов в холодильнике
-  final List<Map<String, dynamic>> _products = [
-    {
-      'id': 1,
-      'name': 'Помидоры',
-      'quantity': '500',
-      'quantityType': 'grams',
-      'category': 'Овощи',
-      'expiryDate': '2025-05-05',
-      'daysLeft': 6,
-    },
-    {
-      'id': 2,
-      'name': 'Огурцы',
-      'quantity': '300',
-      'quantityType': 'grams',
-      'category': 'Овощи',
-      'expiryDate': '2025-05-02',
-      'daysLeft': 3,
-    },
-    {
-      'id': 3,
-      'name': 'Молоко',
-      'quantity': '1',
-      'quantityType': 'liters',
-      'category': 'Молочные',
-      'expiryDate': '2025-05-01',
-      'daysLeft': 2,
-    },
-    {
-      'id': 4,
-      'name': 'Яблоки',
-      'quantity': '5',
-      'quantityType': 'pieces',
-      'category': 'Фрукты',
-      'expiryDate': '2025-05-10',
-      'daysLeft': 11,
-    },
-    {
-      'id': 5,
-      'name': 'Куриное филе',
-      'quantity': '600',
-      'quantityType': 'grams',
-      'category': 'Мясо',
-      'expiryDate': '2025-05-03',
-      'daysLeft': 4,
-    },
-    {
-      'id': 6,
-      'name': 'Рис',
-      'quantity': '500',
-      'quantityType': 'grams',
-      'category': 'Крупы',
-      'expiryDate': '2025-12-31',
-      'daysLeft': 246,
-    },
-    {
-      'id': 7,
-      'name': 'Апельсиновый сок',
-      'quantity': '1.5',
-      'quantityType': 'liters',
-      'category': 'Напитки',
-      'expiryDate': '2025-05-15',
-      'daysLeft': 16,
-    },
-  ];
+  List<RefrigeratorItem> _items = [];
+  List<RefrigeratorItem> _expiringItems = [];
+  List<IngredientType> _categories = [];
+  RefrigeratorStats? _stats;
+
+  late RefrigeratorRepository _refrigeratorRepository;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+
+    // Инициализируем репозиторий
+    _initializeRepository();
+
+    // Слушаем изменения вкладок
+    _tabController.addListener(() {
+      if (_tabController.indexIsChanging) {
+        _loadData();
+      }
+    });
+  }
+
+  void _initializeRepository() {
+    final dataRepository = Provider.of<DataRepository>(context, listen: false);
+    final apiService = dataRepository.apiService;
+    final refrigeratorService = RefrigeratorService(apiService: apiService);
+    _refrigeratorRepository = RefrigeratorRepository(refrigeratorService: refrigeratorService);
+
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
+
+    try {
+      // Загружаем данные в зависимости от активной вкладки
+      if (_tabController.index == 0) {
+        // Вкладка "Все продукты"
+        await _loadItems();
+        await _loadCategories();
+      } else {
+        // Вкладка "Скоро истекают"
+        await _loadExpiringItems();
+      }
+
+      // Всегда загружаем статистику
+      await _loadStats();
+    } catch (e) {
+      setState(() {
+        _error = e.toString();
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _loadItems({bool forceRefresh = false}) async {
+    try {
+      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
+
+      List<RefrigeratorItem> items;
+      if (_searchQuery.isNotEmpty || _selectedCategory != 'Все') {
+        // Если есть фильтры, загружаем отфильтрованные данные
+        items = await _refrigeratorRepository.getItems(
+          search: _searchQuery.isNotEmpty ? _searchQuery : null,
+          category: _selectedCategory != 'Все' ? _selectedCategory : null,
+          config: config,
+        );
+      } else {
+        // Если нет фильтров, загружаем все продукты
+        items = await _refrigeratorRepository.getItems(config: config);
+      }
+
+      setState(() {
+        _items = items;
+      });
+    } catch (e) {
+      print('Ошибка загрузки продуктов: $e');
+      if (mounted) {
+        setState(() {
+          _error = 'Ошибка загрузки продуктов: $e';
+        });
+      }
+    }
+  }
+
+  Future<void> _loadExpiringItems({bool forceRefresh = false}) async {
+    try {
+      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
+      final items = await _refrigeratorRepository.getExpiringItems(config: config);
+
+      setState(() {
+        _expiringItems = items;
+      });
+    } catch (e) {
+      print('Ошибка загрузки истекающих продуктов: $e');
+      if (mounted) {
+        setState(() {
+          _error = 'Ошибка загрузки продуктов: $e';
+        });
+      }
+    }
+  }
+
+  Future<void> _loadCategories() async {
+    if (_isLoadingCategories) return;
+
+    setState(() {
+      _isLoadingCategories = true;
+    });
+
+    try {
+      final categories = await _refrigeratorRepository.getCategories();
+
+      // Добавляем опцию "Все" в начало списка
+      List<String> categoryNames = ['Все'];
+      categoryNames.addAll(categories.map((cat) => cat.name));
+
+      setState(() {
+        _categories = categories;
+      });
+    } catch (e) {
+      print('Ошибка загрузки категорий: $e');
+    } finally {
+      setState(() {
+        _isLoadingCategories = false;
+      });
+    }
+  }
+
+  Future<void> _loadStats() async {
+    try {
+      final stats = await _refrigeratorRepository.getStats();
+      setState(() {
+        _stats = stats;
+      });
+    } catch (e) {
+      print('Ошибка загрузки статистики: $e');
+    }
+  }
+
+  Future<void> _refreshData() async {
+    await _loadData();
+  }
+
+  Future<void> _removeItem(RefrigeratorItem item) async {
+    try {
+      await _refrigeratorRepository.removeItem(item.id);
+
+      // Удаляем из локального списка
+      setState(() {
+        _items.removeWhere((i) => i.id == item.id);
+        _expiringItems.removeWhere((i) => i.id == item.id);
+      });
+
+      // Показываем уведомление
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${item.name} удален из холодильника'),
+            action: SnackBarAction(
+              label: 'Отмена',
+              onPressed: () {
+                // Здесь можно реализовать отмену удаления
+                _refreshData();
+              },
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Ошибка удаления: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -104,29 +222,12 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen> with SingleTick
     super.dispose();
   }
 
-  List<Map<String, dynamic>> get _filteredProducts {
-    return _products.where((product) {
-      // Фильтрация по поиску
-      final matchesSearch = _searchQuery.isEmpty ||
-          product['name'].toLowerCase().contains(_searchQuery.toLowerCase());
-
-      // Фильтрация по категории
-      final matchesCategory = _selectedCategory == 'Все' ||
-          product['category'] == _selectedCategory;
-
-      return matchesSearch && matchesCategory;
-    }).toList();
-  }
-
-  List<Map<String, dynamic>> get _expiringProducts {
-    return _products
-        .where((product) => product['daysLeft'] <= 3)
-        .toList()
-      ..sort((a, b) => a['daysLeft'].compareTo(b['daysLeft']));
-  }
-
   @override
   Widget build(BuildContext context) {
+    // Создаем список категорий для фильтра
+    List<String> categoryNames = ['Все'];
+    categoryNames.addAll(_categories.map((cat) => cat.name));
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Мой холодильник'),
@@ -137,6 +238,43 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen> with SingleTick
             Tab(text: 'Скоро истекают'),
           ],
         ),
+        actions: [
+          if (_stats != null)
+            IconButton(
+              icon: Stack(
+                children: [
+                  const Icon(Icons.info_outline),
+                  if (_stats!.expiringSoon > 0)
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: Colors.orange,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 16,
+                          minHeight: 16,
+                        ),
+                        child: Text(
+                          '${_stats!.expiringSoon}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              onPressed: () {
+                _showStatsDialog();
+              },
+            ),
+        ],
       ),
       body: Column(
         children: [
@@ -156,6 +294,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen> with SingleTick
                       _searchController.clear();
                       _searchQuery = '';
                     });
+                    _loadItems();
                   },
                 )
                     : null,
@@ -166,6 +305,12 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen> with SingleTick
               onChanged: (value) {
                 setState(() {
                   _searchQuery = value;
+                });
+                // Добавляем небольшую задержку для поиска
+                Future.delayed(const Duration(milliseconds: 500), () {
+                  if (_searchQuery == value) {
+                    _loadItems();
+                  }
                 });
               },
             ),
@@ -178,9 +323,9 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen> with SingleTick
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemCount: _categories.length,
+                itemCount: categoryNames.length,
                 itemBuilder: (context, index) {
-                  final category = _categories[index];
+                  final category = categoryNames[index];
                   final isSelected = category == _selectedCategory;
                   return Padding(
                     padding: const EdgeInsets.only(right: 8),
@@ -192,6 +337,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen> with SingleTick
                           setState(() {
                             _selectedCategory = category;
                           });
+                          _loadItems();
                         }
                       },
                       selectedColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
@@ -208,14 +354,45 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen> with SingleTick
 
           // Список продуктов
           Expanded(
-            child: TabBarView(
+            child: _isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : _error != null
+                ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.error_outline,
+                    size: 64,
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Произошла ошибка',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    _error!,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 24),
+                  ElevatedButton(
+                    onPressed: _refreshData,
+                    child: const Text('Повторить'),
+                  ),
+                ],
+              ),
+            )
+                : TabBarView(
               controller: _tabController,
               children: [
                 // Вкладка "Все продукты"
-                _buildProductsList(_filteredProducts),
+                _buildProductsList(_items),
 
                 // Вкладка "Скоро истекают"
-                _buildProductsList(_expiringProducts),
+                _buildProductsList(_expiringItems),
               ],
             ),
           ),
@@ -227,7 +404,8 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen> with SingleTick
           FloatingActionButton(
             heroTag: 'btn1',
             onPressed: () {
-              Navigator.pushNamed(context, '/refrigerator/barcode-scanner');
+              Navigator.pushNamed(context, '/refrigerator/barcode-scanner')
+                  .then((_) => _refreshData());
             },
             backgroundColor: Colors.orange,
             mini: true,
@@ -237,7 +415,8 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen> with SingleTick
           FloatingActionButton(
             heroTag: 'btn2',
             onPressed: () {
-              Navigator.pushNamed(context, '/refrigerator/add-product');
+              Navigator.pushNamed(context, '/refrigerator/add-product')
+                  .then((_) => _refreshData());
             },
             child: const Icon(Icons.add),
           ),
@@ -246,178 +425,175 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen> with SingleTick
     );
   }
 
-  Widget _buildProductsList(List<Map<String, dynamic>> products) {
-    return products.isEmpty
-        ? Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.kitchen,
-            size: 64,
-            color: Colors.grey[400],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            _tabController.index == 0
-                ? 'Ваш холодильник пуст'
-                : 'Нет продуктов с истекающим сроком годности',
-            style: TextStyle(color: Colors.grey[600]),
-          ),
-          if (_tabController.index == 0) ...[
-            const SizedBox(height: 24),
-            ElevatedButton.icon(
-              onPressed: () {
-                Navigator.pushNamed(context, '/refrigerator/add-product');
-              },
-              icon: const Icon(Icons.add),
-              label: const Text('Добавить продукты'),
+  Widget _buildProductsList(List<RefrigeratorItem> products) {
+    if (products.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.kitchen,
+              size: 64,
+              color: Colors.grey[400],
             ),
+            const SizedBox(height: 16),
+            Text(
+              _tabController.index == 0
+                  ? 'Ваш холодильник пуст'
+                  : 'Нет продуктов с истекающим сроком годности',
+              style: TextStyle(color: Colors.grey[600]),
+            ),
+            if (_tabController.index == 0) ...[
+              const SizedBox(height: 24),
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/refrigerator/add-product')
+                      .then((_) => _refreshData());
+                },
+                icon: const Icon(Icons.add),
+                label: const Text('Добавить продукты'),
+              ),
+            ],
           ],
-        ],
-      ),
-    )
-        : ListView.builder(
-      padding: const EdgeInsets.only(bottom: 80),
-      itemCount: products.length,
-      itemBuilder: (context, index) {
-        final product = products[index];
+        ),
+      );
+    }
 
-        // Определение цвета индикатора срока годности
-        Color statusColor;
-        if (product['daysLeft'] <= 0) {
-          statusColor = Colors.red;
-        } else if (product['daysLeft'] <= 3) {
-          statusColor = Colors.orange;
-        } else if (product['daysLeft'] <= 7) {
-          statusColor = Colors.yellow;
-        } else {
-          statusColor = Colors.green;
-        }
+    return RefreshIndicator(
+      onRefresh: _refreshData,
+      child: ListView.builder(
+        padding: const EdgeInsets.only(bottom: 80),
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          final item = products[index];
+          final daysLeft = item.daysLeft;
 
-        return Dismissible(
-          key: Key(product['id'].toString()),
-          background: Container(
-            color: Colors.red,
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.only(right: 16),
-            child: const Icon(
-              Icons.delete,
-              color: Colors.white,
+          // Определение цвета индикатора срока годности
+          Color statusColor;
+          if (daysLeft == null) {
+            statusColor = Colors.grey;
+          } else if (daysLeft <= 0) {
+            statusColor = Colors.red;
+          } else if (daysLeft <= 3) {
+            statusColor = Colors.orange;
+          } else if (daysLeft <= 7) {
+            statusColor = Colors.yellow;
+          } else {
+            statusColor = Colors.green;
+          }
+
+          return Dismissible(
+            key: Key(item.id.toString()),
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.only(right: 16),
+              child: const Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
             ),
-          ),
-          direction: DismissDirection.endToStart,
-          onDismissed: (direction) {
-            setState(() {
-              _products.removeWhere((item) => item['id'] == product['id']);
-            });
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('${product['name']} удален из холодильника'),
-                action: SnackBarAction(
-                  label: 'Отменить',
+            direction: DismissDirection.endToStart,
+            onDismissed: (direction) {
+              _removeItem(item);
+            },
+            child: Card(
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: ListTile(
+                leading: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: item.ingredient?.imageUrl != null &&
+                      item.ingredient!.imageUrl!.isNotEmpty
+                      ? ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      item.ingredient!.imageUrl!,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Icon(
+                          Icons.kitchen,
+                          color: Theme.of(context).colorScheme.primary,
+                        );
+                      },
+                    ),
+                  )
+                      : Icon(
+                    Icons.kitchen,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                title: Text(item.name),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(item.formattedQuantity),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Container(
+                          width: 12,
+                          height: 12,
+                          decoration: BoxDecoration(
+                            color: statusColor,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          daysLeft == null
+                              ? 'Срок не указан'
+                              : daysLeft <= 0
+                              ? 'Просрочено'
+                              : 'Осталось $daysLeft дн.',
+                          style: TextStyle(
+                            color: daysLeft != null && daysLeft <= 0
+                                ? Colors.red
+                                : null,
+                            fontWeight: daysLeft != null && daysLeft <= 3
+                                ? FontWeight.bold
+                                : null,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                trailing: IconButton(
+                  icon: const Icon(Icons.edit),
                   onPressed: () {
-                    setState(() {
-                      _products.add(product);
-                    });
+                    Navigator.pushNamed(
+                      context,
+                      '/refrigerator/add-product',
+                      arguments: {'productId': item.id},
+                    ).then((_) => _refreshData());
                   },
                 ),
-              ),
-            );
-          },
-          child: Card(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: ListTile(
-              leading: Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(
-                  Icons.kitchen,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              title: Text(product['name']),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${product['quantity']} ${_getQuantityTypeText(product['quantityType'])}',
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Container(
-                        width: 12,
-                        height: 12,
-                        decoration: BoxDecoration(
-                          color: statusColor,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        product['daysLeft'] <= 0
-                            ? 'Просрочено'
-                            : 'Осталось ${product['daysLeft']} дн.',
-                        style: TextStyle(
-                          color: product['daysLeft'] <= 0 ? Colors.red : null,
-                          fontWeight: product['daysLeft'] <= 3
-                              ? FontWeight.bold
-                              : null,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              trailing: IconButton(
-                icon: const Icon(Icons.edit),
-                onPressed: () {
-                  // Редактирование продукта
-                  Navigator.pushNamed(
-                    context,
-                    '/refrigerator/add-product',
-                    arguments: {'productId': product['id']},
-                  );
+                onTap: () {
+                  _showProductDetails(context, item);
                 },
               ),
-              onTap: () {
-                // Детальная информация о продукте
-                _showProductDetails(context, product);
-              },
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
   String _getQuantityTypeText(String quantityType) {
-    switch (quantityType) {
-      case 'grams':
-        return 'г';
-      case 'milliliters':
-        return 'мл';
-      case 'liters':
-        return 'л';
-      case 'pieces':
-        return 'шт';
-      case 'tablespoons':
-        return 'ст. л.';
-      case 'teaspoons':
-        return 'ч. л.';
-      case 'cups':
-        return 'стак.';
-      default:
-        return '';
+    try {
+      final type = QuantityType.fromString(quantityType);
+      return type.getShortName();
+    } catch (e) {
+      return quantityType;
     }
   }
 
-  void _showProductDetails(BuildContext context, Map<String, dynamic> product) {
+  void _showProductDetails(BuildContext context, RefrigeratorItem item) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -425,6 +601,9 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen> with SingleTick
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (context) {
+        final daysLeft = item.daysLeft;
+        final ingredient = item.ingredient;
+
         return Container(
           padding: const EdgeInsets.all(24),
           child: Column(
@@ -432,35 +611,73 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen> with SingleTick
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                product['name'],
+                item.name,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 16),
-              _buildDetailRow(
-                context,
-                'Категория:',
-                product['category'],
-              ),
+
+              if (ingredient != null) ...[
+                _buildDetailRow(
+                  context,
+                  'Тип:',
+                  ingredient.type?.name ?? 'Не указан',
+                ),
+              ],
+
               _buildDetailRow(
                 context,
                 'Количество:',
-                '${product['quantity']} ${_getQuantityTypeText(product['quantityType'])}',
+                item.formattedQuantity,
               ),
-              _buildDetailRow(
+
+              if (ingredient?.expiryDate != null) _buildDetailRow(
                 context,
                 'Срок годности:',
-                product['expiryDate'],
+                ingredient!.expiryDate!.toIso8601String().split('T')[0],
               ),
-              _buildDetailRow(
+
+              if (daysLeft != null) _buildDetailRow(
                 context,
                 'Осталось дней:',
-                '${product['daysLeft']}',
-                valueColor: product['daysLeft'] <= 0
+                daysLeft.toString(),
+                valueColor: daysLeft <= 0
                     ? Colors.red
-                    : product['daysLeft'] <= 3
+                    : daysLeft <= 3
                     ? Colors.orange
                     : null,
               ),
+
+              if (ingredient != null) ...[
+                const SizedBox(height: 16),
+                const Divider(),
+                const SizedBox(height: 16),
+                Text(
+                  'Пищевая ценность',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 8),
+                _buildDetailRow(
+                  context,
+                  'Калории:',
+                  '${ingredient.calories} ккал',
+                ),
+                _buildDetailRow(
+                  context,
+                  'Белки:',
+                  '${ingredient.protein} г',
+                ),
+                _buildDetailRow(
+                  context,
+                  'Жиры:',
+                  '${ingredient.fat} г',
+                ),
+                _buildDetailRow(
+                  context,
+                  'Углеводы:',
+                  '${ingredient.carbs} г',
+                ),
+              ],
+
               const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -468,11 +685,12 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen> with SingleTick
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: () {
+                        Navigator.pop(context);
                         Navigator.pushNamed(
                           context,
                           '/refrigerator/add-product',
-                          arguments: {'productId': product['id']},
-                        );
+                          arguments: {'productId': item.id},
+                        ).then((_) => _refreshData());
                       },
                       icon: const Icon(Icons.edit),
                       label: const Text('Редактировать'),
@@ -482,10 +700,11 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen> with SingleTick
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () {
+                        Navigator.pop(context);
                         Navigator.pushNamed(
                           context,
                           '/recipes',
-                          arguments: {'ingredientId': product['id']},
+                          arguments: {'ingredient': item},
                         );
                       },
                       icon: const Icon(Icons.restaurant),
@@ -525,6 +744,66 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen> with SingleTick
           ),
         ],
       ),
+    );
+  }
+
+  void _showStatsDialog() {
+    if (_stats == null) return;
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Статистика холодильника'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildStatsRow(
+              'Всего продуктов:',
+              _stats!.totalItems.toString(),
+              Icons.inventory,
+            ),
+            const SizedBox(height: 16),
+            _buildStatsRow(
+              'Скоро истекают:',
+              _stats!.expiringSoon.toString(),
+              Icons.warning,
+              color: Colors.orange,
+            ),
+            const SizedBox(height: 16),
+            _buildStatsRow(
+              'Просрочены:',
+              _stats!.expired.toString(),
+              Icons.error,
+              color: Colors.red,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Закрыть'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatsRow(String label, String value, IconData icon, {Color? color}) {
+    return Row(
+      children: [
+        Icon(icon, color: color ?? Theme.of(context).colorScheme.primary),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Text(label),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
+        ),
+      ],
     );
   }
 }
