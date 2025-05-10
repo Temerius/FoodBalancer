@@ -873,3 +873,38 @@ INFO 2025-05-10 17:25:31,035 basehttp 12992 19368 "GET /api/favorites/ HTTP/1.1"
 INFO 2025-05-10 17:25:36,971 recipe 12992 19368 Adding recipe to favorites: user_id=66, recipe_id=16
 INFO 2025-05-10 17:25:36,980 recipe 12992 19368 Recipe added to favorites: user_id=66, recipe_id=16, time=0.01s
 INFO 2025-05-10 17:25:37,014 basehttp 12992 19368 "POST /api/favorites/ HTTP/1.1" 201 353
+INFO 2025-05-10 17:26:36,153 autoreload 15988 5476 Watching for file changes with StatReloader
+INFO 2025-05-10 17:26:36,457 wsgi 15988 31344 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-10 17:26:36,457 wsgi 15988 31344 Environment: config.settings
+INFO 2025-05-10 17:26:36,457 wsgi 15988 31344 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-10 17:26:36,462 wsgi 15988 31344 Application initialized successfully
+INFO 2025-05-10 17:33:42,299 views 15988 30396 Profile accessed: user_id=66
+INFO 2025-05-10 17:33:42,459 basehttp 15988 30396 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-10 17:33:42,610 views 15988 30396 Profile accessed: user_id=66
+INFO 2025-05-10 17:33:42,629 basehttp 15988 30396 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-10 17:33:42,767 allergen 15988 30396 Listing all allergens: user_id=66
+INFO 2025-05-10 17:33:42,774 allergen 15988 30396 Retrieved unknown allergens, user_id=66, time=0.01s
+INFO 2025-05-10 17:33:42,795 basehttp 15988 30396 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 17:33:42,879 equipment 15988 30396 Listing all equipment: user_id=66
+INFO 2025-05-10 17:33:42,887 equipment 15988 30396 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-10 17:33:42,907 basehttp 15988 30396 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 17:33:43,014 allergen 15988 30396 Listing user allergens: user_id=66
+INFO 2025-05-10 17:33:43,028 allergen 15988 30396 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-10 17:33:43,056 basehttp 15988 30396 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-10 17:33:43,139 equipment 15988 30396 Listing user equipment: user_id=66
+INFO 2025-05-10 17:33:43,153 equipment 15988 30396 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-10 17:33:43,180 basehttp 15988 30396 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-10 17:33:43,258 recipe 15988 30396 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-10 17:33:43,616 basehttp 15988 30396 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17504
+INFO 2025-05-10 17:33:44,280 recipe 15988 30396 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-10 17:33:44,451 basehttp 15988 30396 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17504
+INFO 2025-05-10 17:33:44,566 basehttp 15988 30396 "GET /api/favorites/ HTTP/1.1" 200 355
+INFO 2025-05-10 17:34:20,271 recipe 15988 7736 Adding recipe to favorites: user_id=66, recipe_id=17
+INFO 2025-05-10 17:34:20,438 recipe 15988 7736 Recipe added to favorites: user_id=66, recipe_id=17, time=0.17s
+INFO 2025-05-10 17:34:20,481 basehttp 15988 7736 "POST /api/favorites/ HTTP/1.1" 201 361
+INFO 2025-05-10 17:34:38,530 recipe 15988 5284 Removing recipe from favorites by ID: user_id=66, recipe_id=17
+INFO 2025-05-10 17:34:38,545 recipe 15988 5284 Recipe removed from favorites: user_id=66, recipe_id=17, time=0.01s
+INFO 2025-05-10 17:34:38,577 basehttp 15988 5284 "DELETE /api/favorites/remove/ HTTP/1.1" 204 0
+INFO 2025-05-10 17:36:02,198 recipe 15988 20444 Adding recipe to favorites: user_id=66, recipe_id=17
+INFO 2025-05-10 17:36:02,205 recipe 15988 20444 Recipe added to favorites: user_id=66, recipe_id=17, time=0.01s
+INFO 2025-05-10 17:36:02,240 basehttp 15988 20444 "POST /api/favorites/ HTTP/1.1" 201 361
