@@ -35,6 +35,8 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
 
   late RefrigeratorRepository _refrigeratorRepository;
 
+
+
   @override
   void initState() {
     super.initState();
@@ -64,61 +66,19 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
   }
 
   // Новый метод для обработки возврата с других экранов
-  Future<void> _handleNavigationReturn(dynamic result) async {
-    print('Navigation return: $result');
-
-    if (_isRefreshing) {
-      print('Already refreshing, skipping');
-      return;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (mounted) {
+      _loadData();
     }
+  }
 
-    if (result == true) { // Проверяем, что операция была успешной
-      print('Starting data refresh after navigation');
-
-      if (!mounted) {
-        print('Widget not mounted, aborting refresh');
-        return;
-      }
-
-      setState(() {
-        _isRefreshing = true;
-      });
-
-      try {
-        // Добавляем небольшую задержку для визуальной обратной связи
-        print('Waiting before refresh...');
-        await Future.delayed(const Duration(milliseconds: 100));
-
-        print('Calling _refreshData...');
-        await _refreshData();
-
-        print('Data refresh completed successfully');
-      } catch (e) {
-        print('Error refreshing data: $e');
-        print('Stack trace: ${StackTrace.current}');
-
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Ошибка обновления данных: $e'),
-              backgroundColor: Colors.red,
-              action: SnackBarAction(
-                label: 'Повторить',
-                onPressed: () => _refreshData(),
-              ),
-            ),
-          );
-        }
-      } finally {
-        if (mounted) {
-          setState(() {
-            _isRefreshing = false;
-          });
-          print('Refresh completed, _isRefreshing set to false');
-        }
-      }
-    } else {
-      print('Result was not true, no refresh needed');
+// И обновить _handleNavigationReturn
+  Future<void> _handleNavigationReturn(dynamic result) async {
+    if (result == true) {
+      // Вызываем didChangeDependencies для обновления экрана
+      didChangeDependencies();
     }
   }
 
