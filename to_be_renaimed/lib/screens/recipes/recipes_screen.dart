@@ -1,6 +1,7 @@
 // lib/screens/recipes/recipes_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cached_network_image/cached_network_image.dart'; // Добавлен импорт
 import '../../repositories/data_repository.dart';
 import '../../models/recipe.dart';
 
@@ -42,8 +43,6 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
   }
 
   // Load recipe data from repository
-  // Обновленная версия метода _loadData в RecipesScreen
-
   Future<void> _loadData({bool forceRefresh = false}) async {
     if (mounted) {
       setState(() {
@@ -297,13 +296,56 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: [
-                  // Recipe image
-                  Container(
+                  // Recipe image с использованием CachedNetworkImage
+                  recipe.mainImageUrl != null && recipe.mainImageUrl!.isNotEmpty
+                      ? ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      bottomLeft: Radius.circular(8),
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl: recipe.mainImageUrl!,
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Container(
+                        color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) {
+                        print('ОШИБКА ЗАГРУЗКИ ИЗОБРАЖЕНИЯ: $url, ошибка: $error');
+                        return Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(8),
+                              bottomLeft: Radius.circular(8),
+                            ),
+                          ),
+                          child: Icon(
+                            Icons.restaurant,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 40,
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                      : Container(
                     width: 100,
                     height: 100,
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        bottomLeft: Radius.circular(8),
+                      ),
                     ),
                     child: Icon(
                       Icons.restaurant,
@@ -321,10 +363,15 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                         Text(
                           recipe.title,
                           style: Theme.of(context).textTheme.titleMedium,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 8),
+
+                        // Исправленное отображение информации о рецепте
                         Row(
                           children: [
+                            // Калории
                             Icon(
                               Icons.local_fire_department,
                               size: 16,
@@ -335,16 +382,28 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                               '${recipe.calories} ккал',
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
-                            const SizedBox(width: 16),
-                            Icon(
-                              Icons.access_time,
-                              size: 16,
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              '${recipe.prepTime} мин',
-                              style: Theme.of(context).textTheme.bodyMedium,
+                            const SizedBox(width: 8), // Уменьшен отступ
+
+                            // Время приготовления с ограничением ширины
+                            Flexible(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.access_time,
+                                    size: 16,
+                                    color: Theme.of(context).colorScheme.secondary,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Flexible(
+                                    child: Text(
+                                      '${recipe.prepTime} мин',
+                                      style: Theme.of(context).textTheme.bodyMedium,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),

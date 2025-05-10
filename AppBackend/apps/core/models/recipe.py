@@ -13,6 +13,13 @@ class Recipe(models.Model):
     rcp_description = models.TextField(_('Описание'), blank=True)
     rcp_cal = models.IntegerField(_('Калорийность'), default=0)
     rcp_portion_count = models.SmallIntegerField(_('Количество порций'), default=1)
+    rcp_main_img = models.CharField(_('Основное изображение'), max_length=256, blank=True, null=True)
+
+    # Новые поля
+    rcp_weight = models.IntegerField(_('Вес порции (г)'), default=0)
+    rcp_fat = models.IntegerField(_('Жиры (г)'), default=0)
+    rcp_hydrates = models.IntegerField(_('Углеводы (г)'), default=0)
+    rcp_protein = models.IntegerField(_('Белки (г)'), default=0)
 
     class Meta:
         db_table = 'recipe'

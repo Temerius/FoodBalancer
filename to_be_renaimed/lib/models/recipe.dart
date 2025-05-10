@@ -1,3 +1,4 @@
+// lib/models/recipe.dart
 import 'package:to_be_renaimed/models/enums.dart';
 import 'package:to_be_renaimed/models/equipment.dart';
 import 'package:to_be_renaimed/models/ingredient_type.dart';
@@ -8,6 +9,13 @@ class Recipe {
   final String description;
   final int calories;
   final int portionCount;
+  final String? mainImageUrl;
+
+  // Новые поля
+  final int weight;
+  final int fat;
+  final int carbs;
+  final int protein;
 
   // Runtime properties
   bool isFavorite = false;
@@ -16,9 +24,6 @@ class Recipe {
   List<Equipment> requiredEquipment = [];
 
   // Calculated nutritional values
-  int? _protein;
-  int? _fat;
-  int? _carbs;
   int? _prepTime; // Estimated preparation time in minutes
 
   Recipe({
@@ -27,32 +32,156 @@ class Recipe {
     required this.description,
     required this.calories,
     required this.portionCount,
+    this.mainImageUrl,
+    this.weight = 0,      // Новое поле - вес порции
+    this.fat = 0,         // Новое поле - жиры
+    this.carbs = 0,       // Новое поле - углеводы
+    this.protein = 0,     // Новое поле - белки
     this.isFavorite = false,
     List<RecipeStep>? steps,
     List<RecipeIngredient>? ingredients,
     List<Equipment>? requiredEquipment,
-    int? protein,
-    int? fat,
-    int? carbs,
     int? prepTime,
   }) :
         steps = steps ?? [],
         ingredients = ingredients ?? [],
         requiredEquipment = requiredEquipment ?? [],
-        _protein = protein,
-        _fat = fat,
-        _carbs = carbs,
         _prepTime = prepTime;
 
   factory Recipe.fromJson(Map<String, dynamic> json) {
-    return Recipe(
-      id: json['rcp_id'],
-      title: json['rcp_title'] ?? '',
-      description: json['rcp_description'] ?? '',
-      calories: json['rcp_cal'] ?? 0,
-      portionCount: json['rcp_portion_count'] ?? 1,
-      isFavorite: json['is_favorite'] ?? false, // From favorite_recipe table/join
-    );
+    try {
+      // Проверка базовых полей
+      final recipeId = json['rcp_id'];
+      final title = json['rcp_title'] ?? '';
+      final description = json['rcp_description'] ?? '';
+
+      if (recipeId == null) {
+        throw FormatException('Обязательное поле rcp_id отсутствует в данных рецепта');
+      }
+
+      // Попытка парсинга числовых полей с корректной обработкой ошибок
+      int calories = 0;
+      try {
+        var calValue = json['rcp_cal'] ?? 0;
+        if (calValue is String) {
+          calories = int.tryParse(calValue) ?? 0;
+        } else {
+          calories = calValue is int ? calValue : 0;
+        }
+      } catch (e) {
+        print("Error parsing calories: $e");
+        calories = 0;
+      }
+
+      int portionCount = 1;
+      try {
+        var portionValue = json['rcp_portion_count'] ?? 1;
+        if (portionValue is String) {
+          portionCount = int.tryParse(portionValue) ?? 1;
+        } else {
+          portionCount = portionValue is int ? portionValue : 1;
+        }
+        if (portionCount <= 0) portionCount = 1; // Минимум 1 порция
+      } catch (e) {
+        print("Error parsing portion count: $e");
+        portionCount = 1;
+      }
+
+      // Парсинг новых полей
+      int weight = 0;
+      try {
+        var weightValue = json['rcp_weight'] ?? 0;
+        if (weightValue is String) {
+          weight = int.tryParse(weightValue) ?? 0;
+        } else {
+          weight = weightValue is int ? weightValue : 0;
+        }
+      } catch (e) {
+        print("Error parsing weight: $e");
+        weight = 0;
+      }
+
+      int fat = 0;
+      try {
+        var fatValue = json['rcp_fat'] ?? 0;
+        if (fatValue is String) {
+          fat = int.tryParse(fatValue) ?? 0;
+        } else {
+          fat = fatValue is int ? fatValue : 0;
+        }
+      } catch (e) {
+        print("Error parsing fat: $e");
+        fat = 0;
+      }
+
+      int carbs = 0;
+      try {
+        var carbsValue = json['rcp_hydrates'] ?? 0; // Важно: поле называется rcp_hydrates в БД
+        if (carbsValue is String) {
+          carbs = int.tryParse(carbsValue) ?? 0;
+        } else {
+          carbs = carbsValue is int ? carbsValue : 0;
+        }
+      } catch (e) {
+        print("Error parsing carbs: $e");
+        carbs = 0;
+      }
+
+      int protein = 0;
+      try {
+        var proteinValue = json['rcp_protein'] ?? 0;
+        if (proteinValue is String) {
+          protein = int.tryParse(proteinValue) ?? 0;
+        } else {
+          protein = proteinValue is int ? proteinValue : 0;
+        }
+      } catch (e) {
+        print("Error parsing protein: $e");
+        protein = 0;
+      }
+
+      // Парсинг флага избранного
+      bool isFavorite = false;
+      try {
+        var favValue = json['is_favorite'] ?? false;
+        if (favValue is String) {
+          isFavorite = favValue.toLowerCase() == 'true';
+        } else {
+          isFavorite = favValue is bool ? favValue : false;
+        }
+      } catch (e) {
+        print("Error parsing isFavorite: $e");
+        isFavorite = false;
+      }
+
+      // Парсинг URL изображения
+      String? mainImageUrl;
+      try {
+        mainImageUrl = json['rcp_main_img'] as String?;
+      } catch (e) {
+        print("Error parsing main image URL: $e");
+        mainImageUrl = null;
+      }
+
+      // Создание и возврат объекта Recipe
+      return Recipe(
+        id: recipeId is int ? recipeId : 0,
+        title: title,
+        description: description,
+        calories: calories,
+        portionCount: portionCount,
+        mainImageUrl: mainImageUrl,
+        weight: weight,        // Новое поле
+        fat: fat,              // Новое поле
+        carbs: carbs,          // Новое поле
+        protein: protein,      // Новое поле
+        isFavorite: isFavorite,
+      );
+    } catch (e) {
+      print("Error creating Recipe from JSON: $e");
+      print("JSON data: $json");
+      throw FormatException('Ошибка при создании рецепта из данных: $e');
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -62,57 +191,27 @@ class Recipe {
       'rcp_description': description,
       'rcp_cal': calories,
       'rcp_portion_count': portionCount,
+      'rcp_weight': weight,       // Новое поле
+      'rcp_fat': fat,             // Новое поле
+      'rcp_hydrates': carbs,      // Важно: в БД поле называется hydrates, а не carbs
+      'rcp_protein': protein,     // Новое поле
       'is_favorite': isFavorite,
+      if (mainImageUrl != null) 'rcp_main_img': mainImageUrl,
     };
   }
 
-  // Getter for protein (calculated if not set)
-  int get protein {
-    if (_protein != null) return _protein!;
-    if (ingredients.isEmpty) return 0;
-
-    // Calculate from ingredients
-    int totalProtein = 0;
-    for (var ingredient in ingredients) {
-      if (ingredient.ingredientType != null) {
-        // Add calculation logic here
-        totalProtein += 3; // Placeholder
-      }
-    }
-    return totalProtein;
+  // Методы для расчета пищевой ценности на 100 г с округлением вверх
+  int calculatePer100g(int value) {
+    if (weight <= 0) return 0;
+    // Используем функцию .ceil() для округления вверх
+    return (value * 100 / weight).ceil();
   }
 
-  // Getter for fat (calculated if not set)
-  int get fat {
-    if (_fat != null) return _fat!;
-    if (ingredients.isEmpty) return 0;
-
-    // Calculate from ingredients
-    int totalFat = 0;
-    for (var ingredient in ingredients) {
-      if (ingredient.ingredientType != null) {
-        // Add calculation logic here
-        totalFat += 2; // Placeholder
-      }
-    }
-    return totalFat;
-  }
-
-  // Getter for carbs (calculated if not set)
-  int get carbs {
-    if (_carbs != null) return _carbs!;
-    if (ingredients.isEmpty) return 0;
-
-    // Calculate from ingredients
-    int totalCarbs = 0;
-    for (var ingredient in ingredients) {
-      if (ingredient.ingredientType != null) {
-        // Add calculation logic here
-        totalCarbs += 5; // Placeholder
-      }
-    }
-    return totalCarbs;
-  }
+  // Геттеры для значений на 100 г
+  int get caloriesPer100g => calculatePer100g(calories);
+  int get proteinPer100g => calculatePer100g(protein);
+  int get fatPer100g => calculatePer100g(fat);
+  int get carbsPer100g => calculatePer100g(carbs);
 
   // Getter for prep time (calculated if not set)
   int get prepTime {
@@ -123,10 +222,7 @@ class Recipe {
     return steps.length * 10; // 10 minutes per step as a basic estimate
   }
 
-  // Setters for nutrition values
-  set protein(int value) => _protein = value;
-  set fat(int value) => _fat = value;
-  set carbs(int value) => _carbs = value;
+  // Setter for prep time
   set prepTime(int value) => _prepTime = value;
 
   Recipe copyWith({
@@ -135,13 +231,15 @@ class Recipe {
     String? description,
     int? calories,
     int? portionCount,
+    String? mainImageUrl,
+    int? weight,
+    int? fat,
+    int? carbs,
+    int? protein,
     bool? isFavorite,
     List<RecipeStep>? steps,
     List<RecipeIngredient>? ingredients,
     List<Equipment>? requiredEquipment,
-    int? protein,
-    int? fat,
-    int? carbs,
     int? prepTime,
   }) {
     return Recipe(
@@ -150,13 +248,15 @@ class Recipe {
       description: description ?? this.description,
       calories: calories ?? this.calories,
       portionCount: portionCount ?? this.portionCount,
+      mainImageUrl: mainImageUrl ?? this.mainImageUrl,
+      weight: weight ?? this.weight,
+      fat: fat ?? this.fat,
+      carbs: carbs ?? this.carbs,
+      protein: protein ?? this.protein,
       isFavorite: isFavorite ?? this.isFavorite,
       steps: steps ?? List.from(this.steps),
       ingredients: ingredients ?? List.from(this.ingredients),
       requiredEquipment: requiredEquipment ?? List.from(this.requiredEquipment),
-      protein: protein ?? _protein,
-      fat: fat ?? _fat,
-      carbs: carbs ?? _carbs,
       prepTime: prepTime ?? _prepTime,
     );
   }
@@ -170,6 +270,24 @@ class Recipe {
 
   @override
   int get hashCode => id.hashCode;
+
+  // Метод для отладочного вывода информации о рецепте
+  void debugPrint() {
+    print("\n===== RECIPE DEBUG INFO =====");
+    print("ID: $id");
+    print("Title: $title");
+    print("Description: ${description.substring(0, description.length > 50 ? 50 : description.length)}...");
+    print("Calories: $calories");
+    print("Portions: $portionCount");
+    print("Weight: $weight g");
+    print("Protein: $protein g");
+    print("Fat: $fat g");
+    print("Carbs: $carbs g");
+    print("Is Favorite: $isFavorite");
+    print("Steps count: ${steps.length}");
+    print("Ingredients count: ${ingredients.length}");
+    print("==========================\n");
+  }
 }
 
 class RecipeStep {

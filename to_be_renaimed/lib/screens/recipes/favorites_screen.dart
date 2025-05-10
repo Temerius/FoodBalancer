@@ -174,7 +174,33 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               child: Row(
                 children: [
                   // Recipe image
-                  Container(
+                  recipe.mainImageUrl != null && recipe.mainImageUrl!.isNotEmpty
+                      ? ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      recipe.mainImageUrl!,
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        // Если не удалось загрузить изображение, показываем заглушку
+                        return Container(
+                          width: 80,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Icon(
+                            Icons.restaurant,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 32,
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                      : Container(
                     width: 80,
                     height: 80,
                     decoration: BoxDecoration(

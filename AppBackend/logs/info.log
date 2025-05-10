@@ -45,3 +45,447 @@ WARNING 2025-05-09 19:26:12,151 recipe 29544 2752 Missing recipe ID in favorite 
 WARNING 2025-05-09 19:26:12,166 basehttp 29544 2752 "POST /api/favorites/ HTTP/1.1" 400 65
 INFO 2025-05-09 19:26:17,716 recipe 29544 2752 Recipe viewed: recipe_id=3, title='Banana Pancakes', user_id=66
 INFO 2025-05-09 19:26:17,850 basehttp 29544 2752 "GET /api/recipes/3/ HTTP/1.1" 200 1931
+INFO 2025-05-09 19:27:11,034 autoreload 28400 26248 Watching for file changes with StatReloader
+INFO 2025-05-09 19:27:11,280 wsgi 28400 18496 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-09 19:27:11,280 wsgi 28400 18496 Environment: config.settings
+INFO 2025-05-09 19:27:11,281 wsgi 28400 18496 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-09 19:27:11,284 wsgi 28400 18496 Application initialized successfully
+INFO 2025-05-09 23:46:10,357 autoreload 28400 26248 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\recipe.py changed, reloading.
+INFO 2025-05-09 23:46:12,760 autoreload 22368 3604 Watching for file changes with StatReloader
+INFO 2025-05-09 23:46:13,274 wsgi 22368 30192 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-09 23:46:13,275 wsgi 22368 30192 Environment: config.settings
+INFO 2025-05-09 23:46:13,275 wsgi 22368 30192 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-09 23:46:13,283 wsgi 22368 30192 Application initialized successfully
+INFO 2025-05-09 23:46:19,812 autoreload 22368 3604 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\recipe.py changed, reloading.
+INFO 2025-05-09 23:46:20,619 autoreload 29712 30152 Watching for file changes with StatReloader
+INFO 2025-05-09 23:46:20,836 wsgi 29712 8668 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-09 23:46:20,836 wsgi 29712 8668 Environment: config.settings
+INFO 2025-05-09 23:46:20,837 wsgi 29712 8668 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-09 23:46:20,840 wsgi 29712 8668 Application initialized successfully
+INFO 2025-05-09 23:46:53,902 autoreload 29712 30152 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\serializers\recipe.py changed, reloading.
+INFO 2025-05-09 23:46:55,647 autoreload 21040 16884 Watching for file changes with StatReloader
+INFO 2025-05-09 23:46:56,021 wsgi 21040 29948 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-09 23:46:56,021 wsgi 21040 29948 Environment: config.settings
+INFO 2025-05-09 23:46:56,021 wsgi 21040 29948 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-09 23:46:56,030 wsgi 21040 29948 Application initialized successfully
+INFO 2025-05-09 23:48:13,586 autoreload 17844 28576 Watching for file changes with StatReloader
+INFO 2025-05-09 23:48:13,890 wsgi 17844 29204 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-09 23:48:13,891 wsgi 17844 29204 Environment: config.settings
+INFO 2025-05-09 23:48:13,891 wsgi 17844 29204 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-09 23:48:13,897 wsgi 17844 29204 Application initialized successfully
+INFO 2025-05-09 23:54:54,294 autoreload 468 4692 Watching for file changes with StatReloader
+INFO 2025-05-09 23:54:54,701 wsgi 468 20068 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-09 23:54:54,702 wsgi 468 20068 Environment: config.settings
+INFO 2025-05-09 23:54:54,703 wsgi 468 20068 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-09 23:54:54,712 wsgi 468 20068 Application initialized successfully
+INFO 2025-05-10 00:11:22,217 views 468 31432 Profile accessed: user_id=66
+INFO 2025-05-10 00:11:22,370 basehttp 468 31432 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-10 00:11:22,554 allergen 468 31432 Listing all allergens: user_id=66
+INFO 2025-05-10 00:11:22,576 allergen 468 31432 Retrieved unknown allergens, user_id=66, time=0.02s
+INFO 2025-05-10 00:11:22,627 basehttp 468 31432 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 00:11:22,833 equipment 468 31432 Listing all equipment: user_id=66
+INFO 2025-05-10 00:11:22,847 equipment 468 31432 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-10 00:11:22,892 basehttp 468 31432 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 00:11:23,097 views 468 31432 Profile accessed: user_id=66
+INFO 2025-05-10 00:11:23,146 basehttp 468 31432 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-10 00:11:23,271 allergen 468 31432 Listing all allergens: user_id=66
+INFO 2025-05-10 00:11:23,279 allergen 468 31432 Retrieved unknown allergens, user_id=66, time=0.01s
+INFO 2025-05-10 00:11:23,329 basehttp 468 31432 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 00:11:23,450 equipment 468 31432 Listing all equipment: user_id=66
+INFO 2025-05-10 00:11:23,463 equipment 468 31432 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-10 00:11:23,499 basehttp 468 31432 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 00:11:23,613 allergen 468 31432 Listing user allergens: user_id=66
+INFO 2025-05-10 00:11:23,637 allergen 468 31432 Retrieved 3 user allergens, user_id=66, time=0.02s
+INFO 2025-05-10 00:11:23,692 basehttp 468 31432 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-10 00:11:49,568 views 468 3020 Profile accessed: user_id=66
+INFO 2025-05-10 00:11:49,584 basehttp 468 3020 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-10 00:11:49,700 allergen 468 3020 Listing all allergens: user_id=66
+INFO 2025-05-10 00:11:49,704 allergen 468 3020 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-10 00:11:49,724 basehttp 468 3020 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 00:11:49,822 equipment 468 3020 Listing all equipment: user_id=66
+INFO 2025-05-10 00:11:49,828 equipment 468 3020 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-10 00:11:49,849 basehttp 468 3020 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 00:11:49,953 views 468 3020 Profile accessed: user_id=66
+INFO 2025-05-10 00:11:49,974 basehttp 468 3020 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-10 00:11:50,070 allergen 468 3020 Listing all allergens: user_id=66
+INFO 2025-05-10 00:11:50,075 allergen 468 3020 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-10 00:11:50,097 basehttp 468 3020 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 00:11:50,196 equipment 468 3020 Listing all equipment: user_id=66
+INFO 2025-05-10 00:11:50,201 equipment 468 3020 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-10 00:11:50,220 basehttp 468 3020 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 00:11:50,318 allergen 468 3020 Listing user allergens: user_id=66
+INFO 2025-05-10 00:11:50,331 allergen 468 3020 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-10 00:11:50,358 basehttp 468 3020 "GET /api/user-allergens/ HTTP/1.1" 200 100
+WARNING 2025-05-10 00:12:49,586 recipe 468 27084 Missing recipe ID in favorite add request: user_id=66
+WARNING 2025-05-10 00:12:49,595 basehttp 468 27084 "POST /api/favorites/ HTTP/1.1" 400 65
+INFO 2025-05-10 00:13:56,906 views 468 29492 Profile update attempt: user_id=66
+INFO 2025-05-10 00:13:57,080 views 468 29492 Profile updated successfully: user_id=66, time=0.17s
+INFO 2025-05-10 00:13:57,113 basehttp 468 29492 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-10 00:13:57,236 allergen 468 29492 Starting user allergens update for user ID: 66
+INFO 2025-05-10 00:13:57,237 allergen 468 29492 Request data: {'allergen_ids': [8, 9, 10]}
+INFO 2025-05-10 00:13:57,238 allergen 468 29492 Allergen IDs to update: [8, 9, 10]
+INFO 2025-05-10 00:13:57,256 allergen 468 29492 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-10 00:13:57,275 allergen 468 29492 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-10 00:13:57,286 allergen 468 29492 Created allergen mapping: user 66 - allergen 9
+INFO 2025-05-10 00:13:57,298 allergen 468 29492 Created allergen mapping: user 66 - allergen 10
+INFO 2025-05-10 00:13:57,299 allergen 468 29492 Successfully updated allergens for user 66: [8, 9, 10]
+INFO 2025-05-10 00:13:57,362 basehttp 468 29492 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-10 00:13:57,571 equipment 468 29492 Starting user equipment update for user ID: 66
+INFO 2025-05-10 00:13:57,572 equipment 468 29492 Request data: {'equipment_ids': [1, 2]}
+INFO 2025-05-10 00:13:57,573 equipment 468 29492 Equipment IDs to update: [1, 2]
+INFO 2025-05-10 00:13:57,590 equipment 468 29492 Deleted (2, {'core.M2MUsrEqp': 2}) existing equipment records
+INFO 2025-05-10 00:13:57,604 equipment 468 29492 Created equipment mapping: user 66 - equipment 1
+INFO 2025-05-10 00:13:57,613 equipment 468 29492 Created equipment mapping: user 66 - equipment 2
+INFO 2025-05-10 00:13:57,614 equipment 468 29492 Successfully updated equipment for user 66: [1, 2]
+INFO 2025-05-10 00:13:57,671 basehttp 468 29492 "POST /api/user-equipment/update/ HTTP/1.1" 200 59
+INFO 2025-05-10 00:14:04,630 views 468 29492 Profile accessed: user_id=66
+INFO 2025-05-10 00:14:04,642 basehttp 468 29492 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-10 00:14:04,780 allergen 468 29492 Listing user allergens: user_id=66
+INFO 2025-05-10 00:14:04,791 allergen 468 29492 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-10 00:14:04,811 basehttp 468 29492 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-10 00:14:04,901 equipment 468 29492 Listing user equipment: user_id=66
+INFO 2025-05-10 00:14:04,915 equipment 468 29492 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-10 00:14:04,937 basehttp 468 29492 "GET /api/user-equipment/ HTTP/1.1" 200 375
+INFO 2025-05-10 00:31:30,845 views 468 19864 Profile accessed: user_id=66
+INFO 2025-05-10 00:31:30,983 basehttp 468 19864 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-10 00:31:31,119 allergen 468 19864 Listing all allergens: user_id=66
+INFO 2025-05-10 00:31:31,128 allergen 468 19864 Retrieved unknown allergens, user_id=66, time=0.01s
+INFO 2025-05-10 00:31:31,160 basehttp 468 19864 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 00:31:31,329 equipment 468 19864 Listing all equipment: user_id=66
+INFO 2025-05-10 00:31:31,342 equipment 468 19864 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-10 00:31:31,370 basehttp 468 19864 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 00:31:31,557 views 468 19864 Profile accessed: user_id=66
+INFO 2025-05-10 00:31:31,608 basehttp 468 19864 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-10 00:31:31,680 allergen 468 19864 Listing all allergens: user_id=66
+INFO 2025-05-10 00:31:31,687 allergen 468 19864 Retrieved unknown allergens, user_id=66, time=0.01s
+INFO 2025-05-10 00:31:31,726 basehttp 468 19864 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 00:31:32,453 equipment 468 19864 Listing all equipment: user_id=66
+INFO 2025-05-10 00:31:32,460 equipment 468 19864 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-10 00:31:32,482 basehttp 468 19864 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 00:31:32,569 allergen 468 19864 Listing user allergens: user_id=66
+INFO 2025-05-10 00:31:32,596 allergen 468 19864 Retrieved 3 user allergens, user_id=66, time=0.03s
+INFO 2025-05-10 00:31:32,628 basehttp 468 19864 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-10 00:31:53,597 recipe 468 5136 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-10 00:31:54,244 basehttp 468 5136 "GET /api/recipes/?limit=100 HTTP/1.1" 200 13854
+INFO 2025-05-10 00:31:54,424 recipe 468 5136 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-10 00:31:54,904 basehttp 468 5136 "GET /api/recipes/?limit=100 HTTP/1.1" 200 13854
+INFO 2025-05-10 00:31:55,214 basehttp 468 5136 "GET /api/favorites/ HTTP/1.1" 200 2
+WARNING 2025-05-10 00:33:04,907 recipe 468 24520 Missing recipe ID in favorite add request: user_id=66
+WARNING 2025-05-10 00:33:04,929 basehttp 468 24520 "POST /api/favorites/ HTTP/1.1" 400 65
+INFO 2025-05-10 01:28:01,117 recipe 468 29260 Recipe viewed: recipe_id=53, title='Croissants', user_id=66
+INFO 2025-05-10 01:28:01,279 basehttp 468 29260 "GET /api/recipes/53/ HTTP/1.1" 200 2025
+INFO 2025-05-10 01:28:06,949 recipe 468 29260 Recipe viewed: recipe_id=10, title='Chocolate Mousse', user_id=66
+INFO 2025-05-10 01:28:07,024 basehttp 468 29260 "GET /api/recipes/10/ HTTP/1.1" 200 1576
+INFO 2025-05-10 01:28:17,426 recipe 468 29260 Recipe viewed: recipe_id=4, title='Greek Salad', user_id=66
+INFO 2025-05-10 01:28:17,527 basehttp 468 29260 "GET /api/recipes/4/ HTTP/1.1" 200 2299
+INFO 2025-05-10 01:28:26,455 recipe 468 29260 Recipe viewed: recipe_id=8, title='Vegetable Soup', user_id=66
+INFO 2025-05-10 01:28:26,553 basehttp 468 29260 "GET /api/recipes/8/ HTTP/1.1" 200 2265
+INFO 2025-05-10 01:28:34,109 recipe 468 29260 Recipe viewed: recipe_id=46, title='Duck Confit', user_id=66
+INFO 2025-05-10 01:28:34,160 basehttp 468 29260 "GET /api/recipes/46/ HTTP/1.1" 200 665
+INFO 2025-05-10 01:28:40,239 views 468 30648 Profile accessed: user_id=66
+INFO 2025-05-10 01:28:40,256 basehttp 468 30648 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-10 01:28:40,347 allergen 468 30648 Listing all allergens: user_id=66
+INFO 2025-05-10 01:28:40,354 allergen 468 30648 Retrieved unknown allergens, user_id=66, time=0.01s
+INFO 2025-05-10 01:28:40,371 basehttp 468 30648 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 01:28:40,469 equipment 468 30648 Listing all equipment: user_id=66
+INFO 2025-05-10 01:28:40,480 equipment 468 30648 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-10 01:28:40,503 basehttp 468 30648 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 01:28:40,607 views 468 30648 Profile accessed: user_id=66
+INFO 2025-05-10 01:28:40,631 basehttp 468 30648 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-10 01:28:40,725 allergen 468 30648 Listing all allergens: user_id=66
+INFO 2025-05-10 01:28:40,731 allergen 468 30648 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-10 01:28:40,750 basehttp 468 30648 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 01:28:40,919 equipment 468 30648 Listing all equipment: user_id=66
+INFO 2025-05-10 01:28:40,928 equipment 468 30648 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-10 01:28:41,207 basehttp 468 30648 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 01:28:41,392 allergen 468 30648 Listing user allergens: user_id=66
+INFO 2025-05-10 01:28:41,409 allergen 468 30648 Retrieved 3 user allergens, user_id=66, time=0.02s
+INFO 2025-05-10 01:28:41,441 basehttp 468 30648 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-10 01:28:52,264 recipe 468 30648 Recipe viewed: recipe_id=11, title='Salmon Teriyaki', user_id=66
+INFO 2025-05-10 01:28:52,350 basehttp 468 30648 "GET /api/recipes/11/ HTTP/1.1" 200 1848
+INFO 2025-05-10 01:28:54,442 recipe 468 30648 Recipe viewed: recipe_id=12, title='Ratatouille', user_id=66
+INFO 2025-05-10 01:28:54,525 basehttp 468 30648 "GET /api/recipes/12/ HTTP/1.1" 200 1807
+INFO 2025-05-10 01:28:56,985 recipe 468 30648 Recipe viewed: recipe_id=13, title='Caesar Salad', user_id=66
+INFO 2025-05-10 01:28:57,054 basehttp 468 30648 "GET /api/recipes/13/ HTTP/1.1" 200 2582
+INFO 2025-05-10 01:29:02,112 recipe 468 30648 Recipe viewed: recipe_id=14, title='Beef Bourguignon', user_id=66
+INFO 2025-05-10 01:29:02,190 basehttp 468 30648 "GET /api/recipes/14/ HTTP/1.1" 200 1739
+INFO 2025-05-10 01:29:34,603 views 468 25528 Profile update attempt: user_id=66
+INFO 2025-05-10 01:29:34,658 views 468 25528 Profile updated successfully: user_id=66, time=0.06s
+INFO 2025-05-10 01:29:34,683 basehttp 468 25528 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-10 01:29:34,756 allergen 468 25528 Starting user allergens update for user ID: 66
+INFO 2025-05-10 01:29:34,758 allergen 468 25528 Request data: {'allergen_ids': [8, 9, 10]}
+INFO 2025-05-10 01:29:34,759 allergen 468 25528 Allergen IDs to update: [8, 9, 10]
+INFO 2025-05-10 01:29:34,772 allergen 468 25528 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+INFO 2025-05-10 01:29:34,781 allergen 468 25528 Created allergen mapping: user 66 - allergen 8
+INFO 2025-05-10 01:29:34,795 allergen 468 25528 Created allergen mapping: user 66 - allergen 9
+INFO 2025-05-10 01:29:34,803 allergen 468 25528 Created allergen mapping: user 66 - allergen 10
+INFO 2025-05-10 01:29:34,804 allergen 468 25528 Successfully updated allergens for user 66: [8, 9, 10]
+INFO 2025-05-10 01:29:34,840 basehttp 468 25528 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-10 01:29:34,946 equipment 468 25528 Starting user equipment update for user ID: 66
+INFO 2025-05-10 01:29:34,947 equipment 468 25528 Request data: {'equipment_ids': [3, 4]}
+INFO 2025-05-10 01:29:34,948 equipment 468 25528 Equipment IDs to update: [3, 4]
+INFO 2025-05-10 01:29:34,960 equipment 468 25528 Deleted (2, {'core.M2MUsrEqp': 2}) existing equipment records
+INFO 2025-05-10 01:29:34,976 equipment 468 25528 Created equipment mapping: user 66 - equipment 3
+INFO 2025-05-10 01:29:34,983 equipment 468 25528 Created equipment mapping: user 66 - equipment 4
+INFO 2025-05-10 01:29:34,985 equipment 468 25528 Successfully updated equipment for user 66: [3, 4]
+INFO 2025-05-10 01:29:35,017 basehttp 468 25528 "POST /api/user-equipment/update/ HTTP/1.1" 200 59
+INFO 2025-05-10 01:29:47,396 views 468 25528 Profile accessed: user_id=66
+INFO 2025-05-10 01:29:47,414 basehttp 468 25528 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-10 01:29:47,484 allergen 468 25528 Listing user allergens: user_id=66
+INFO 2025-05-10 01:29:47,495 allergen 468 25528 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-10 01:29:47,515 basehttp 468 25528 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-10 01:29:47,632 equipment 468 25528 Listing user equipment: user_id=66
+INFO 2025-05-10 01:29:47,643 equipment 468 25528 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-10 01:29:47,677 basehttp 468 25528 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-10 01:31:42,510 views 468 27392 Registration attempt: email=test_6fz0cof4@example.com
+INFO 2025-05-10 01:31:42,994 views 468 27392 User registered successfully: user_id=112, email=test_6fz0cof4@example.com, time=0.48s
+INFO 2025-05-10 01:31:43,031 basehttp 468 27392 "POST /api/users/register/ HTTP/1.1" 201 233
+INFO 2025-05-10 01:31:43,098 views 468 29304 Login attempt: email=test_6fz0cof4@example.com
+INFO 2025-05-10 01:31:43,506 views 468 29304 User login successful: user_id=112, email=test_6fz0cof4@example.com, time=0.41s
+INFO 2025-05-10 01:31:43,520 basehttp 468 29304 "POST /api/users/login/ HTTP/1.1" 200 233
+INFO 2025-05-10 01:31:43,699 views 468 25180 Profile accessed: user_id=112
+INFO 2025-05-10 01:31:43,717 basehttp 468 25180 "GET /api/users/profile/ HTTP/1.1" 200 173
+INFO 2025-05-10 01:31:43,760 ingredient 468 17300 Listing refrigerator ingredients: user_id=112
+INFO 2025-05-10 01:31:43,786 ingredient 468 17300 Retrieved unknown refrigerator ingredients for user_id=112, time=0.03s
+INFO 2025-05-10 01:31:43,802 basehttp 468 17300 "GET /api/refrigerator/ HTTP/1.1" 200 2
+INFO 2025-05-10 01:31:43,886 basehttp 468 2244 "GET /api/favorites/ HTTP/1.1" 200 2
+INFO 2025-05-10 01:31:43,947 allergen 468 29372 Listing all allergens: user_id=112
+INFO 2025-05-10 01:31:43,951 allergen 468 29372 Retrieved unknown allergens, user_id=112, time=0.00s
+INFO 2025-05-10 01:31:43,964 basehttp 468 29372 "GET /api/allergens/ HTTP/1.1" 200 1711
+INFO 2025-05-10 01:31:44,025 equipment 468 17072 Listing all equipment: user_id=112
+INFO 2025-05-10 01:31:44,031 equipment 468 17072 Retrieved unknown equipment items, user_id=112, time=0.01s
+INFO 2025-05-10 01:31:44,042 basehttp 468 17072 "GET /api/equipment/ HTTP/1.1" 200 13914
+INFO 2025-05-10 01:31:44,262 views 468 27944 Logout attempt: user_id=112
+INFO 2025-05-10 01:31:44,270 views 468 27944 User logged out successfully: user_id=112
+INFO 2025-05-10 01:31:44,288 basehttp 468 27944 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-10 01:32:06,247 views 468 21692 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-10 01:32:06,784 views 468 21692 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.54s
+INFO 2025-05-10 01:32:06,810 basehttp 468 21692 "POST /api/users/login/ HTTP/1.1" 200 211
+INFO 2025-05-10 01:32:07,040 views 468 21692 Profile accessed: user_id=66
+INFO 2025-05-10 01:32:07,055 basehttp 468 21692 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-10 01:32:07,200 allergen 468 21692 Listing all allergens: user_id=66
+INFO 2025-05-10 01:32:07,205 allergen 468 21692 Retrieved unknown allergens, user_id=66, time=0.01s
+INFO 2025-05-10 01:32:07,222 basehttp 468 21692 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 01:32:07,302 equipment 468 21692 Listing all equipment: user_id=66
+INFO 2025-05-10 01:32:07,308 equipment 468 21692 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-10 01:32:07,325 basehttp 468 21692 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 01:32:07,421 recipe 468 21692 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-10 01:32:07,759 basehttp 468 21692 "GET /api/recipes/?limit=100 HTTP/1.1" 200 14047
+INFO 2025-05-10 01:32:07,986 basehttp 468 21692 "GET /api/favorites/ HTTP/1.1" 200 2
+INFO 2025-05-10 01:32:08,057 allergen 468 21692 Listing all allergens: user_id=66
+INFO 2025-05-10 01:32:08,062 allergen 468 21692 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-10 01:32:08,081 basehttp 468 21692 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 01:32:08,212 equipment 468 21692 Listing all equipment: user_id=66
+INFO 2025-05-10 01:32:08,217 equipment 468 21692 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-10 01:32:08,236 basehttp 468 21692 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 01:32:08,318 allergen 468 21692 Listing user allergens: user_id=66
+INFO 2025-05-10 01:32:08,332 allergen 468 21692 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-10 01:32:08,357 basehttp 468 21692 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-10 01:32:39,505 recipe 468 22496 Recipe viewed: recipe_id=12, title='Ratatouille', user_id=66
+INFO 2025-05-10 01:32:39,570 basehttp 468 22496 "GET /api/recipes/12/ HTTP/1.1" 200 1807
+INFO 2025-05-10 01:33:23,399 recipe 468 28980 Recipe viewed: recipe_id=13, title='Caesar Salad', user_id=66
+INFO 2025-05-10 01:33:23,497 basehttp 468 28980 "GET /api/recipes/13/ HTTP/1.1" 200 2582
+INFO 2025-05-10 01:57:20,473 autoreload 468 4692 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\recipe.py changed, reloading.
+INFO 2025-05-10 01:57:23,619 autoreload 19488 16544 Watching for file changes with StatReloader
+INFO 2025-05-10 01:57:24,046 wsgi 19488 30728 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-10 01:57:24,046 wsgi 19488 30728 Environment: config.settings
+INFO 2025-05-10 01:57:24,047 wsgi 19488 30728 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-10 01:57:24,054 wsgi 19488 30728 Application initialized successfully
+INFO 2025-05-10 01:57:53,132 autoreload 19488 16544 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\serializers\recipe.py changed, reloading.
+INFO 2025-05-10 01:57:54,513 autoreload 22692 7488 Watching for file changes with StatReloader
+INFO 2025-05-10 01:57:54,866 wsgi 22692 28580 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-10 01:57:54,866 wsgi 22692 28580 Environment: config.settings
+INFO 2025-05-10 01:57:54,867 wsgi 22692 28580 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-10 01:57:54,873 wsgi 22692 28580 Application initialized successfully
+INFO 2025-05-10 02:09:32,856 views 22692 18652 Profile accessed: user_id=66
+INFO 2025-05-10 02:09:33,365 basehttp 22692 18652 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-10 02:09:33,578 views 22692 18652 Profile accessed: user_id=66
+INFO 2025-05-10 02:09:33,610 basehttp 22692 18652 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-10 02:09:33,739 allergen 22692 18652 Listing all allergens: user_id=66
+INFO 2025-05-10 02:09:33,807 allergen 22692 18652 Retrieved unknown allergens, user_id=66, time=0.07s
+INFO 2025-05-10 02:09:33,835 basehttp 22692 18652 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 02:09:33,949 equipment 22692 18652 Listing all equipment: user_id=66
+INFO 2025-05-10 02:09:33,978 equipment 22692 18652 Retrieved unknown equipment items, user_id=66, time=0.03s
+INFO 2025-05-10 02:09:33,997 basehttp 22692 18652 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 02:09:34,101 allergen 22692 18652 Listing user allergens: user_id=66
+INFO 2025-05-10 02:09:34,171 allergen 22692 18652 Retrieved 3 user allergens, user_id=66, time=0.07s
+INFO 2025-05-10 02:09:34,208 basehttp 22692 18652 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-10 02:10:05,785 recipe 22692 29392 Recipe viewed: recipe_id=7, title='Chicken Stir-Fry', user_id=66
+INFO 2025-05-10 02:10:05,928 basehttp 22692 29392 "GET /api/recipes/7/ HTTP/1.1" 200 2410
+INFO 2025-05-10 02:10:34,395 recipe 22692 29656 Recipe viewed: recipe_id=28, title='Pesto Pasta', user_id=66
+INFO 2025-05-10 02:10:34,476 basehttp 22692 29656 "GET /api/recipes/28/ HTTP/1.1" 200 1140
+INFO 2025-05-10 02:11:07,624 recipe 22692 22192 Recipe viewed: recipe_id=14, title='Beef Bourguignon', user_id=66
+INFO 2025-05-10 02:11:07,740 basehttp 22692 22192 "GET /api/recipes/14/ HTTP/1.1" 200 1805
+INFO 2025-05-10 02:11:10,022 recipe 22692 22192 Recipe viewed: recipe_id=15, title='Apple Pie', user_id=66
+INFO 2025-05-10 02:11:10,111 basehttp 22692 22192 "GET /api/recipes/15/ HTTP/1.1" 200 1389
+INFO 2025-05-10 02:11:19,299 recipe 22692 22192 Recipe viewed: recipe_id=17, title='Caprese Salad', user_id=66
+INFO 2025-05-10 02:11:19,375 basehttp 22692 22192 "GET /api/recipes/17/ HTTP/1.1" 200 1138
+INFO 2025-05-10 02:11:21,734 recipe 22692 22192 Recipe viewed: recipe_id=19, title='Guacamole', user_id=66
+INFO 2025-05-10 02:11:21,824 basehttp 22692 22192 "GET /api/recipes/19/ HTTP/1.1" 200 1052
+INFO 2025-05-10 02:11:28,055 recipe 22692 22192 Recipe viewed: recipe_id=22, title='Cheesecake', user_id=66
+INFO 2025-05-10 02:11:28,160 basehttp 22692 22192 "GET /api/recipes/22/ HTTP/1.1" 200 1132
+INFO 2025-05-10 02:14:43,259 views 22692 31412 Registration attempt: email=test_zmgssv2g@example.com
+INFO 2025-05-10 02:14:44,035 views 22692 31412 User registered successfully: user_id=113, email=test_zmgssv2g@example.com, time=0.78s
+INFO 2025-05-10 02:14:44,078 basehttp 22692 31412 "POST /api/users/register/ HTTP/1.1" 201 233
+INFO 2025-05-10 02:14:44,134 views 22692 13332 Login attempt: email=test_zmgssv2g@example.com
+INFO 2025-05-10 02:14:44,637 views 22692 13332 User login successful: user_id=113, email=test_zmgssv2g@example.com, time=0.50s
+INFO 2025-05-10 02:14:44,660 basehttp 22692 13332 "POST /api/users/login/ HTTP/1.1" 200 233
+INFO 2025-05-10 02:14:44,734 views 22692 19584 Profile accessed: user_id=113
+INFO 2025-05-10 02:14:44,759 basehttp 22692 19584 "GET /api/users/profile/ HTTP/1.1" 200 173
+INFO 2025-05-10 02:14:44,873 ingredient 22692 3068 Listing refrigerator ingredients: user_id=113
+INFO 2025-05-10 02:14:44,881 ingredient 22692 3068 Retrieved unknown refrigerator ingredients for user_id=113, time=0.01s
+INFO 2025-05-10 02:14:44,901 basehttp 22692 3068 "GET /api/refrigerator/ HTTP/1.1" 200 2
+INFO 2025-05-10 02:14:44,993 basehttp 22692 6068 "GET /api/favorites/ HTTP/1.1" 200 2
+INFO 2025-05-10 02:14:45,060 allergen 22692 8012 Listing all allergens: user_id=113
+INFO 2025-05-10 02:14:45,064 allergen 22692 8012 Retrieved unknown allergens, user_id=113, time=0.00s
+INFO 2025-05-10 02:14:45,082 basehttp 22692 8012 "GET /api/allergens/ HTTP/1.1" 200 1711
+INFO 2025-05-10 02:14:45,154 equipment 22692 17704 Listing all equipment: user_id=113
+INFO 2025-05-10 02:14:45,160 equipment 22692 17704 Retrieved unknown equipment items, user_id=113, time=0.01s
+INFO 2025-05-10 02:14:45,182 basehttp 22692 17704 "GET /api/equipment/ HTTP/1.1" 200 13914
+INFO 2025-05-10 02:14:45,264 views 22692 29028 Logout attempt: user_id=113
+INFO 2025-05-10 02:14:45,275 views 22692 29028 User logged out successfully: user_id=113
+INFO 2025-05-10 02:14:45,295 basehttp 22692 29028 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-10 02:14:57,799 views 22692 24476 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-10 02:14:58,449 views 22692 24476 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.65s
+INFO 2025-05-10 02:14:58,484 basehttp 22692 24476 "POST /api/users/login/ HTTP/1.1" 200 211
+INFO 2025-05-10 02:14:58,725 views 22692 24476 Profile accessed: user_id=66
+INFO 2025-05-10 02:14:58,744 basehttp 22692 24476 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-10 02:14:58,973 allergen 22692 24476 Listing all allergens: user_id=66
+INFO 2025-05-10 02:14:58,979 allergen 22692 24476 Retrieved unknown allergens, user_id=66, time=0.01s
+INFO 2025-05-10 02:14:58,996 basehttp 22692 24476 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 02:14:59,085 equipment 22692 24476 Listing all equipment: user_id=66
+INFO 2025-05-10 02:14:59,093 equipment 22692 24476 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-10 02:14:59,113 basehttp 22692 24476 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 02:14:59,223 recipe 22692 24476 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-10 02:14:59,577 basehttp 22692 24476 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17505
+INFO 2025-05-10 02:14:59,697 basehttp 22692 24476 "GET /api/favorites/ HTTP/1.1" 200 2
+INFO 2025-05-10 02:14:59,781 allergen 22692 24476 Listing all allergens: user_id=66
+INFO 2025-05-10 02:14:59,786 allergen 22692 24476 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-10 02:14:59,805 basehttp 22692 24476 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 02:14:59,871 equipment 22692 24476 Listing all equipment: user_id=66
+INFO 2025-05-10 02:14:59,879 equipment 22692 24476 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-10 02:14:59,901 basehttp 22692 24476 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 02:14:59,986 allergen 22692 24476 Listing user allergens: user_id=66
+INFO 2025-05-10 02:15:00,001 allergen 22692 24476 Retrieved 3 user allergens, user_id=66, time=0.02s
+INFO 2025-05-10 02:15:00,040 basehttp 22692 24476 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-10 02:15:13,135 recipe 22692 24476 Recipe viewed: recipe_id=16, title='Shrimp Scampi', user_id=66
+INFO 2025-05-10 02:15:13,208 basehttp 22692 24476 "GET /api/recipes/16/ HTTP/1.1" 200 1127
+INFO 2025-05-10 02:15:22,332 recipe 22692 24476 Recipe viewed: recipe_id=12, title='Ratatouille', user_id=66
+INFO 2025-05-10 02:15:22,439 basehttp 22692 24476 "GET /api/recipes/12/ HTTP/1.1" 200 1872
+INFO 2025-05-10 02:32:18,820 views 22692 24724 Registration attempt: email=test_44svdm9h@example.com
+INFO 2025-05-10 02:32:19,536 views 22692 24724 User registered successfully: user_id=114, email=test_44svdm9h@example.com, time=0.72s
+INFO 2025-05-10 02:32:19,605 basehttp 22692 24724 "POST /api/users/register/ HTTP/1.1" 201 233
+INFO 2025-05-10 02:32:46,161 views 22692 9260 Registration attempt: email=test_lbfjcor2@example.com
+INFO 2025-05-10 02:32:46,570 views 22692 9260 User registered successfully: user_id=115, email=test_lbfjcor2@example.com, time=0.41s
+INFO 2025-05-10 02:32:46,601 basehttp 22692 9260 "POST /api/users/register/ HTTP/1.1" 201 233
+INFO 2025-05-10 02:32:46,681 views 22692 21720 Login attempt: email=test_lbfjcor2@example.com
+INFO 2025-05-10 02:32:47,089 views 22692 21720 User login successful: user_id=115, email=test_lbfjcor2@example.com, time=0.41s
+INFO 2025-05-10 02:32:47,117 basehttp 22692 21720 "POST /api/users/login/ HTTP/1.1" 200 233
+INFO 2025-05-10 02:32:47,179 views 22692 3848 Profile accessed: user_id=115
+INFO 2025-05-10 02:32:47,201 basehttp 22692 3848 "GET /api/users/profile/ HTTP/1.1" 200 173
+INFO 2025-05-10 02:32:47,266 ingredient 22692 17592 Listing refrigerator ingredients: user_id=115
+INFO 2025-05-10 02:32:47,272 ingredient 22692 17592 Retrieved unknown refrigerator ingredients for user_id=115, time=0.01s
+INFO 2025-05-10 02:32:47,288 basehttp 22692 17592 "GET /api/refrigerator/ HTTP/1.1" 200 2
+INFO 2025-05-10 02:32:47,479 basehttp 22692 21176 "GET /api/favorites/ HTTP/1.1" 200 2
+INFO 2025-05-10 02:32:47,560 allergen 22692 22024 Listing all allergens: user_id=115
+INFO 2025-05-10 02:32:47,563 allergen 22692 22024 Retrieved unknown allergens, user_id=115, time=0.00s
+INFO 2025-05-10 02:32:47,577 basehttp 22692 22024 "GET /api/allergens/ HTTP/1.1" 200 1711
+INFO 2025-05-10 02:32:47,637 equipment 22692 26360 Listing all equipment: user_id=115
+INFO 2025-05-10 02:32:47,642 equipment 22692 26360 Retrieved unknown equipment items, user_id=115, time=0.01s
+INFO 2025-05-10 02:32:47,657 basehttp 22692 26360 "GET /api/equipment/ HTTP/1.1" 200 13914
+INFO 2025-05-10 02:32:47,715 views 22692 18876 Logout attempt: user_id=115
+INFO 2025-05-10 02:32:47,722 views 22692 18876 User logged out successfully: user_id=115
+INFO 2025-05-10 02:32:47,739 basehttp 22692 18876 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-10 02:33:11,052 views 22692 17120 Registration attempt: email=test_uayetfq7@example.com
+INFO 2025-05-10 02:33:11,522 views 22692 17120 User registered successfully: user_id=116, email=test_uayetfq7@example.com, time=0.47s
+INFO 2025-05-10 02:33:11,554 basehttp 22692 17120 "POST /api/users/register/ HTTP/1.1" 201 233
+INFO 2025-05-10 02:33:11,660 views 22692 5708 Login attempt: email=test_uayetfq7@example.com
+INFO 2025-05-10 02:33:12,160 views 22692 5708 User login successful: user_id=116, email=test_uayetfq7@example.com, time=0.50s
+INFO 2025-05-10 02:33:12,190 basehttp 22692 5708 "POST /api/users/login/ HTTP/1.1" 200 233
+INFO 2025-05-10 02:33:12,255 views 22692 25156 Profile accessed: user_id=116
+INFO 2025-05-10 02:33:12,276 basehttp 22692 25156 "GET /api/users/profile/ HTTP/1.1" 200 173
+INFO 2025-05-10 02:33:12,350 ingredient 22692 13516 Listing refrigerator ingredients: user_id=116
+INFO 2025-05-10 02:33:12,353 ingredient 22692 13516 Retrieved unknown refrigerator ingredients for user_id=116, time=0.00s
+INFO 2025-05-10 02:33:12,369 basehttp 22692 13516 "GET /api/refrigerator/ HTTP/1.1" 200 2
+INFO 2025-05-10 02:33:12,433 basehttp 22692 19688 "GET /api/favorites/ HTTP/1.1" 200 2
+INFO 2025-05-10 02:33:12,502 allergen 22692 30648 Listing all allergens: user_id=116
+INFO 2025-05-10 02:33:12,506 allergen 22692 30648 Retrieved unknown allergens, user_id=116, time=0.00s
+INFO 2025-05-10 02:33:12,520 basehttp 22692 30648 "GET /api/allergens/ HTTP/1.1" 200 1711
+INFO 2025-05-10 02:33:12,582 equipment 22692 27708 Listing all equipment: user_id=116
+INFO 2025-05-10 02:33:12,587 equipment 22692 27708 Retrieved unknown equipment items, user_id=116, time=0.01s
+INFO 2025-05-10 02:33:12,607 basehttp 22692 27708 "GET /api/equipment/ HTTP/1.1" 200 13914
+INFO 2025-05-10 02:33:12,694 views 22692 28384 Logout attempt: user_id=116
+INFO 2025-05-10 02:33:12,699 views 22692 28384 User logged out successfully: user_id=116
+INFO 2025-05-10 02:33:12,717 basehttp 22692 28384 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-10 02:33:25,189 views 22692 16464 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-10 02:33:25,547 views 22692 16464 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.36s
+INFO 2025-05-10 02:33:25,568 basehttp 22692 16464 "POST /api/users/login/ HTTP/1.1" 200 211
+INFO 2025-05-10 02:33:25,754 allergen 22692 16464 Listing all allergens: user_id=66
+INFO 2025-05-10 02:33:25,758 allergen 22692 16464 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-10 02:33:25,770 basehttp 22692 16464 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 02:33:25,869 equipment 22692 16464 Listing all equipment: user_id=66
+INFO 2025-05-10 02:33:25,875 equipment 22692 16464 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-10 02:33:25,889 basehttp 22692 16464 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 02:33:25,969 allergen 22692 16464 Listing user allergens: user_id=66
+INFO 2025-05-10 02:33:25,982 allergen 22692 16464 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-10 02:33:25,999 basehttp 22692 16464 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-10 02:33:53,681 recipe 22692 16352 Recipe viewed: recipe_id=17, title='Caprese Salad', user_id=66
+INFO 2025-05-10 02:33:53,744 basehttp 22692 16352 "GET /api/recipes/17/ HTTP/1.1" 200 1138
+INFO 2025-05-10 02:33:55,576 recipe 22692 16352 Recipe viewed: recipe_id=18, title='Chicken Curry', user_id=66
+INFO 2025-05-10 02:33:55,631 basehttp 22692 16352 "GET /api/recipes/18/ HTTP/1.1" 200 1124
+INFO 2025-05-10 02:33:58,694 recipe 22692 16352 Recipe viewed: recipe_id=19, title='Guacamole', user_id=66
+INFO 2025-05-10 02:33:58,739 basehttp 22692 16352 "GET /api/recipes/19/ HTTP/1.1" 200 1052
+INFO 2025-05-10 02:34:06,213 recipe 22692 16352 Recipe viewed: recipe_id=21, title='French Onion Soup', user_id=66
+INFO 2025-05-10 02:34:06,270 basehttp 22692 16352 "GET /api/recipes/21/ HTTP/1.1" 200 1129
+INFO 2025-05-10 02:34:16,764 recipe 22692 16352 Recipe viewed: recipe_id=25, title='Baked Salmon', user_id=66
+INFO 2025-05-10 02:34:16,811 basehttp 22692 16352 "GET /api/recipes/25/ HTTP/1.1" 200 1077
+INFO 2025-05-10 02:34:56,374 views 22692 22600 Registration attempt: email=test_uqyq3ty3@example.com
+INFO 2025-05-10 02:34:56,812 views 22692 22600 User registered successfully: user_id=117, email=test_uqyq3ty3@example.com, time=0.44s
+INFO 2025-05-10 02:34:56,845 basehttp 22692 22600 "POST /api/users/register/ HTTP/1.1" 201 233
+INFO 2025-05-10 02:34:56,917 views 22692 14276 Login attempt: email=test_uqyq3ty3@example.com
+INFO 2025-05-10 02:34:57,235 views 22692 14276 User login successful: user_id=117, email=test_uqyq3ty3@example.com, time=0.32s
+INFO 2025-05-10 02:34:57,252 basehttp 22692 14276 "POST /api/users/login/ HTTP/1.1" 200 233
+INFO 2025-05-10 02:34:57,359 views 22692 2232 Profile accessed: user_id=117
+INFO 2025-05-10 02:34:57,377 basehttp 22692 2232 "GET /api/users/profile/ HTTP/1.1" 200 173
+INFO 2025-05-10 02:34:57,453 ingredient 22692 20692 Listing refrigerator ingredients: user_id=117
+INFO 2025-05-10 02:34:57,456 ingredient 22692 20692 Retrieved unknown refrigerator ingredients for user_id=117, time=0.00s
+INFO 2025-05-10 02:34:57,470 basehttp 22692 20692 "GET /api/refrigerator/ HTTP/1.1" 200 2
+INFO 2025-05-10 02:34:57,609 basehttp 22692 18356 "GET /api/favorites/ HTTP/1.1" 200 2
+INFO 2025-05-10 02:34:57,670 allergen 22692 28184 Listing all allergens: user_id=117
+INFO 2025-05-10 02:34:57,672 allergen 22692 28184 Retrieved unknown allergens, user_id=117, time=0.00s
+INFO 2025-05-10 02:34:57,686 basehttp 22692 28184 "GET /api/allergens/ HTTP/1.1" 200 1711
+INFO 2025-05-10 02:34:57,749 equipment 22692 2652 Listing all equipment: user_id=117
+INFO 2025-05-10 02:34:57,754 equipment 22692 2652 Retrieved unknown equipment items, user_id=117, time=0.00s
+INFO 2025-05-10 02:34:57,767 basehttp 22692 2652 "GET /api/equipment/ HTTP/1.1" 200 13914
+INFO 2025-05-10 02:34:57,893 views 22692 23456 Logout attempt: user_id=117
+INFO 2025-05-10 02:34:57,897 views 22692 23456 User logged out successfully: user_id=117
+INFO 2025-05-10 02:34:57,912 basehttp 22692 23456 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-10 02:35:12,715 views 22692 25804 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-10 02:35:13,011 views 22692 25804 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.30s
+INFO 2025-05-10 02:35:13,025 basehttp 22692 25804 "POST /api/users/login/ HTTP/1.1" 200 211
+INFO 2025-05-10 02:35:13,207 allergen 22692 25804 Listing all allergens: user_id=66
+INFO 2025-05-10 02:35:13,211 allergen 22692 25804 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-10 02:35:13,224 basehttp 22692 25804 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 02:35:13,315 equipment 22692 25804 Listing all equipment: user_id=66
+INFO 2025-05-10 02:35:13,319 equipment 22692 25804 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-10 02:35:13,332 basehttp 22692 25804 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 02:35:13,421 allergen 22692 25804 Listing user allergens: user_id=66
+INFO 2025-05-10 02:35:13,429 allergen 22692 25804 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-10 02:35:13,445 basehttp 22692 25804 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-10 02:36:02,192 views 22692 30804 Profile accessed: user_id=66
+INFO 2025-05-10 02:36:02,219 basehttp 22692 30804 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-10 02:36:02,369 views 22692 30804 Profile accessed: user_id=66
+INFO 2025-05-10 02:36:02,390 basehttp 22692 30804 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-10 02:36:02,545 allergen 22692 30804 Listing all allergens: user_id=66
+INFO 2025-05-10 02:36:02,548 allergen 22692 30804 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-10 02:36:02,562 basehttp 22692 30804 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-10 02:36:02,634 equipment 22692 30804 Listing all equipment: user_id=66
+INFO 2025-05-10 02:36:02,639 equipment 22692 30804 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-10 02:36:02,654 basehttp 22692 30804 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-10 02:36:02,808 allergen 22692 30804 Listing user allergens: user_id=66
+INFO 2025-05-10 02:36:02,827 allergen 22692 30804 Retrieved 3 user allergens, user_id=66, time=0.02s
+INFO 2025-05-10 02:36:02,861 basehttp 22692 30804 "GET /api/user-allergens/ HTTP/1.1" 200 100
+WARNING 2025-05-10 02:36:42,902 recipe 22692 21368 Missing recipe ID in favorite add request: user_id=66
+WARNING 2025-05-10 02:36:42,914 basehttp 22692 21368 "POST /api/favorites/ HTTP/1.1" 400 65
+INFO 2025-05-10 02:36:55,542 recipe 22692 21368 Recipe viewed: recipe_id=24, title='Mushroom Risotto', user_id=66
+INFO 2025-05-10 02:36:55,586 basehttp 22692 21368 "GET /api/recipes/24/ HTTP/1.1" 200 1123

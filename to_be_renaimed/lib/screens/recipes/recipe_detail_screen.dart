@@ -162,7 +162,38 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
           pinned: true,
           flexibleSpace: FlexibleSpaceBar(
             title: Text(_recipe!.title),
-            background: Container(
+            background: _recipe!.mainImageUrl != null && _recipe!.mainImageUrl!.isNotEmpty
+                ? Image.network(
+              _recipe!.mainImageUrl!,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                // Если не удалось загрузить изображение, показываем иконку
+                return Container(
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                  child: Center(
+                    child: Icon(
+                      Icons.restaurant,
+                      size: 64,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                );
+              },
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Container(
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  ),
+                );
+              },
+            )
+                : Container(
               color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
               child: Center(
                 child: Icon(
@@ -236,24 +267,83 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                 Card(
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildNutrientInfo(
-                            context,
-                            'Белки',
-                            '${_recipe!.protein} г'
+                        Text(
+                          'Пищевая ценность порции (${_recipe!.weight > 0 ? '${_recipe!.weight} г' : ''})',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
-                        _buildNutrientInfo(
-                            context,
-                            'Жиры',
-                            '${_recipe!.fat} г'
+                        const SizedBox(height: 12),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _buildNutrientInfo(
+                                context,
+                                'Калории',
+                                '${_recipe!.calories} ккал'
+                            ),
+                            _buildNutrientInfo(
+                                context,
+                                'Белки',
+                                '${_recipe!.protein} г'
+                            ),
+                            _buildNutrientInfo(
+                                context,
+                                'Жиры',
+                                '${_recipe!.fat} г'
+                            ),
+                            _buildNutrientInfo(
+                                context,
+                                'Углеводы',
+                                '${_recipe!.carbs} г'
+                            ),
+                          ],
                         ),
-                        _buildNutrientInfo(
-                            context,
-                            'Углеводы',
-                            '${_recipe!.carbs} г'
-                        ),
+
+                        if (_recipe!.weight > 0) ...[
+                          const SizedBox(height: 8),
+                          const Divider(),
+                          const SizedBox(height: 8),
+
+                          // Добавим отображение пищевой ценности на 100 грамм
+                          Text(
+                            'На 100 грамм:',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _buildNutrientInfo(
+                                  context,
+                                  'Калории',
+                                  '${(_recipe!.weight > 0 ? _recipe?.caloriesPer100g: 0)} ккал'
+                              ),
+                              _buildNutrientInfo(
+                                  context,
+                                  'Белки',
+                                  '${(_recipe!.weight > 0 ? _recipe?.proteinPer100g : 0)} г'
+                              ),
+                              _buildNutrientInfo(
+                                  context,
+                                  'Жиры',
+                                  '${(_recipe!.weight > 0 ? _recipe?.fatPer100g : 0)} г'
+                              ),
+                              _buildNutrientInfo(
+                                  context,
+                                  'Углеводы',
+                                  '${(_recipe!.weight > 0 ? _recipe?.carbsPer100g : 0)} г'
+                              ),
+                            ],
+                          ),
+                        ],
                       ],
                     ),
                   ),
@@ -349,7 +439,10 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
       children: [
         Text(
           label,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: TextStyle(
+            fontSize: 12,
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+          ),
         ),
         const SizedBox(height: 4),
         Text(

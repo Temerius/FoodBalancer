@@ -256,7 +256,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                     topRight: Radius.circular(8),
                                   ),
                                 ),
-                                child: Center(
+                                child: recipe.mainImageUrl != null && recipe.mainImageUrl!.isNotEmpty
+                                    ? ClipRRect(
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(8),
+                                    topRight: Radius.circular(8),
+                                  ),
+                                  child: Image.network(
+                                    recipe.mainImageUrl!,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      // В случае ошибки загрузки изображения
+                                      return Center(
+                                        child: Icon(
+                                          Icons.restaurant,
+                                          color: Theme.of(context).colorScheme.primary,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                )
+                                    : Center(
                                   child: Icon(
                                     Icons.restaurant,
                                     color: Theme.of(context).colorScheme.primary,

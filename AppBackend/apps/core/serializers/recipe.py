@@ -31,14 +31,17 @@ class StepSerializer(serializers.ModelSerializer):
         model = Step
         fields = ['stp_id', 'stp_title', 'stp_instruction', 'images', 'ingredients']
 
-
 class RecipeListSerializer(serializers.ModelSerializer):
     """Сериализатор для списка рецептов"""
     is_favorite = serializers.SerializerMethodField()
 
     class Meta:
         model = Recipe
-        fields = ['rcp_id', 'rcp_title', 'rcp_description', 'rcp_cal', 'rcp_portion_count', 'is_favorite']
+        fields = [
+            'rcp_id', 'rcp_title', 'rcp_description', 'rcp_cal', 'rcp_portion_count',
+            'rcp_main_img', 'rcp_weight', 'rcp_fat', 'rcp_hydrates', 'rcp_protein',
+            'is_favorite'
+        ]  # Добавлены новые поля
 
     def get_is_favorite(self, obj):
         """Проверка, находится ли рецепт в избранном у пользователя"""
@@ -61,8 +64,9 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
         model = Recipe
         fields = [
             'rcp_id', 'rcp_title', 'rcp_description', 'rcp_cal', 'rcp_portion_count',
+            'rcp_main_img', 'rcp_weight', 'rcp_fat', 'rcp_hydrates', 'rcp_protein',
             'steps', 'equipment', 'is_favorite'
-        ]
+        ]  # Добавлены новые поля
 
     def get_is_favorite(self, obj):
         """Проверка, находится ли рецепт в избранном у пользователя"""
