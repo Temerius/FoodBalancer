@@ -19,6 +19,8 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
   bool _isRefreshing = false;
   String? _errorMessage;
 
+  final FocusNode _searchFocusNode = FocusNode();
+
   // Lists to store recipes
   List<Recipe> _allRecipes = [];
   List<Recipe> _favoriteRecipes = [];
@@ -39,6 +41,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
   void dispose() {
     _tabController.dispose();
     _searchController.dispose();
+    _searchFocusNode.dispose();
     super.dispose();
   }
 
@@ -122,6 +125,22 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
     ).toList();
   }
 
+  List<Recipe> _getFilteredRecommendedRecipes() {
+    if (_searchQuery.isEmpty) return _recommendedRecipes;
+
+    return _recommendedRecipes.where((recipe) =>
+        recipe.title.toLowerCase().contains(_searchQuery.toLowerCase())
+    ).toList();
+  }
+
+  List<Recipe> _getFilteredFavoriteRecipes() {
+    if (_searchQuery.isEmpty) return _favoriteRecipes;
+
+    return _favoriteRecipes.where((recipe) =>
+        recipe.title.toLowerCase().contains(_searchQuery.toLowerCase())
+    ).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,6 +193,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
             padding: const EdgeInsets.all(16.0),
             child: TextField(
               controller: _searchController,
+              focusNode: _searchFocusNode,
               decoration: InputDecoration(
                 hintText: 'Поиск рецептов',
                 prefixIcon: const Icon(Icons.search),
@@ -184,6 +204,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                     setState(() {
                       _searchController.clear();
                       _searchQuery = '';
+                      _searchFocusNode.unfocus();
                     });
                   },
                 )
@@ -197,6 +218,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                   _searchQuery = value;
                 });
               },
+              autofocus: false,
             ),
           ),
 
@@ -213,10 +235,10 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                 _buildRecipesList(_getFilteredRecipes()),
 
                 // Recommended tab
-                _buildRecipesList(_recommendedRecipes),
+                _buildRecipesList(_getFilteredRecommendedRecipes()),
 
                 // Favorites tab
-                _buildRecipesList(_favoriteRecipes),
+                _buildRecipesList(_getFilteredFavoriteRecipes()),
               ],
             ),
           ),

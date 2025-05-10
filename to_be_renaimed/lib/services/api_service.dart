@@ -253,7 +253,11 @@ class ApiService {
   }
 
   // DELETE request
-  Future<Map<String, dynamic>> delete(String endpoint) async {
+  // В lib/services/api_service.dart
+// Обновить метод delete для поддержки данных
+
+// DELETE request
+  Future<Map<String, dynamic>> delete(String endpoint, {Map<String, dynamic>? data}) async {
     // Check connection before making request
     final hasConnection = await _networkUtil.checkConnection();
     if (!hasConnection) {
@@ -265,13 +269,29 @@ class ApiService {
     if (DEBUG) {
       print('API Request: DELETE $baseUrl$endpoint');
       print('Headers: $_headers');
+      if (data != null) {
+        print('Body: ${jsonEncode(data)}');
+      }
     }
 
     try {
-      final response = await _client.delete(
-        Uri.parse('$baseUrl$endpoint'),
-        headers: _headers,
-      ).timeout(const Duration(seconds: 15));
+      http.Response response;
+
+      if (data != null) {
+        // DELETE с телом запроса
+        final request = http.Request('DELETE', Uri.parse('$baseUrl$endpoint'));
+        request.headers.addAll(_headers);
+        request.body = jsonEncode(data);
+
+        final streamedResponse = await _client.send(request).timeout(const Duration(seconds: 15));
+        response = await http.Response.fromStream(streamedResponse);
+      } else {
+        // Обычный DELETE без тела
+        response = await _client.delete(
+          Uri.parse('$baseUrl$endpoint'),
+          headers: _headers,
+        ).timeout(const Duration(seconds: 15));
+      }
 
       return _handleResponse(response);
     } on SocketException {

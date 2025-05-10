@@ -1,10 +1,12 @@
 // lib/repositories/repositories/recipe_repository.dart
+import 'package:flutter/cupertino.dart';
+
 import '../../models/recipe.dart';
 import '../services/cache_service.dart';
 import '../models/cache_config.dart';
 import '../../services/api_service.dart';
 
-class RecipeRepository {
+class RecipeRepository with ChangeNotifier{
   static const String _cacheKey = 'recipes';
   static const String _favoritesCacheKey = 'favorite_recipes';
   static const String _recipeDetailsCacheKey = 'recipe_details';
@@ -50,6 +52,8 @@ class RecipeRepository {
 
           // Get favorite recipes to update isFavorite flag
           await _updateFavoriteStatus();
+
+          notifyListeners();
 
           return _recipes;
         } catch (e) {
@@ -102,6 +106,10 @@ class RecipeRepository {
   }
 
   // Get recipe details
+  // В lib/repositories/repositories/recipe_repository.dart
+// Обновить метод getRecipeDetails для правильной установки статуса избранного
+
+// Get recipe details
   Future<Recipe?> getRecipeDetails(int recipeId, {CacheConfig? config}) async {
     final cacheConfig = config ?? CacheConfig.defaultConfig;
     print("\n===== GETTING RECIPE DETAILS FOR ID: $recipeId (forceRefresh: ${cacheConfig.forceRefresh}) =====");
@@ -121,6 +129,10 @@ class RecipeRepository {
         try {
           final recipe = Recipe.fromJson(cachedData);
           _processRecipeIngredients(recipe);
+
+          // Обновляем статус избранного
+          recipe.isFavorite = _favoriteRecipeIds.contains(recipeId);
+
           _recipeDetails[recipeId] = recipe;
           return recipe;
         } catch (e) {
@@ -137,11 +149,21 @@ class RecipeRepository {
       // Parse recipe details
       final recipe = Recipe.fromJson(response);
 
+      // Загружаем актуальный список избранного, если его нет
+      if (_favoriteRecipeIds.isEmpty) {
+        await _loadFavoriteRecipeIds();
+      }
+
+      // Обновляем статус избранного
+      recipe.isFavorite = _favoriteRecipeIds.contains(recipeId);
+
       // Save to memory
       _recipeDetails[recipeId] = recipe;
 
-      // Save to cache
-      await CacheService.save("${_recipeDetailsCacheKey}_$recipeId", response);
+      // Save to cache (но сохраняем без статуса избранного, так как он может изменяться)
+      final cacheData = Map<String, dynamic>.from(response);
+      cacheData.remove('is_favorite');
+      await CacheService.save("${_recipeDetailsCacheKey}_$recipeId", cacheData);
 
       return recipe;
     } catch (e) {
@@ -202,10 +224,11 @@ class RecipeRepository {
       try {
         if (newStatus) {
           // Add to favorites
-          await _apiService.post('/api/favorites/', {'recipe_id': recipeId});
+          await _apiService.post('/api/favorites/', {'fvr_rcp_id': recipeId});
         } else {
-          // Remove from favorites
-          await _apiService.delete('/api/favorites/$recipeId/');
+          // Remove from favorites - используем метод delete с данными
+          // DELETE метод с телом запроса требует особого подхода
+          await _apiService.delete('/api/favorites/remove/', data: {'fvr_rcp_id': recipeId});
         }
 
         // Update local status
@@ -220,14 +243,17 @@ class RecipeRepository {
           _recipes[recipeIndex] = _recipes[recipeIndex].copyWith(isFavorite: newStatus);
         }
 
+        // Update recipe details if loaded
+        if (_recipeDetails.containsKey(recipeId)) {
+          _recipeDetails[recipeId] = _recipeDetails[recipeId]!.copyWith(isFavorite: newStatus);
+        }
+
         // Update cache
         await CacheService.save(_favoritesCacheKey, _favoriteRecipeIds);
 
         return true;
       } catch (e) {
         print("API ERROR WHEN TOGGLING FAVORITE: $e");
-        // We could still update the local status even if API fails
-        // but it's better to keep consistency with the server
         return false;
       }
     } catch (e) {
@@ -236,12 +262,15 @@ class RecipeRepository {
     }
   }
 
+
   // Load favorite recipe IDs from API or cache
   Future<List<int>> _loadFavoriteRecipeIds({CacheConfig? config}) async {
     final cacheConfig = config ?? CacheConfig.defaultConfig;
+    print("\n===== LOADING FAVORITE RECIPE IDS (forceRefresh: ${cacheConfig.forceRefresh}) =====");
 
     // Return from memory if already loaded and not force refreshing
     if (_favoriteRecipeIds.isNotEmpty && !cacheConfig.forceRefresh) {
+      print("FAVORITE IDS ALREADY IN MEMORY: $_favoriteRecipeIds");
       return _favoriteRecipeIds;
     }
 
@@ -267,6 +296,7 @@ class RecipeRepository {
           }
 
           _favoriteRecipeIds = favoriteIds;
+          print("FAVORITE IDS LOADED FROM CACHE: $_favoriteRecipeIds");
           return favoriteIds;
         } catch (e) {
           print("ERROR PARSING FAVORITE RECIPES FROM CACHE: $e");
@@ -276,24 +306,33 @@ class RecipeRepository {
 
     // Load from API
     try {
+      print("FETCHING FAVORITE RECIPES FROM API...");
       final response = await _apiService.get('/api/favorites/');
+      print("FAVORITE RECIPES API RESPONSE: $response");
+
       List<int> favoriteIds = [];
 
+      // Проверяем структуру ответа
       if (response.containsKey('results')) {
         final List<dynamic> favoritesJson = response['results'];
-
         for (var item in favoritesJson) {
           _extractFavoriteRecipeId(item, favoriteIds);
         }
-      } else {
-        final rawData = response['raw_data'] ?? response;
-
-        if (rawData is List) {
-          for (var item in rawData) {
-            _extractFavoriteRecipeId(item, favoriteIds);
-          }
+      } else if (response['raw_data'] is List) {
+        // Если raw_data содержит список
+        final List<dynamic> favoritesJson = response['raw_data'];
+        for (var item in favoritesJson) {
+          _extractFavoriteRecipeId(item, favoriteIds);
+        }
+      } else if (response is List) {
+        // Если сам ответ является списком
+        final List<dynamic> favoritesJson = response as List;
+        for (var item in favoritesJson) {
+          _extractFavoriteRecipeId(item, favoriteIds);
         }
       }
+
+      print("FAVORITE IDS EXTRACTED: $favoriteIds");
 
       // Save to cache
       await CacheService.save(_favoritesCacheKey, favoriteIds);
@@ -311,10 +350,13 @@ class RecipeRepository {
   // Helper method to extract recipe ID from a favorite item
   void _extractFavoriteRecipeId(dynamic item, List<int> favoriteIds) {
     if (item is Map<String, dynamic>) {
-      // Check different possible keys for recipe ID
       dynamic recipeId;
 
-      if (item.containsKey('fvr_rcp_id')) {
+      // Проверяем структуру ответа от сервера
+      if (item.containsKey('recipe') && item['recipe'] is Map<String, dynamic>) {
+        // Извлекаем ID из вложенного объекта recipe
+        recipeId = item['recipe']['rcp_id'];
+      } else if (item.containsKey('fvr_rcp_id')) {
         recipeId = item['fvr_rcp_id'];
       } else if (item.containsKey('recipe_id')) {
         recipeId = item['recipe_id'];
@@ -347,16 +389,33 @@ class RecipeRepository {
 
   // Update favorite status for all recipes
   Future<void> _updateFavoriteStatus() async {
-    // Load favorite recipe IDs
-    await _loadFavoriteRecipeIds();
+    print("\n===== UPDATING FAVORITE STATUS =====");
+    print("CURRENT FAVORITE IDS: $_favoriteRecipeIds");
+    print("TOTAL RECIPES IN MEMORY: ${_recipes.length}");
+
+    // Load favorite recipe IDs if not already loaded
+    if (_favoriteRecipeIds.isEmpty) {
+      print("LOADING FAVORITE IDS...");
+      await _loadFavoriteRecipeIds();
+    }
 
     // Update isFavorite flag for all recipes
+    int updatedCount = 0;
     for (var i = 0; i < _recipes.length; i++) {
       bool isFavorite = _favoriteRecipeIds.contains(_recipes[i].id);
+
       if (_recipes[i].isFavorite != isFavorite) {
+        print("UPDATING RECIPE ${_recipes[i].id} (${_recipes[i].title}): ${_recipes[i].isFavorite} -> $isFavorite");
         _recipes[i] = _recipes[i].copyWith(isFavorite: isFavorite);
+        updatedCount++;
       }
     }
+
+    print("UPDATED $updatedCount RECIPES' FAVORITE STATUS");
+    print("===== FAVORITE STATUS UPDATE COMPLETE =====\n");
+
+    // Уведомляем об изменениях
+    notifyListeners();
   }
 
   // Clear recipe cache

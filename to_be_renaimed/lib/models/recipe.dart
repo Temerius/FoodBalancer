@@ -48,6 +48,7 @@ class Recipe {
         requiredEquipment = requiredEquipment ?? [],
         _prepTime = prepTime;
 
+  // В lib/models/recipe.dart
   factory Recipe.fromJson(Map<String, dynamic> json) {
     try {
       // Проверка базовых полей
@@ -59,7 +60,7 @@ class Recipe {
         throw FormatException('Обязательное поле rcp_id отсутствует в данных рецепта');
       }
 
-      // Попытка парсинга числовых полей с корректной обработкой ошибок
+      // Парсинг числовых полей
       int calories = 0;
       try {
         var calValue = json['rcp_cal'] ?? 0;
@@ -81,7 +82,7 @@ class Recipe {
         } else {
           portionCount = portionValue is int ? portionValue : 1;
         }
-        if (portionCount <= 0) portionCount = 1; // Минимум 1 порция
+        if (portionCount <= 0) portionCount = 1;
       } catch (e) {
         print("Error parsing portion count: $e");
         portionCount = 1;
@@ -116,7 +117,7 @@ class Recipe {
 
       int carbs = 0;
       try {
-        var carbsValue = json['rcp_hydrates'] ?? 0; // Важно: поле называется rcp_hydrates в БД
+        var carbsValue = json['rcp_hydrates'] ?? 0;
         if (carbsValue is String) {
           carbs = int.tryParse(carbsValue) ?? 0;
         } else {
@@ -140,7 +141,6 @@ class Recipe {
         protein = 0;
       }
 
-      // Парсинг флага избранного
       bool isFavorite = false;
       try {
         var favValue = json['is_favorite'] ?? false;
@@ -154,7 +154,6 @@ class Recipe {
         isFavorite = false;
       }
 
-      // Парсинг URL изображения
       String? mainImageUrl;
       try {
         mainImageUrl = json['rcp_main_img'] as String?;
@@ -163,20 +162,52 @@ class Recipe {
         mainImageUrl = null;
       }
 
+      // Парсинг шагов рецепта
+      List<RecipeStep> steps = [];
+      try {
+        if (json['steps'] != null && json['steps'] is List) {
+          steps = (json['steps'] as List)
+              .map((stepJson) => RecipeStep.fromJson(stepJson))
+              .toList();
+        }
+      } catch (e) {
+        print("Error parsing steps: $e");
+        steps = [];
+      }
+
+      // Парсинг оборудования (если есть)
+      List<Equipment> equipment = [];
+      try {
+        if (json['equipment'] != null && json['equipment'] is List) {
+          equipment = (json['equipment'] as List)
+              .map((equipmentJson) => Equipment.fromJson(equipmentJson))
+              .toList();
+        }
+      } catch (e) {
+        print("Error parsing equipment: $e");
+        equipment = [];
+      }
+
       // Создание и возврат объекта Recipe
-      return Recipe(
+      final recipe = Recipe(
         id: recipeId is int ? recipeId : 0,
         title: title,
         description: description,
         calories: calories,
         portionCount: portionCount,
         mainImageUrl: mainImageUrl,
-        weight: weight,        // Новое поле
-        fat: fat,              // Новое поле
-        carbs: carbs,          // Новое поле
-        protein: protein,      // Новое поле
+        weight: weight,
+        fat: fat,
+        carbs: carbs,
+        protein: protein,
         isFavorite: isFavorite,
       );
+
+      // Устанавливаем шаги и оборудование
+      recipe.steps = steps;
+      recipe.requiredEquipment = equipment;
+
+      return recipe;
     } catch (e) {
       print("Error creating Recipe from JSON: $e");
       print("JSON data: $json");
@@ -290,6 +321,7 @@ class Recipe {
   }
 }
 
+// В lib/models/recipe.dart
 class RecipeStep {
   final int id;
   final int recipeId;
@@ -308,13 +340,52 @@ class RecipeStep {
   });
 
   factory RecipeStep.fromJson(Map<String, dynamic> json) {
-    return RecipeStep(
-      id: json['stp_id'],
-      recipeId: json['stp_rcp_id'],
-      title: json['stp_title'] ?? '',
-      instruction: json['stp_instruction'] ?? '',
-      // Images would be populated from a separate query/join
-    );
+    try {
+      // Парсинг изображений
+      List<String> imageUrls = [];
+      if (json['images'] != null && json['images'] is List) {
+        imageUrls = (json['images'] as List)
+            .map((imageJson) {
+          if (imageJson is Map<String, dynamic> && imageJson['img_url'] != null) {
+            return imageJson['img_url'] as String;
+          }
+          return null;
+        })
+            .where((url) => url != null)
+            .cast<String>()
+            .toList();
+      }
+
+      // Парсинг ингредиентов шага
+      List<RecipeStepIngredient> ingredients = [];
+      if (json['ingredients'] != null && json['ingredients'] is List) {
+        ingredients = (json['ingredients'] as List)
+            .map((ingredientJson) {
+          try {
+            return RecipeStepIngredient.fromJson(ingredientJson);
+          } catch (e) {
+            print("Error parsing step ingredient: $e");
+            return null;
+          }
+        })
+            .where((ingredient) => ingredient != null)
+            .cast<RecipeStepIngredient>()
+            .toList();
+      }
+
+      return RecipeStep(
+        id: json['stp_id'] ?? 0,
+        recipeId: json['stp_rcp_id'] ?? 0,
+        title: json['stp_title'] ?? '',
+        instruction: json['stp_instruction'] ?? '',
+        imageUrls: imageUrls,
+        ingredients: ingredients,
+      );
+    } catch (e) {
+      print("Error parsing RecipeStep: $e");
+      print("JSON data: $json");
+      throw FormatException('Ошибка при парсинге шага рецепта: $e');
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -323,6 +394,8 @@ class RecipeStep {
       'stp_rcp_id': recipeId,
       'stp_title': title,
       'stp_instruction': instruction,
+      'images': imageUrls.map((url) => {'img_url': url}).toList(),
+      'ingredients': ingredients.map((ingredient) => ingredient.toJson()).toList(),
     };
   }
 
@@ -431,6 +504,7 @@ class RecipeIngredient {
   int get hashCode => Object.hash(recipeId, ingredientTypeId);
 }
 
+// В lib/models/recipe.dart
 class RecipeStepIngredient {
   final int id;
   final int stepId;
@@ -451,13 +525,55 @@ class RecipeStepIngredient {
   });
 
   factory RecipeStepIngredient.fromJson(Map<String, dynamic> json) {
-    return RecipeStepIngredient(
-      id: json['msi_id'],
-      stepId: json['msi_stp_id'],
-      ingredientTypeId: json['msi_igt_id'],
-      quantity: json['msi_quantity'] ?? 0,
-      quantityType: QuantityType.fromString(json['msi_quantity_type'] ?? 'grams'),
-    );
+    try {
+      // Парсинг типа ингредиента
+      IngredientType? ingredientType;
+      if (json['ingredient_type'] != null && json['ingredient_type'] is Map<String, dynamic>) {
+        try {
+          ingredientType = IngredientType.fromJson(json['ingredient_type']);
+        } catch (e) {
+          print("Error parsing ingredient_type: $e");
+          ingredientType = null;
+        }
+      }
+
+      // Парсинг количества
+      int quantity = 0;
+      try {
+        var quantityValue = json['msi_quantity'] ?? 0;
+        if (quantityValue is String) {
+          quantity = int.tryParse(quantityValue) ?? 0;
+        } else {
+          quantity = quantityValue is int ? quantityValue : 0;
+        }
+      } catch (e) {
+        print("Error parsing quantity: $e");
+        quantity = 0;
+      }
+
+      // Парсинг типа количества
+      QuantityType quantityType = QuantityType.grams;
+      try {
+        var quantityTypeValue = json['msi_quantity_type'] ?? 'grams';
+        quantityType = QuantityType.fromString(quantityTypeValue);
+      } catch (e) {
+        print("Error parsing quantity type: $e");
+        quantityType = QuantityType.grams;
+      }
+
+      return RecipeStepIngredient(
+        id: json['msi_id'] ?? 0,
+        stepId: json['msi_stp_id'] ?? 0,
+        ingredientTypeId: json['msi_igt_id'] ?? ingredientType?.id ?? 0,
+        quantity: quantity,
+        quantityType: quantityType,
+        ingredientType: ingredientType,
+      );
+    } catch (e) {
+      print("Error parsing RecipeStepIngredient: $e");
+      print("JSON data: $json");
+      throw FormatException('Ошибка при парсинге ингредиента шага: $e');
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -467,6 +583,7 @@ class RecipeStepIngredient {
       'msi_igt_id': ingredientTypeId,
       'msi_quantity': quantity,
       'msi_quantity_type': quantityType.toString().split('.').last,
+      if (ingredientType != null) 'ingredient_type': ingredientType!.toJson(),
     };
   }
 

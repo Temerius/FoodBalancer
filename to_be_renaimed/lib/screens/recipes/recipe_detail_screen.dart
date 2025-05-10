@@ -41,9 +41,12 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Добавим лог для отладки
       print("Trying to load recipe with ID: ${widget.recipeId}");
 
+      // Сначала загружаем список избранного, чтобы статус был актуальным
+      await dataRepository.getFavoriteRecipes(forceRefresh: forceRefresh);
+
+      // Затем загружаем детали рецепта
       final recipe = await dataRepository.getRecipeDetails(widget.recipeId!, forceRefresh: forceRefresh);
 
       if (recipe == null) {
@@ -69,7 +72,6 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
           _errorMessage = 'Ошибка загрузки рецепта: ${e.toString()}';
         }
 
-        // Выводим полный текст ошибки для отладки
         print("Error loading recipe: $e");
       });
     } finally {
@@ -380,7 +382,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
 
                 // Instructions
                 Text(
-                  'Инструкции',
+                  'Шаги приготовления',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 12),
@@ -412,7 +414,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
       BuildContext context,
       IconData icon,
       String value,
-      String label,
+      String label,  // Этот параметр больше не используется
       ) {
     return Column(
       children: [
@@ -422,10 +424,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
           value,
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
+        // Удалили отображение label
       ],
     );
   }
@@ -457,17 +456,47 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
     );
   }
 
+  // В lib/screens/recipes/recipe_detail_screen.dart
+  // В lib/screens/recipes/recipe_detail_screen.dart
   Widget _buildIngredientsList() {
-    // Check if recipe has ingredients
-    if (_recipe?.ingredients == null || _recipe!.ingredients.isEmpty) {
+    // Создаем общий список ингредиентов из всех шагов
+    Map<String, Map<String, dynamic>> allIngredients = {};
+
+    // Собираем ингредиенты из всех шагов
+    if (_recipe?.steps != null) {
+      for (var step in _recipe!.steps) {
+        for (var ingredient in step.ingredients) {
+          if (ingredient.ingredientType != null) {
+            final key = '${ingredient.ingredientType!.id}_${ingredient.quantityType.toString()}';
+
+            if (allIngredients.containsKey(key)) {
+              // Складываем количество для одинаковых ингредиентов с одинаковыми единицами измерения
+              allIngredients[key]!['totalQuantity'] += ingredient.quantity;
+            } else {
+              // Добавляем новый ингредиент
+              allIngredients[key] = {
+                'ingredient': ingredient,
+                'totalQuantity': ingredient.quantity,
+              };
+            }
+          }
+        }
+      }
+    }
+
+    if (allIngredients.isEmpty) {
       return const Padding(
         padding: EdgeInsets.symmetric(vertical: 8.0),
         child: Text('Информация об ингредиентах отсутствует'),
       );
     }
 
+    // Просто выводим все ингредиенты без группировки
     return Column(
-      children: _recipe!.ingredients.map((ingredient) {
+      children: allIngredients.values.map((ingredientData) {
+        final ingredient = ingredientData['ingredient'] as RecipeStepIngredient;
+        final totalQuantity = ingredientData['totalQuantity'] as int;
+
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Row(
@@ -488,7 +517,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                 ),
               ),
               Text(
-                ingredient.formattedQuantity ?? '---',
+                '$totalQuantity ${ingredient.quantityType.getShortName()}',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
@@ -498,6 +527,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
     );
   }
 
+  // В lib/screens/recipes/recipe_detail_screen.dart
   Widget _buildInstructionsList() {
     // Check if recipe has steps
     if (_recipe?.steps == null || _recipe!.steps.isEmpty) {
@@ -510,38 +540,184 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
     return Column(
       children: List.generate(
         _recipe!.steps.length,
-            (index) => Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Text(
-                    '${index + 1}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+            (index) {
+          final step = _recipe!.steps[index];
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Step number and title
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${index + 1}',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (step.title.isNotEmpty) ...[
+                                Text(
+                                  step.title,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                              ],
+                              Text(
+                                step.instruction,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
+
+                    // Step ingredients (if any)
+                    if (step.ingredients.isNotEmpty) ...[
+                      const SizedBox(height: 16),
+                      const Divider(),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Необходимо для этого шага:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: step.ingredients.map((ingredient) {
+                          return Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              '${ingredient.name} - ${ingredient.formattedQuantity}',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+
+                    if (step.imageUrls.isNotEmpty) ...[
+                      const SizedBox(height: 16),
+                      Container(
+                        height: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.grey.shade50,
+                        ),
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          itemCount: step.imageUrls.length,
+                          itemBuilder: (context, imageIndex) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(6),
+                                child: Image.network(
+                                  step.imageUrls[imageIndex],
+                                  width: 150,
+                                  height: 150,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder: (context, child, loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Container(
+                                      width: 150,
+                                      height: 150,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade100,
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          value: loadingProgress.expectedTotalBytes != null
+                                              ? loadingProgress.cumulativeBytesLoaded /
+                                              loadingProgress.expectedTotalBytes!
+                                              : null,
+                                          strokeWidth: 2,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(
+                                      width: 150,
+                                      height: 150,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).colorScheme.errorContainer,
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.image_not_supported,
+                                            color: Theme.of(context).colorScheme.onErrorContainer,
+                                            size: 24,
+                                          ),
+                                          const SizedBox(height: 4),
+                                          Text(
+                                            'Не удалось\nзагрузить',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Theme.of(context).colorScheme.onErrorContainer,
+                                              fontSize: 10,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Text(
-                  _recipe!.steps[index].instruction,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

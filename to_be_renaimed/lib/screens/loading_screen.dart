@@ -28,6 +28,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
     });
   }
 
+  // В lib/screens/loading_screen.dart
+// Обновить метод _initializeApp
+
   Future<void> _initializeApp() async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final dataRepository = Provider.of<DataRepository>(context, listen: false);
@@ -42,14 +45,14 @@ class _LoadingScreenState extends State<LoadingScreen> {
       await authProvider.initialize();
 
       setState(() {
-        _progress = 0.3;
+        _progress = 0.2;
       });
 
       if (authProvider.isAuthenticated) {
         // Если пользователь авторизован, инициализируем репозитории
         setState(() {
           _statusMessage = "Загрузка базовых данных...";
-          _progress = 0.5;
+          _progress = 0.3;
         });
 
         // Инициализация репозиториев и загрузка базовых данных
@@ -57,7 +60,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
         setState(() {
           _statusMessage = "Загрузка профиля пользователя...";
-          _progress = 0.6;
+          _progress = 0.4;
         });
 
         // Обязательная загрузка профиля пользователя после авторизации
@@ -65,7 +68,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
         setState(() {
           _statusMessage = "Загрузка аллергенов...";
-          _progress = 0.7;
+          _progress = 0.5;
         });
 
         // Загружаем полный список аллергенов
@@ -73,22 +76,43 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
         setState(() {
           _statusMessage = "Загрузка оборудования...";
-          _progress = 0.8;
+          _progress = 0.6;
         });
 
         // Загружаем полный список оборудования
         await dataRepository.getEquipment(forceRefresh: true);
 
         setState(() {
-          _statusMessage = "Обновление данных пользователя...";
-          _progress = 0.9;
+          _statusMessage = "Обновление аллергенов пользователя...";
+          _progress = 0.7;
         });
 
         // Принудительно обновляем аллергены пользователя
         await dataRepository.refreshUserAllergens();
 
-        // Загружаем рецепты и другие данные
-        await dataRepository.getRecipes();
+        setState(() {
+          _statusMessage = "Обновление оборудования пользователя...";
+          _progress = 0.75;
+        });
+
+        // Принудительно обновляем оборудование пользователя
+        await dataRepository.refreshUserEquipment();
+
+        setState(() {
+          _statusMessage = "Загрузка рецептов...";
+          _progress = 0.8;
+        });
+
+        // Загружаем рецепты
+        await dataRepository.getRecipes(forceRefresh: true);
+
+        setState(() {
+          _statusMessage = "Загрузка избранных рецептов...";
+          _progress = 0.9;
+        });
+
+        // ВАЖНО: Загружаем избранные рецепты
+        await dataRepository.getFavoriteRecipes(forceRefresh: true);
       }
 
       setState(() {
