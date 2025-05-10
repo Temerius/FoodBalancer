@@ -32,6 +32,34 @@ class Ingredient {
   });
 
   factory Ingredient.fromJson(Map<String, dynamic> json) {
+    // Правильно парсим ingredientTypeId
+    int ingredientTypeId = 0;
+    try {
+      if (json['ing_igt_id'] is int) {
+        // Если это просто число
+        ingredientTypeId = json['ing_igt_id'];
+      } else if (json['ing_igt_id'] is Map<String, dynamic>) {
+        // Если это объект, извлекаем ID из него
+        final typeMap = json['ing_igt_id'] as Map<String, dynamic>;
+        ingredientTypeId = typeMap['igt_id'] ?? 0;
+      } else if (json['ing_igt_id'] is String) {
+        // Если это строка, парсим её
+        ingredientTypeId = int.tryParse(json['ing_igt_id']) ?? 0;
+      }
+    } catch (e) {
+      print('Error parsing ing_igt_id: $e');
+    }
+
+    // Также получаем объект IngredientType, если он есть
+    IngredientType? type;
+    try {
+      if (json['ing_igt_id'] is Map<String, dynamic>) {
+        type = IngredientType.fromJson(json['ing_igt_id']);
+      }
+    } catch (e) {
+      print('Error parsing IngredientType from ing_igt_id: $e');
+    }
+
     return Ingredient(
       id: json['ing_id'],
       name: json['ing_name'] ?? '',
@@ -43,8 +71,9 @@ class Ingredient {
       protein: json['ing_protein'] ?? 0,
       fat: json['ing_fat'] ?? 0,
       carbs: json['ing_hydrates'] ?? 0, // Note: hydrates field mapped to carbs
-      ingredientTypeId: json['ing_igt_id'] ?? 0,
+      ingredientTypeId: ingredientTypeId,
       imageUrl: json['ing_img_url'],
+      type: type,
     );
   }
 

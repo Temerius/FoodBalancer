@@ -5,6 +5,7 @@ import '../../repositories/data_repository.dart';
 import '../../repositories/repositories/refrigerator_repository.dart';
 import '../../models/refrigerator_item.dart';
 import '../../models/ingredient.dart';
+import '../../models/ingredient_type.dart';
 import '../../models/enums.dart';
 import '../../services/refrigerator_service.dart';
 import '../../utils/date_formatter.dart';
@@ -20,18 +21,20 @@ class AddProductScreen extends StatefulWidget {
 
 class _AddProductScreenState extends State<AddProductScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _searchController = TextEditingController();
+  final _typeSearchController = TextEditingController();
+  final _productNameController = TextEditingController();
   final _quantityController = TextEditingController();
   DateTime _expiryDate = DateTime.now().add(const Duration(days: 7));
   QuantityType _quantityType = QuantityType.grams;
 
   bool _isEditing = false;
   bool _isLoading = false;
-  bool _isSearching = false;
+  bool _isSearchingTypes = false;
   String? _error;
 
-  Ingredient? _selectedIngredient;
-  List<Ingredient> _searchResults = [];
+  IngredientType? _selectedType;
+  List<IngredientType> _searchResults = [];
+  List<IngredientType> _allTypes = [];
   RefrigeratorItem? _currentItem;
 
   late RefrigeratorRepository _refrigeratorRepository;
@@ -48,8 +51,36 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
     _isEditing = widget.productId != null;
 
+    _loadIngredientTypes();
+
     if (_isEditing) {
       _loadExistingProduct();
+    }
+  }
+
+  Future<void> _loadIngredientTypes() async {
+    try {
+      final dataRepository = Provider.of<DataRepository>(context, listen: false);
+
+      // Загружаем все типы ингредиентов из API через DataRepository
+      final response = await dataRepository.apiService.get('/api/ingredient-types/?limit=1000');
+
+      if (response['results'] != null) {
+        setState(() {
+          _allTypes = (response['results'] as List)
+              .map((json) => IngredientType.fromJson(json))
+              .toList();
+          _searchResults = _allTypes;
+        });
+      }
+    } catch (e) {
+      print('Error loading ingredient types: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Ошибка загрузки типов продуктов: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
@@ -59,7 +90,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
     });
 
     try {
-      // Загружаем данные существующего продукта
       final items = await _refrigeratorRepository.getItems();
       final item = items.firstWhere(
             (item) => item.id == widget.productId,
@@ -68,7 +98,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
       setState(() {
         _currentItem = item;
-        _selectedIngredient = item.ingredient;
         _quantityController.text = item.quantity.toString();
         _quantityType = item.quantityType;
 
@@ -76,8 +105,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
           _expiryDate = item.ingredient!.expiryDate!;
         }
 
-        if (_selectedIngredient != null) {
-          _searchController.text = _selectedIngredient!.name;
+        if (item.ingredient?.type != null) {
+          _selectedType = item.ingredient!.type;
+          _typeSearchController.text = _selectedType!.name;
+        }
+
+        if (item.ingredient != null) {
+          _productNameController.text = item.ingredient!.name;
         }
       });
     } catch (e) {
@@ -91,42 +125,25 @@ class _AddProductScreenState extends State<AddProductScreen> {
     }
   }
 
-  Future<void> _searchIngredients(String query) async {
+  void _searchTypes(String query) {
     if (query.isEmpty) {
       setState(() {
-        _searchResults = [];
+        _searchResults = _allTypes;
       });
       return;
     }
 
     setState(() {
-      _isSearching = true;
+      _searchResults = _allTypes
+          .where((type) => type.name.toLowerCase().contains(query.toLowerCase()))
+          .toList();
     });
-
-    try {
-      final results = await _refrigeratorRepository.searchIngredients(query: query);
-      setState(() {
-        _searchResults = results;
-      });
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Ошибка поиска: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } finally {
-      setState(() {
-        _isSearching = false;
-      });
-    }
   }
 
   @override
   void dispose() {
-    _searchController.dispose();
+    _typeSearchController.dispose();
+    _productNameController.dispose();
     _quantityController.dispose();
     super.dispose();
   }
@@ -166,87 +183,109 @@ class _AddProductScreenState extends State<AddProductScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Поиск и выбор ингредиента
-              if (!_isEditing) ...[
-                Text(
-                  'Выберите продукт',
-                  style: Theme.of(context).textTheme.titleMedium,
+              // Шаг 1: Выбор типа продукта
+              Text(
+                'Шаг 1: Выберите тип продукта',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _typeSearchController,
+                decoration: InputDecoration(
+                  labelText: 'Тип продукта',
+                  hintText: 'Например: Молочные продукты, Овощи',
+                  prefixIcon: const Icon(Icons.category),
+                  suffixIcon: _selectedType != null
+                      ? IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      setState(() {
+                        _selectedType = null;
+                        _typeSearchController.clear();
+                        _searchResults = _allTypes;
+                      });
+                    },
+                  )
+                      : null,
                 ),
-                const SizedBox(height: 12),
-                TextFormField(
-                  controller: _searchController,
-                  decoration: InputDecoration(
-                    labelText: 'Поиск продукта',
-                    hintText: 'Начните вводить название',
-                    prefixIcon: const Icon(Icons.search),
-                    suffixIcon: _isSearching
-                        ? const Padding(
-                      padding: EdgeInsets.all(12.0),
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                        : null,
-                  ),
-                  validator: (value) {
-                    if (_selectedIngredient == null) {
-                      return 'Пожалуйста, выберите продукт из списка';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    _searchIngredients(value);
-                  },
-                ),
-                const SizedBox(height: 12),
+                enabled: !_isEditing, // Не разрешаем изменять тип при редактировании
+                onChanged: _searchTypes,
+                validator: (value) {
+                  if (_selectedType == null) {
+                    return 'Пожалуйста, выберите тип продукта';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 12),
 
-                // Результаты поиска
-                if (_searchResults.isNotEmpty)
-                  Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey[300]!),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: ListView.builder(
-                      itemCount: _searchResults.length,
-                      itemBuilder: (context, index) {
-                        final ingredient = _searchResults[index];
-                        return ListTile(
-                          leading: ingredient.imageUrl != null
-                              ? Image.network(
-                            ingredient.imageUrl!,
-                            width: 40,
-                            height: 40,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) =>
-                            const Icon(Icons.fastfood),
-                          )
-                              : const Icon(Icons.fastfood),
-                          title: Text(ingredient.name),
-                          subtitle: Text(ingredient.type?.name ?? ''),
-                          onTap: () {
-                            setState(() {
-                              _selectedIngredient = ingredient;
-                              _searchController.text = ingredient.name;
-                              _searchResults = [];
-                            });
-                          },
-                        );
-                      },
-                    ),
+              // Результаты поиска типов
+              if (_searchResults.isNotEmpty && _selectedType == null)
+                Container(
+                  height: 150,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey[300]!),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-              ] else ...[
-                // Если редактируем, показываем название продукта
-                Text(
-                  'Продукт: ${_selectedIngredient?.name ?? ''}',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  child: ListView.builder(
+                    itemCount: _searchResults.length,
+                    itemBuilder: (context, index) {
+                      final type = _searchResults[index];
+                      return ListTile(
+                        leading: type.imageUrl != null
+                            ? Image.network(
+                          type.imageUrl!,
+                          width: 40,
+                          height: 40,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                          const Icon(Icons.category),
+                        )
+                            : const Icon(Icons.category),
+                        title: Text(type.name),
+                        onTap: () {
+                          setState(() {
+                            _selectedType = type;
+                            _typeSearchController.text = type.name;
+                            _searchResults = [];
+                          });
+                        },
+                      );
+                    },
+                  ),
                 ),
-              ],
 
               const SizedBox(height: 24),
 
-              // Количество и единица измерения
+              // Шаг 2: Название продукта
               Text(
-                'Количество',
+                'Шаг 2: Введите название продукта',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _productNameController,
+                decoration: InputDecoration(
+                  labelText: 'Название продукта',
+                  hintText: 'Например: Молоко 3.2%, Помидоры черри',
+                  prefixIcon: const Icon(Icons.fastfood),
+                ),
+                enabled: _selectedType != null || _isEditing,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Введите название продукта';
+                  }
+                  return null;
+                },
+              ),
+
+              const SizedBox(height: 24),
+              const Divider(),
+              const SizedBox(height: 24),
+
+              // Шаг 3: Количество и единица измерения
+              Text(
+                'Шаг 3: Укажите количество',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 12),
@@ -301,9 +340,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
               ),
               const SizedBox(height: 24),
 
-              // Срок годности
+              // Шаг 4: Срок годности
               Text(
-                'Срок годности',
+                'Шаг 4: Укажите срок годности',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 12),
@@ -398,22 +437,71 @@ class _AddProductScreenState extends State<AddProductScreen> {
           }
         } else {
           // Добавление нового продукта
-          if (_selectedIngredient == null) {
-            throw Exception('Выберите продукт');
+          if (_selectedType == null) {
+            throw Exception('Выберите тип продукта');
           }
 
+          final dataRepository = Provider.of<DataRepository>(context, listen: false);
+
+          // Проверяем, существует ли уже ингредиент с таким же названием, типом и сроком годности
+          final existingIngredients = await _refrigeratorRepository.searchIngredients(
+            query: _productNameController.text,
+            typeId: _selectedType!.id,
+          );
+
+          int ingredientId;
+
+          // Ищем точное совпадение по названию, типу и сроку годности
+          final exactMatch = existingIngredients.where((ingredient) {
+            // Проверяем название
+            final nameMatch = ingredient.name.toLowerCase().trim() ==
+                _productNameController.text.toLowerCase().trim();
+
+            // Проверяем тип
+            final typeMatch = ingredient.ingredientTypeId == _selectedType!.id;
+
+            // Проверяем срок годности (если есть)
+            final expiryMatch = ingredient.expiryDate != null ?
+            (ingredient.expiryDate!.year == _expiryDate.year &&
+                ingredient.expiryDate!.month == _expiryDate.month &&
+                ingredient.expiryDate!.day == _expiryDate.day) : false;
+
+            return nameMatch && typeMatch && expiryMatch;
+          }).firstOrNull;
+
+          if (exactMatch != null) {
+            // Используем существующий ингредиент с таким же сроком годности
+            ingredientId = exactMatch.id;
+          } else {
+            // Создаем новый ингредиент
+            final newIngredientResponse = await dataRepository.apiService.post('/api/ingredients/', {
+              'ing_name': _productNameController.text,
+              'ing_exp_date': _expiryDate.toIso8601String().split('T')[0],
+              'ing_weight': 100, // Значение по умолчанию
+              'ing_calories': 0, // Значение по умолчанию
+              'ing_protein': 0,
+              'ing_fat': 0,
+              'ing_hydrates': 0,
+              'ing_igt_id': _selectedType!.id,
+            });
+
+            ingredientId = newIngredientResponse['ing_id'];
+          }
+
+          // Добавляем продукт в холодильник
           await _refrigeratorRepository.addItem(
-            ingredientId: _selectedIngredient!.id,
+            ingredientId: ingredientId,
             quantity: int.parse(_quantityController.text),
             quantityType: _quantityType,
           );
 
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Продукт добавлен в холодильник'),
+              SnackBar(
+                content: Text('${_productNameController.text} добавлен в холодильник'),
               ),
             );
+            Navigator.pop(context);
           }
         }
 
@@ -444,7 +532,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Подтверждение'),
-        content: Text('Вы уверены, что хотите удалить ${_selectedIngredient?.name ?? 'этот продукт'}?'),
+        content: Text('Вы уверены, что хотите удалить ${_productNameController.text}?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),

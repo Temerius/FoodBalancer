@@ -685,3 +685,5 @@ django.db.utils.InternalError: Invalid height (35-255 cm allowed) for user 66
 CONTEXT:  PL/pgSQL function validate_user_height() line 4 at RAISE
 
 ERROR 2025-05-10 20:27:45,052 basehttp 31224 4772 "PUT /api/users/profile/ HTTP/1.1" 500 28039
+ERROR 2025-05-10 22:12:28,702 log 26912 29552 Internal Server Error: /api/refrigerator/
+ERROR 2025-05-10 22:12:28,703 basehttp 26912 29552 "POST /api/refrigerator/ HTTP/1.1" 500 132

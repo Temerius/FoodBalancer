@@ -279,14 +279,15 @@ class RefrigeratorRepository {
   }
 
   // Удалить продукт из холодильника
+  // Удалить продукт из холодильника
   Future<void> removeItem(int itemId) async {
     try {
       await _refrigeratorService.removeItem(itemId);
 
-      // Удаляем продукт из списка
+      // Удаляем продукт из списка в памяти
       _items.removeWhere((item) => item.id == itemId);
 
-      // Обновляем статистику
+      // Обновляем статистику в памяти
       if (_stats != null) {
         _stats = RefrigeratorStats(
           totalItems: _stats!.totalItems - 1,
@@ -295,8 +296,28 @@ class RefrigeratorRepository {
         );
       }
 
-      // Очищаем кэш
-      await _clearCache();
+      // Обновляем кэш с текущими данными из памяти
+      await CacheService.save(_cacheKey, {
+        'items': _items.map((item) => item.toJson()).toList(),
+        'stats': _stats?.toJson(),
+      });
+
+      // Обновляем кэш категорий, получив их из текущих продуктов
+      final uniqueTypes = <String>{};
+      for (var item in _items) {
+        if (item.ingredient?.type?.name != null) {
+          uniqueTypes.add(item.ingredient!.type!.name);
+        }
+      }
+
+      // Создаем список категорий из уникальных типов
+      final categoryList = uniqueTypes.map((name) => {
+        'igt_id': _categories.firstWhere((cat) => cat.name == name, orElse: () => IngredientType(id: 0, name: name)).id,
+        'igt_name': name,
+        'igt_img_url': null,
+      }).toList();
+
+      await CacheService.save(_categoriesCacheKey, categoryList);
     } catch (e) {
       print("ERROR REMOVING REFRIGERATOR ITEM: $e");
       rethrow;

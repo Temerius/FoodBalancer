@@ -56,7 +56,7 @@ class IngredientTypeViewSet(viewsets.ReadOnlyModelViewSet):
         return response
 
 
-class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
+class IngredientViewSet(viewsets.ModelViewSet):  # Изменено с ReadOnlyModelViewSet на ModelViewSet
     """API для доступа к ингредиентам"""
     queryset = Ingredient.objects.all()
     permission_classes = [IsAuthenticated]
@@ -118,6 +118,103 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
         logger.info(
             f"Retrieved ingredient: ingredient_id={ingredient_id}, name='{instance.ing_name}', user_id={user_id}, time={time.time() - start_time:.2f}s")
         return response
+
+    def create(self, request, *args, **kwargs):
+        """Создание нового ингредиента"""
+        start_time = time.time()
+        user_id = request.user.usr_id
+
+        logger.info(f"Creating new ingredient: user_id={user_id}, data={request.data}")
+
+        # Создаем сериализатор с данными
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+
+            # Логируем успешное создание
+            logger.info(
+                f"Ingredient created successfully: ingredient_id={serializer.data['ing_id']}, "
+                f"name='{serializer.data['ing_name']}', type_id={serializer.data['ing_igt_id']}, "
+                f"user_id={user_id}, time={time.time() - start_time:.2f}s"
+            )
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        else:
+            logger.warning(f"Failed to create ingredient: user_id={user_id}, errors={serializer.errors}")
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, *args, **kwargs):
+        """Обновление ингредиента"""
+        start_time = time.time()
+        instance = self.get_object()
+        user_id = request.user.usr_id
+        ingredient_id = instance.ing_id
+        ingredient_name = instance.ing_name
+
+        logger.info(f"Updating ingredient: ingredient_id={ingredient_id}, name='{ingredient_name}', user_id={user_id}")
+
+        # Сохраняем старые значения для лога
+        old_name = instance.ing_name
+        old_type_id = instance.ing_igt_id.igt_id
+
+        response = super().update(request, *args, **kwargs)
+
+        # Логируем изменения
+        if response.status_code == status.HTTP_200_OK:
+            new_name = response.data.get('ing_name', old_name)
+            new_type_id = response.data.get('ing_igt_id', old_type_id)
+
+            changes = []
+            if old_name != new_name:
+                changes.append(f"name: '{old_name}' -> '{new_name}'")
+            if old_type_id != new_type_id:
+                changes.append(f"type_id: {old_type_id} -> {new_type_id}")
+
+            if changes:
+                logger.info(
+                    f"Ingredient updated: ingredient_id={ingredient_id}, "
+                    f"changes: {', '.join(changes)}, user_id={user_id}, time={time.time() - start_time:.2f}s"
+                )
+            else:
+                logger.info(
+                    f"Ingredient update called but no changes made: ingredient_id={ingredient_id}, user_id={user_id}"
+                )
+        else:
+            logger.warning(
+                f"Failed to update ingredient: ingredient_id={ingredient_id}, user_id={user_id}, status={response.status_code}"
+            )
+
+        return response
+
+    def destroy(self, request, *args, **kwargs):
+        """Удаление ингредиента"""
+        start_time = time.time()
+        instance = self.get_object()
+        user_id = request.user.usr_id
+        ingredient_id = instance.ing_id
+        ingredient_name = instance.ing_name
+
+        logger.info(f"Deleting ingredient: ingredient_id={ingredient_id}, name='{ingredient_name}', user_id={user_id}")
+
+        # Проверяем, используется ли этот ингредиент в холодильниках пользователей
+        users_count = M2MUsrIng.objects.filter(mui_ing_id=ingredient_id).count()
+
+        if users_count > 0:
+            logger.warning(
+                f"Cannot delete ingredient: ingredient_id={ingredient_id} is used by {users_count} users, user_id={user_id}"
+            )
+            return Response(
+                {"error": f"Этот ингредиент используется в {users_count} холодильниках. Удаление невозможно."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        self.perform_destroy(instance)
+        logger.info(
+            f"Ingredient deleted: ingredient_id={ingredient_id}, name='{ingredient_name}', user_id={user_id}, time={time.time() - start_time:.2f}s"
+        )
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class RefrigeratorViewSet(viewsets.ModelViewSet):
@@ -227,23 +324,16 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
 
         ingredient_id = request.data['mui_ing_id']
 
-        # Проверка, существует ли уже такой ингредиент у пользователя
-        if M2MUsrIng.objects.filter(mui_usr_id=request.user, mui_ing_id=ingredient_id).exists():
-            logger.info(f"Ingredient already in refrigerator: ingredient_id={ingredient_id}, user_id={user_id}")
-            return Response(
-                {"error": "Этот ингредиент уже есть в холодильнике"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
         # Создание связи
         try:
             ingredient = Ingredient.objects.get(ing_id=ingredient_id)
-            quantity = request.data['mui_quantity']
+            quantity = int(request.data['mui_quantity'])
             quantity_type = request.data['mui_quantity_type']
 
+            # Создаем объект с правильными полями
             refrigerator_item = M2MUsrIng.objects.create(
                 mui_usr_id=request.user,
-                mui_ing_id_id=ingredient_id,
+                mui_ing_id=ingredient,  # Передаем объект ингредиента
                 mui_quantity=quantity,
                 mui_quantity_type=quantity_type
             )
@@ -252,7 +342,11 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
                 f"Ingredient added to refrigerator: ingredient_id={ingredient_id}, name='{ingredient.ing_name}', "
                 f"quantity={quantity} {quantity_type}, user_id={user_id}, time={time.time() - start_time:.2f}s"
             )
+
+            # Сериализуем созданный объект
             serializer = self.get_serializer(refrigerator_item)
+
+            # Возвращаем данные с правильным статусом
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         except Ingredient.DoesNotExist:
@@ -260,6 +354,12 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
             return Response(
                 {"error": "Указанный ингредиент не существует"},
                 status=status.HTTP_404_NOT_FOUND
+            )
+        except ValueError as e:
+            logger.warning(f"Invalid data format: user_id={user_id}, error={str(e)}")
+            return Response(
+                {"error": f"Неверный формат данных: {str(e)}"},
+                status=status.HTTP_400_BAD_REQUEST
             )
         except Exception as e:
             logger.error(

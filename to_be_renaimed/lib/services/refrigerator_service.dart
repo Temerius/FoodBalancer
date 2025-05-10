@@ -109,6 +109,7 @@ class RefrigeratorService {
   }
 
   // Добавить продукт в холодильник
+  // Добавить продукт в холодильник
   Future<RefrigeratorItem> addItem({
     required int ingredientId,
     required int quantity,
@@ -121,9 +122,20 @@ class RefrigeratorService {
         'mui_quantity_type': quantityType.toString().split('.').last,
       });
 
+      // Отладочный вывод
+      print('API RESPONSE TYPE: ${response.runtimeType}');
+      print('API RESPONSE CONTENT: $response');
+
+      // Проверяем, что именно возвращает сервер
+      if (response is Map<String, dynamic>) {
+        print('mui_ing_id TYPE: ${response['mui_ing_id']?.runtimeType}');
+        print('mui_ing_id VALUE: ${response['mui_ing_id']}');
+      }
+
       return RefrigeratorItem.fromJson(response);
     } catch (e) {
       print('Error in addItem: $e');
+      print('Error stackTrace: ${e is Error ? e.stackTrace : 'no stack trace'}');
       throw Exception('Ошибка при добавлении продукта: $e');
     }
   }

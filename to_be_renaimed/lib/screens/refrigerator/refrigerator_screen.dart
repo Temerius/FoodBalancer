@@ -182,24 +182,39 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     try {
       await _refrigeratorRepository.removeItem(item.id);
 
-      // Удаляем из локального списка
+      // Удаляем из локальных списков
       setState(() {
         _items.removeWhere((i) => i.id == item.id);
         _expiringItems.removeWhere((i) => i.id == item.id);
       });
+
+      // После удаления проверяем, остались ли продукты этого типа
+      final removedItemType = item.ingredient?.type;
+      if (removedItemType != null) {
+        // Проверяем, есть ли еще продукты этого типа
+        final hasItemsOfThisType = _items.any((item) =>
+        item.ingredient?.type?.id == removedItemType.id);
+
+        if (!hasItemsOfThisType) {
+          // Если больше нет продуктов этого типа, удаляем его из категорий
+          setState(() {
+            _categories.removeWhere((cat) => cat.id == removedItemType.id);
+
+            // Если удаляемый тип был выбран в фильтре, сбрасываем на "Все"
+            if (_selectedCategory == removedItemType.name) {
+              _selectedCategory = 'Все';
+              // Перезагружаем список без фильтра
+              _loadItems();
+            }
+          });
+        }
+      }
 
       // Показываем уведомление
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('${item.name} удален из холодильника'),
-            action: SnackBarAction(
-              label: 'Отмена',
-              onPressed: () {
-                // Здесь можно реализовать отмену удаления
-                _refreshData();
-              },
-            ),
           ),
         );
       }

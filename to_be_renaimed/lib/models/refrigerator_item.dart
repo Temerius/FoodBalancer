@@ -22,9 +22,13 @@ class RefrigeratorItem {
   });
 
   factory RefrigeratorItem.fromJson(Map<String, dynamic> json) {
+    print('\n=== RefrigeratorItem.fromJson DEBUG ===');
+    print('JSON TYPE: ${json.runtimeType}');
+    print('JSON CONTENT: $json');
+
     // Сначала получаем данные из сериализованной структуры
     Ingredient? ingredient;
-    if (json['ingredient'] != null) {
+    if (json['ingredient'] != null && json['ingredient'] is Map<String, dynamic>) {
       ingredient = Ingredient.fromJson(json['ingredient']);
     }
 
@@ -36,11 +40,74 @@ class RefrigeratorItem {
       print('Error parsing quantity type: $e');
     }
 
+    // Правильно парсим числовые поля
+    int id = 0;
+    try {
+      print('PARSING mui_id: ${json['mui_id']} (type: ${json['mui_id']?.runtimeType})');
+      if (json['mui_id'] is int) {
+        id = json['mui_id'];
+      } else if (json['mui_id'] is String) {
+        id = int.tryParse(json['mui_id']) ?? 0;
+      }
+    } catch (e) {
+      print('ERROR parsing id: $e');
+    }
+
+    int userId = 0;
+    try {
+      print('PARSING mui_usr_id: ${json['mui_usr_id']} (type: ${json['mui_usr_id']?.runtimeType})');
+      if (json['mui_usr_id'] is int) {
+        userId = json['mui_usr_id'];
+      } else if (json['mui_usr_id'] is String) {
+        userId = int.tryParse(json['mui_usr_id']) ?? 0;
+      }
+    } catch (e) {
+      print('ERROR parsing userId: $e');
+    }
+
+    int ingredientId = 0;
+    try {
+      print('PARSING mui_ing_id: ${json['mui_ing_id']} (type: ${json['mui_ing_id']?.runtimeType})');
+      if (json['mui_ing_id'] is int) {
+        ingredientId = json['mui_ing_id'];
+      } else if (json['mui_ing_id'] is String) {
+        ingredientId = int.tryParse(json['mui_ing_id']) ?? 0;
+      } else if (json['mui_ing_id'] is Map && json['mui_ing_id']['ing_id'] != null) {
+        // Если mui_ing_id - это объект, извлекаем ID из него
+        ingredientId = json['mui_ing_id']['ing_id'];
+      } else if (ingredient != null) {
+        // Если не получилось извлечь ID из mui_ing_id, используем ID из ingredient
+        ingredientId = ingredient.id;
+      }
+    } catch (e) {
+      print('ERROR parsing ingredientId: $e');
+    }
+
+    int quantity = 0;
+    try {
+      print('PARSING mui_quantity: ${json['mui_quantity']} (type: ${json['mui_quantity']?.runtimeType})');
+      if (json['mui_quantity'] is int) {
+        quantity = json['mui_quantity'];
+      } else if (json['mui_quantity'] is String) {
+        quantity = int.tryParse(json['mui_quantity']) ?? 0;
+      }
+    } catch (e) {
+      print('ERROR parsing quantity: $e');
+    }
+
+    print('=== FINAL VALUES ===');
+    print('id: $id');
+    print('userId: $userId');
+    print('ingredientId: $ingredientId');
+    print('quantity: $quantity');
+    print('quantityType: $quantityType');
+    print('=========================\n');
+
     return RefrigeratorItem(
-      id: json['mui_id'] ?? 0,
-      userId: json['mui_usr_id'] ?? 0,
-      ingredientId: json['mui_ing_id'] ?? ingredient?.id ?? 0,
-      quantity: json['mui_quantity'] ?? 0,
+      id: id,
+      userId: userId,
+      ingredientId: ingredientId,
+      quantity: quantity,
       quantityType: quantityType,
       ingredient: ingredient,
     );
@@ -69,9 +136,19 @@ class RefrigeratorItem {
   int? get daysLeft {
     if (ingredient?.expiryDate == null) return null;
 
+    // Получаем только даты без времени для правильного сравнения
     final now = DateTime.now();
-    final difference = ingredient!.expiryDate!.difference(now);
-    return difference.inDays;
+    final today = DateTime(now.year, now.month, now.day);
+    final expiry = DateTime(
+      ingredient!.expiryDate!.year,
+      ingredient!.expiryDate!.month,
+      ingredient!.expiryDate!.day,
+    );
+
+    // Считаем разницу в днях
+    final difference = expiry.difference(today).inDays;
+
+    return difference;
   }
 
   // Проверить, истек ли срок годности
