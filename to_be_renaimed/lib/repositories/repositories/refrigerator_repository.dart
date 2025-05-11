@@ -26,35 +26,19 @@ class RefrigeratorRepository {
   List<IngredientType> get categories => _categories;
 
   // Получить все продукты в холодильнике
-  Future<List<RefrigeratorItem>> getItems({
-    String? search,
-    String? category,
-    bool? expiringSoon,
-    CacheConfig? config,
-  }) async {
+  Future<List<RefrigeratorItem>> getItems({CacheConfig? config}) async {
     final cacheConfig = config ?? CacheConfig.defaultConfig;
     print("\n===== GETTING REFRIGERATOR ITEMS (forceRefresh: ${cacheConfig.forceRefresh}) =====");
 
-    // Формируем ключ кэша в зависимости от параметров фильтрации
-    String cacheKey = _cacheKey;
-    if (search != null || category != null || expiringSoon != null) {
-      final filters = <String>[];
-      if (search != null) filters.add('search_$search');
-      if (category != null) filters.add('category_$category');
-      if (expiringSoon == true) filters.add('expiring');
-      cacheKey = '${_cacheKey}_${filters.join('_')}';
-    }
-
-    // Если нет фильтров и продукты уже в памяти и не требуется обновление
-    if (search == null && category == null && expiringSoon == null &&
-        _items.isNotEmpty && !cacheConfig.forceRefresh) {
+    // Если продукты уже в памяти и не требуется обновление
+    if (_items.isNotEmpty && !cacheConfig.forceRefresh) {
       print("REFRIGERATOR ITEMS ALREADY IN MEMORY: ${_items.length} items");
       return _items;
     }
 
-    // Пробуем загрузить из кэша если нет фильтров
-    if (!cacheConfig.forceRefresh && search == null && category == null && expiringSoon == null) {
-      final cachedData = await CacheService.get(cacheKey, cacheConfig);
+    // Пробуем загрузить из кэша
+    if (!cacheConfig.forceRefresh) {
+      final cachedData = await CacheService.get(_cacheKey, cacheConfig);
 
       if (cachedData != null) {
         print("LOADING REFRIGERATOR ITEMS FROM CACHE: ${cachedData['items'].length} items");
@@ -79,27 +63,20 @@ class RefrigeratorRepository {
     // Загружаем из API
     try {
       print("FETCHING REFRIGERATOR ITEMS FROM API...");
-      final response = await _refrigeratorService.getRefrigeratorItems(
-        search: search,
-        category: category,
-        expiringSoon: expiringSoon,
-      );
+      final response = await _refrigeratorService.getRefrigeratorItems();
 
-      // Если нет фильтров, сохраняем в основной список
-      if (search == null && category == null && expiringSoon == null) {
-        _items = response.items;
-        _stats = response.stats;
+      _items = response.items;
+      _stats = response.stats;
 
-        // Сохраняем в кэш
-        print("SAVING REFRIGERATOR ITEMS TO CACHE...");
-        await CacheService.save(cacheKey, {
-          'items': _items.map((item) => item.toJson()).toList(),
-          'stats': _stats?.toJson(),
-        });
-      }
+      // Сохраняем в кэш
+      print("SAVING REFRIGERATOR ITEMS TO CACHE...");
+      await CacheService.save(_cacheKey, {
+        'items': _items.map((item) => item.toJson()).toList(),
+        'stats': _stats?.toJson(),
+      });
 
-      print("REFRIGERATOR ITEMS LOADED FROM API: ${response.items.length} items");
-      return response.items;
+      print("REFRIGERATOR ITEMS LOADED FROM API: ${_items.length} items");
+      return _items;
     } catch (e) {
       print("ERROR FETCHING REFRIGERATOR ITEMS FROM API: $e");
       if (_items.isNotEmpty) {
@@ -110,42 +87,63 @@ class RefrigeratorRepository {
     }
   }
 
+  // Получить отфильтрованные продукты
+  Future<List<RefrigeratorItem>> getFilteredItems({
+    String? search,
+    String? category,
+    bool? expiringSoon,
+    CacheConfig? config,
+  }) async {
+    // Сначала получаем все продукты
+    final allItems = await getItems(config: config);
+
+    // Применяем фильтры
+    List<RefrigeratorItem> filtered = List.from(allItems);
+
+    if (search != null && search.isNotEmpty) {
+      filtered = filtered.where((item) {
+        final name = item.ingredient?.name?.toLowerCase() ?? '';
+        final typeName = item.ingredient?.type?.name?.toLowerCase() ?? '';
+        final searchLower = search.toLowerCase();
+        return name.contains(searchLower) || typeName.contains(searchLower);
+      }).toList();
+    }
+
+    if (category != null && category.isNotEmpty && category != 'Все') {
+      filtered = filtered.where((item) {
+        return item.ingredient?.type?.name == category;
+      }).toList();
+    }
+
+    if (expiringSoon == true) {
+      final now = DateTime.now();
+      final future = now.add(const Duration(days: 3));
+      filtered = filtered.where((item) {
+        final expiryDate = item.ingredient?.expiryDate;
+        if (expiryDate == null) return false;
+        return !expiryDate.isBefore(now) && !expiryDate.isAfter(future);
+      }).toList();
+    }
+
+    return filtered;
+  }
+
   // Получить продукты с истекающим сроком годности
   Future<List<RefrigeratorItem>> getExpiringItems({CacheConfig? config}) async {
-    try {
-      final items = await getItems(expiringSoon: true, config: config);
-      return items;
-    } catch (e) {
-      print("ERROR GETTING EXPIRING ITEMS: $e");
-      rethrow;
-    }
+    return getFilteredItems(expiringSoon: true, config: config);
   }
 
   // Получить статистику холодильника
   Future<RefrigeratorStats> getStats({CacheConfig? config}) async {
-    final cacheConfig = config ?? CacheConfig.defaultConfig;
+    // Загружаем все продукты (которые включают статистику)
+    await getItems(config: config);
 
-    // Если статистика уже в памяти и не требуется обновление
-    if (_stats != null && !cacheConfig.forceRefresh) {
+    if (_stats != null) {
       return _stats!;
     }
 
-    try {
-      await getItems(config: config); // Это загружает и статистику
-      if (_stats != null) {
-        return _stats!;
-      }
-
-      // Если по какой-то причине статистика не загрузилась, загружаем отдельно
-      _stats = await _refrigeratorService.getRefrigeratorStats();
-      return _stats!;
-    } catch (e) {
-      print("ERROR GETTING REFRIGERATOR STATS: $e");
-      if (_stats != null) {
-        return _stats!;
-      }
-      rethrow;
-    }
+    // Если статистика не загрузилась, создаем пустую
+    return RefrigeratorStats(totalItems: 0, expiringSoon: 0, expired: 0);
   }
 
   // Получить категории продуктов в холодильнике
@@ -157,6 +155,16 @@ class RefrigeratorRepository {
     if (_categories.isNotEmpty && !cacheConfig.forceRefresh) {
       print("REFRIGERATOR CATEGORIES ALREADY IN MEMORY: ${_categories.length} items");
       return _categories;
+    }
+
+    // Если у нас есть продукты в памяти, можем извлечь категории из них
+    if (_items.isNotEmpty && !cacheConfig.forceRefresh) {
+      _extractCategoriesFromItems();
+      if (_categories.isNotEmpty) {
+        print("CATEGORIES EXTRACTED FROM ITEMS: ${_categories.length} items");
+        await _saveCategoriesToCache();
+        return _categories;
+      }
     }
 
     // Пробуем загрузить из кэша
@@ -183,9 +191,7 @@ class RefrigeratorRepository {
       _categories = await _refrigeratorService.getRefrigeratorCategories();
 
       // Сохраняем в кэш
-      print("SAVING REFRIGERATOR CATEGORIES TO CACHE...");
-      await CacheService.save(_categoriesCacheKey,
-          _categories.map((cat) => cat.toJson()).toList());
+      await _saveCategoriesToCache();
 
       print("REFRIGERATOR CATEGORIES LOADED FROM API: ${_categories.length} items");
       return _categories;
@@ -197,6 +203,26 @@ class RefrigeratorRepository {
       }
       rethrow;
     }
+  }
+
+  // Извлечение категорий из продуктов
+  void _extractCategoriesFromItems() {
+    final uniqueCategories = <int, IngredientType>{};
+
+    for (var item in _items) {
+      if (item.ingredient?.type != null) {
+        uniqueCategories[item.ingredient!.type!.id] = item.ingredient!.type!;
+      }
+    }
+
+    _categories = uniqueCategories.values.toList();
+  }
+
+  // Сохранение категорий в кэш
+  Future<void> _saveCategoriesToCache() async {
+    print("SAVING REFRIGERATOR CATEGORIES TO CACHE...");
+    await CacheService.save(_categoriesCacheKey,
+        _categories.map((cat) => cat.toJson()).toList());
   }
 
   // Добавить продукт в холодильник
@@ -224,8 +250,17 @@ class RefrigeratorRepository {
         );
       }
 
-      // Очищаем кэш чтобы при следующей загрузке получить актуальные данные
-      await _clearCache();
+      // Обновляем категории
+      if (newItem.ingredient?.type != null) {
+        final hasCategory = _categories.any((cat) => cat.id == newItem.ingredient!.type!.id);
+        if (!hasCategory) {
+          _categories.add(newItem.ingredient!.type!);
+          await _saveCategoriesToCache();
+        }
+      }
+
+      // Сохраняем обновленные данные в кэш
+      await _updateCache();
 
       return newItem;
     } catch (e) {
@@ -268,8 +303,8 @@ class RefrigeratorRepository {
         _items[index] = updatedItem;
       }
 
-      // Очищаем кэш
-      await _clearCache();
+      // Сохраняем обновленные данные в кэш
+      await _updateCache();
 
       return updatedItem;
     } catch (e) {
@@ -279,10 +314,13 @@ class RefrigeratorRepository {
   }
 
   // Удалить продукт из холодильника
-  // Удалить продукт из холодильника
   Future<void> removeItem(int itemId) async {
     try {
       await _refrigeratorService.removeItem(itemId);
+
+      // Сохраняем тип удаляемого продукта для обновления категорий
+      final removedItem = _items.firstWhere((item) => item.id == itemId, orElse: () => throw Exception());
+      final removedType = removedItem.ingredient?.type;
 
       // Удаляем продукт из списка в памяти
       _items.removeWhere((item) => item.id == itemId);
@@ -296,28 +334,20 @@ class RefrigeratorRepository {
         );
       }
 
-      // Обновляем кэш с текущими данными из памяти
-      await CacheService.save(_cacheKey, {
-        'items': _items.map((item) => item.toJson()).toList(),
-        'stats': _stats?.toJson(),
-      });
+      // Проверяем, есть ли еще продукты этого типа
+      if (removedType != null) {
+        final hasItemsOfThisType = _items.any((item) =>
+        item.ingredient?.type?.id == removedType.id);
 
-      // Обновляем кэш категорий, получив их из текущих продуктов
-      final uniqueTypes = <String>{};
-      for (var item in _items) {
-        if (item.ingredient?.type?.name != null) {
-          uniqueTypes.add(item.ingredient!.type!.name);
+        if (!hasItemsOfThisType) {
+          // Если больше нет продуктов этого типа, удаляем его из категорий
+          _categories.removeWhere((cat) => cat.id == removedType.id);
+          await _saveCategoriesToCache();
         }
       }
 
-      // Создаем список категорий из уникальных типов
-      final categoryList = uniqueTypes.map((name) => {
-        'igt_id': _categories.firstWhere((cat) => cat.name == name, orElse: () => IngredientType(id: 0, name: name)).id,
-        'igt_name': name,
-        'igt_img_url': null,
-      }).toList();
-
-      await CacheService.save(_categoriesCacheKey, categoryList);
+      // Сохраняем обновленные данные в кэш
+      await _updateCache();
     } catch (e) {
       print("ERROR REMOVING REFRIGERATOR ITEM: $e");
       rethrow;
@@ -338,6 +368,14 @@ class RefrigeratorRepository {
       print("ERROR SEARCHING INGREDIENTS: $e");
       rethrow;
     }
+  }
+
+  // Обновление всего кэша
+  Future<void> _updateCache() async {
+    await CacheService.save(_cacheKey, {
+      'items': _items.map((item) => item.toJson()).toList(),
+      'stats': _stats?.toJson(),
+    });
   }
 
   // Очистка кэша

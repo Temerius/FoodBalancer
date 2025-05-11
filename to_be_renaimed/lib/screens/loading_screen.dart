@@ -116,6 +116,21 @@ class _LoadingScreenState extends State<LoadingScreen> {
       }
 
       setState(() {
+        _statusMessage = "Загрузка данных холодильника...";
+        _progress = 0.9;
+      });
+
+      await dataRepository.getRefrigeratorItems(forceRefresh: true);
+
+      setState(() {
+        _statusMessage = "Загрузка категорий продуктов...";
+        _progress = 0.95;
+      });
+
+      // НОВОЕ: Загружаем категории холодильника
+      await dataRepository.getRefrigeratorCategories(forceRefresh: true);
+
+      setState(() {
         _progress = 1.0;
         _statusMessage = "Готово!";
       });

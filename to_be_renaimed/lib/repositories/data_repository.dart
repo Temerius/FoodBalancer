@@ -1,6 +1,9 @@
 // lib/repositories/data_repository.dart
 import 'package:flutter/foundation.dart';
 import 'package:to_be_renaimed/repositories/repositories/refrigerator_repository.dart';
+import '../models/enums.dart';
+import '../models/ingredient.dart';
+import '../models/ingredient_type.dart';
 import '../models/refrigerator_item.dart';
 import '../models/user.dart';
 import '../models/allergen.dart';
@@ -36,6 +39,8 @@ class DataRepository with ChangeNotifier {
   DateTime? _lastAllergensUpdate;
   DateTime? _lastEquipmentUpdate;
   DateTime? _lastRecipesUpdate;
+  DateTime? _lastRefrigeratorUpdate;
+  DateTime? _lastRefrigeratorCategoriesUpdate;
 
   // Интервал обновления (по умолчанию 5 минут)
   final Duration _updateInterval = const Duration(minutes: 5);
@@ -114,6 +119,201 @@ class DataRepository with ChangeNotifier {
     if (lastUpdate == null) return true;
     return DateTime.now().difference(lastUpdate) > _updateInterval;
   }
+
+  Future<List<RefrigeratorItem>> getRefrigeratorItems({bool forceRefresh = false}) async {
+    // Проверяем, нужно ли обновлять данные
+    if (!forceRefresh && _refrigeratorRepository.items.isNotEmpty && !_needsUpdate(_lastRefrigeratorUpdate)) {
+      return _refrigeratorRepository.items;
+    }
+
+    _setLoading(true);
+    try {
+      print("\n===== GETTING REFRIGERATOR ITEMS (forceRefresh: $forceRefresh) =====");
+      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
+      final items = await _refrigeratorRepository.getItems(config: config);
+
+      // Обновляем время последнего обновления
+      _lastRefrigeratorUpdate = DateTime.now();
+
+      notifyListeners();
+      return items;
+    } catch (e) {
+      print("ERROR GETTING REFRIGERATOR ITEMS: $e");
+      _setError(e.toString());
+      return [];
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  Future<List<RefrigeratorItem>> getFilteredRefrigeratorItems({
+    String? search,
+    String? category,
+    bool? expiringSoon,
+    bool forceRefresh = false,
+  }) async {
+    try {
+      print("\n===== GETTING FILTERED REFRIGERATOR ITEMS =====");
+      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
+
+      // Используем новый метод getFilteredItems вместо getItems с параметрами
+      final items = await _refrigeratorRepository.getFilteredItems(
+        search: search,
+        category: category,
+        expiringSoon: expiringSoon,
+        config: config,
+      );
+
+      notifyListeners();
+      return items;
+    } catch (e) {
+      print("ERROR GETTING FILTERED REFRIGERATOR ITEMS: $e");
+      _setError(e.toString());
+      return [];
+    }
+  }
+
+  Future<List<RefrigeratorItem>> getExpiringItems({bool forceRefresh = false}) async {
+    try {
+      print("\n===== GETTING EXPIRING ITEMS (forceRefresh: $forceRefresh) =====");
+      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
+      final items = await _refrigeratorRepository.getExpiringItems(config: config);
+
+      notifyListeners();
+      return items;
+    } catch (e) {
+      print("ERROR GETTING EXPIRING ITEMS: $e");
+      _setError(e.toString());
+      return [];
+    }
+  }
+
+
+  Future<RefrigeratorStats> getRefrigeratorStats({bool forceRefresh = false}) async {
+    try {
+      print("\n===== GETTING REFRIGERATOR STATS (forceRefresh: $forceRefresh) =====");
+      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
+      final stats = await _refrigeratorRepository.getStats(config: config);
+
+      notifyListeners();
+      return stats;
+    } catch (e) {
+      print("ERROR GETTING REFRIGERATOR STATS: $e");
+      _setError(e.toString());
+      return RefrigeratorStats(totalItems: 0, expiringSoon: 0, expired: 0);
+    }
+  }
+
+  Future<List<IngredientType>> getRefrigeratorCategories({bool forceRefresh = false}) async {
+    // Проверяем, нужно ли обновлять данные
+    if (!forceRefresh && _refrigeratorRepository.categories.isNotEmpty && !_needsUpdate(_lastRefrigeratorCategoriesUpdate)) {
+      return _refrigeratorRepository.categories;
+    }
+
+    try {
+      print("\n===== GETTING REFRIGERATOR CATEGORIES (forceRefresh: $forceRefresh) =====");
+      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
+      final categories = await _refrigeratorRepository.getCategories(config: config);
+
+      // Обновляем время последнего обновления
+      _lastRefrigeratorCategoriesUpdate = DateTime.now();
+
+      notifyListeners();
+      return categories;
+    } catch (e) {
+      print("ERROR GETTING REFRIGERATOR CATEGORIES: $e");
+      _setError(e.toString());
+      return [];
+    }
+  }
+
+  Future<RefrigeratorItem?> addRefrigeratorItem({
+    required int ingredientId,
+    required int quantity,
+    required QuantityType quantityType,
+  }) async {
+    try {
+      print("\n===== ADDING ITEM TO REFRIGERATOR =====");
+      final item = await _refrigeratorRepository.addItem(
+        ingredientId: ingredientId,
+        quantity: quantity,
+        quantityType: quantityType,
+      );
+
+      // Обновляем время последнего обновления
+      _lastRefrigeratorUpdate = DateTime.now();
+      _lastRefrigeratorCategoriesUpdate = DateTime.now();
+
+      notifyListeners();
+      return item;
+    } catch (e) {
+      print("ERROR ADDING ITEM TO REFRIGERATOR: $e");
+      _setError(e.toString());
+      return null;
+    }
+  }
+
+  Future<RefrigeratorItem?> updateRefrigeratorItem({
+    required int itemId,
+    int? quantity,
+    QuantityType? quantityType,
+  }) async {
+    try {
+      print("\n===== UPDATING REFRIGERATOR ITEM =====");
+      final item = await _refrigeratorRepository.updateItem(
+        itemId: itemId,
+        quantity: quantity,
+        quantityType: quantityType,
+      );
+
+      // Обновляем время последнего обновления
+      _lastRefrigeratorUpdate = DateTime.now();
+
+      notifyListeners();
+      return item;
+    } catch (e) {
+      print("ERROR UPDATING REFRIGERATOR ITEM: $e");
+      _setError(e.toString());
+      return null;
+    }
+  }
+
+  // Удаление продукта из холодильника
+  Future<bool> removeRefrigeratorItem(int itemId) async {
+    try {
+      print("\n===== REMOVING ITEM FROM REFRIGERATOR =====");
+      await _refrigeratorRepository.removeItem(itemId);
+
+      // Обновляем время последнего обновления
+      _lastRefrigeratorUpdate = DateTime.now();
+      _lastRefrigeratorCategoriesUpdate = DateTime.now();
+
+      notifyListeners();
+      return true;
+    } catch (e) {
+      print("ERROR REMOVING ITEM FROM REFRIGERATOR: $e");
+      _setError(e.toString());
+      return false;
+    }
+  }
+
+  // Поиск ингредиентов
+  Future<List<Ingredient>> searchIngredients({
+    required String query,
+    int? typeId,
+  }) async {
+    try {
+      return await _refrigeratorRepository.searchIngredients(
+        query: query,
+        typeId: typeId,
+      );
+    } catch (e) {
+      print("ERROR SEARCHING INGREDIENTS: $e");
+      _setError(e.toString());
+      return [];
+    }
+  }
+
 
   // Получение рецептов
   Future<List<Recipe>> getRecipes({bool forceRefresh = false}) async {
@@ -310,6 +510,17 @@ class DataRepository with ChangeNotifier {
       if (_needsUpdate(_lastRecipesUpdate)) {
         await getRecipes(forceRefresh: true);
         _lastRecipesUpdate = DateTime.now();
+      }
+
+      if (_needsUpdate(_lastRefrigeratorUpdate)) {
+        await getRefrigeratorItems(forceRefresh: true);
+        _lastRefrigeratorUpdate = DateTime.now();
+      }
+
+      // Обновляем категории холодильника
+      if (_needsUpdate(_lastRefrigeratorCategoriesUpdate)) {
+        await getRefrigeratorCategories(forceRefresh: true);
+        _lastRefrigeratorCategoriesUpdate = DateTime.now();
       }
 
       print("===== USER DATA REFRESHED =====");
@@ -549,5 +760,7 @@ class DataRepository with ChangeNotifier {
     _lastAllergensUpdate = null;
     _lastEquipmentUpdate = null;
     _lastRecipesUpdate = null;
+    _lastRefrigeratorUpdate = null;
+    _lastRefrigeratorCategoriesUpdate = null;
   }
 }

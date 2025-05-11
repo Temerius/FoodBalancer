@@ -2,12 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../repositories/data_repository.dart';
-import '../../repositories/repositories/refrigerator_repository.dart';
-import '../../repositories/models/cache_config.dart';
 import '../../models/refrigerator_item.dart';
 import '../../models/ingredient_type.dart';
 import '../../models/enums.dart';
-import '../../services/refrigerator_service.dart';
 
 class RefrigeratorScreen extends StatefulWidget {
   const RefrigeratorScreen({Key? key}) : super(key: key);
@@ -23,8 +20,6 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
   String _searchQuery = '';
   String _selectedCategory = 'Все';
 
-  bool _isLoading = false;
-  bool _isLoadingCategories = false;
   bool _isRefreshing = false; // Флаг для предотвращения повторных обновлений
   String? _error;
 
@@ -33,20 +28,26 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
   List<IngredientType> _categories = [];
   RefrigeratorStats? _stats;
 
-  late RefrigeratorRepository _refrigeratorRepository;
-
-
+  DataRepository? _dataRepository;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    _initializeRepository();
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
         _loadData();
       }
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_dataRepository == null) {
+      _dataRepository = Provider.of<DataRepository>(context, listen: false);
+      _loadData();
+    }
   }
 
   @override
@@ -57,62 +58,16 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     super.dispose();
   }
 
-  void _initializeRepository() {
-    final dataRepository = Provider.of<DataRepository>(context, listen: false);
-    final apiService = dataRepository.apiService;
-    final refrigeratorService = RefrigeratorService(apiService: apiService);
-    _refrigeratorRepository = RefrigeratorRepository(refrigeratorService: refrigeratorService);
-    _loadData();
-  }
-
-  // Новый метод для обработки возврата с других экранов
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (mounted) {
-      _loadData();
-    }
-  }
-
-// И обновить _handleNavigationReturn
-  Future<void> _handleNavigationReturn(dynamic result) async {
-    if (result == true) {
-      // Вызываем didChangeDependencies для обновления экрана
-      didChangeDependencies();
-    }
-  }
-
-  // Улучшенный метод обновления данных
-  Future<void> _refreshData() async {
-    if (_isRefreshing) return; // Предотвращаем многократные вызовы
-
-    setState(() {
-      _isRefreshing = true;
-    });
-
-    try {
-      await _loadData();
-    } catch (e) {
-      print('Error in _refreshData: $e');
-      throw e; // Перебрасываем исключение для обработки выше
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isRefreshing = false;
-        });
-      }
-    }
-  }
-
-  // Улучшенный метод загрузки данных с лучшей обработкой ошибок
+  // Обновленный метод загрузки данных
   Future<void> _loadData() async {
     print('_loadData: Starting data load');
 
     try {
       setState(() {
-        _isLoading = true;
         _error = null;
       });
+
+      final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
 
       // Загружаем данные в зависимости от активной вкладки
       if (_tabController.index == 0) {
@@ -144,30 +99,28 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
           ),
         );
       }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
     }
   }
 
-  Future<void> _loadItems({bool forceRefresh = false}) async {
-    try {
-      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
+  Future<void> _loadItems() async {
+    final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
 
+    try {
       List<RefrigeratorItem> items;
       if (_searchQuery.isNotEmpty || _selectedCategory != 'Все') {
         // Если есть фильтры, загружаем отфильтрованные данные
-        items = await _refrigeratorRepository.getItems(
+        items = await dataRepository.getFilteredRefrigeratorItems(
           search: _searchQuery.isNotEmpty ? _searchQuery : null,
           category: _selectedCategory != 'Все' ? _selectedCategory : null,
-          config: config,
         );
       } else {
-        // Если нет фильтров, загружаем все продукты
-        items = await _refrigeratorRepository.getItems(config: config);
+        // Если нет фильтров, получаем все продукты из DataRepository
+        items = dataRepository.refrigeratorItems;
+
+        // Если список пустой, принудительно загружаем
+        if (items.isEmpty) {
+          items = await dataRepository.getRefrigeratorItems();
+        }
       }
 
       setState(() {
@@ -183,10 +136,11 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     }
   }
 
-  Future<void> _loadExpiringItems({bool forceRefresh = false}) async {
+  Future<void> _loadExpiringItems() async {
+    final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
+
     try {
-      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
-      final items = await _refrigeratorRepository.getExpiringItems(config: config);
+      final items = await dataRepository.getExpiringItems();
 
       setState(() {
         _expiringItems = items;
@@ -202,30 +156,24 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
   }
 
   Future<void> _loadCategories() async {
-    if (_isLoadingCategories) return;
-
-    setState(() {
-      _isLoadingCategories = true;
-    });
+    final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
 
     try {
-      final categories = await _refrigeratorRepository.getCategories();
+      final categories = await dataRepository.getRefrigeratorCategories();
 
       setState(() {
         _categories = categories;
       });
     } catch (e) {
       print('Ошибка загрузки категорий: $e');
-    } finally {
-      setState(() {
-        _isLoadingCategories = false;
-      });
     }
   }
 
   Future<void> _loadStats() async {
+    final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
+
     try {
-      final stats = await _refrigeratorRepository.getStats();
+      final stats = await dataRepository.getRefrigeratorStats();
       setState(() {
         _stats = stats;
       });
@@ -234,8 +182,107 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     }
   }
 
+  // Новый метод для обработки возврата с других экранов
+  Future<void> _handleNavigationReturn(dynamic result) async {
+    if (result == true) {
+      // Принудительно обновляем данные из API
+      final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
+      await dataRepository.getRefrigeratorItems(forceRefresh: true);
+      await dataRepository.getRefrigeratorCategories(forceRefresh: true);
+      await _loadData();
+    }
+  }
+
+  // Улучшенный метод обновления данных
+  Future<void> _refreshData() async {
+    if (_isRefreshing) return; // Предотвращаем многократные вызовы
+
+    setState(() {
+      _isRefreshing = true;
+    });
+
+    try {
+      final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
+
+      // Принудительно обновляем данные
+      await dataRepository.getRefrigeratorItems(forceRefresh: true);
+      await dataRepository.getRefrigeratorCategories(forceRefresh: true);
+      await _loadData();
+    } catch (e) {
+      print('Error in _refreshData: $e');
+      throw e; // Перебрасываем исключение для обработки выше
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isRefreshing = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _removeItem(RefrigeratorItem item) async {
+    final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
+
+    try {
+      final success = await dataRepository.removeRefrigeratorItem(item.id);
+
+      if (success) {
+        // Обновляем локальные списки
+        setState(() {
+          _items.removeWhere((i) => i.id == item.id);
+          _expiringItems.removeWhere((i) => i.id == item.id);
+        });
+
+        // После удаления проверяем, остались ли продукты этого типа
+        final removedItemType = item.ingredient?.type;
+        if (removedItemType != null) {
+          // Проверяем, есть ли еще продукты этого типа
+          final hasItemsOfThisType = _items.any((item) =>
+          item.ingredient?.type?.id == removedItemType.id);
+
+          if (!hasItemsOfThisType) {
+            // Если больше нет продуктов этого типа, удаляем его из категорий
+            setState(() {
+              _categories.removeWhere((cat) => cat.id == removedItemType.id);
+
+              // Если удаляемый тип был выбран в фильтре, сбрасываем на "Все"
+              if (_selectedCategory == removedItemType.name) {
+                _selectedCategory = 'Все';
+                // Перезагружаем список без фильтра
+                _loadItems();
+              }
+            });
+          }
+        }
+
+        // Показываем уведомление
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('${item.name} удален из холодильника'),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Ошибка удаления: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context);
+
+    // Используем данные из DataRepository
+    final isLoading = dataRepository.isLoading;
+
     // Создаем список категорий для фильтра
     List<String> categoryNames = ['Все'];
     categoryNames.addAll(_categories.map((cat) => cat.name));
@@ -329,10 +376,6 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
   }
 
   Widget _buildCurrentContent() {
-    if (_isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
     if (_error != null) {
       return Center(
         child: Column(
@@ -461,6 +504,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
   }
 
   Widget _buildProductsList(List<RefrigeratorItem> products) {
+    // ... rest of the build methods remain the same ...
     if (products.isEmpty) {
       return Center(
         child: Column(
@@ -617,15 +661,6 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
         },
       ),
     );
-  }
-
-  String _getQuantityTypeText(String quantityType) {
-    try {
-      final type = QuantityType.fromString(quantityType);
-      return type.getShortName();
-    } catch (e) {
-      return quantityType;
-    }
   }
 
   void _showProductDetails(BuildContext context, RefrigeratorItem item) {
@@ -840,57 +875,5 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
         ),
       ],
     );
-  }
-
-  Future<void> _removeItem(RefrigeratorItem item) async {
-    try {
-      await _refrigeratorRepository.removeItem(item.id);
-
-      // Удаляем из локальных списков
-      setState(() {
-        _items.removeWhere((i) => i.id == item.id);
-        _expiringItems.removeWhere((i) => i.id == item.id);
-      });
-
-      // После удаления проверяем, остались ли продукты этого типа
-      final removedItemType = item.ingredient?.type;
-      if (removedItemType != null) {
-        // Проверяем, есть ли еще продукты этого типа
-        final hasItemsOfThisType = _items.any((item) =>
-        item.ingredient?.type?.id == removedItemType.id);
-
-        if (!hasItemsOfThisType) {
-          // Если больше нет продуктов этого типа, удаляем его из категорий
-          setState(() {
-            _categories.removeWhere((cat) => cat.id == removedItemType.id);
-
-            // Если удаляемый тип был выбран в фильтре, сбрасываем на "Все"
-            if (_selectedCategory == removedItemType.name) {
-              _selectedCategory = 'Все';
-              // Перезагружаем список без фильтра
-              _loadItems();
-            }
-          });
-        }
-      }
-
-      // Показываем уведомление
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${item.name} удален из холодильника'),
-          ),
-        );
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Ошибка удаления: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    }
   }
 }

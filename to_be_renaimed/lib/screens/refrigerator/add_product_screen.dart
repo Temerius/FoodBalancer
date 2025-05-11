@@ -1,13 +1,11 @@
-// lib/screens/refrigerator/add_product_screen.dart
+// lib/screens/refrigerator/add_product_screen.dart - Complete refactored file
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../repositories/data_repository.dart';
-import '../../repositories/repositories/refrigerator_repository.dart';
 import '../../models/refrigerator_item.dart';
 import '../../models/ingredient.dart';
 import '../../models/ingredient_type.dart';
 import '../../models/enums.dart';
-import '../../services/refrigerator_service.dart';
 import '../../utils/date_formatter.dart';
 
 class AddProductScreen extends StatefulWidget {
@@ -37,30 +35,31 @@ class _AddProductScreenState extends State<AddProductScreen> {
   List<IngredientType> _allTypes = [];
   RefrigeratorItem? _currentItem;
 
-  late RefrigeratorRepository _refrigeratorRepository;
+  DataRepository? _dataRepository;
 
   @override
   void initState() {
     super.initState();
-
-    // Получаем DataRepository для доступа к ApiService
-    final dataRepository = Provider.of<DataRepository>(context, listen: false);
-    final apiService = dataRepository.apiService;
-    final refrigeratorService = RefrigeratorService(apiService: apiService);
-    _refrigeratorRepository = RefrigeratorRepository(refrigeratorService: refrigeratorService);
-
     _isEditing = widget.productId != null;
 
-    _loadIngredientTypes();
+    // Задержка инициализации до получения контекста
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initializeData();
+    });
+  }
+
+  Future<void> _initializeData() async {
+    _dataRepository = Provider.of<DataRepository>(context, listen: false);
+    await _loadIngredientTypes();
 
     if (_isEditing) {
-      _loadExistingProduct();
+      await _loadExistingProduct();
     }
   }
 
   Future<void> _loadIngredientTypes() async {
     try {
-      final dataRepository = Provider.of<DataRepository>(context, listen: false);
+      final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
 
       // Загружаем все типы ингредиентов из API через DataRepository
       final response = await dataRepository.apiService.get('/api/ingredient-types/?limit=1000');
@@ -90,15 +89,30 @@ class _AddProductScreenState extends State<AddProductScreen> {
     });
 
     try {
-      final items = await _refrigeratorRepository.getItems();
-      final item = items.firstWhere(
-            (item) => item.id == widget.productId,
-        orElse: () => throw Exception('Продукт не найден'),
-      );
+      final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
+
+      // Получаем продукты из DataRepository
+      final items = dataRepository.refrigeratorItems;
+
+      RefrigeratorItem? item;
+      if (items.isEmpty) {
+        // Если список пустой, загружаем из API
+        await dataRepository.getRefrigeratorItems();
+        final updatedItems = dataRepository.refrigeratorItems;
+        item = updatedItems.firstWhere(
+              (item) => item.id == widget.productId,
+          orElse: () => throw Exception('Продукт не найден'),
+        );
+      } else {
+        item = items.firstWhere(
+              (item) => item.id == widget.productId,
+          orElse: () => throw Exception('Продукт не найден'),
+        );
+      }
 
       setState(() {
         _currentItem = item;
-        _quantityController.text = item.quantity.toString();
+        _quantityController.text = item!.quantity.toString();
         _quantityType = item.quantityType;
 
         if (item.ingredient?.expiryDate != null) {
@@ -149,7 +163,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
     super.dispose();
   }
 
-  // Complete build method for AddProductScreen
   @override
   Widget build(BuildContext context) {
     print('AddProductScreen: build called');
@@ -157,7 +170,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_isEditing ? 'Редактирование продукта' : 'Добавление продукта'),
-        // Добавляем кнопку закрытия для отладки
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
@@ -425,7 +437,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
     }
   }
 
-  // Complete _saveProduct method for AddProductScreen
   Future<void> _saveProduct() async {
     print('_saveProduct: Starting save process');
 
@@ -437,17 +448,19 @@ class _AddProductScreenState extends State<AddProductScreen> {
       });
 
       try {
+        final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
+
         if (_isEditing && _currentItem != null) {
           print('_saveProduct: Updating existing product');
 
           // Обновление существующего продукта
-          await _refrigeratorRepository.updateItem(
+          final updatedItem = await dataRepository.updateRefrigeratorItem(
             itemId: _currentItem!.id,
             quantity: int.parse(_quantityController.text),
             quantityType: _quantityType,
           );
 
-          if (mounted) {
+          if (updatedItem != null && mounted) {
             print('_saveProduct: Showing success snackbar for update');
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -466,10 +479,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
             throw Exception('Выберите тип продукта');
           }
 
-          final dataRepository = Provider.of<DataRepository>(context, listen: false);
-
           // Проверяем, существует ли уже ингредиент с таким же названием, типом и сроком годности
-          final existingIngredients = await _refrigeratorRepository.searchIngredients(
+          final existingIngredients = await dataRepository.searchIngredients(
             query: _productNameController.text,
             typeId: _selectedType!.id,
           );
@@ -519,13 +530,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
           // Добавляем продукт в холодильник
           print('_saveProduct: Adding product to refrigerator');
-          await _refrigeratorRepository.addItem(
+          final addedItem = await dataRepository.addRefrigeratorItem(
             ingredientId: ingredientId,
             quantity: int.parse(_quantityController.text),
             quantityType: _quantityType,
           );
 
-          if (mounted) {
+          if (addedItem != null && mounted) {
             print('_saveProduct: Showing success snackbar for add');
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -592,15 +603,17 @@ class _AddProductScreenState extends State<AddProductScreen> {
     });
 
     try {
-      await _refrigeratorRepository.removeItem(_currentItem!.id);
+      final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
 
-      if (mounted) {
+      final success = await dataRepository.removeRefrigeratorItem(_currentItem!.id);
+
+      if (success && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Продукт удален'),
           ),
         );
-        Navigator.pop(context);
+        Navigator.pop(context, true);
       }
     } catch (e) {
       if (mounted) {
