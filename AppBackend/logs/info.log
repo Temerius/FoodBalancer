@@ -2979,3 +2979,583 @@ INFO 2025-05-11 13:49:58,411 basehttp 27692 13668 "GET /api/refrigerator/categor
 INFO 2025-05-11 13:50:12,970 ingredient 27692 13668 Removing ingredient from refrigerator: ingredient_id=82, name='Гадость', user_id=66
 INFO 2025-05-11 13:50:12,977 ingredient 27692 13668 Ingredient removed from refrigerator: ingredient_id=82, name='Гадость', user_id=66, time=0.01s
 INFO 2025-05-11 13:50:12,992 basehttp 27692 13668 "DELETE /api/refrigerator/288/ HTTP/1.1" 204 0
+INFO 2025-05-11 13:53:31,975 autoreload 10056 13184 Watching for file changes with StatReloader
+INFO 2025-05-11 13:53:32,287 wsgi 10056 32080 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 13:53:32,287 wsgi 10056 32080 Environment: config.settings
+INFO 2025-05-11 13:53:32,287 wsgi 10056 32080 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 13:53:32,293 wsgi 10056 32080 Application initialized successfully
+INFO 2025-05-11 14:04:29,310 autoreload 10056 13184 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\serializers\ingredient.py changed, reloading.
+INFO 2025-05-11 14:04:31,487 autoreload 20920 28560 Watching for file changes with StatReloader
+INFO 2025-05-11 14:04:31,928 wsgi 20920 33536 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 14:04:31,928 wsgi 20920 33536 Environment: config.settings
+INFO 2025-05-11 14:04:31,929 wsgi 20920 33536 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 14:04:31,933 wsgi 20920 33536 Application initialized successfully
+INFO 2025-05-11 14:05:26,368 autoreload 20920 28560 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\ingredient.py changed, reloading.
+INFO 2025-05-11 14:05:27,376 autoreload 27720 28404 Watching for file changes with StatReloader
+INFO 2025-05-11 14:05:27,683 wsgi 27720 23176 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 14:05:27,684 wsgi 27720 23176 Environment: config.settings
+INFO 2025-05-11 14:05:27,684 wsgi 27720 23176 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 14:05:27,689 wsgi 27720 23176 Application initialized successfully
+INFO 2025-05-11 14:05:59,291 autoreload 32072 32944 Watching for file changes with StatReloader
+INFO 2025-05-11 14:05:59,474 wsgi 32072 25752 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 14:05:59,474 wsgi 32072 25752 Environment: config.settings
+INFO 2025-05-11 14:05:59,475 wsgi 32072 25752 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 14:05:59,478 wsgi 32072 25752 Application initialized successfully
+INFO 2025-05-11 14:07:27,390 views 32072 8816 Profile accessed: user_id=66
+INFO 2025-05-11 14:07:27,624 basehttp 32072 8816 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 14:07:27,766 views 32072 8816 Profile accessed: user_id=66
+INFO 2025-05-11 14:07:27,775 basehttp 32072 8816 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 14:07:27,904 allergen 32072 8816 Listing all allergens: user_id=66
+INFO 2025-05-11 14:07:27,945 allergen 32072 8816 Retrieved unknown allergens, user_id=66, time=0.04s
+INFO 2025-05-11 14:07:27,965 basehttp 32072 8816 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-11 14:07:28,049 equipment 32072 8816 Listing all equipment: user_id=66
+INFO 2025-05-11 14:07:28,070 equipment 32072 8816 Retrieved unknown equipment items, user_id=66, time=0.02s
+INFO 2025-05-11 14:07:28,090 basehttp 32072 8816 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-11 14:07:28,199 allergen 32072 8816 Listing user allergens: user_id=66
+ERROR 2025-05-11 14:07:28,502 basehttp 32072 8816 "GET /api/user-allergens/ HTTP/1.1" 500 27594
+INFO 2025-05-11 14:07:28,608 equipment 32072 8816 Listing user equipment: user_id=66
+INFO 2025-05-11 14:07:28,650 equipment 32072 8816 Retrieved 2 user equipment items, user_id=66, time=0.04s
+INFO 2025-05-11 14:07:28,672 basehttp 32072 8816 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-11 14:07:28,778 recipe 32072 8816 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 14:07:29,098 basehttp 32072 8816 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 14:07:29,200 recipe 32072 8816 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 14:07:29,482 basehttp 32072 8816 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 14:07:29,623 basehttp 32072 8816 "GET /api/favorites/ HTTP/1.1" 200 1063
+INFO 2025-05-11 14:07:29,727 ingredient 32072 8816 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 14:07:29,766 ingredient 32072 8816 Retrieved 1 refrigerator ingredients for user_id=66, time=0.04s
+INFO 2025-05-11 14:07:29,836 basehttp 32072 8816 "GET /api/refrigerator/ HTTP/1.1" 200 537
+INFO 2025-05-11 14:07:29,997 ingredient 32072 8816 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 14:07:30,008 ingredient 32072 8816 Found 1 categories in refrigerator for user_id=66, time=0.01s
+INFO 2025-05-11 14:07:30,038 basehttp 32072 8816 "GET /api/refrigerator/categories/ HTTP/1.1" 200 154
+INFO 2025-05-11 14:07:36,478 ingredient 32072 8816 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 14:07:36,500 ingredient 32072 8816 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 14:07:36,529 basehttp 32072 8816 "GET /api/refrigerator/ HTTP/1.1" 200 537
+INFO 2025-05-11 14:07:36,631 ingredient 32072 8816 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 14:07:36,637 ingredient 32072 8816 Found 1 categories in refrigerator for user_id=66, time=0.01s
+INFO 2025-05-11 14:07:36,651 basehttp 32072 8816 "GET /api/refrigerator/categories/ HTTP/1.1" 200 154
+INFO 2025-05-11 14:07:38,611 ingredient 32072 8816 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 14:07:38,624 basehttp 32072 8816 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 14:08:08,664 ingredient 32072 32496 Creating new ingredient: user_id=66, data={'ing_name': 'зелёнка', 'ing_exp_date': '2025-05-18', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 100, 'ing_fat': 100, 'ing_hydrates': 50, 'ing_igt_id': 25, 'allergen_ids': [5]}
+INFO 2025-05-11 14:08:08,720 ingredient 32072 32496 Ingredient created successfully: ingredient_id=83, name='зелёнка', type_id=25, user_id=66, time=0.06s
+INFO 2025-05-11 14:08:08,755 basehttp 32072 32496 "POST /api/ingredients/ HTTP/1.1" 201 188
+INFO 2025-05-11 14:08:08,828 ingredient 32072 32496 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 14:08:08,865 ingredient 32072 32496 Ingredient added to refrigerator: ingredient_id=83, name='зелёнка', quantity=20 grams, user_id=66, time=0.04s
+INFO 2025-05-11 14:08:08,893 basehttp 32072 32496 "POST /api/refrigerator/ HTTP/1.1" 201 461
+INFO 2025-05-11 14:08:09,171 ingredient 32072 32496 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 14:08:09,193 ingredient 32072 32496 Retrieved 2 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 14:08:09,214 basehttp 32072 32496 "GET /api/refrigerator/ HTTP/1.1" 200 999
+INFO 2025-05-11 14:08:09,310 ingredient 32072 32496 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 14:08:09,314 ingredient 32072 32496 Found 2 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 14:08:09,326 basehttp 32072 32496 "GET /api/refrigerator/categories/ HTTP/1.1" 200 309
+INFO 2025-05-11 14:14:13,028 autoreload 32072 32944 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\ingredient.py changed, reloading.
+INFO 2025-05-11 14:14:14,788 autoreload 33008 4720 Watching for file changes with StatReloader
+INFO 2025-05-11 14:14:15,074 wsgi 33008 32740 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 14:14:15,074 wsgi 33008 32740 Environment: config.settings
+INFO 2025-05-11 14:14:15,075 wsgi 33008 32740 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 14:14:15,079 wsgi 33008 32740 Application initialized successfully
+INFO 2025-05-11 14:14:24,991 autoreload 33008 4720 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\ingredient.py changed, reloading.
+INFO 2025-05-11 14:14:27,141 autoreload 18864 32352 Watching for file changes with StatReloader
+INFO 2025-05-11 14:14:27,402 wsgi 18864 12980 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 14:14:27,403 wsgi 18864 12980 Environment: config.settings
+INFO 2025-05-11 14:14:27,403 wsgi 18864 12980 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 14:14:27,407 wsgi 18864 12980 Application initialized successfully
+INFO 2025-05-11 14:14:55,125 autoreload 18864 32352 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\serializers\ingredient.py changed, reloading.
+INFO 2025-05-11 14:14:56,644 autoreload 30820 30236 Watching for file changes with StatReloader
+INFO 2025-05-11 14:14:57,093 wsgi 30820 29876 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 14:14:57,094 wsgi 30820 29876 Environment: config.settings
+INFO 2025-05-11 14:14:57,094 wsgi 30820 29876 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 14:14:57,100 wsgi 30820 29876 Application initialized successfully
+INFO 2025-05-11 14:15:46,449 autoreload 30820 30236 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\ingredient.py changed, reloading.
+INFO 2025-05-11 14:15:47,256 autoreload 9380 21096 Watching for file changes with StatReloader
+INFO 2025-05-11 14:15:47,494 wsgi 9380 7316 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 14:15:47,494 wsgi 9380 7316 Environment: config.settings
+INFO 2025-05-11 14:15:47,494 wsgi 9380 7316 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 14:15:47,497 wsgi 9380 7316 Application initialized successfully
+INFO 2025-05-11 14:16:09,684 autoreload 22500 27592 Watching for file changes with StatReloader
+INFO 2025-05-11 14:16:09,938 wsgi 22500 32168 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 14:16:09,939 wsgi 22500 32168 Environment: config.settings
+INFO 2025-05-11 14:16:09,939 wsgi 22500 32168 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 14:16:09,942 wsgi 22500 32168 Application initialized successfully
+INFO 2025-05-11 14:16:21,502 ingredient 22500 32488 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 14:16:21,562 basehttp 22500 32488 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 14:16:47,232 ingredient 22500 19376 Creating new ingredient: user_id=66, data={'ing_name': 'что-то странное', 'ing_exp_date': '2025-05-18', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 29, 'allergen_ids': [3, 4, 5]}
+INFO 2025-05-11 14:16:47,270 ingredient 22500 19376 Ingredient created successfully: ingredient_id=84, name='что-то странное', type_id=29, user_id=66, time=0.04s
+INFO 2025-05-11 14:16:47,330 basehttp 22500 19376 "POST /api/ingredients/ HTTP/1.1" 201 197
+INFO 2025-05-11 14:16:47,409 ingredient 22500 19376 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 14:16:47,434 ingredient 22500 19376 Ingredient added to refrigerator: ingredient_id=84, name='что-то странное', quantity=500 milliliters, user_id=66, time=0.03s
+INFO 2025-05-11 14:16:47,470 basehttp 22500 19376 "POST /api/refrigerator/ HTTP/1.1" 201 479
+INFO 2025-05-11 14:16:47,597 ingredient 22500 19376 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 14:16:47,630 ingredient 22500 19376 Retrieved 3 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-11 14:16:47,694 basehttp 22500 19376 "GET /api/refrigerator/ HTTP/1.1" 200 1479
+INFO 2025-05-11 14:16:47,771 ingredient 22500 19376 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 14:16:47,776 ingredient 22500 19376 Found 3 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 14:16:47,798 basehttp 22500 19376 "GET /api/refrigerator/categories/ HTTP/1.1" 200 466
+INFO 2025-05-11 14:22:31,796 autoreload 31428 31956 Watching for file changes with StatReloader
+INFO 2025-05-11 14:22:32,000 wsgi 31428 19868 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 14:22:32,000 wsgi 31428 19868 Environment: config.settings
+INFO 2025-05-11 14:22:32,000 wsgi 31428 19868 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 14:22:32,003 wsgi 31428 19868 Application initialized successfully
+INFO 2025-05-11 14:22:36,588 ingredient 31428 30712 Removing ingredient from refrigerator: ingredient_id=84, name='что-то странное', user_id=66
+INFO 2025-05-11 14:22:36,597 ingredient 31428 30712 Ingredient removed from refrigerator: ingredient_id=84, name='что-то странное', user_id=66, time=0.05s
+INFO 2025-05-11 14:22:36,674 basehttp 31428 30712 "DELETE /api/refrigerator/290/ HTTP/1.1" 204 0
+INFO 2025-05-11 14:22:41,702 ingredient 31428 30712 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 14:22:41,719 basehttp 31428 30712 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 14:23:02,591 ingredient 31428 19356 Creating new ingredient: user_id=66, data={'ing_name': 'макарошки', 'ing_exp_date': '2025-05-18', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 53, 'allergen_ids': [1, 2, 3]}
+INFO 2025-05-11 14:23:02,627 ingredient 31428 19356 Ingredient created successfully: ingredient_id=85, name='макарошки', type_id=53, user_id=66, time=0.04s
+INFO 2025-05-11 14:23:02,669 basehttp 31428 19356 "POST /api/ingredients/ HTTP/1.1" 201 187
+INFO 2025-05-11 14:23:02,788 ingredient 31428 19356 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 14:23:02,801 ingredient 31428 19356 Ingredient added to refrigerator: ingredient_id=85, name='макарошки', quantity=100 grams, user_id=66, time=0.01s
+INFO 2025-05-11 14:23:02,832 basehttp 31428 19356 "POST /api/refrigerator/ HTTP/1.1" 201 459
+INFO 2025-05-11 14:23:03,000 ingredient 31428 19356 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 14:23:03,032 ingredient 31428 19356 Retrieved 3 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-11 14:23:03,078 basehttp 31428 19356 "GET /api/refrigerator/ HTTP/1.1" 200 1459
+INFO 2025-05-11 14:23:03,166 ingredient 31428 19356 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 14:23:03,171 ingredient 31428 19356 Found 3 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 14:23:03,188 basehttp 31428 19356 "GET /api/refrigerator/categories/ HTTP/1.1" 200 462
+INFO 2025-05-11 14:25:42,208 autoreload 31428 31956 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\ingredient.py changed, reloading.
+INFO 2025-05-11 14:25:43,208 autoreload 28316 2996 Watching for file changes with StatReloader
+INFO 2025-05-11 14:25:43,524 wsgi 28316 31804 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 14:25:43,525 wsgi 28316 31804 Environment: config.settings
+INFO 2025-05-11 14:25:43,525 wsgi 28316 31804 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 14:25:43,529 wsgi 28316 31804 Application initialized successfully
+INFO 2025-05-11 14:26:14,609 autoreload 26348 30044 Watching for file changes with StatReloader
+INFO 2025-05-11 14:26:14,850 wsgi 26348 25788 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 14:26:14,850 wsgi 26348 25788 Environment: config.settings
+INFO 2025-05-11 14:26:14,850 wsgi 26348 25788 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 14:26:14,854 wsgi 26348 25788 Application initialized successfully
+INFO 2025-05-11 14:26:27,741 ingredient 26348 10720 Removing ingredient from refrigerator: ingredient_id=85, name='макарошки', user_id=66
+INFO 2025-05-11 14:26:27,745 ingredient 26348 10720 Ingredient removed from refrigerator: ingredient_id=85, name='макарошки', user_id=66, time=0.01s
+INFO 2025-05-11 14:26:27,794 basehttp 26348 10720 "DELETE /api/refrigerator/291/ HTTP/1.1" 204 0
+INFO 2025-05-11 14:26:29,358 ingredient 26348 10720 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 14:26:29,381 basehttp 26348 10720 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 14:26:49,542 ingredient 26348 29876 Creating new ingredient: user_id=66, data={'ing_name': 'фиг знает что', 'ing_exp_date': '2025-05-18', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 62, 'allergen_ids': [1, 2, 3]}
+INFO 2025-05-11 14:26:49,609 ingredient 26348 29876 Ingredient created successfully: ingredient_id=86, name='фиг знает что', type_id=62, user_id=66, time=0.07s
+INFO 2025-05-11 14:26:49,661 basehttp 26348 29876 "POST /api/ingredients/ HTTP/1.1" 201 193
+INFO 2025-05-11 14:26:49,757 ingredient 26348 29876 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 14:26:49,793 ingredient 26348 29876 Ingredient added to refrigerator: ingredient_id=86, name='фиг знает что', quantity=500 grams, user_id=66, time=0.04s
+INFO 2025-05-11 14:26:49,819 basehttp 26348 29876 "POST /api/refrigerator/ HTTP/1.1" 201 467
+INFO 2025-05-11 14:26:49,935 ingredient 26348 29876 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 14:26:49,971 ingredient 26348 29876 Retrieved 3 refrigerator ingredients for user_id=66, time=0.04s
+INFO 2025-05-11 14:26:50,022 basehttp 26348 29876 "GET /api/refrigerator/ HTTP/1.1" 200 1467
+INFO 2025-05-11 14:26:50,148 ingredient 26348 29876 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 14:26:50,154 ingredient 26348 29876 Found 3 categories in refrigerator for user_id=66, time=0.01s
+INFO 2025-05-11 14:26:50,175 basehttp 26348 29876 "GET /api/refrigerator/categories/ HTTP/1.1" 200 464
+INFO 2025-05-11 14:28:05,004 views 26348 16448 Profile accessed: user_id=66
+INFO 2025-05-11 14:28:05,026 basehttp 26348 16448 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 14:28:05,110 allergen 26348 16448 Listing user allergens: user_id=66
+ERROR 2025-05-11 14:28:05,293 basehttp 26348 16448 "GET /api/user-allergens/ HTTP/1.1" 500 27594
+INFO 2025-05-11 14:28:05,491 equipment 26348 16448 Listing user equipment: user_id=66
+INFO 2025-05-11 14:28:05,505 equipment 26348 16448 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 14:28:05,528 basehttp 26348 16448 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-11 14:28:10,945 views 26348 16448 Profile update attempt: user_id=66
+INFO 2025-05-11 14:28:11,120 views 26348 16448 Profile updated successfully: user_id=66, time=0.18s
+INFO 2025-05-11 14:28:11,146 basehttp 26348 16448 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-11 14:28:11,220 allergen 26348 16448 Starting user allergens update for user ID: 66
+INFO 2025-05-11 14:28:11,221 allergen 26348 16448 Request data: {'allergen_ids': [5, 4, 6]}
+INFO 2025-05-11 14:28:11,222 allergen 26348 16448 Allergen IDs to update: [5, 4, 6]
+INFO 2025-05-11 14:28:11,237 allergen 26348 16448 Deleted (3, {'core.M2MUsrAlg': 3}) existing allergen records
+ERROR 2025-05-11 14:28:11,288 allergen 26348 16448 Error updating allergens: column m2m_usr_alg.id does not exist
+LINE 1: ...a_alg_id", "mua_usr_id") VALUES (5, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+ERROR 2025-05-11 14:28:11,289 allergen 26348 16448 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column m2m_usr_alg.id does not exist
+LINE 1: ...a_alg_id", "mua_usr_id") VALUES (5, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 87, in update_user_allergens
+    allergen_relation = M2MUsrAlg.objects.create(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: ...a_alg_id", "mua_usr_id") VALUES (5, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+
+WARNING 2025-05-11 14:28:11,312 basehttp 26348 16448 "POST /api/user-allergens/update/ HTTP/1.1" 400 194
+INFO 2025-05-11 14:28:11,400 equipment 26348 16448 Starting user equipment update for user ID: 66
+INFO 2025-05-11 14:28:11,401 equipment 26348 16448 Request data: {'equipment_ids': [4, 3]}
+INFO 2025-05-11 14:28:11,401 equipment 26348 16448 Equipment IDs to update: [4, 3]
+INFO 2025-05-11 14:28:11,414 equipment 26348 16448 Deleted (2, {'core.M2MUsrEqp': 2}) existing equipment records
+INFO 2025-05-11 14:28:11,424 equipment 26348 16448 Created equipment mapping: user 66 - equipment 4
+INFO 2025-05-11 14:28:11,431 equipment 26348 16448 Created equipment mapping: user 66 - equipment 3
+INFO 2025-05-11 14:28:11,432 equipment 26348 16448 Successfully updated equipment for user 66: [4, 3]
+INFO 2025-05-11 14:28:11,457 basehttp 26348 16448 "POST /api/user-equipment/update/ HTTP/1.1" 200 59
+INFO 2025-05-11 14:28:21,503 views 26348 16448 Profile update attempt: user_id=66
+INFO 2025-05-11 14:28:21,510 views 26348 16448 Profile updated successfully: user_id=66, time=0.01s
+INFO 2025-05-11 14:28:21,532 basehttp 26348 16448 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-11 14:28:21,686 allergen 26348 16448 Starting user allergens update for user ID: 66
+INFO 2025-05-11 14:28:21,687 allergen 26348 16448 Request data: {'allergen_ids': []}
+INFO 2025-05-11 14:28:21,687 allergen 26348 16448 Allergen IDs to update: []
+INFO 2025-05-11 14:28:21,693 allergen 26348 16448 Deleted (0, {}) existing allergen records
+INFO 2025-05-11 14:28:21,693 allergen 26348 16448 Successfully updated allergens for user 66: []
+INFO 2025-05-11 14:28:21,710 basehttp 26348 16448 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-11 14:28:21,783 equipment 26348 16448 Starting user equipment update for user ID: 66
+INFO 2025-05-11 14:28:21,783 equipment 26348 16448 Request data: {'equipment_ids': [4, 3]}
+INFO 2025-05-11 14:28:21,784 equipment 26348 16448 Equipment IDs to update: [4, 3]
+INFO 2025-05-11 14:28:21,792 equipment 26348 16448 Deleted (2, {'core.M2MUsrEqp': 2}) existing equipment records
+INFO 2025-05-11 14:28:21,798 equipment 26348 16448 Created equipment mapping: user 66 - equipment 4
+INFO 2025-05-11 14:28:21,804 equipment 26348 16448 Created equipment mapping: user 66 - equipment 3
+INFO 2025-05-11 14:28:21,804 equipment 26348 16448 Successfully updated equipment for user 66: [4, 3]
+INFO 2025-05-11 14:28:21,827 basehttp 26348 16448 "POST /api/user-equipment/update/ HTTP/1.1" 200 59
+INFO 2025-05-11 14:29:01,850 autoreload 26348 30044 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\ingredient.py changed, reloading.
+INFO 2025-05-11 14:29:02,902 autoreload 25912 30896 Watching for file changes with StatReloader
+INFO 2025-05-11 14:29:03,183 wsgi 25912 29780 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 14:29:03,183 wsgi 25912 29780 Environment: config.settings
+INFO 2025-05-11 14:29:03,183 wsgi 25912 29780 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 14:29:03,188 wsgi 25912 29780 Application initialized successfully
+INFO 2025-05-11 14:29:08,020 autoreload 31352 6096 Watching for file changes with StatReloader
+INFO 2025-05-11 14:29:08,261 wsgi 31352 19612 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 14:29:08,262 wsgi 31352 19612 Environment: config.settings
+INFO 2025-05-11 14:29:08,262 wsgi 31352 19612 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 14:29:08,266 wsgi 31352 19612 Application initialized successfully
+INFO 2025-05-11 14:29:11,777 ingredient 31352 1952 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 14:29:11,805 ingredient 31352 1952 Retrieved 3 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-11 14:29:11,879 basehttp 31352 1952 "GET /api/refrigerator/ HTTP/1.1" 200 1467
+INFO 2025-05-11 14:29:12,033 ingredient 31352 1952 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 14:29:12,037 ingredient 31352 1952 Found 3 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 14:29:12,051 basehttp 31352 1952 "GET /api/refrigerator/categories/ HTTP/1.1" 200 464
+INFO 2025-05-11 14:29:13,970 ingredient 31352 1952 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 14:29:13,982 basehttp 31352 1952 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 14:29:27,307 ingredient 31352 1952 Creating new ingredient: user_id=66, data={'ing_name': 'кэйл', 'ing_exp_date': '2025-05-18', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 20, 'allergen_ids': [1, 2, 3]}
+INFO 2025-05-11 14:29:27,328 ingredient 31352 1952 Ingredient created successfully: ingredient_id=87, name='кэйл', type_id=20, user_id=66, time=0.02s
+INFO 2025-05-11 14:29:27,354 basehttp 31352 1952 "POST /api/ingredients/ HTTP/1.1" 201 177
+INFO 2025-05-11 14:29:27,501 ingredient 31352 1952 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 14:29:27,507 ingredient 31352 1952 Ingredient added to refrigerator: ingredient_id=87, name='кэйл', quantity=20 grams, user_id=66, time=0.01s
+INFO 2025-05-11 14:29:27,527 basehttp 31352 1952 "POST /api/refrigerator/ HTTP/1.1" 201 447
+INFO 2025-05-11 14:29:27,707 ingredient 31352 1952 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 14:29:27,729 ingredient 31352 1952 Retrieved 4 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 14:29:27,743 basehttp 31352 1952 "GET /api/refrigerator/ HTTP/1.1" 200 1915
+INFO 2025-05-11 14:29:27,813 ingredient 31352 1952 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 14:29:27,817 ingredient 31352 1952 Found 4 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 14:29:27,827 basehttp 31352 1952 "GET /api/refrigerator/categories/ HTTP/1.1" 200 616
+INFO 2025-05-11 14:30:31,459 views 31352 20088 Profile update attempt: user_id=66
+INFO 2025-05-11 14:30:31,487 views 31352 20088 Profile updated successfully: user_id=66, time=0.03s
+INFO 2025-05-11 14:30:31,512 basehttp 31352 20088 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-11 14:30:31,585 allergen 31352 20088 Starting user allergens update for user ID: 66
+INFO 2025-05-11 14:30:31,585 allergen 31352 20088 Request data: {'allergen_ids': [1, 2, 3]}
+INFO 2025-05-11 14:30:31,586 allergen 31352 20088 Allergen IDs to update: [1, 2, 3]
+INFO 2025-05-11 14:30:31,593 allergen 31352 20088 Deleted (0, {}) existing allergen records
+ERROR 2025-05-11 14:30:31,601 allergen 31352 20088 Error updating allergens: column m2m_usr_alg.id does not exist
+LINE 1: ...a_alg_id", "mua_usr_id") VALUES (1, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+ERROR 2025-05-11 14:30:31,602 allergen 31352 20088 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column m2m_usr_alg.id does not exist
+LINE 1: ...a_alg_id", "mua_usr_id") VALUES (1, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 87, in update_user_allergens
+    allergen_relation = M2MUsrAlg.objects.create(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: ...a_alg_id", "mua_usr_id") VALUES (1, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+
+WARNING 2025-05-11 14:30:31,624 basehttp 31352 20088 "POST /api/user-allergens/update/ HTTP/1.1" 400 194
+INFO 2025-05-11 14:30:31,694 equipment 31352 20088 Starting user equipment update for user ID: 66
+INFO 2025-05-11 14:30:31,694 equipment 31352 20088 Request data: {'equipment_ids': [4, 3]}
+INFO 2025-05-11 14:30:31,694 equipment 31352 20088 Equipment IDs to update: [4, 3]
+INFO 2025-05-11 14:30:31,704 equipment 31352 20088 Deleted (2, {'core.M2MUsrEqp': 2}) existing equipment records
+INFO 2025-05-11 14:30:31,712 equipment 31352 20088 Created equipment mapping: user 66 - equipment 4
+INFO 2025-05-11 14:30:31,716 equipment 31352 20088 Created equipment mapping: user 66 - equipment 3
+INFO 2025-05-11 14:30:31,717 equipment 31352 20088 Successfully updated equipment for user 66: [4, 3]
+INFO 2025-05-11 14:30:31,742 basehttp 31352 20088 "POST /api/user-equipment/update/ HTTP/1.1" 200 59
+INFO 2025-05-11 17:09:46,339 autoreload 16668 18416 Watching for file changes with StatReloader
+INFO 2025-05-11 17:12:55,595 autoreload 16668 18416 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\ingredient.py changed, reloading.
+INFO 2025-05-11 17:12:56,774 autoreload 6364 6620 Watching for file changes with StatReloader
+INFO 2025-05-11 17:12:57,146 wsgi 6364 9956 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 17:12:57,146 wsgi 6364 9956 Environment: config.settings
+INFO 2025-05-11 17:12:57,147 wsgi 6364 9956 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 17:12:57,153 wsgi 6364 9956 Application initialized successfully
+INFO 2025-05-11 17:13:05,034 autoreload 17764 25452 Watching for file changes with StatReloader
+INFO 2025-05-11 17:13:05,222 wsgi 17764 3376 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 17:13:05,222 wsgi 17764 3376 Environment: config.settings
+INFO 2025-05-11 17:13:05,223 wsgi 17764 3376 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 17:13:05,227 wsgi 17764 3376 Application initialized successfully
+INFO 2025-05-11 17:15:58,259 views 17764 8480 Profile accessed: user_id=66
+INFO 2025-05-11 17:15:58,613 basehttp 17764 8480 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 17:15:58,808 views 17764 8480 Profile accessed: user_id=66
+INFO 2025-05-11 17:15:58,824 basehttp 17764 8480 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 17:15:59,105 allergen 17764 8480 Listing all allergens: user_id=66
+INFO 2025-05-11 17:15:59,161 allergen 17764 8480 Retrieved unknown allergens, user_id=66, time=0.06s
+INFO 2025-05-11 17:15:59,192 basehttp 17764 8480 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-11 17:15:59,301 equipment 17764 8480 Listing all equipment: user_id=66
+INFO 2025-05-11 17:15:59,332 equipment 17764 8480 Retrieved unknown equipment items, user_id=66, time=0.03s
+INFO 2025-05-11 17:15:59,374 basehttp 17764 8480 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-11 17:15:59,517 allergen 17764 8480 Listing user allergens: user_id=66
+ERROR 2025-05-11 17:16:00,131 basehttp 17764 8480 "GET /api/user-allergens/ HTTP/1.1" 500 27594
+INFO 2025-05-11 17:16:00,312 equipment 17764 8480 Listing user equipment: user_id=66
+INFO 2025-05-11 17:16:00,354 equipment 17764 8480 Retrieved 2 user equipment items, user_id=66, time=0.04s
+INFO 2025-05-11 17:16:00,375 basehttp 17764 8480 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-11 17:16:00,530 recipe 17764 8480 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 17:16:00,938 basehttp 17764 8480 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 17:16:01,032 recipe 17764 8480 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 17:16:01,307 basehttp 17764 8480 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 17:16:01,437 basehttp 17764 8480 "GET /api/favorites/ HTTP/1.1" 200 1063
+INFO 2025-05-11 17:16:01,545 ingredient 17764 8480 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 17:16:01,670 ingredient 17764 8480 Retrieved 4 refrigerator ingredients for user_id=66, time=0.12s
+INFO 2025-05-11 17:16:01,752 basehttp 17764 8480 "GET /api/refrigerator/ HTTP/1.1" 200 1915
+INFO 2025-05-11 17:16:01,864 ingredient 17764 8480 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 17:16:01,873 ingredient 17764 8480 Found 4 categories in refrigerator for user_id=66, time=0.01s
+INFO 2025-05-11 17:16:01,907 basehttp 17764 8480 "GET /api/refrigerator/categories/ HTTP/1.1" 200 616
+INFO 2025-05-11 17:16:09,549 ingredient 17764 8480 Removing ingredient from refrigerator: ingredient_id=87, name='кэйл', user_id=66
+INFO 2025-05-11 17:16:09,561 ingredient 17764 8480 Ingredient removed from refrigerator: ingredient_id=87, name='кэйл', user_id=66, time=0.07s
+INFO 2025-05-11 17:16:09,601 basehttp 17764 8480 "DELETE /api/refrigerator/293/ HTTP/1.1" 204 0
+INFO 2025-05-11 17:16:10,797 ingredient 17764 8480 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 17:16:10,815 basehttp 17764 8480 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 17:16:29,641 ingredient 17764 2480 Creating new ingredient: user_id=66, data={'ing_name': 'редисояка', 'ing_exp_date': '2025-05-18', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 16, 'allergen_ids': [3, 4]}
+INFO 2025-05-11 17:16:29,717 ingredient 17764 2480 Ingredient created successfully: ingredient_id=88, name='редисояка', type_id=16, user_id=66, time=0.08s
+INFO 2025-05-11 17:16:29,793 basehttp 17764 2480 "POST /api/ingredients/ HTTP/1.1" 201 187
+INFO 2025-05-11 17:16:29,864 ingredient 17764 2480 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 17:16:29,912 ingredient 17764 2480 Ingredient added to refrigerator: ingredient_id=88, name='редисояка', quantity=100 grams, user_id=66, time=0.05s
+INFO 2025-05-11 17:16:29,941 basehttp 17764 2480 "POST /api/refrigerator/ HTTP/1.1" 201 521
+INFO 2025-05-11 17:16:30,183 ingredient 17764 2480 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 17:16:30,205 ingredient 17764 2480 Retrieved 4 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 17:16:30,240 basehttp 17764 2480 "GET /api/refrigerator/ HTTP/1.1" 200 1989
+INFO 2025-05-11 17:16:30,448 ingredient 17764 2480 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 17:16:30,452 ingredient 17764 2480 Found 4 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 17:16:30,463 basehttp 17764 2480 "GET /api/refrigerator/categories/ HTTP/1.1" 200 619
+INFO 2025-05-11 17:17:12,167 ingredient 17764 3680 Removing ingredient from refrigerator: ingredient_id=88, name='редисояка', user_id=66
+INFO 2025-05-11 17:17:12,174 ingredient 17764 3680 Ingredient removed from refrigerator: ingredient_id=88, name='редисояка', user_id=66, time=0.01s
+INFO 2025-05-11 17:17:12,216 basehttp 17764 3680 "DELETE /api/refrigerator/294/ HTTP/1.1" 204 0
+INFO 2025-05-11 17:18:36,233 autoreload 17764 25452 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\allergen.py changed, reloading.
+INFO 2025-05-11 17:18:37,545 autoreload 5408 21452 Watching for file changes with StatReloader
+INFO 2025-05-11 17:18:37,806 wsgi 5408 6620 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 17:18:37,807 wsgi 5408 6620 Environment: config.settings
+INFO 2025-05-11 17:18:37,807 wsgi 5408 6620 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 17:18:37,811 wsgi 5408 6620 Application initialized successfully
+INFO 2025-05-11 17:18:42,113 autoreload 25560 11284 Watching for file changes with StatReloader
+INFO 2025-05-11 17:18:42,397 wsgi 25560 22420 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 17:18:42,397 wsgi 25560 22420 Environment: config.settings
+INFO 2025-05-11 17:18:42,397 wsgi 25560 22420 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 17:18:42,402 wsgi 25560 22420 Application initialized successfully
+INFO 2025-05-11 17:18:55,247 views 25560 22244 Profile accessed: user_id=66
+INFO 2025-05-11 17:18:55,292 basehttp 25560 22244 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 17:18:55,397 allergen 25560 22244 Listing user allergens: user_id=66
+INFO 2025-05-11 17:18:55,403 allergen 25560 22244 Retrieved 0 user allergens, user_id=66, time=0.01s
+INFO 2025-05-11 17:18:55,424 basehttp 25560 22244 "GET /api/user-allergens/ HTTP/1.1" 200 2
+INFO 2025-05-11 17:18:55,487 equipment 25560 22244 Listing user equipment: user_id=66
+INFO 2025-05-11 17:18:55,505 equipment 25560 22244 Retrieved 2 user equipment items, user_id=66, time=0.02s
+INFO 2025-05-11 17:18:55,537 basehttp 25560 22244 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-11 17:19:24,011 views 25560 21592 Profile accessed: user_id=66
+INFO 2025-05-11 17:19:24,021 basehttp 25560 21592 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 17:19:24,149 views 25560 21592 Profile accessed: user_id=66
+INFO 2025-05-11 17:19:24,159 basehttp 25560 21592 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 17:19:24,257 allergen 25560 21592 Listing all allergens: user_id=66
+INFO 2025-05-11 17:19:24,260 allergen 25560 21592 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-11 17:19:24,269 basehttp 25560 21592 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-11 17:19:24,358 equipment 25560 21592 Listing all equipment: user_id=66
+INFO 2025-05-11 17:19:24,363 equipment 25560 21592 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 17:19:24,377 basehttp 25560 21592 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-11 17:19:24,477 allergen 25560 21592 Listing user allergens: user_id=66
+INFO 2025-05-11 17:19:24,480 allergen 25560 21592 Retrieved 0 user allergens, user_id=66, time=0.00s
+INFO 2025-05-11 17:19:24,492 basehttp 25560 21592 "GET /api/user-allergens/ HTTP/1.1" 200 2
+INFO 2025-05-11 17:19:24,602 equipment 25560 21592 Listing user equipment: user_id=66
+INFO 2025-05-11 17:19:24,610 equipment 25560 21592 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 17:19:24,621 basehttp 25560 21592 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-11 17:19:24,710 recipe 25560 21592 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 17:19:24,931 basehttp 25560 21592 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 17:19:25,026 recipe 25560 21592 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 17:19:25,197 basehttp 25560 21592 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 17:19:25,333 basehttp 25560 21592 "GET /api/favorites/ HTTP/1.1" 200 1063
+INFO 2025-05-11 17:19:25,511 ingredient 25560 21592 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 17:19:25,549 ingredient 25560 21592 Retrieved 3 refrigerator ingredients for user_id=66, time=0.04s
+INFO 2025-05-11 17:19:25,606 basehttp 25560 21592 "GET /api/refrigerator/ HTTP/1.1" 200 1467
+INFO 2025-05-11 17:19:25,764 ingredient 25560 21592 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 17:19:25,768 ingredient 25560 21592 Found 3 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 17:19:25,788 basehttp 25560 21592 "GET /api/refrigerator/categories/ HTTP/1.1" 200 464
+INFO 2025-05-11 17:19:31,942 views 25560 21592 Profile update attempt: user_id=66
+INFO 2025-05-11 17:19:32,030 views 25560 21592 Profile updated successfully: user_id=66, time=0.09s
+INFO 2025-05-11 17:19:32,043 basehttp 25560 21592 "PUT /api/users/profile/ HTTP/1.1" 200 139
+INFO 2025-05-11 17:19:32,119 allergen 25560 21592 Starting user allergens update for user ID: 66
+INFO 2025-05-11 17:19:32,120 allergen 25560 21592 Request data: {'allergen_ids': [1, 2, 3]}
+INFO 2025-05-11 17:19:32,120 allergen 25560 21592 Allergen IDs to update: [1, 2, 3]
+INFO 2025-05-11 17:19:32,129 allergen 25560 21592 Deleted (0, {}) existing allergen records
+INFO 2025-05-11 17:19:32,138 allergen 25560 21592 Created allergen mapping: user 66 - allergen 1
+INFO 2025-05-11 17:19:32,144 allergen 25560 21592 Created allergen mapping: user 66 - allergen 2
+INFO 2025-05-11 17:19:32,152 allergen 25560 21592 Created allergen mapping: user 66 - allergen 3
+INFO 2025-05-11 17:19:32,152 allergen 25560 21592 Successfully updated allergens for user 66: [1, 2, 3]
+INFO 2025-05-11 17:19:32,186 basehttp 25560 21592 "POST /api/user-allergens/update/ HTTP/1.1" 200 59
+INFO 2025-05-11 17:19:32,274 equipment 25560 21592 Starting user equipment update for user ID: 66
+INFO 2025-05-11 17:19:32,275 equipment 25560 21592 Request data: {'equipment_ids': [4, 3]}
+INFO 2025-05-11 17:19:32,275 equipment 25560 21592 Equipment IDs to update: [4, 3]
+INFO 2025-05-11 17:19:32,284 equipment 25560 21592 Deleted (2, {'core.M2MUsrEqp': 2}) existing equipment records
+INFO 2025-05-11 17:19:32,292 equipment 25560 21592 Created equipment mapping: user 66 - equipment 4
+INFO 2025-05-11 17:19:32,299 equipment 25560 21592 Created equipment mapping: user 66 - equipment 3
+INFO 2025-05-11 17:19:32,300 equipment 25560 21592 Successfully updated equipment for user 66: [4, 3]
+INFO 2025-05-11 17:19:32,333 basehttp 25560 21592 "POST /api/user-equipment/update/ HTTP/1.1" 200 59
+INFO 2025-05-11 17:20:05,562 views 25560 17764 Profile accessed: user_id=66
+INFO 2025-05-11 17:20:05,577 basehttp 25560 17764 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 17:20:05,678 views 25560 17764 Profile accessed: user_id=66
+INFO 2025-05-11 17:20:05,692 basehttp 25560 17764 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 17:20:05,807 allergen 25560 17764 Listing all allergens: user_id=66
+INFO 2025-05-11 17:20:05,810 allergen 25560 17764 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-11 17:20:05,825 basehttp 25560 17764 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-11 17:20:05,917 equipment 25560 17764 Listing all equipment: user_id=66
+INFO 2025-05-11 17:20:05,921 equipment 25560 17764 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-11 17:20:05,934 basehttp 25560 17764 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-11 17:20:06,054 allergen 25560 17764 Listing user allergens: user_id=66
+INFO 2025-05-11 17:20:06,074 allergen 25560 17764 Retrieved 3 user allergens, user_id=66, time=0.02s
+INFO 2025-05-11 17:20:06,093 basehttp 25560 17764 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-11 17:20:06,194 equipment 25560 17764 Listing user equipment: user_id=66
+INFO 2025-05-11 17:20:06,201 equipment 25560 17764 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 17:20:06,218 basehttp 25560 17764 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-11 17:20:06,289 recipe 25560 17764 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 17:20:06,508 basehttp 25560 17764 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 17:20:06,601 recipe 25560 17764 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 17:20:06,740 basehttp 25560 17764 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 17:20:06,858 basehttp 25560 17764 "GET /api/favorites/ HTTP/1.1" 200 1063
+INFO 2025-05-11 17:20:06,931 ingredient 25560 17764 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 17:20:06,951 ingredient 25560 17764 Retrieved 3 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 17:20:06,994 basehttp 25560 17764 "GET /api/refrigerator/ HTTP/1.1" 200 1467
+INFO 2025-05-11 17:20:07,082 ingredient 25560 17764 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 17:20:07,086 ingredient 25560 17764 Found 3 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 17:20:07,100 basehttp 25560 17764 "GET /api/refrigerator/categories/ HTTP/1.1" 200 464
+INFO 2025-05-11 17:20:22,767 ingredient 25560 24780 Removing ingredient from refrigerator: ingredient_id=86, name='фиг знает что', user_id=66
+INFO 2025-05-11 17:20:22,773 ingredient 25560 24780 Ingredient removed from refrigerator: ingredient_id=86, name='фиг знает что', user_id=66, time=0.01s
+INFO 2025-05-11 17:20:22,796 basehttp 25560 24780 "DELETE /api/refrigerator/292/ HTTP/1.1" 204 0
+INFO 2025-05-11 17:20:24,110 ingredient 25560 24780 Removing ingredient from refrigerator: ingredient_id=83, name='зелёнка', user_id=66
+INFO 2025-05-11 17:20:24,114 ingredient 25560 24780 Ingredient removed from refrigerator: ingredient_id=83, name='зелёнка', user_id=66, time=0.01s
+INFO 2025-05-11 17:20:24,142 basehttp 25560 24780 "DELETE /api/refrigerator/289/ HTTP/1.1" 204 0
+INFO 2025-05-11 17:20:25,396 ingredient 25560 24780 Removing ingredient from refrigerator: ingredient_id=76, name='морковка', user_id=66
+INFO 2025-05-11 17:20:25,400 ingredient 25560 24780 Ingredient removed from refrigerator: ingredient_id=76, name='морковка', user_id=66, time=0.01s
+INFO 2025-05-11 17:20:25,423 basehttp 25560 24780 "DELETE /api/refrigerator/282/ HTTP/1.1" 204 0
+INFO 2025-05-11 17:20:29,096 ingredient 25560 24780 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 17:20:29,113 basehttp 25560 24780 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 17:20:46,378 ingredient 25560 12204 Creating new ingredient: user_id=66, data={'ing_name': 'Гадость', 'ing_exp_date': '2025-05-18', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 5, 'allergen_ids': [1, 2, 3]}
+INFO 2025-05-11 17:20:46,415 ingredient 25560 12204 Ingredient created successfully: ingredient_id=89, name='Гадость', type_id=5, user_id=66, time=0.04s
+INFO 2025-05-11 17:20:46,484 basehttp 25560 12204 "POST /api/ingredients/ HTTP/1.1" 201 182
+INFO 2025-05-11 17:20:46,564 ingredient 25560 12204 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 17:20:46,573 ingredient 25560 12204 Ingredient added to refrigerator: ingredient_id=89, name='Гадость', quantity=100 grams, user_id=66, time=0.01s
+INFO 2025-05-11 17:20:46,604 basehttp 25560 12204 "POST /api/refrigerator/ HTTP/1.1" 201 555
+INFO 2025-05-11 17:20:46,872 ingredient 25560 12204 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 17:20:46,888 ingredient 25560 12204 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 17:20:46,907 basehttp 25560 12204 "GET /api/refrigerator/ HTTP/1.1" 200 635
+INFO 2025-05-11 17:20:46,994 ingredient 25560 12204 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 17:20:46,998 ingredient 25560 12204 Found 1 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 17:20:47,014 basehttp 25560 12204 "GET /api/refrigerator/categories/ HTTP/1.1" 200 156
+INFO 2025-05-11 17:20:50,641 ingredient 25560 12204 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 17:20:50,662 basehttp 25560 12204 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 17:21:20,167 ingredient 25560 18416 Creating new ingredient: user_id=66, data={'ing_name': 'роза', 'ing_exp_date': '2025-05-18', 'ing_weight': 100, 'ing_calories': 10000, 'ing_protein': 20, 'ing_fat': 30, 'ing_hydrates': 4, 'ing_igt_id': 36, 'allergen_ids': [18, 19, 27, 28]}
+INFO 2025-05-11 17:21:20,207 ingredient 25560 18416 Ingredient created successfully: ingredient_id=90, name='роза', type_id=36, user_id=66, time=0.04s
+INFO 2025-05-11 17:21:20,259 basehttp 25560 18416 "POST /api/ingredients/ HTTP/1.1" 201 183
+INFO 2025-05-11 17:21:20,374 ingredient 25560 18416 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 17:21:20,383 ingredient 25560 18416 Ingredient added to refrigerator: ingredient_id=90, name='роза', quantity=50 grams, user_id=66, time=0.01s
+INFO 2025-05-11 17:21:20,414 basehttp 25560 18416 "POST /api/refrigerator/ HTTP/1.1" 201 598
+INFO 2025-05-11 17:21:20,656 ingredient 25560 18416 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 17:21:20,677 ingredient 25560 18416 Retrieved 2 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 17:21:20,698 basehttp 25560 18416 "GET /api/refrigerator/ HTTP/1.1" 200 1234
+INFO 2025-05-11 17:21:20,786 ingredient 25560 18416 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 17:21:20,790 ingredient 25560 18416 Found 2 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 17:21:20,804 basehttp 25560 18416 "GET /api/refrigerator/categories/ HTTP/1.1" 200 312
+INFO 2025-05-11 17:22:24,554 ingredient 25560 20780 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 17:22:24,583 basehttp 25560 20780 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388

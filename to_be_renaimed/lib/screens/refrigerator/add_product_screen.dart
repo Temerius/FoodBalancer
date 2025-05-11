@@ -663,26 +663,31 @@ class _AddProductScreenState extends State<AddProductScreen> {
             throw Exception('Выберите тип продукта');
           }
 
-          // Получаем аллергены
-          final selectedAllergenIds = _allAllergens
-              .where((allergen) => allergen.isSelected)
-              .map((allergen) => allergen.id)
-              .toList();
+          final selectedAllergenIds = <int>[];
+          for (var allergen in _allAllergens) {
+            if (allergen.isSelected) {
+              print('Selected allergen: ${allergen.id} - ${allergen.name}');
+              selectedAllergenIds.add(allergen.id);
+            }
+          }
 
-          // Создаем новый ингредиент с полными данными
-          print('_saveProduct: Creating new ingredient');
+          print('Final allergen IDs to send: $selectedAllergenIds');
+          // Получаем аллергены
+
 
           final newIngredientResponse = await dataRepository.apiService.post('/api/ingredients/', {
             'ing_name': _productNameController.text,
             'ing_exp_date': _expiryDate.toIso8601String().split('T')[0],
-            'ing_weight': 100, // Значение по умолчанию для веса порции
+            'ing_weight': 100,
             'ing_calories': int.tryParse(_caloriesController.text) ?? 0,
             'ing_protein': int.tryParse(_proteinController.text) ?? 0,
             'ing_fat': int.tryParse(_fatController.text) ?? 0,
             'ing_hydrates': int.tryParse(_carbsController.text) ?? 0,
             'ing_igt_id': _selectedType!.id,
-            'allergen_ids': selectedAllergenIds, // Добавляем аллергены
+            'allergen_ids': selectedAllergenIds,
           });
+
+          print('API Response: $newIngredientResponse');
 
           final ingredientId = newIngredientResponse['ing_id'];
           print('_saveProduct: New ingredient created with id=$ingredientId');

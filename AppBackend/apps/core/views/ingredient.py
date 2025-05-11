@@ -119,6 +119,7 @@ class IngredientViewSet(viewsets.ModelViewSet):
         start_time = time.time()
         user_id = request.user.usr_id
 
+        print(f"Creating ingredient with data: {request.data}")
         logger.info(f"Creating new ingredient: user_id={user_id}, data={request.data}")
 
         # Создаем сериализатор с данными
@@ -128,33 +129,18 @@ class IngredientViewSet(viewsets.ModelViewSet):
             # Создаем ингредиент
             ingredient = serializer.save()
 
-            # Обработка аллергенов
-            allergen_ids = request.data.get('allergen_ids', [])
-            if allergen_ids:
-                logger.info(
-                    f"Adding allergens to ingredient: ingredient_id={ingredient.ing_id}, allergen_ids={allergen_ids}")
-
-                # Создаем связи с аллергенами
-                for allergen_id in allergen_ids:
-                    try:
-                        IngredientToAllergen.objects.create(
-                            mia_ing_id=ingredient,
-                            mia_alg_id_id=allergen_id
-                        )
-                    except Exception as e:
-                        logger.error(f"Error creating allergen link: allergen_id={allergen_id}, error={e}")
-
             headers = self.get_success_headers(serializer.data)
 
             # Логируем успешное создание
             logger.info(
                 f"Ingredient created successfully: ingredient_id={ingredient.ing_id}, "
                 f"name='{ingredient.ing_name}', type_id={ingredient.ing_igt_id.igt_id}, "
-                f"allergens={allergen_ids}, user_id={user_id}, time={time.time() - start_time:.2f}s"
+                f"user_id={user_id}, time={time.time() - start_time:.2f}s"
             )
 
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
         else:
+            print(f"Serializer errors: {serializer.errors}")
             logger.warning(f"Failed to create ingredient: user_id={user_id}, errors={serializer.errors}")
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

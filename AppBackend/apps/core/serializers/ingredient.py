@@ -25,7 +25,6 @@ class IngredientSerializer(serializers.ModelSerializer):
     ing_igt_id = serializers.PrimaryKeyRelatedField(queryset=IngredientType.objects.all())
     allergen_ids = serializers.ListField(
         child=serializers.IntegerField(),
-        source='allergens',
         required=False,
         write_only=True
     )
@@ -39,38 +38,73 @@ class IngredientSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        allergen_ids = validated_data.pop('allergens', [])
+        print(f"Creating ingredient with data: {validated_data}")
+
+        # Извлекаем allergen_ids ПЕРЕД созданием объекта
+        allergen_ids = validated_data.pop('allergen_ids', [])
+        print(f"Allergen IDs to create: {allergen_ids}")
+
+        # Создаем ингредиент
         ingredient = super().create(validated_data)
+        print(f"Created ingredient: {ingredient.ing_id} - {ingredient.ing_name}")
 
         # Создаем связи с аллергенами
         for allergen_id in allergen_ids:
             try:
-                IngredientToAllergen.objects.create(
-                    mia_ing_id=ingredient,
-                    mia_alg_id_id=allergen_id
-                )
+                # Проверяем, существует ли аллерген
+                allergen = Allergen.objects.get(alg_id=allergen_id)
+
+                # Проверяем, существует ли уже такая связь
+                if IngredientToAllergen.objects.filter(
+                        mia_ing_id=ingredient,
+                        mia_alg_id=allergen
+                ).exists():
+                    print(f"Allergen link already exists: {ingredient.ing_name} - {allergen.alg_name}")
+                else:
+                    # Создаем связь без использования get_or_create
+                    IngredientToAllergen.objects.create(
+                        mia_ing_id=ingredient,
+                        mia_alg_id=allergen
+                    )
+                    print(f"Created allergen link: {ingredient.ing_name} - {allergen.alg_name}")
+
+            except Allergen.DoesNotExist:
+                print(f"Allergen with ID {allergen_id} does not exist")
             except Exception as e:
-                print(f"Error creating allergen link: {e}")
+                print(f"Error creating allergen link for ID {allergen_id}: {str(e)}")
 
         return ingredient
 
     def update(self, instance, validated_data):
-        allergen_ids = validated_data.pop('allergens', None)
+        print(f"Updating ingredient {instance.ing_id} with data: {validated_data}")
+
+        # Извлекаем allergen_ids
+        allergen_ids = validated_data.pop('allergen_ids', None)
+
+        # Обновляем основные поля
         instance = super().update(instance, validated_data)
 
+        # Обновляем аллергены, если они были переданы
         if allergen_ids is not None:
+            print(f"Updating allergens to: {allergen_ids}")
+
             # Удаляем старые связи
             IngredientToAllergen.objects.filter(mia_ing_id=instance).delete()
+            print("Deleted old allergen links")
 
             # Создаем новые связи
             for allergen_id in allergen_ids:
                 try:
+                    allergen = Allergen.objects.get(alg_id=allergen_id)
                     IngredientToAllergen.objects.create(
                         mia_ing_id=instance,
-                        mia_alg_id_id=allergen_id
+                        mia_alg_id=allergen
                     )
+                    print(f"Created new allergen link: {instance.ing_name} - {allergen.alg_name}")
+                except Allergen.DoesNotExist:
+                    print(f"Allergen with ID {allergen_id} does not exist")
                 except Exception as e:
-                    print(f"Error updating allergen link: {e}")
+                    print(f"Error creating allergen link: {str(e)}")
 
         return instance
 

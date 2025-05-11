@@ -862,3 +862,670 @@ LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
                ^
 
 ERROR 2025-05-11 13:42:39,636 basehttp 27692 31360 "GET /api/user-allergens/ HTTP/1.1" 500 27594
+ERROR 2025-05-11 14:07:28,209 middleware 32072 8816 Exception in GET /api/user-allergens/: ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+, user_id=66, ip=192.168.100.2
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 123, in list
+    response = super().list(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\mixins.py", line 46, in list
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 768, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 253, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 687, in to_representation
+    self.child.to_representation(item) for item in iterable
+                                                   ^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 398, in __iter__
+    self._fetch_all()
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+
+ERROR 2025-05-11 14:07:28,473 log 32072 8816 Internal Server Error: /api/user-allergens/
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 123, in list
+    response = super().list(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\mixins.py", line 46, in list
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 768, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 253, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 687, in to_representation
+    self.child.to_representation(item) for item in iterable
+                                                   ^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 398, in __iter__
+    self._fetch_all()
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+
+ERROR 2025-05-11 14:07:28,502 basehttp 32072 8816 "GET /api/user-allergens/ HTTP/1.1" 500 27594
+ERROR 2025-05-11 14:28:05,115 middleware 26348 16448 Exception in GET /api/user-allergens/: ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+, user_id=66, ip=192.168.100.2
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 123, in list
+    response = super().list(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\mixins.py", line 46, in list
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 768, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 253, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 687, in to_representation
+    self.child.to_representation(item) for item in iterable
+                                                   ^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 398, in __iter__
+    self._fetch_all()
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+
+ERROR 2025-05-11 14:28:05,254 log 26348 16448 Internal Server Error: /api/user-allergens/
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 123, in list
+    response = super().list(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\mixins.py", line 46, in list
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 768, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 253, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 687, in to_representation
+    self.child.to_representation(item) for item in iterable
+                                                   ^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 398, in __iter__
+    self._fetch_all()
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+
+ERROR 2025-05-11 14:28:05,293 basehttp 26348 16448 "GET /api/user-allergens/ HTTP/1.1" 500 27594
+ERROR 2025-05-11 14:28:11,288 allergen 26348 16448 Error updating allergens: column m2m_usr_alg.id does not exist
+LINE 1: ...a_alg_id", "mua_usr_id") VALUES (5, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+ERROR 2025-05-11 14:28:11,289 allergen 26348 16448 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column m2m_usr_alg.id does not exist
+LINE 1: ...a_alg_id", "mua_usr_id") VALUES (5, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 87, in update_user_allergens
+    allergen_relation = M2MUsrAlg.objects.create(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: ...a_alg_id", "mua_usr_id") VALUES (5, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+
+ERROR 2025-05-11 14:30:31,601 allergen 31352 20088 Error updating allergens: column m2m_usr_alg.id does not exist
+LINE 1: ...a_alg_id", "mua_usr_id") VALUES (1, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+ERROR 2025-05-11 14:30:31,602 allergen 31352 20088 Traceback: Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column m2m_usr_alg.id does not exist
+LINE 1: ...a_alg_id", "mua_usr_id") VALUES (1, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 87, in update_user_allergens
+    allergen_relation = M2MUsrAlg.objects.create(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: ...a_alg_id", "mua_usr_id") VALUES (1, 66) RETURNING "m2m_usr_a...
+                                                             ^
+
+
+ERROR 2025-05-11 17:15:59,531 middleware 17764 8480 Exception in GET /api/user-allergens/: ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+, user_id=66, ip=192.168.100.2
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 123, in list
+    response = super().list(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\mixins.py", line 46, in list
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 768, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 253, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 687, in to_representation
+    self.child.to_representation(item) for item in iterable
+                                                   ^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 398, in __iter__
+    self._fetch_all()
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+
+ERROR 2025-05-11 17:16:00,073 log 17764 8480 Internal Server Error: /api/user-allergens/
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\allergen.py", line 123, in list
+    response = super().list(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\mixins.py", line 46, in list
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 768, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 253, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\rest_framework\serializers.py", line 687, in to_representation
+    self.child.to_representation(item) for item in iterable
+                                                   ^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 398, in __iter__
+    self._fetch_all()
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 252, in execute
+    return self._record(super().execute, sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 177, in _record
+    return method(sql, params)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column m2m_usr_alg.id does not exist
+LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
+               ^
+
+ERROR 2025-05-11 17:16:00,131 basehttp 17764 8480 "GET /api/user-allergens/ HTTP/1.1" 500 27594
