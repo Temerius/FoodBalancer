@@ -30,11 +30,16 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
 
-    // ИСПРАВЛЕНИЕ: Упрощаем listener - только обновляем UI
+    // ИСПРАВЛЕНИЕ: Сохраняем выбранную категорию при смене вкладок
     _tabController.addListener(() {
-      if (_tabController.indexIsChanging) {
+      if (!_tabController.indexIsChanging) {
         print('TAB CHANGED to index: ${_tabController.index}');
-        setState(() {}); // Просто обновляем UI
+
+        // При переключении на вкладку истекающих, не сбрасываем категорию
+        // Просто вызываем setState для перестройки UI
+        if (mounted) {
+          setState(() {});
+        }
       }
     });
   }
@@ -44,7 +49,6 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     super.didChangeDependencies();
     if (_dataRepository == null) {
       _dataRepository = Provider.of<DataRepository>(context, listen: false);
-      // НЕ загружаем данные здесь - они уже загружены в LoadingScreen
     }
   }
 
@@ -54,186 +58,6 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     _tabController.dispose();
     _searchController.dispose();
     super.dispose();
-  }
-
-  // Обновленный метод загрузки данных
-  Future<void> _loadData() async {
-    print('_loadData: Starting data load');
-
-    try {
-      setState(() {
-        _error = null;
-      });
-
-      final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
-
-      // Загружаем данные в зависимости от активной вкладки
-      if (_tabController.index == 0) {
-        print('_loadData: Loading items and categories');
-        await _loadItems();
-        await _loadCategories(); // Загружаем категории только для основной вкладки
-      } else {
-        print('_loadData: Loading expiring items');
-        await _loadExpiringItems();
-        // НЕ загружаем категории на вкладке истекающих
-      }
-
-      // Всегда загружаем статистику
-      print('_loadData: Loading statistics');
-      await _loadStats(forceRefresh: false);
-
-      print('_loadData: Data loaded successfully');
-    } catch (e) {
-      print('_loadData: Error occurred - $e');
-      setState(() {
-        _error = e.toString();
-      });
-
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Ошибка загрузки данных: ${e.toString()}'),
-            backgroundColor: Colors.red,
-            duration: Duration(seconds: 5),
-          ),
-        );
-      }
-    }
-  }
-
-  Future<void> _loadItems() async {
-    final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
-
-    try {
-      List<RefrigeratorItem> items;
-      if (_searchQuery.isNotEmpty || _selectedCategory != 'Все') {
-        // Если есть фильтры, загружаем отфильтрованные данные
-        items = await dataRepository.getFilteredRefrigeratorItems(
-          search: _searchQuery.isNotEmpty ? _searchQuery : null,
-          category: _selectedCategory != 'Все' ? _selectedCategory : null,
-        );
-      } else {
-        // Если нет фильтров, получаем все продукты из DataRepository
-        items = dataRepository.refrigeratorItems;
-
-        // Если список пустой, принудительно загружаем
-        if (items.isEmpty) {
-          items = await dataRepository.getRefrigeratorItems();
-        }
-      }
-
-      setState(() {
-        _items = items;
-      });
-    } catch (e) {
-      print('Ошибка загрузки продуктов: $e');
-      if (mounted) {
-        setState(() {
-          _error = 'Ошибка загрузки продуктов: $e';
-        });
-      }
-    }
-  }
-
-  Future<void> _loadExpiringItems() async {
-    final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
-
-    print('\n=== LOAD EXPIRING ITEMS START ===');
-
-    try {
-      // Получаем все товары (без принудительной загрузки)
-      var allItems = dataRepository.refrigeratorItems;
-
-      // Если список пустой, тогда загружаем
-      if (allItems.isEmpty) {
-        allItems = await dataRepository.getRefrigeratorItems();
-      }
-
-      print('Total items for filtering: ${allItems.length}');
-
-      // Фильтруем истекающие товары
-      final now = DateTime.now();
-      final today = DateTime(now.year, now.month, now.day);
-
-      final expiringItems = <RefrigeratorItem>[];
-
-      for (var item in allItems) {
-        if (item.ingredient?.expiryDate == null) {
-          continue;
-        }
-
-        final expiryDate = DateTime(
-          item.ingredient!.expiryDate!.year,
-          item.ingredient!.expiryDate!.month,
-          item.ingredient!.expiryDate!.day,
-        );
-
-        final daysDifference = expiryDate.difference(today).inDays;
-
-        if (daysDifference >= 0 && daysDifference <= 3) {
-          expiringItems.add(item);
-        }
-      }
-
-      // Сортируем по дате истечения
-      expiringItems.sort((a, b) {
-        final aDate = a.ingredient!.expiryDate!;
-        final bDate = b.ingredient!.expiryDate!;
-        return aDate.compareTo(bDate);
-      });
-
-      setState(() {
-        _expiringItems = expiringItems;
-      });
-
-      print('Found ${expiringItems.length} expiring items');
-      print('=== LOAD EXPIRING ITEMS END ===\n');
-
-    } catch (e) {
-      print('Ошибка загрузки истекающих продуктов: $e');
-      if (mounted) {
-        setState(() {
-          _error = 'Ошибка загрузки продуктов: $e';
-        });
-      }
-    }
-  }
-
-
-  Future<void> _loadCategories() async {
-    final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
-
-    try {
-      // Загружаем категории продуктов, которые реально есть в холодильнике
-      final refrigeratorCategories = await dataRepository.getRefrigeratorCategories();
-
-      // Отдельно загружаем ВСЕ доступные категории (если нужно)
-      // final allCategories = await dataRepository.getAllIngredientTypes();
-
-      setState(() {
-        _refrigeratorCategories = refrigeratorCategories;
-        // _allAvailableCategories = allCategories;
-      });
-
-      print('CATEGORIES LOADED: Refrigerator=${_refrigeratorCategories.length}');
-    } catch (e) {
-      print('Ошибка загрузки категорий: $e');
-    }
-  }
-
-  // ИСПРАВЛЕНИЕ: Добавлен параметр forceRefresh
-  Future<void> _loadStats({bool forceRefresh = false}) async {
-    final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
-
-    try {
-      final stats = await dataRepository.getRefrigeratorStats(forceRefresh: forceRefresh);
-      setState(() {
-        _stats = stats;
-      });
-      print('Stats loaded: totalItems=${stats.totalItems}, expiringSoon=${stats.expiringSoon}, expired=${stats.expired}');
-    } catch (e) {
-      print('Ошибка загрузки статистики: $e');
-    }
   }
 
   // Новый метод для обработки возврата с других экранов
@@ -247,7 +71,6 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
       // UI обновится автоматически
     }
   }
-
 
   // Улучшенный метод обновления данных
   Future<void> _refreshData() async {
@@ -298,6 +121,9 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
       final success = await dataRepository.removeRefrigeratorItem(item.id);
 
       if (success && mounted) {
+        // ИСПРАВЛЕНО: Принудительно обновляем статистику после удаления
+        await dataRepository.getRefrigeratorStats(forceRefresh: true);
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('${item.name} удален из холодильника'),
@@ -325,7 +151,43 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     }
   }
 
- @override
+  void _resetCategoryIfNeeded(List<IngredientType> userCategories) {
+    final categoryNames = ['Все', ...userCategories.map((cat) => cat.name)];
+
+    // Если выбранная категория больше не существует, сбрасываем на "Все"
+    if (!categoryNames.contains(_selectedCategory)) {
+      setState(() {
+        _selectedCategory = 'Все';
+      });
+    }
+  }
+
+
+
+  List<RefrigeratorItem> _filterExpiringItems(List<RefrigeratorItem> items) {
+    var filtered = items;
+
+    // Поиск (так же как для основных продуктов)
+    if (_searchQuery.isNotEmpty) {
+      filtered = filtered.where((item) {
+        final name = item.ingredient?.name?.toLowerCase() ?? '';
+        final typeName = item.ingredient?.type?.name?.toLowerCase() ?? '';
+        final searchLower = _searchQuery.toLowerCase();
+        return name.contains(searchLower) || typeName.contains(searchLower);
+      }).toList();
+    }
+
+    // Категория
+    if (_selectedCategory != 'Все') {
+      filtered = filtered.where((item) {
+        return item.ingredient?.type?.name == _selectedCategory;
+      }).toList();
+    }
+
+    return filtered;
+  }
+
+  @override
   Widget build(BuildContext context) {
     // ИСПРАВЛЕНИЕ: Получаем все данные из репозитория через Provider
     return Consumer<DataRepository>(
@@ -336,6 +198,10 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
         final userCategories = dataRepository.userRefrigeratorCategories;
         final stats = dataRepository.refrigeratorStats;
         final isLoading = dataRepository.isLoading;
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _resetCategoryIfNeeded(userCategories);
+        });
 
         // Фильтрация основных продуктов
         final filteredItems = _filterItems(items);
@@ -383,7 +249,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
                     ],
                   ),
                   onPressed: () {
-                    _showStatsDialog(stats);
+                    _showStatsDialog(stats); // ИСПРАВЛЕНО: передаем правильный тип
                   },
                 ),
             ],
@@ -461,42 +327,44 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
       ) {
     final categoryNames = ['Все', ...userCategories.map((cat) => cat.name)];
 
+    // Фильтруем истекающие продукты с учетом поиска и категории
+    final filteredExpiringItems = _filterExpiringItems(expiringItems);
+
     return Column(
       children: [
-        // Поиск (только на основной вкладке)
-        if (_tabController.index == 0)
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'Поиск продуктов',
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: _searchQuery.isNotEmpty
-                    ? IconButton(
-                  icon: const Icon(Icons.clear),
-                  onPressed: () {
-                    setState(() {
-                      _searchController.clear();
-                      _searchQuery = '';
-                    });
-                  },
-                )
-                    : null,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
+        // ИСПРАВЛЕНО: Поиск на ОБЕИХ вкладках
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: TextField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              hintText: _tabController.index == 0 ? 'Поиск продуктов' : 'Поиск истекающих продуктов',
+              prefixIcon: const Icon(Icons.search),
+              suffixIcon: _searchQuery.isNotEmpty
+                  ? IconButton(
+                icon: const Icon(Icons.clear),
+                onPressed: () {
+                  setState(() {
+                    _searchController.clear();
+                    _searchQuery = '';
+                  });
+                },
+              )
+                  : null,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
               ),
-              onChanged: (value) {
-                setState(() {
-                  _searchQuery = value;
-                });
-              },
             ),
+            onChanged: (value) {
+              setState(() {
+                _searchQuery = value;
+              });
+            },
           ),
+        ),
 
-        // Фильтр категорий (только на основной вкладке)
-        if (_tabController.index == 0 && categoryNames.length > 1)
+        // Фильтр категорий на обеих вкладках
+        if (categoryNames.length > 1)
           SizedBox(
             height: 50,
             child: ListView.builder(
@@ -536,153 +404,13 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
             controller: _tabController,
             children: [
               _buildProductsList(filteredItems, isMainTab: true),
-              _buildProductsList(expiringItems, isMainTab: false),
+              _buildProductsList(filteredExpiringItems, isMainTab: false), // Передаем отфильтрованные истекающие
             ],
           ),
         ),
       ],
     );
   }
-
-
-  Widget _buildCurrentContent() {
-    if (_error != null) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.error_outline,
-              size: 64,
-              color: Theme.of(context).colorScheme.error,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Произошла ошибка',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Text(
-                _error!,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: _refreshData,
-              child: const Text('Повторить'),
-            ),
-          ],
-        ),
-      );
-    }
-
-    // ИСПРАВЛЕНИЕ: Создаем список категорий с проверкой
-    List<String> categoryNames = ['Все'];
-
-    // Добавляем категории только если они есть И мы на основной вкладке
-    if (_tabController.index == 0 && _refrigeratorCategories.isNotEmpty) {
-      categoryNames.addAll(_refrigeratorCategories.map((cat) => cat.name));
-
-      // Проверяем, существует ли выбранная категория
-      if (!categoryNames.contains(_selectedCategory)) {
-        _selectedCategory = 'Все';
-      }
-    }
-
-    return Column(
-      children: [
-        // Поиск - показываем на основной вкладке
-        if (_tabController.index == 0)
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'Поиск продуктов',
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: _searchQuery.isNotEmpty
-                    ? IconButton(
-                  icon: const Icon(Icons.clear),
-                  onPressed: () {
-                    setState(() {
-                      _searchController.clear();
-                      _searchQuery = '';
-                    });
-                    _loadItems();
-                  },
-                )
-                    : null,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  _searchQuery = value;
-                });
-                Future.delayed(const Duration(milliseconds: 500), () {
-                  if (_searchQuery == value) {
-                    _loadItems();
-                  }
-                });
-              },
-            ),
-          ),
-
-        // Фильтр категорий ТОЛЬКО на основной вкладке
-        if (_tabController.index == 0 && categoryNames.length > 1)
-          SizedBox(
-            height: 50,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: categoryNames.length,
-              itemBuilder: (context, index) {
-                final category = categoryNames[index];
-                final isSelected = category == _selectedCategory;
-                return Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: ChoiceChip(
-                    label: Text(category),
-                    selected: isSelected,
-                    onSelected: (selected) {
-                      if (selected) {
-                        setState(() {
-                          _selectedCategory = category;
-                        });
-                        _loadItems();
-                      }
-                    },
-                    selectedColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
-                    labelStyle: TextStyle(
-                      color: isSelected
-                          ? Theme.of(context).colorScheme.primary
-                          : Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-
-        // Список продуктов
-        Expanded(
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              _buildProductsList(_items, isMainTab: true),
-              _buildProductsList(_expiringItems, isMainTab: false),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
 
   Widget _buildProductsList(List<RefrigeratorItem> products, {required bool isMainTab}) {
     if (products.isEmpty) {
@@ -1010,9 +738,8 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     );
   }
 
-  void _showStatsDialog() {
-    if (_stats == null) return;
-
+  // ИСПРАВЛЕНИЕ: Исправлена сигнатура метода
+  void _showStatsDialog(RefrigeratorStats stats) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -1022,20 +749,20 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
           children: [
             _buildStatsRow(
               'Всего продуктов:',
-              _stats!.totalItems.toString(),
+              stats.totalItems.toString(),
               Icons.inventory,
             ),
             const SizedBox(height: 16),
             _buildStatsRow(
               'Скоро истекают:',
-              _stats!.expiringSoon.toString(),
+              stats.expiringSoon.toString(),
               Icons.warning,
               color: Colors.orange,
             ),
             const SizedBox(height: 16),
             _buildStatsRow(
               'Просрочены:',
-              _stats!.expired.toString(),
+              stats.expired.toString(),
               Icons.error,
               color: Colors.red,
             ),
