@@ -1529,3 +1529,6 @@ LINE 1: SELECT "m2m_usr_alg"."id", "m2m_usr_alg"."mua_alg_id", "m2m_...
                ^
 
 ERROR 2025-05-11 17:16:00,131 basehttp 17764 8480 "GET /api/user-allergens/ HTTP/1.1" 500 27594
+ERROR 2025-05-11 18:57:27,275 middleware 25328 3812 404 Not Found: DELETE /api/refrigerator/310/
+ERROR 2025-05-11 18:57:28,929 middleware 25328 3812 404 Not Found: DELETE /api/refrigerator/310/
+ERROR 2025-05-11 18:57:30,218 middleware 25328 3812 404 Not Found: DELETE /api/refrigerator/310/

@@ -49,21 +49,22 @@ class _LoadingScreenState extends State<LoadingScreen> {
       });
 
       if (authProvider.isAuthenticated) {
-        // Если пользователь авторизован, инициализируем репозитории
+        // ИСПРАВЛЕНИЕ: Загружаем ВСЕ данные один раз здесь
+
         setState(() {
-          _statusMessage = "Загрузка базовых данных...";
+          _statusMessage = "Загрузка категорий...";
           _progress = 0.3;
         });
 
-        // Инициализация репозиториев и загрузка базовых данных
-        await dataRepository.initialize();
+        // 1. Загружаем все категории (один раз)
+        await dataRepository.getAllIngredientTypes();
 
         setState(() {
           _statusMessage = "Загрузка профиля пользователя...";
           _progress = 0.4;
         });
 
-        // Обязательная загрузка профиля пользователя после авторизации
+        // 2. Загружаем базовые данные пользователя
         await dataRepository.getUserProfile(forceRefresh: true);
 
         setState(() {
@@ -71,7 +72,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
           _progress = 0.5;
         });
 
-        // Загружаем полный список аллергенов
+        // 3. Загружаем аллергены
         await dataRepository.getAllAllergens(forceRefresh: true);
 
         setState(() {
@@ -79,56 +80,53 @@ class _LoadingScreenState extends State<LoadingScreen> {
           _progress = 0.6;
         });
 
-        // Загружаем полный список оборудования
+        // 4. Загружаем оборудование
         await dataRepository.getEquipment(forceRefresh: true);
 
         setState(() {
-          _statusMessage = "Обновление аллергенов пользователя...";
+          _statusMessage = "Загрузка продуктов холодильника...";
           _progress = 0.7;
         });
 
-        // Принудительно обновляем аллергены пользователя
-        await dataRepository.refreshUserAllergens();
-
-        setState(() {
-          _statusMessage = "Обновление оборудования пользователя...";
-          _progress = 0.75;
-        });
-
-        // Принудительно обновляем оборудование пользователя
-        await dataRepository.refreshUserEquipment();
+        // 5. ВАЖНО: Загружаем продукты холодильника
+        // Это автоматически обновит:
+        // - userRefrigeratorCategories
+        // - expiringItems
+        await dataRepository.getRefrigeratorItems(forceRefresh: true);
 
         setState(() {
           _statusMessage = "Загрузка рецептов...";
           _progress = 0.8;
         });
 
-        // Загружаем рецепты
+        // 6. Загружаем рецепты
         await dataRepository.getRecipes(forceRefresh: true);
 
         setState(() {
           _statusMessage = "Загрузка избранных рецептов...";
+          _progress = 0.85;
+        });
+
+        // 7. Загружаем избранные рецепты
+        await dataRepository.getFavoriteRecipes(forceRefresh: true);
+
+        setState(() {
+          _statusMessage = "Загрузка статистики...";
           _progress = 0.9;
         });
 
-        // ВАЖНО: Загружаем избранные рецепты
-        await dataRepository.getFavoriteRecipes(forceRefresh: true);
+        // 8. Загружаем статистику
+        await dataRepository.getRefrigeratorStats(forceRefresh: true);
+
+        setState(() {
+          _statusMessage = "Обновление данных пользователя...";
+          _progress = 0.95;
+        });
+
+        // 9. Обновляем конкретные данные пользователя
+        await dataRepository.refreshUserAllergens();
+        await dataRepository.refreshUserEquipment();
       }
-
-      setState(() {
-        _statusMessage = "Загрузка данных холодильника...";
-        _progress = 0.9;
-      });
-
-      await dataRepository.getRefrigeratorItems(forceRefresh: true);
-
-      setState(() {
-        _statusMessage = "Загрузка категорий продуктов...";
-        _progress = 0.95;
-      });
-
-      // НОВОЕ: Загружаем категории холодильника
-      await dataRepository.getRefrigeratorCategories(forceRefresh: true);
 
       setState(() {
         _progress = 1.0;

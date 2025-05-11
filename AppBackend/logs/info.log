@@ -4165,3 +4165,657 @@ INFO 2025-05-11 18:14:39,143 basehttp 24988 14396 "GET /api/refrigerator/ HTTP/1
 INFO 2025-05-11 18:14:39,230 ingredient 24988 14396 Listing refrigerator ingredients: user_id=66
 INFO 2025-05-11 18:14:39,241 ingredient 24988 14396 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
 INFO 2025-05-11 18:14:39,258 basehttp 24988 14396 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:15:29,258 autoreload 25328 18272 Watching for file changes with StatReloader
+INFO 2025-05-11 18:15:29,542 wsgi 25328 17916 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 18:15:29,542 wsgi 25328 17916 Environment: config.settings
+INFO 2025-05-11 18:15:29,542 wsgi 25328 17916 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 18:15:29,546 wsgi 25328 17916 Application initialized successfully
+INFO 2025-05-11 18:19:37,770 views 25328 15580 Profile accessed: user_id=66
+INFO 2025-05-11 18:19:37,826 basehttp 25328 15580 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 18:19:37,967 views 25328 15580 Profile accessed: user_id=66
+INFO 2025-05-11 18:19:37,986 basehttp 25328 15580 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 18:19:38,093 allergen 25328 15580 Listing all allergens: user_id=66
+INFO 2025-05-11 18:19:38,107 allergen 25328 15580 Retrieved unknown allergens, user_id=66, time=0.01s
+INFO 2025-05-11 18:19:38,128 basehttp 25328 15580 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-11 18:19:38,289 equipment 25328 15580 Listing all equipment: user_id=66
+INFO 2025-05-11 18:19:38,295 equipment 25328 15580 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 18:19:38,312 basehttp 25328 15580 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-11 18:19:38,414 allergen 25328 15580 Listing user allergens: user_id=66
+INFO 2025-05-11 18:19:38,428 allergen 25328 15580 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-11 18:19:38,450 basehttp 25328 15580 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-11 18:19:38,550 equipment 25328 15580 Listing user equipment: user_id=66
+INFO 2025-05-11 18:19:38,558 equipment 25328 15580 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 18:19:38,578 basehttp 25328 15580 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-11 18:19:38,691 recipe 25328 15580 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 18:19:39,030 basehttp 25328 15580 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 18:19:39,105 recipe 25328 15580 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 18:19:39,336 basehttp 25328 15580 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 18:19:39,482 basehttp 25328 15580 "GET /api/favorites/ HTTP/1.1" 200 1063
+INFO 2025-05-11 18:19:39,576 ingredient 25328 15580 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:19:39,590 ingredient 25328 15580 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:19:39,621 basehttp 25328 15580 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:19:39,701 ingredient 25328 15580 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 18:19:39,705 ingredient 25328 15580 Found 0 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 18:19:39,723 basehttp 25328 15580 "GET /api/refrigerator/categories/ HTTP/1.1" 200 2
+INFO 2025-05-11 18:19:42,754 ingredient 25328 15580 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:19:42,769 ingredient 25328 15580 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:19:42,788 basehttp 25328 15580 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:19:45,057 ingredient 25328 15580 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 18:19:45,084 basehttp 25328 15580 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 18:19:56,252 ingredient 25328 15580 Creating new ingredient: user_id=66, data={'ing_name': 'огурчик', 'ing_exp_date': '2025-05-13', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 3, 'allergen_ids': []}
+INFO 2025-05-11 18:19:56,262 ingredient 25328 15580 Ingredient created successfully: ingredient_id=98, name='огурчик', type_id=3, user_id=66, time=0.01s
+INFO 2025-05-11 18:19:56,283 basehttp 25328 15580 "POST /api/ingredients/ HTTP/1.1" 201 182
+INFO 2025-05-11 18:19:56,348 ingredient 25328 15580 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 18:19:56,358 ingredient 25328 15580 Ingredient added to refrigerator: ingredient_id=98, name='огурчик', quantity=100 grams, user_id=66, time=0.01s
+INFO 2025-05-11 18:19:56,389 basehttp 25328 15580 "POST /api/refrigerator/ HTTP/1.1" 201 458
+INFO 2025-05-11 18:19:56,703 ingredient 25328 15580 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:19:56,722 ingredient 25328 15580 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 18:19:56,744 basehttp 25328 15580 "GET /api/refrigerator/ HTTP/1.1" 200 538
+INFO 2025-05-11 18:19:56,814 ingredient 25328 15580 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 18:19:56,818 ingredient 25328 15580 Found 1 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 18:19:56,832 basehttp 25328 15580 "GET /api/refrigerator/categories/ HTTP/1.1" 200 157
+INFO 2025-05-11 18:19:56,908 ingredient 25328 15580 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:19:56,924 ingredient 25328 15580 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 18:19:56,952 basehttp 25328 15580 "GET /api/refrigerator/ HTTP/1.1" 200 538
+INFO 2025-05-11 18:20:01,418 ingredient 25328 15580 Removing ingredient from refrigerator: ingredient_id=98, name='огурчик', user_id=66
+INFO 2025-05-11 18:20:01,423 ingredient 25328 15580 Ingredient removed from refrigerator: ingredient_id=98, name='огурчик', user_id=66, time=0.01s
+INFO 2025-05-11 18:20:01,444 basehttp 25328 15580 "DELETE /api/refrigerator/304/ HTTP/1.1" 204 0
+INFO 2025-05-11 18:20:01,524 ingredient 25328 15580 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:20:01,533 ingredient 25328 15580 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:20:01,549 basehttp 25328 15580 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:20:01,632 ingredient 25328 15580 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:20:01,640 ingredient 25328 15580 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:20:01,654 basehttp 25328 15580 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:20:01,740 ingredient 25328 15580 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 18:20:01,745 ingredient 25328 15580 Found 0 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 18:20:01,758 basehttp 25328 15580 "GET /api/refrigerator/categories/ HTTP/1.1" 200 2
+INFO 2025-05-11 18:20:01,835 ingredient 25328 15580 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:20:01,844 ingredient 25328 15580 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:20:01,858 basehttp 25328 15580 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:20:09,616 ingredient 25328 15580 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 18:20:09,635 basehttp 25328 15580 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 18:20:20,795 ingredient 25328 15580 Creating new ingredient: user_id=66, data={'ing_name': 'да', 'ing_exp_date': '2025-05-13', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 3, 'allergen_ids': [8, 9]}
+INFO 2025-05-11 18:20:20,821 ingredient 25328 15580 Ingredient created successfully: ingredient_id=99, name='да', type_id=3, user_id=66, time=0.03s
+INFO 2025-05-11 18:20:20,855 basehttp 25328 15580 "POST /api/ingredients/ HTTP/1.1" 201 172
+INFO 2025-05-11 18:20:20,985 ingredient 25328 15580 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 18:20:20,996 ingredient 25328 15580 Ingredient added to refrigerator: ingredient_id=99, name='да', quantity=100 grams, user_id=66, time=0.01s
+INFO 2025-05-11 18:20:21,031 basehttp 25328 15580 "POST /api/refrigerator/ HTTP/1.1" 201 512
+INFO 2025-05-11 18:20:21,204 ingredient 25328 15580 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:20:21,223 ingredient 25328 15580 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 18:20:21,243 basehttp 25328 15580 "GET /api/refrigerator/ HTTP/1.1" 200 592
+INFO 2025-05-11 18:20:21,328 ingredient 25328 15580 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 18:20:21,332 ingredient 25328 15580 Found 1 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 18:20:21,347 basehttp 25328 15580 "GET /api/refrigerator/categories/ HTTP/1.1" 200 157
+INFO 2025-05-11 18:20:21,471 ingredient 25328 15580 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:20:21,488 ingredient 25328 15580 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 18:20:21,506 basehttp 25328 15580 "GET /api/refrigerator/ HTTP/1.1" 200 592
+INFO 2025-05-11 18:20:22,534 ingredient 25328 15580 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 18:20:22,567 basehttp 25328 15580 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 18:20:45,918 ingredient 25328 6400 Creating new ingredient: user_id=66, data={'ing_name': 'нет ', 'ing_exp_date': '2025-05-12', 'ing_weight': 100, 'ing_calories': 10, 'ing_protein': 1079, 'ing_fat': 7867, 'ing_hydrates': 4864, 'ing_igt_id': 19, 'allergen_ids': [8, 13]}
+INFO 2025-05-11 18:20:45,949 ingredient 25328 6400 Ingredient created successfully: ingredient_id=100, name='нет', type_id=19, user_id=66, time=0.03s
+INFO 2025-05-11 18:20:45,984 basehttp 25328 6400 "POST /api/ingredients/ HTTP/1.1" 201 186
+INFO 2025-05-11 18:20:46,061 ingredient 25328 6400 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 18:20:46,073 ingredient 25328 6400 Ingredient added to refrigerator: ingredient_id=100, name='нет', quantity=1000 grams, user_id=66, time=0.01s
+INFO 2025-05-11 18:20:46,105 basehttp 25328 6400 "POST /api/refrigerator/ HTTP/1.1" 201 528
+INFO 2025-05-11 18:20:46,297 ingredient 25328 6400 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:20:46,321 ingredient 25328 6400 Retrieved 2 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 18:20:46,342 basehttp 25328 6400 "GET /api/refrigerator/ HTTP/1.1" 200 1121
+INFO 2025-05-11 18:20:46,405 ingredient 25328 6400 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 18:20:46,409 ingredient 25328 6400 Found 2 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 18:20:46,425 basehttp 25328 6400 "GET /api/refrigerator/categories/ HTTP/1.1" 200 314
+INFO 2025-05-11 18:20:46,482 ingredient 25328 6400 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:20:46,506 ingredient 25328 6400 Retrieved 2 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 18:20:46,538 basehttp 25328 6400 "GET /api/refrigerator/ HTTP/1.1" 200 1121
+INFO 2025-05-11 18:21:01,279 ingredient 25328 6400 Removing ingredient from refrigerator: ingredient_id=100, name='нет', user_id=66
+INFO 2025-05-11 18:21:01,283 ingredient 25328 6400 Ingredient removed from refrigerator: ingredient_id=100, name='нет', user_id=66, time=0.01s
+INFO 2025-05-11 18:21:01,304 basehttp 25328 6400 "DELETE /api/refrigerator/306/ HTTP/1.1" 204 0
+INFO 2025-05-11 18:21:01,399 ingredient 25328 6400 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:21:01,413 ingredient 25328 6400 Retrieved 1 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:21:01,429 basehttp 25328 6400 "GET /api/refrigerator/ HTTP/1.1" 200 592
+INFO 2025-05-11 18:21:01,510 ingredient 25328 6400 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:21:01,525 ingredient 25328 6400 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 18:21:01,542 basehttp 25328 6400 "GET /api/refrigerator/ HTTP/1.1" 200 592
+INFO 2025-05-11 18:21:01,617 ingredient 25328 6400 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 18:21:01,621 ingredient 25328 6400 Found 1 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 18:21:01,634 basehttp 25328 6400 "GET /api/refrigerator/categories/ HTTP/1.1" 200 157
+INFO 2025-05-11 18:21:01,713 ingredient 25328 6400 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:21:01,729 ingredient 25328 6400 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 18:21:01,748 basehttp 25328 6400 "GET /api/refrigerator/ HTTP/1.1" 200 592
+INFO 2025-05-11 18:21:04,257 ingredient 25328 6400 Removing ingredient from refrigerator: ingredient_id=99, name='да', user_id=66
+INFO 2025-05-11 18:21:04,264 ingredient 25328 6400 Ingredient removed from refrigerator: ingredient_id=99, name='да', user_id=66, time=0.01s
+INFO 2025-05-11 18:21:04,289 basehttp 25328 6400 "DELETE /api/refrigerator/305/ HTTP/1.1" 204 0
+INFO 2025-05-11 18:21:04,378 ingredient 25328 6400 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:21:04,390 ingredient 25328 6400 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:21:04,407 basehttp 25328 6400 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:21:04,491 ingredient 25328 6400 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:21:04,504 ingredient 25328 6400 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:21:04,523 basehttp 25328 6400 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:21:04,627 ingredient 25328 6400 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 18:21:04,632 ingredient 25328 6400 Found 0 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 18:21:04,649 basehttp 25328 6400 "GET /api/refrigerator/categories/ HTTP/1.1" 200 2
+INFO 2025-05-11 18:21:04,786 ingredient 25328 6400 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:21:04,803 ingredient 25328 6400 Retrieved 0 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 18:21:04,831 basehttp 25328 6400 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:24:50,198 views 25328 18860 Profile accessed: user_id=66
+INFO 2025-05-11 18:24:50,211 basehttp 25328 18860 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 18:24:50,351 views 25328 18860 Profile accessed: user_id=66
+INFO 2025-05-11 18:24:50,365 basehttp 25328 18860 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 18:24:50,603 allergen 25328 18860 Listing all allergens: user_id=66
+INFO 2025-05-11 18:24:50,606 allergen 25328 18860 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-11 18:24:50,621 basehttp 25328 18860 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-11 18:24:50,696 equipment 25328 18860 Listing all equipment: user_id=66
+INFO 2025-05-11 18:24:50,701 equipment 25328 18860 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-11 18:24:50,716 basehttp 25328 18860 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-11 18:24:50,847 allergen 25328 18860 Listing user allergens: user_id=66
+INFO 2025-05-11 18:24:50,856 allergen 25328 18860 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-11 18:24:50,885 basehttp 25328 18860 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-11 18:24:50,971 equipment 25328 18860 Listing user equipment: user_id=66
+INFO 2025-05-11 18:24:50,977 equipment 25328 18860 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 18:24:50,996 basehttp 25328 18860 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-11 18:24:51,067 recipe 25328 18860 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 18:24:51,294 basehttp 25328 18860 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 18:24:51,380 recipe 25328 18860 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 18:24:51,513 basehttp 25328 18860 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 18:24:51,640 basehttp 25328 18860 "GET /api/favorites/ HTTP/1.1" 200 1063
+INFO 2025-05-11 18:24:51,716 ingredient 25328 18860 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:24:51,726 ingredient 25328 18860 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:24:51,755 basehttp 25328 18860 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:24:51,889 ingredient 25328 18860 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 18:24:51,893 ingredient 25328 18860 Found 0 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 18:24:51,915 basehttp 25328 18860 "GET /api/refrigerator/categories/ HTTP/1.1" 200 2
+INFO 2025-05-11 18:24:56,412 ingredient 25328 18860 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:24:56,422 ingredient 25328 18860 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:24:56,436 basehttp 25328 18860 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:24:56,569 ingredient 25328 18860 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:24:56,578 ingredient 25328 18860 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:24:56,592 basehttp 25328 18860 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:24:57,857 ingredient 25328 18860 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 18:24:57,880 basehttp 25328 18860 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 18:25:10,345 ingredient 25328 18860 Creating new ingredient: user_id=66, data={'ing_name': 'морковка', 'ing_exp_date': '2025-05-12', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 1, 'allergen_ids': [6, 7]}
+INFO 2025-05-11 18:25:10,368 ingredient 25328 18860 Ingredient created successfully: ingredient_id=101, name='морковка', type_id=1, user_id=66, time=0.02s
+INFO 2025-05-11 18:25:10,398 basehttp 25328 18860 "POST /api/ingredients/ HTTP/1.1" 201 185
+INFO 2025-05-11 18:25:10,487 ingredient 25328 18860 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 18:25:10,494 ingredient 25328 18860 Ingredient added to refrigerator: ingredient_id=101, name='морковка', quantity=100 grams, user_id=66, time=0.01s
+INFO 2025-05-11 18:25:10,523 basehttp 25328 18860 "POST /api/refrigerator/ HTTP/1.1" 201 524
+INFO 2025-05-11 18:25:10,766 ingredient 25328 18860 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:25:10,781 ingredient 25328 18860 Retrieved 1 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:25:10,801 basehttp 25328 18860 "GET /api/refrigerator/ HTTP/1.1" 200 604
+INFO 2025-05-11 18:25:10,906 ingredient 25328 18860 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 18:25:10,909 ingredient 25328 18860 Found 1 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 18:25:10,922 basehttp 25328 18860 "GET /api/refrigerator/categories/ HTTP/1.1" 200 154
+INFO 2025-05-11 18:25:10,999 ingredient 25328 18860 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:25:11,016 ingredient 25328 18860 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 18:25:11,033 basehttp 25328 18860 "GET /api/refrigerator/ HTTP/1.1" 200 604
+INFO 2025-05-11 18:25:11,139 ingredient 25328 18860 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:25:11,156 ingredient 25328 18860 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 18:25:11,173 basehttp 25328 18860 "GET /api/refrigerator/ HTTP/1.1" 200 604
+INFO 2025-05-11 18:25:21,730 ingredient 25328 18860 Removing ingredient from refrigerator: ingredient_id=101, name='морковка', user_id=66
+INFO 2025-05-11 18:25:21,735 ingredient 25328 18860 Ingredient removed from refrigerator: ingredient_id=101, name='морковка', user_id=66, time=0.01s
+INFO 2025-05-11 18:25:21,757 basehttp 25328 18860 "DELETE /api/refrigerator/307/ HTTP/1.1" 204 0
+INFO 2025-05-11 18:25:21,899 ingredient 25328 18860 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:25:21,910 ingredient 25328 18860 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:25:21,933 basehttp 25328 18860 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:25:22,040 ingredient 25328 18860 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:25:22,050 ingredient 25328 18860 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:25:22,066 basehttp 25328 18860 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:25:22,197 ingredient 25328 18860 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 18:25:22,201 ingredient 25328 18860 Found 0 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 18:25:22,213 basehttp 25328 18860 "GET /api/refrigerator/categories/ HTTP/1.1" 200 2
+INFO 2025-05-11 18:25:22,337 ingredient 25328 18860 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:25:22,347 ingredient 25328 18860 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:25:22,362 basehttp 25328 18860 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:33:29,522 views 25328 24660 Profile accessed: user_id=66
+INFO 2025-05-11 18:33:29,536 basehttp 25328 24660 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 18:33:30,844 views 25328 24660 Profile accessed: user_id=66
+INFO 2025-05-11 18:33:30,858 basehttp 25328 24660 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 18:33:31,195 allergen 25328 24660 Listing all allergens: user_id=66
+INFO 2025-05-11 18:33:31,199 allergen 25328 24660 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-11 18:33:31,215 basehttp 25328 24660 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-11 18:33:31,350 equipment 25328 24660 Listing all equipment: user_id=66
+INFO 2025-05-11 18:33:31,356 equipment 25328 24660 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 18:33:31,377 basehttp 25328 24660 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-11 18:33:31,499 allergen 25328 24660 Listing user allergens: user_id=66
+INFO 2025-05-11 18:33:31,508 allergen 25328 24660 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-11 18:33:31,533 basehttp 25328 24660 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-11 18:33:31,698 equipment 25328 24660 Listing user equipment: user_id=66
+INFO 2025-05-11 18:33:31,704 equipment 25328 24660 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 18:33:31,726 basehttp 25328 24660 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-11 18:33:31,838 recipe 25328 24660 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 18:33:32,082 basehttp 25328 24660 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 18:33:32,198 recipe 25328 24660 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 18:33:32,330 basehttp 25328 24660 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 18:33:32,468 basehttp 25328 24660 "GET /api/favorites/ HTTP/1.1" 200 1063
+INFO 2025-05-11 18:33:32,546 ingredient 25328 24660 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:33:32,555 ingredient 25328 24660 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:33:32,584 basehttp 25328 24660 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:33:32,705 ingredient 25328 24660 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 18:33:32,708 ingredient 25328 24660 Found 0 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 18:33:32,726 basehttp 25328 24660 "GET /api/refrigerator/categories/ HTTP/1.1" 200 2
+INFO 2025-05-11 18:33:35,615 ingredient 25328 24660 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:33:35,629 ingredient 25328 24660 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:33:35,650 basehttp 25328 24660 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:33:35,806 ingredient 25328 24660 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:33:35,819 ingredient 25328 24660 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:33:35,838 basehttp 25328 24660 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:33:36,535 ingredient 25328 24660 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 18:33:36,554 basehttp 25328 24660 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 18:33:50,658 ingredient 25328 24660 Creating new ingredient: user_id=66, data={'ing_name': 'морковка', 'ing_exp_date': '2025-05-13', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 1, 'allergen_ids': []}
+INFO 2025-05-11 18:33:50,668 ingredient 25328 24660 Ingredient created successfully: ingredient_id=102, name='морковка', type_id=1, user_id=66, time=0.01s
+INFO 2025-05-11 18:33:50,686 basehttp 25328 24660 "POST /api/ingredients/ HTTP/1.1" 201 185
+INFO 2025-05-11 18:33:50,732 ingredient 25328 24660 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 18:33:50,740 ingredient 25328 24660 Ingredient added to refrigerator: ingredient_id=102, name='морковка', quantity=100 grams, user_id=66, time=0.01s
+INFO 2025-05-11 18:33:50,768 basehttp 25328 24660 "POST /api/refrigerator/ HTTP/1.1" 201 459
+INFO 2025-05-11 18:33:51,126 ingredient 25328 24660 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:33:51,145 ingredient 25328 24660 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 18:33:51,167 basehttp 25328 24660 "GET /api/refrigerator/ HTTP/1.1" 200 539
+INFO 2025-05-11 18:33:51,279 ingredient 25328 24660 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:33:51,296 ingredient 25328 24660 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 18:33:51,314 basehttp 25328 24660 "GET /api/refrigerator/ HTTP/1.1" 200 539
+INFO 2025-05-11 18:33:59,614 ingredient 25328 24660 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:33:59,628 ingredient 25328 24660 Retrieved 1 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:33:59,645 basehttp 25328 24660 "GET /api/refrigerator/ HTTP/1.1" 200 539
+INFO 2025-05-11 18:33:59,737 ingredient 25328 24660 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:33:59,753 ingredient 25328 24660 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 18:33:59,774 basehttp 25328 24660 "GET /api/refrigerator/ HTTP/1.1" 200 539
+INFO 2025-05-11 18:34:03,989 ingredient 25328 24660 Removing ingredient from refrigerator: ingredient_id=102, name='морковка', user_id=66
+INFO 2025-05-11 18:34:03,995 ingredient 25328 24660 Ingredient removed from refrigerator: ingredient_id=102, name='морковка', user_id=66, time=0.01s
+INFO 2025-05-11 18:34:04,018 basehttp 25328 24660 "DELETE /api/refrigerator/308/ HTTP/1.1" 204 0
+INFO 2025-05-11 18:34:04,216 ingredient 25328 24660 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:34:04,225 ingredient 25328 24660 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:34:04,240 basehttp 25328 24660 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:34:04,309 ingredient 25328 24660 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:34:04,319 ingredient 25328 24660 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:34:04,334 basehttp 25328 24660 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:34:04,417 ingredient 25328 24660 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 18:34:04,420 ingredient 25328 24660 Found 0 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 18:34:04,432 basehttp 25328 24660 "GET /api/refrigerator/categories/ HTTP/1.1" 200 2
+INFO 2025-05-11 18:34:04,486 ingredient 25328 24660 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:34:04,497 ingredient 25328 24660 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:34:04,512 basehttp 25328 24660 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:34:20,259 ingredient 25328 23724 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 18:34:20,277 basehttp 25328 23724 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 18:34:31,948 ingredient 25328 23724 Creating new ingredient: user_id=66, data={'ing_name': 'морковка', 'ing_exp_date': '2025-05-13', 'ing_weight': 100, 'ing_calories': 100, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 1, 'allergen_ids': []}
+INFO 2025-05-11 18:34:31,958 ingredient 25328 23724 Ingredient created successfully: ingredient_id=103, name='морковка', type_id=1, user_id=66, time=0.01s
+INFO 2025-05-11 18:34:31,970 basehttp 25328 23724 "POST /api/ingredients/ HTTP/1.1" 201 187
+INFO 2025-05-11 18:34:32,103 ingredient 25328 23724 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 18:34:32,110 ingredient 25328 23724 Ingredient added to refrigerator: ingredient_id=103, name='морковка', quantity=100 grams, user_id=66, time=0.01s
+INFO 2025-05-11 18:34:32,132 basehttp 25328 23724 "POST /api/refrigerator/ HTTP/1.1" 201 461
+INFO 2025-05-11 18:34:32,260 ingredient 25328 23724 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:34:32,273 ingredient 25328 23724 Retrieved 1 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:34:32,286 basehttp 25328 23724 "GET /api/refrigerator/ HTTP/1.1" 200 541
+INFO 2025-05-11 18:34:32,416 ingredient 25328 23724 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:34:32,429 ingredient 25328 23724 Retrieved 1 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:34:32,443 basehttp 25328 23724 "GET /api/refrigerator/ HTTP/1.1" 200 541
+INFO 2025-05-11 18:34:42,306 ingredient 25328 23724 Removing ingredient from refrigerator: ingredient_id=103, name='морковка', user_id=66
+INFO 2025-05-11 18:34:42,310 ingredient 25328 23724 Ingredient removed from refrigerator: ingredient_id=103, name='морковка', user_id=66, time=0.01s
+INFO 2025-05-11 18:34:42,326 basehttp 25328 23724 "DELETE /api/refrigerator/309/ HTTP/1.1" 204 0
+INFO 2025-05-11 18:34:42,409 ingredient 25328 23724 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:34:42,421 ingredient 25328 23724 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:34:42,436 basehttp 25328 23724 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:34:42,519 ingredient 25328 23724 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:34:42,529 ingredient 25328 23724 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:34:42,542 basehttp 25328 23724 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:34:42,692 ingredient 25328 23724 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 18:34:42,696 ingredient 25328 23724 Found 0 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 18:34:42,707 basehttp 25328 23724 "GET /api/refrigerator/categories/ HTTP/1.1" 200 2
+INFO 2025-05-11 18:34:42,772 ingredient 25328 23724 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:34:42,782 ingredient 25328 23724 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:34:42,796 basehttp 25328 23724 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:34:42,940 ingredient 25328 23724 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:34:42,952 ingredient 25328 23724 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:34:42,966 basehttp 25328 23724 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:35:34,202 ingredient 25328 24264 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:35:34,214 ingredient 25328 24264 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:35:34,240 basehttp 25328 24264 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:56:30,756 views 25328 20428 Profile accessed: user_id=66
+INFO 2025-05-11 18:56:30,771 basehttp 25328 20428 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 18:56:30,918 views 25328 20428 Profile accessed: user_id=66
+INFO 2025-05-11 18:56:30,933 basehttp 25328 20428 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 18:56:31,078 allergen 25328 20428 Listing all allergens: user_id=66
+INFO 2025-05-11 18:56:31,082 allergen 25328 20428 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-11 18:56:31,098 basehttp 25328 20428 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-11 18:56:31,171 equipment 25328 20428 Listing all equipment: user_id=66
+INFO 2025-05-11 18:56:31,174 equipment 25328 20428 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-11 18:56:31,189 basehttp 25328 20428 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-11 18:56:31,282 allergen 25328 20428 Listing user allergens: user_id=66
+INFO 2025-05-11 18:56:31,290 allergen 25328 20428 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-11 18:56:31,310 basehttp 25328 20428 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-11 18:56:31,448 equipment 25328 20428 Listing user equipment: user_id=66
+INFO 2025-05-11 18:56:31,455 equipment 25328 20428 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 18:56:31,474 basehttp 25328 20428 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-11 18:56:31,574 recipe 25328 20428 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 18:56:31,877 basehttp 25328 20428 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 18:56:32,591 recipe 25328 20428 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 18:56:32,728 basehttp 25328 20428 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 18:56:32,868 basehttp 25328 20428 "GET /api/favorites/ HTTP/1.1" 200 1063
+INFO 2025-05-11 18:56:32,947 ingredient 25328 20428 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:56:32,957 ingredient 25328 20428 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:56:32,985 basehttp 25328 20428 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:56:33,116 ingredient 25328 20428 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 18:56:33,119 ingredient 25328 20428 Found 0 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 18:56:33,138 basehttp 25328 20428 "GET /api/refrigerator/categories/ HTTP/1.1" 200 2
+INFO 2025-05-11 18:56:37,211 ingredient 25328 20428 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:56:37,223 ingredient 25328 20428 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:56:37,239 basehttp 25328 20428 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:56:37,296 ingredient 25328 20428 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:56:37,308 ingredient 25328 20428 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:56:37,329 basehttp 25328 20428 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:56:38,985 ingredient 25328 20428 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 18:56:39,002 basehttp 25328 20428 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 18:56:51,579 ingredient 25328 20428 Creating new ingredient: user_id=66, data={'ing_name': 'морковка:(', 'ing_exp_date': '2025-05-12', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 1, 'allergen_ids': []}
+INFO 2025-05-11 18:56:51,590 ingredient 25328 20428 Ingredient created successfully: ingredient_id=104, name='морковка:(', type_id=1, user_id=66, time=0.01s
+INFO 2025-05-11 18:56:51,609 basehttp 25328 20428 "POST /api/ingredients/ HTTP/1.1" 201 187
+INFO 2025-05-11 18:56:51,704 ingredient 25328 20428 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 18:56:51,712 ingredient 25328 20428 Ingredient added to refrigerator: ingredient_id=104, name='морковка:(', quantity=100 grams, user_id=66, time=0.01s
+INFO 2025-05-11 18:56:51,739 basehttp 25328 20428 "POST /api/refrigerator/ HTTP/1.1" 201 461
+INFO 2025-05-11 18:56:52,082 ingredient 25328 20428 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:56:52,098 ingredient 25328 20428 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 18:56:52,119 basehttp 25328 20428 "GET /api/refrigerator/ HTTP/1.1" 200 541
+INFO 2025-05-11 18:56:52,280 ingredient 25328 20428 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:56:52,296 ingredient 25328 20428 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 18:56:52,312 basehttp 25328 20428 "GET /api/refrigerator/ HTTP/1.1" 200 541
+INFO 2025-05-11 18:57:01,959 ingredient 25328 20428 Removing ingredient from refrigerator: ingredient_id=104, name='морковка:(', user_id=66
+INFO 2025-05-11 18:57:01,965 ingredient 25328 20428 Ingredient removed from refrigerator: ingredient_id=104, name='морковка:(', user_id=66, time=0.01s
+INFO 2025-05-11 18:57:01,989 basehttp 25328 20428 "DELETE /api/refrigerator/310/ HTTP/1.1" 204 0
+INFO 2025-05-11 18:57:02,078 ingredient 25328 20428 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:57:02,088 ingredient 25328 20428 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:57:02,105 basehttp 25328 20428 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:57:02,188 ingredient 25328 20428 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:57:02,200 ingredient 25328 20428 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:57:02,218 basehttp 25328 20428 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:57:02,296 ingredient 25328 20428 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:57:02,307 ingredient 25328 20428 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:57:02,324 basehttp 25328 20428 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 18:57:02,451 ingredient 25328 20428 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 18:57:02,462 ingredient 25328 20428 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 18:57:02,478 basehttp 25328 20428 "GET /api/refrigerator/ HTTP/1.1" 200 80
+WARNING 2025-05-11 18:57:27,292 basehttp 25328 3812 "DELETE /api/refrigerator/310/ HTTP/1.1" 404 50
+WARNING 2025-05-11 18:57:28,942 basehttp 25328 3812 "DELETE /api/refrigerator/310/ HTTP/1.1" 404 50
+WARNING 2025-05-11 18:57:30,234 basehttp 25328 3812 "DELETE /api/refrigerator/310/ HTTP/1.1" 404 50
+INFO 2025-05-11 19:00:57,954 views 25328 17460 Profile accessed: user_id=66
+INFO 2025-05-11 19:00:57,964 basehttp 25328 17460 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 19:00:58,153 views 25328 17460 Profile accessed: user_id=66
+INFO 2025-05-11 19:00:58,162 basehttp 25328 17460 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 19:00:58,317 allergen 25328 17460 Listing all allergens: user_id=66
+INFO 2025-05-11 19:00:58,320 allergen 25328 17460 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-11 19:00:58,331 basehttp 25328 17460 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-11 19:00:58,416 equipment 25328 17460 Listing all equipment: user_id=66
+INFO 2025-05-11 19:00:58,421 equipment 25328 17460 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 19:00:58,433 basehttp 25328 17460 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-11 19:00:58,508 allergen 25328 17460 Listing user allergens: user_id=66
+INFO 2025-05-11 19:00:58,517 allergen 25328 17460 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-11 19:00:58,532 basehttp 25328 17460 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-11 19:00:58,617 equipment 25328 17460 Listing user equipment: user_id=66
+INFO 2025-05-11 19:00:58,623 equipment 25328 17460 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 19:00:58,639 basehttp 25328 17460 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-11 19:00:58,690 recipe 25328 17460 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 19:00:58,892 basehttp 25328 17460 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 19:00:58,960 recipe 25328 17460 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 19:00:59,092 basehttp 25328 17460 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 19:00:59,278 basehttp 25328 17460 "GET /api/favorites/ HTTP/1.1" 200 1063
+INFO 2025-05-11 19:00:59,349 ingredient 25328 17460 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 19:00:59,359 ingredient 25328 17460 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 19:00:59,384 basehttp 25328 17460 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 19:00:59,492 ingredient 25328 17460 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 19:00:59,495 ingredient 25328 17460 Found 0 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 19:00:59,513 basehttp 25328 17460 "GET /api/refrigerator/categories/ HTTP/1.1" 200 2
+INFO 2025-05-11 19:01:02,032 ingredient 25328 17460 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 19:01:02,043 ingredient 25328 17460 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 19:01:02,057 basehttp 25328 17460 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 19:01:02,161 ingredient 25328 17460 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 19:01:02,173 ingredient 25328 17460 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 19:01:02,187 basehttp 25328 17460 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 19:01:03,477 ingredient 25328 17460 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 19:01:03,493 basehttp 25328 17460 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 19:01:23,961 basehttp 25328 7576 "POST /api/ingredients/ HTTP/1.1" 201 191
+INFO 2025-05-11 19:01:24,004 ingredient 25328 7576 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 19:01:24,039 basehttp 25328 7576 "POST /api/refrigerator/ HTTP/1.1" 201 557
+INFO 2025-05-11 19:01:24,386 ingredient 25328 7576 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 19:01:24,418 ingredient 25328 7576 Retrieved 1 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-11 19:01:24,452 basehttp 25328 7576 "GET /api/refrigerator/ HTTP/1.1" 200 637
+INFO 2025-05-11 19:01:24,575 ingredient 25328 7576 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 19:01:24,599 ingredient 25328 7576 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 19:01:24,624 basehttp 25328 7576 "GET /api/refrigerator/ HTTP/1.1" 200 637
+INFO 2025-05-11 19:01:37,203 basehttp 25328 7576 "DELETE /api/refrigerator/311/ HTTP/1.1" 204 0
+INFO 2025-05-11 19:01:37,295 ingredient 25328 7576 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 19:01:37,307 ingredient 25328 7576 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 19:01:37,327 basehttp 25328 7576 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 19:01:37,410 ingredient 25328 7576 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 19:01:37,422 ingredient 25328 7576 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 19:01:37,441 basehttp 25328 7576 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 19:01:37,607 ingredient 25328 7576 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 19:01:37,611 ingredient 25328 7576 Found 0 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 19:01:37,620 basehttp 25328 7576 "GET /api/refrigerator/categories/ HTTP/1.1" 200 2
+INFO 2025-05-11 19:01:37,739 ingredient 25328 7576 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 19:01:37,747 ingredient 25328 7576 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 19:01:37,758 basehttp 25328 7576 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 19:01:37,818 ingredient 25328 7576 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 19:01:37,828 ingredient 25328 7576 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 19:01:37,842 basehttp 25328 7576 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 19:03:50,046 ingredient 25328 23564 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 19:03:50,064 basehttp 25328 23564 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 19:04:03,801 ingredient 25328 23564 Creating new ingredient: user_id=66, data={'ing_name': 'морковка', 'ing_exp_date': '2025-05-18', 'ing_weight': 100, 'ing_calories': 100, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 1, 'allergen_ids': []}
+INFO 2025-05-11 19:04:03,812 ingredient 25328 23564 Ingredient created successfully: ingredient_id=106, name='морковка', type_id=1, user_id=66, time=0.01s
+INFO 2025-05-11 19:04:03,829 basehttp 25328 23564 "POST /api/ingredients/ HTTP/1.1" 201 187
+INFO 2025-05-11 19:04:03,942 ingredient 25328 23564 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 19:04:03,954 ingredient 25328 23564 Ingredient added to refrigerator: ingredient_id=106, name='морковка', quantity=1 grams, user_id=66, time=0.01s
+INFO 2025-05-11 19:04:03,992 basehttp 25328 23564 "POST /api/refrigerator/ HTTP/1.1" 201 459
+INFO 2025-05-11 19:04:04,207 ingredient 25328 23564 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 19:04:04,225 ingredient 25328 23564 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 19:04:04,246 basehttp 25328 23564 "GET /api/refrigerator/ HTTP/1.1" 200 539
+INFO 2025-05-11 19:04:04,363 ingredient 25328 23564 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 19:04:04,394 ingredient 25328 23564 Retrieved 1 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-11 19:04:04,441 basehttp 25328 23564 "GET /api/refrigerator/ HTTP/1.1" 200 539
+INFO 2025-05-11 20:34:05,851 views 25328 22480 Profile accessed: user_id=66
+INFO 2025-05-11 20:34:05,874 basehttp 25328 22480 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 20:34:06,042 views 25328 22480 Profile accessed: user_id=66
+INFO 2025-05-11 20:34:06,055 basehttp 25328 22480 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 20:34:06,252 allergen 25328 22480 Listing all allergens: user_id=66
+INFO 2025-05-11 20:34:06,258 allergen 25328 22480 Retrieved unknown allergens, user_id=66, time=0.01s
+INFO 2025-05-11 20:34:06,271 basehttp 25328 22480 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-11 20:34:06,332 equipment 25328 22480 Listing all equipment: user_id=66
+INFO 2025-05-11 20:34:06,337 equipment 25328 22480 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-11 20:34:06,350 basehttp 25328 22480 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-11 20:34:06,432 allergen 25328 22480 Listing user allergens: user_id=66
+INFO 2025-05-11 20:34:06,443 allergen 25328 22480 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-11 20:34:06,465 basehttp 25328 22480 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-11 20:34:06,527 equipment 25328 22480 Listing user equipment: user_id=66
+INFO 2025-05-11 20:34:06,535 equipment 25328 22480 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 20:34:06,560 basehttp 25328 22480 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-11 20:34:06,672 recipe 25328 22480 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 20:34:06,870 basehttp 25328 22480 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 20:34:07,015 recipe 25328 22480 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 20:34:07,148 basehttp 25328 22480 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 20:34:07,270 basehttp 25328 22480 "GET /api/favorites/ HTTP/1.1" 200 1063
+INFO 2025-05-11 20:34:07,386 ingredient 25328 22480 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:34:07,408 ingredient 25328 22480 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 20:34:07,453 basehttp 25328 22480 "GET /api/refrigerator/ HTTP/1.1" 200 539
+INFO 2025-05-11 20:34:07,559 ingredient 25328 22480 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 20:34:07,564 ingredient 25328 22480 Found 1 categories in refrigerator for user_id=66, time=0.01s
+INFO 2025-05-11 20:34:07,694 basehttp 25328 22480 "GET /api/refrigerator/categories/ HTTP/1.1" 200 154
+INFO 2025-05-11 20:34:10,475 ingredient 25328 22480 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:34:10,489 ingredient 25328 22480 Retrieved 1 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:34:10,503 basehttp 25328 22480 "GET /api/refrigerator/ HTTP/1.1" 200 539
+INFO 2025-05-11 20:34:10,586 ingredient 25328 22480 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:34:10,600 ingredient 25328 22480 Retrieved 1 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:34:10,614 basehttp 25328 22480 "GET /api/refrigerator/ HTTP/1.1" 200 539
+INFO 2025-05-11 20:34:15,961 ingredient 25328 22480 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 20:34:15,972 basehttp 25328 22480 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 20:34:33,562 ingredient 25328 20400 Creating new ingredient: user_id=66, data={'ing_name': 'потата ', 'ing_exp_date': '2025-05-13', 'ing_weight': 100, 'ing_calories': 100, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 6, 'allergen_ids': [1, 2, 3]}
+INFO 2025-05-11 20:34:33,605 ingredient 25328 20400 Ingredient created successfully: ingredient_id=107, name='потата', type_id=6, user_id=66, time=0.04s
+INFO 2025-05-11 20:34:33,654 basehttp 25328 20400 "POST /api/ingredients/ HTTP/1.1" 201 183
+INFO 2025-05-11 20:34:33,726 ingredient 25328 20400 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 20:34:33,748 ingredient 25328 20400 Ingredient added to refrigerator: ingredient_id=107, name='потата', quantity=200 grams, user_id=66, time=0.02s
+INFO 2025-05-11 20:34:33,792 basehttp 25328 20400 "POST /api/refrigerator/ HTTP/1.1" 201 555
+INFO 2025-05-11 20:34:34,023 ingredient 25328 20400 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:34:34,040 ingredient 25328 20400 Retrieved 2 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 20:34:34,056 basehttp 25328 20400 "GET /api/refrigerator/ HTTP/1.1" 200 1095
+INFO 2025-05-11 20:34:34,144 ingredient 25328 20400 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:34:34,160 ingredient 25328 20400 Retrieved 2 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 20:34:34,173 basehttp 25328 20400 "GET /api/refrigerator/ HTTP/1.1" 200 1095
+INFO 2025-05-11 20:35:06,010 ingredient 25328 1636 Removing ingredient from refrigerator: ingredient_id=107, name='потата', user_id=66
+INFO 2025-05-11 20:35:06,017 ingredient 25328 1636 Ingredient removed from refrigerator: ingredient_id=107, name='потата', user_id=66, time=0.01s
+INFO 2025-05-11 20:35:06,034 basehttp 25328 1636 "DELETE /api/refrigerator/313/ HTTP/1.1" 204 0
+INFO 2025-05-11 20:35:06,118 ingredient 25328 1636 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:35:06,130 ingredient 25328 1636 Retrieved 1 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:35:06,143 basehttp 25328 1636 "GET /api/refrigerator/ HTTP/1.1" 200 539
+INFO 2025-05-11 20:35:06,216 ingredient 25328 1636 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:35:06,229 ingredient 25328 1636 Retrieved 1 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:35:06,243 basehttp 25328 1636 "GET /api/refrigerator/ HTTP/1.1" 200 539
+INFO 2025-05-11 20:35:06,345 ingredient 25328 1636 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:35:06,357 ingredient 25328 1636 Retrieved 1 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:35:06,368 basehttp 25328 1636 "GET /api/refrigerator/ HTTP/1.1" 200 539
+INFO 2025-05-11 20:35:10,206 ingredient 25328 1636 Removing ingredient from refrigerator: ingredient_id=106, name='морковка', user_id=66
+INFO 2025-05-11 20:35:10,212 ingredient 25328 1636 Ingredient removed from refrigerator: ingredient_id=106, name='морковка', user_id=66, time=0.01s
+INFO 2025-05-11 20:35:10,228 basehttp 25328 1636 "DELETE /api/refrigerator/312/ HTTP/1.1" 204 0
+INFO 2025-05-11 20:35:10,295 ingredient 25328 1636 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:35:10,303 ingredient 25328 1636 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:35:10,313 basehttp 25328 1636 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 20:35:10,375 ingredient 25328 1636 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:35:10,383 ingredient 25328 1636 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:35:10,396 basehttp 25328 1636 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 20:35:10,527 ingredient 25328 1636 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:35:10,536 ingredient 25328 1636 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:35:10,546 basehttp 25328 1636 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 20:35:10,655 ingredient 25328 1636 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:35:10,662 ingredient 25328 1636 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:35:10,674 basehttp 25328 1636 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 20:35:22,969 ingredient 25328 1636 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 20:35:22,986 basehttp 25328 1636 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 20:35:34,310 ingredient 25328 1636 Creating new ingredient: user_id=66, data={'ing_name': 'морковка', 'ing_exp_date': '2025-05-18', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 1, 'allergen_ids': []}
+INFO 2025-05-11 20:35:34,321 ingredient 25328 1636 Ingredient created successfully: ingredient_id=108, name='морковка', type_id=1, user_id=66, time=0.01s
+INFO 2025-05-11 20:35:34,342 basehttp 25328 1636 "POST /api/ingredients/ HTTP/1.1" 201 185
+INFO 2025-05-11 20:35:34,447 ingredient 25328 1636 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 20:35:34,455 ingredient 25328 1636 Ingredient added to refrigerator: ingredient_id=108, name='морковка', quantity=1000 grams, user_id=66, time=0.01s
+INFO 2025-05-11 20:35:34,485 basehttp 25328 1636 "POST /api/refrigerator/ HTTP/1.1" 201 460
+INFO 2025-05-11 20:35:34,755 ingredient 25328 1636 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:35:34,771 ingredient 25328 1636 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 20:35:34,789 basehttp 25328 1636 "GET /api/refrigerator/ HTTP/1.1" 200 540
+INFO 2025-05-11 20:35:34,866 ingredient 25328 1636 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:35:34,883 ingredient 25328 1636 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 20:35:34,899 basehttp 25328 1636 "GET /api/refrigerator/ HTTP/1.1" 200 540
+INFO 2025-05-11 20:35:49,864 ingredient 25328 1636 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 20:35:49,885 basehttp 25328 1636 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 20:36:26,542 ingredient 25328 22904 Creating new ingredient: user_id=66, data={'ing_name': 'ћда', 'ing_exp_date': '2025-05-13', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 2, 'allergen_ids': []}
+INFO 2025-05-11 20:36:26,551 ingredient 25328 22904 Ingredient created successfully: ingredient_id=109, name='ћда', type_id=2, user_id=66, time=0.01s
+INFO 2025-05-11 20:36:26,569 basehttp 25328 22904 "POST /api/ingredients/ HTTP/1.1" 201 175
+INFO 2025-05-11 20:36:26,620 ingredient 25328 22904 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 20:36:26,628 ingredient 25328 22904 Ingredient added to refrigerator: ingredient_id=109, name='ћда', quantity=100000 grams, user_id=66, time=0.01s
+INFO 2025-05-11 20:36:26,658 basehttp 25328 22904 "POST /api/refrigerator/ HTTP/1.1" 201 453
+INFO 2025-05-11 20:36:26,772 ingredient 25328 22904 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:36:26,794 ingredient 25328 22904 Retrieved 2 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 20:36:26,815 basehttp 25328 22904 "GET /api/refrigerator/ HTTP/1.1" 200 994
+INFO 2025-05-11 20:36:26,962 ingredient 25328 22904 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:36:26,989 ingredient 25328 22904 Retrieved 2 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-11 20:36:27,013 basehttp 25328 22904 "GET /api/refrigerator/ HTTP/1.1" 200 994
+INFO 2025-05-11 20:36:40,720 ingredient 25328 22904 Removing ingredient from refrigerator: ingredient_id=109, name='ћда', user_id=66
+INFO 2025-05-11 20:36:40,726 ingredient 25328 22904 Ingredient removed from refrigerator: ingredient_id=109, name='ћда', user_id=66, time=0.01s
+INFO 2025-05-11 20:36:40,752 basehttp 25328 22904 "DELETE /api/refrigerator/315/ HTTP/1.1" 204 0
+INFO 2025-05-11 20:36:40,858 ingredient 25328 22904 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:36:40,878 ingredient 25328 22904 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 20:36:40,902 basehttp 25328 22904 "GET /api/refrigerator/ HTTP/1.1" 200 540
+INFO 2025-05-11 20:36:40,971 ingredient 25328 22904 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:36:41,000 ingredient 25328 22904 Retrieved 1 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-11 20:36:41,033 basehttp 25328 22904 "GET /api/refrigerator/ HTTP/1.1" 200 540
+INFO 2025-05-11 20:36:41,173 ingredient 25328 22904 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:36:41,189 ingredient 25328 22904 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 20:36:41,207 basehttp 25328 22904 "GET /api/refrigerator/ HTTP/1.1" 200 540
+INFO 2025-05-11 20:36:57,303 ingredient 25328 13612 Removing ingredient from refrigerator: ingredient_id=108, name='морковка', user_id=66
+INFO 2025-05-11 20:36:57,309 ingredient 25328 13612 Ingredient removed from refrigerator: ingredient_id=108, name='морковка', user_id=66, time=0.01s
+INFO 2025-05-11 20:36:57,332 basehttp 25328 13612 "DELETE /api/refrigerator/314/ HTTP/1.1" 204 0
+INFO 2025-05-11 20:36:57,509 ingredient 25328 13612 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:36:57,519 ingredient 25328 13612 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:36:57,537 basehttp 25328 13612 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 20:36:57,626 ingredient 25328 13612 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:36:57,637 ingredient 25328 13612 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:36:57,655 basehttp 25328 13612 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 20:36:57,720 ingredient 25328 13612 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:36:57,733 ingredient 25328 13612 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:36:57,758 basehttp 25328 13612 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 20:36:57,860 ingredient 25328 13612 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:36:57,871 ingredient 25328 13612 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:36:57,889 basehttp 25328 13612 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 20:37:07,175 ingredient 25328 13612 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 20:37:07,194 basehttp 25328 13612 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 20:37:16,755 ingredient 25328 13612 Creating new ingredient: user_id=66, data={'ing_name': 'тест', 'ing_exp_date': '2025-05-12', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 1, 'allergen_ids': []}
+INFO 2025-05-11 20:37:16,764 ingredient 25328 13612 Ingredient created successfully: ingredient_id=110, name='тест', type_id=1, user_id=66, time=0.01s
+INFO 2025-05-11 20:37:16,780 basehttp 25328 13612 "POST /api/ingredients/ HTTP/1.1" 201 177
+INFO 2025-05-11 20:37:16,834 ingredient 25328 13612 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 20:37:16,842 ingredient 25328 13612 Ingredient added to refrigerator: ingredient_id=110, name='тест', quantity=50 grams, user_id=66, time=0.01s
+INFO 2025-05-11 20:37:16,870 basehttp 25328 13612 "POST /api/refrigerator/ HTTP/1.1" 201 450
+INFO 2025-05-11 20:37:17,108 ingredient 25328 13612 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:37:17,126 ingredient 25328 13612 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 20:37:17,144 basehttp 25328 13612 "GET /api/refrigerator/ HTTP/1.1" 200 530
+INFO 2025-05-11 20:37:17,233 ingredient 25328 13612 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:37:17,250 ingredient 25328 13612 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 20:37:17,267 basehttp 25328 13612 "GET /api/refrigerator/ HTTP/1.1" 200 530
+INFO 2025-05-11 20:37:19,994 ingredient 25328 13612 Removing ingredient from refrigerator: ingredient_id=110, name='тест', user_id=66
+INFO 2025-05-11 20:37:20,001 ingredient 25328 13612 Ingredient removed from refrigerator: ingredient_id=110, name='тест', user_id=66, time=0.01s
+INFO 2025-05-11 20:37:20,028 basehttp 25328 13612 "DELETE /api/refrigerator/316/ HTTP/1.1" 204 0
+INFO 2025-05-11 20:37:20,127 ingredient 25328 13612 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:37:20,139 ingredient 25328 13612 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:37:20,154 basehttp 25328 13612 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 20:37:20,280 ingredient 25328 13612 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:37:20,291 ingredient 25328 13612 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:37:20,310 basehttp 25328 13612 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 20:37:20,465 ingredient 25328 13612 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:37:20,476 ingredient 25328 13612 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:37:20,495 basehttp 25328 13612 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 20:37:20,578 ingredient 25328 13612 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:37:20,588 ingredient 25328 13612 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:37:20,606 basehttp 25328 13612 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 20:45:13,056 views 25328 21280 Profile accessed: user_id=66
+INFO 2025-05-11 20:45:13,073 basehttp 25328 21280 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 20:45:13,176 views 25328 21280 Profile accessed: user_id=66
+INFO 2025-05-11 20:45:13,190 basehttp 25328 21280 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 20:45:13,312 allergen 25328 21280 Listing all allergens: user_id=66
+INFO 2025-05-11 20:45:13,315 allergen 25328 21280 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-11 20:45:13,330 basehttp 25328 21280 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-11 20:45:13,395 equipment 25328 21280 Listing all equipment: user_id=66
+INFO 2025-05-11 20:45:13,399 equipment 25328 21280 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-11 20:45:13,416 basehttp 25328 21280 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-11 20:45:13,499 allergen 25328 21280 Listing user allergens: user_id=66
+INFO 2025-05-11 20:45:13,507 allergen 25328 21280 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-11 20:45:13,526 basehttp 25328 21280 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-11 20:45:13,624 equipment 25328 21280 Listing user equipment: user_id=66
+INFO 2025-05-11 20:45:13,631 equipment 25328 21280 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 20:45:13,654 basehttp 25328 21280 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-11 20:45:13,810 recipe 25328 21280 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 20:45:14,107 basehttp 25328 21280 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 20:45:14,178 recipe 25328 21280 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 20:45:14,395 basehttp 25328 21280 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 20:45:14,522 basehttp 25328 21280 "GET /api/favorites/ HTTP/1.1" 200 1063
+INFO 2025-05-11 20:45:14,597 ingredient 25328 21280 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:45:14,607 ingredient 25328 21280 Retrieved 0 refrigerator ingredients for user_id=66, time=0.01s
+INFO 2025-05-11 20:45:14,637 basehttp 25328 21280 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-11 20:45:14,767 ingredient 25328 21280 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 20:45:14,772 ingredient 25328 21280 Found 0 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 20:45:14,789 basehttp 25328 21280 "GET /api/refrigerator/categories/ HTTP/1.1" 200 2
+INFO 2025-05-11 20:45:18,706 ingredient 25328 21280 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 20:45:18,727 basehttp 25328 21280 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 20:45:29,015 ingredient 25328 21280 Creating new ingredient: user_id=66, data={'ing_name': 'морковка', 'ing_exp_date': '2025-05-18', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 1, 'allergen_ids': []}
+INFO 2025-05-11 20:45:29,024 ingredient 25328 21280 Ingredient created successfully: ingredient_id=111, name='морковка', type_id=1, user_id=66, time=0.01s
+INFO 2025-05-11 20:45:29,042 basehttp 25328 21280 "POST /api/ingredients/ HTTP/1.1" 201 185
+INFO 2025-05-11 20:45:29,155 ingredient 25328 21280 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 20:45:29,166 ingredient 25328 21280 Ingredient added to refrigerator: ingredient_id=111, name='морковка', quantity=100000 grams, user_id=66, time=0.01s
+INFO 2025-05-11 20:45:29,198 basehttp 25328 21280 "POST /api/refrigerator/ HTTP/1.1" 201 462
+INFO 2025-05-11 20:45:29,471 ingredient 25328 21280 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:45:29,486 ingredient 25328 21280 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 20:45:29,509 basehttp 25328 21280 "GET /api/refrigerator/ HTTP/1.1" 200 542
+INFO 2025-05-11 20:45:29,683 ingredient 25328 21280 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:45:29,699 ingredient 25328 21280 Retrieved 1 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 20:45:29,716 basehttp 25328 21280 "GET /api/refrigerator/ HTTP/1.1" 200 542
+INFO 2025-05-11 20:45:30,959 ingredient 25328 21280 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 20:45:30,974 basehttp 25328 21280 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 20:45:43,567 ingredient 25328 21280 Creating new ingredient: user_id=66, data={'ing_name': 'бе', 'ing_exp_date': '2025-05-12', 'ing_weight': 100, 'ing_calories': 0, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 5, 'allergen_ids': []}
+INFO 2025-05-11 20:45:43,575 ingredient 25328 21280 Ingredient created successfully: ingredient_id=112, name='бе', type_id=5, user_id=66, time=0.01s
+INFO 2025-05-11 20:45:43,594 basehttp 25328 21280 "POST /api/ingredients/ HTTP/1.1" 201 173
+INFO 2025-05-11 20:45:43,662 ingredient 25328 21280 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-11 20:45:43,673 ingredient 25328 21280 Ingredient added to refrigerator: ingredient_id=112, name='бе', quantity=50 milliliters, user_id=66, time=0.01s
+INFO 2025-05-11 20:45:43,704 basehttp 25328 21280 "POST /api/refrigerator/ HTTP/1.1" 201 454
+INFO 2025-05-11 20:45:43,892 ingredient 25328 21280 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:45:43,917 ingredient 25328 21280 Retrieved 2 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 20:45:43,935 basehttp 25328 21280 "GET /api/refrigerator/ HTTP/1.1" 200 997
+INFO 2025-05-11 20:45:44,206 ingredient 25328 21280 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 20:45:44,239 ingredient 25328 21280 Retrieved 2 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-11 20:45:44,270 basehttp 25328 21280 "GET /api/refrigerator/ HTTP/1.1" 200 997

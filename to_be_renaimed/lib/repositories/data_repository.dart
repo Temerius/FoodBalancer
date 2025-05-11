@@ -61,6 +61,17 @@ class DataRepository with ChangeNotifier {
   List<Allergen> get allergens => _allergenRepository.allergens;
   List<Equipment> get equipment => _equipmentRepository.equipment;
   List<Recipe> get recipes => _recipeRepository.recipes;
+
+  List<IngredientType> _allCategories = [];
+
+  List<IngredientType> _userRefrigeratorCategories = [];
+
+  List<RefrigeratorItem> _expiringItems = [];
+
+  List<IngredientType> get allCategories => _allCategories;
+  List<IngredientType> get userRefrigeratorCategories => _userRefrigeratorCategories;
+  List<RefrigeratorItem> get expiringItems => _expiringItems;
+
   bool get isLoadingProfile => _isLoadingProfile;
   bool get isLoadingAllergens => _isLoadingAllergens;
   bool get isLoadingEquipment => _isLoadingEquipment;
@@ -96,6 +107,192 @@ class DataRepository with ChangeNotifier {
     );
   }
 
+
+  Future<List<IngredientType>> getAllIngredientTypes({bool forceRefresh = false}) async {
+    if (!forceRefresh && _allCategories.isNotEmpty) {
+      return _allCategories;
+    }
+
+    try {
+      final response = await _apiService.get('/api/ingredient-types/?limit=1000');
+
+      if (response['results'] != null) {
+        _allCategories = (response['results'] as List)
+            .map((json) => IngredientType.fromJson(json))
+            .toList();
+      }
+
+      notifyListeners();
+      return _allCategories;
+    } catch (e) {
+      print("ERROR GETTING ALL INGREDIENT TYPES: $e");
+      return _allCategories;
+    }
+  }
+
+// Обновление истекающих продуктов из текущего списка холодильника
+  void _updateExpiringItems() {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+    _expiringItems = refrigeratorItems.where((item) {
+      if (item.ingredient?.expiryDate == null) return false;
+
+      final expiryDate = DateTime(
+        item.ingredient!.expiryDate!.year,
+        item.ingredient!.expiryDate!.month,
+        item.ingredient!.expiryDate!.day,
+      );
+
+      final daysDifference = expiryDate.difference(today).inDays;
+      return daysDifference >= 0 && daysDifference <= 3;
+    }).toList();
+
+    // Сортируем по дате истечения
+    _expiringItems.sort((a, b) {
+      final aDate = a.ingredient!.expiryDate!;
+      final bDate = b.ingredient!.expiryDate!;
+      return aDate.compareTo(bDate);
+    });
+
+    notifyListeners();
+  }
+
+// Обновление категорий пользователя из текущего списка холодильника
+  void _updateUserRefrigeratorCategories() {
+    // Извлекаем уникальные категории из продуктов пользователя
+    final uniqueCategories = <int, IngredientType>{};
+
+    for (var item in refrigeratorItems) {
+      if (item.ingredient?.type != null) {
+        uniqueCategories[item.ingredient!.type!.id] = item.ingredient!.type!;
+      }
+    }
+
+    _userRefrigeratorCategories = uniqueCategories.values.toList();
+    notifyListeners();
+  }
+
+// Переписываем getRefrigeratorItems для обновления всех связанных данных
+  Future<List<RefrigeratorItem>> getRefrigeratorItems({bool forceRefresh = false}) async {
+    // Проверяем, нужно ли обновлять данные
+    if (!forceRefresh && _refrigeratorRepository.items.isNotEmpty && !_needsUpdate(_lastRefrigeratorUpdate)) {
+      return _refrigeratorRepository.items;
+    }
+
+    _setLoading(true);
+    try {
+      print("\n===== GETTING REFRIGERATOR ITEMS (forceRefresh: $forceRefresh) =====");
+      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
+      final items = await _refrigeratorRepository.getItems(config: config);
+
+      // ИСПРАВЛЕНИЕ: После загрузки продуктов обновляем все связанные данные
+      _updateUserRefrigeratorCategories();
+      _updateExpiringItems();
+
+      // Обновляем время последнего обновления
+      _lastRefrigeratorUpdate = DateTime.now();
+
+      notifyListeners();
+      return items;
+    } catch (e) {
+      print("ERROR GETTING REFRIGERATOR ITEMS: $e");
+      _setError(e.toString());
+      return [];
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+// Переписываем addRefrigeratorItem
+  Future<RefrigeratorItem?> addRefrigeratorItem({
+    required int ingredientId,
+    required int quantity,
+    required QuantityType quantityType,
+  }) async {
+    try {
+      print("\n===== ADDING ITEM TO REFRIGERATOR =====");
+      final item = await _refrigeratorRepository.addItem(
+        ingredientId: ingredientId,
+        quantity: quantity,
+        quantityType: quantityType,
+      );
+
+      // ИСПРАВЛЕНИЕ: После добавления обновляем все связанные данные
+      _updateUserRefrigeratorCategories();
+      _updateExpiringItems();
+
+      // Обновляем время последнего обновления
+      _lastRefrigeratorUpdate = DateTime.now();
+      _lastRefrigeratorCategoriesUpdate = DateTime.now();
+
+      notifyListeners();
+      return item;
+    } catch (e) {
+      print("ERROR ADDING ITEM TO REFRIGERATOR: $e");
+      _setError(e.toString());
+      return null;
+    }
+  }
+
+// Переписываем removeRefrigeratorItem
+  Future<bool> removeRefrigeratorItem(int itemId) async {
+    try {
+      print("\n===== REMOVING ITEM FROM REFRIGERATOR =====");
+      await _refrigeratorRepository.removeItem(itemId);
+
+      // ИСПРАВЛЕНИЕ: После удаления обновляем все связанные данные
+      _updateUserRefrigeratorCategories();
+      _updateExpiringItems();
+
+      // Обновляем время последнего обновления
+      _lastRefrigeratorUpdate = DateTime.now();
+      _lastRefrigeratorCategoriesUpdate = DateTime.now();
+
+      notifyListeners();
+      return true;
+    } catch (e) {
+      print("ERROR REMOVING ITEM FROM REFRIGERATOR: $e");
+      _setError(e.toString());
+      return false;
+    }
+  }
+
+// Переписываем initialize для загрузки всех данных
+  Future<void> initialize() async {
+    _setLoading(true);
+    try {
+      print("\n===== INITIALIZING DATA REPOSITORY =====");
+
+      // 1. Загружаем все категории (один раз)
+      await getAllIngredientTypes();
+
+      // 2. Загружаем данные пользователя
+      await _userRepository.getUserProfile();
+      await _allergenRepository.getAllAllergens();
+      await _equipmentRepository.getAllEquipment();
+
+      // 3. Загружаем продукты и рецепты
+      await getRecipes();
+      await getRefrigeratorItems(); // Это автоматически обновит категории и истекающие
+
+      // 4. Устанавливаем время последнего обновления
+      _lastProfileUpdate = DateTime.now();
+      _lastAllergensUpdate = DateTime.now();
+      _lastEquipmentUpdate = DateTime.now();
+      _lastRecipesUpdate = DateTime.now();
+
+      _isInitialized = true;
+      print("===== DATA REPOSITORY INITIALIZED =====");
+    } catch (e) {
+      print("ERROR DURING REPOSITORY INITIALIZATION: $e");
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+
   // Метод для переключения статуса "избранное" у рецепта
   Future<bool> toggleFavoriteRecipe(int recipeId) async {
     try {
@@ -118,32 +315,6 @@ class DataRepository with ChangeNotifier {
   bool _needsUpdate(DateTime? lastUpdate) {
     if (lastUpdate == null) return true;
     return DateTime.now().difference(lastUpdate) > _updateInterval;
-  }
-
-  Future<List<RefrigeratorItem>> getRefrigeratorItems({bool forceRefresh = false}) async {
-    // Проверяем, нужно ли обновлять данные
-    if (!forceRefresh && _refrigeratorRepository.items.isNotEmpty && !_needsUpdate(_lastRefrigeratorUpdate)) {
-      return _refrigeratorRepository.items;
-    }
-
-    _setLoading(true);
-    try {
-      print("\n===== GETTING REFRIGERATOR ITEMS (forceRefresh: $forceRefresh) =====");
-      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
-      final items = await _refrigeratorRepository.getItems(config: config);
-
-      // Обновляем время последнего обновления
-      _lastRefrigeratorUpdate = DateTime.now();
-
-      notifyListeners();
-      return items;
-    } catch (e) {
-      print("ERROR GETTING REFRIGERATOR ITEMS: $e");
-      _setError(e.toString());
-      return [];
-    } finally {
-      _setLoading(false);
-    }
   }
 
   Future<List<RefrigeratorItem>> getFilteredRefrigeratorItems({
@@ -227,32 +398,6 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  Future<RefrigeratorItem?> addRefrigeratorItem({
-    required int ingredientId,
-    required int quantity,
-    required QuantityType quantityType,
-  }) async {
-    try {
-      print("\n===== ADDING ITEM TO REFRIGERATOR =====");
-      final item = await _refrigeratorRepository.addItem(
-        ingredientId: ingredientId,
-        quantity: quantity,
-        quantityType: quantityType,
-      );
-
-      // Обновляем время последнего обновления
-      _lastRefrigeratorUpdate = DateTime.now();
-      _lastRefrigeratorCategoriesUpdate = DateTime.now();
-
-      notifyListeners();
-      return item;
-    } catch (e) {
-      print("ERROR ADDING ITEM TO REFRIGERATOR: $e");
-      _setError(e.toString());
-      return null;
-    }
-  }
-
   Future<RefrigeratorItem?> updateRefrigeratorItem({
     required int itemId,
     int? quantity,
@@ -275,25 +420,6 @@ class DataRepository with ChangeNotifier {
       print("ERROR UPDATING REFRIGERATOR ITEM: $e");
       _setError(e.toString());
       return null;
-    }
-  }
-
-  // Удаление продукта из холодильника
-  Future<bool> removeRefrigeratorItem(int itemId) async {
-    try {
-      print("\n===== REMOVING ITEM FROM REFRIGERATOR =====");
-      await _refrigeratorRepository.removeItem(itemId);
-
-      // Обновляем время последнего обновления
-      _lastRefrigeratorUpdate = DateTime.now();
-      _lastRefrigeratorCategoriesUpdate = DateTime.now();
-
-      notifyListeners();
-      return true;
-    } catch (e) {
-      print("ERROR REMOVING ITEM FROM REFRIGERATOR: $e");
-      _setError(e.toString());
-      return false;
     }
   }
 
@@ -373,36 +499,6 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  // Инициализация репозитория
-  Future<void> initialize() async {
-    _setLoading(true);
-    try {
-      print("\n===== INITIALIZING DATA REPOSITORY =====");
-      // Проверяем состояние кэша
-      print("CHECKING CACHE STATE...");
-      await CacheService.listAllKeys();
-
-      // Загрузка данных из кэша без принудительного обновления
-      await _userRepository.getUserProfile();
-      await _allergenRepository.getAllAllergens();
-      await _equipmentRepository.getAllEquipment();
-      await getRecipes();
-
-      // Устанавливаем время последнего обновления
-      _lastProfileUpdate = DateTime.now();
-      _lastAllergensUpdate = DateTime.now();
-      _lastEquipmentUpdate = DateTime.now();
-      _lastRecipesUpdate = DateTime.now();
-
-      _isInitialized = true;
-      print("===== DATA REPOSITORY INITIALIZED =====");
-    } catch (e) {
-      print("ERROR DURING REPOSITORY INITIALIZATION: $e");
-      _setError(e.toString());
-    } finally {
-      _setLoading(false);
-    }
-  }
 
   // Получение профиля пользователя
   Future<User?> getUserProfile({bool forceRefresh = false}) async {
