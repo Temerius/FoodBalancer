@@ -2879,3 +2879,25 @@ INFO 2025-05-11 12:23:22,177 basehttp 29984 30320 "DELETE /api/refrigerator/287/
 INFO 2025-05-11 12:23:24,848 ingredient 29984 30320 Removing ingredient from refrigerator: ingredient_id=79, name='потата', user_id=66
 INFO 2025-05-11 12:23:24,851 ingredient 29984 30320 Ingredient removed from refrigerator: ingredient_id=79, name='потата', user_id=66, time=0.01s
 INFO 2025-05-11 12:23:24,880 basehttp 29984 30320 "DELETE /api/refrigerator/285/ HTTP/1.1" 204 0
+INFO 2025-05-11 12:56:30,853 autoreload 7304 24868 Watching for file changes with StatReloader
+INFO 2025-05-11 12:56:31,234 wsgi 7304 29928 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 12:56:31,234 wsgi 7304 29928 Environment: config.settings
+INFO 2025-05-11 12:56:31,234 wsgi 7304 29928 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 12:56:31,237 wsgi 7304 29928 Application initialized successfully
+INFO 2025-05-11 12:58:44,217 autoreload 7304 24868 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\ingredient.py changed, reloading.
+INFO 2025-05-11 12:58:45,704 autoreload 30600 24780 Watching for file changes with StatReloader
+INFO 2025-05-11 12:59:15,828 autoreload 30600 24780 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\serializers\ingredient.py changed, reloading.
+INFO 2025-05-11 12:59:16,978 autoreload 3288 4720 Watching for file changes with StatReloader
+INFO 2025-05-11 13:09:34,507 autoreload 3288 4720 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\__init__.py changed, reloading.
+INFO 2025-05-11 13:09:35,467 autoreload 29164 27540 Watching for file changes with StatReloader
+INFO 2025-05-11 13:11:20,895 autoreload 29164 27540 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\ingredient.py changed, reloading.
+INFO 2025-05-11 13:11:21,680 autoreload 33228 29572 Watching for file changes with StatReloader
+INFO 2025-05-11 13:11:35,963 autoreload 33228 29572 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\ingredient.py changed, reloading.
+INFO 2025-05-11 13:11:36,739 autoreload 19188 31864 Watching for file changes with StatReloader
+INFO 2025-05-11 13:17:19,758 autoreload 19188 31864 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\models\ingredient.py changed, reloading.
+INFO 2025-05-11 13:17:21,165 autoreload 16032 30924 Watching for file changes with StatReloader
+INFO 2025-05-11 13:17:39,774 autoreload 16032 30924 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\serializers\ingredient.py changed, reloading.
+INFO 2025-05-11 13:17:41,071 autoreload 33436 33672 Watching for file changes with StatReloader
+INFO 2025-05-11 13:19:42,863 autoreload 33436 33672 D:\BSUIR\Semester6\CourseWork\FoodBalancer\AppBackend\apps\core\views\ingredient.py changed, reloading.
+INFO 2025-05-11 13:19:44,345 autoreload 9968 19988 Watching for file changes with StatReloader
+INFO 2025-05-11 13:24:52,311 autoreload 15860 22756 Watching for file changes with StatReloader

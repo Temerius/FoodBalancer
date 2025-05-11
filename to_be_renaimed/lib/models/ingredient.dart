@@ -1,5 +1,6 @@
 import 'package:to_be_renaimed/models/enums.dart';
 import 'package:to_be_renaimed/models/ingredient_type.dart';
+import 'package:to_be_renaimed/models/allergen.dart';
 
 class Ingredient {
   final int id;
@@ -16,6 +17,7 @@ class Ingredient {
   // Runtime properties
   IngredientType? type;
   bool isSelected = false;
+  List<Allergen> allergens = []; // Добавлено поле для аллергенов
 
   Ingredient({
     required this.id,
@@ -29,6 +31,7 @@ class Ingredient {
     required this.ingredientTypeId,
     this.imageUrl,
     this.type,
+    this.allergens = const [],
   });
 
   factory Ingredient.fromJson(Map<String, dynamic> json) {
@@ -60,6 +63,18 @@ class Ingredient {
       print('Error parsing IngredientType from ing_igt_id: $e');
     }
 
+    // Парсим аллергены
+    List<Allergen> allergens = [];
+    try {
+      if (json['allergens'] != null && json['allergens'] is List) {
+        allergens = (json['allergens'] as List)
+            .map((allergenJson) => Allergen.fromJson(allergenJson))
+            .toList();
+      }
+    } catch (e) {
+      print('Error parsing allergens: $e');
+    }
+
     return Ingredient(
       id: json['ing_id'],
       name: json['ing_name'] ?? '',
@@ -74,6 +89,7 @@ class Ingredient {
       ingredientTypeId: ingredientTypeId,
       imageUrl: json['ing_img_url'],
       type: type,
+      allergens: allergens,
     );
   }
 
@@ -89,6 +105,7 @@ class Ingredient {
       'ing_hydrates': carbs, // Note: carbs mapped to hydrates field
       'ing_igt_id': ingredientTypeId,
       if (imageUrl != null) 'ing_img_url': imageUrl,
+      'allergen_ids': allergens.map((allergen) => allergen.id).toList(),
     };
   }
 
@@ -104,6 +121,12 @@ class Ingredient {
   // Get category from type (if available)
   String? get category => type?.category;
 
+  // Get allergen names as string
+  String get allergensString {
+    if (allergens.isEmpty) return 'Нет аллергенов';
+    return allergens.map((allergen) => allergen.name).join(', ');
+  }
+
   Ingredient copyWith({
     int? id,
     String? name,
@@ -116,6 +139,7 @@ class Ingredient {
     int? ingredientTypeId,
     String? imageUrl,
     IngredientType? type,
+    List<Allergen>? allergens,
   }) {
     return Ingredient(
       id: id ?? this.id,
@@ -129,6 +153,7 @@ class Ingredient {
       ingredientTypeId: ingredientTypeId ?? this.ingredientTypeId,
       imageUrl: imageUrl ?? this.imageUrl,
       type: type ?? this.type,
+      allergens: allergens ?? this.allergens,
     );
   }
 

@@ -10588,3 +10588,19 @@ DEBUG 2025-05-11 12:23:24,841 utils 29984 30320 (0.016) SELECT "authtoken_token"
 DEBUG 2025-05-11 12:23:24,845 utils 29984 30320 (0.000) SELECT "m2m_usr_ing"."mui_id", "m2m_usr_ing"."mui_quantity", "m2m_usr_ing"."mui_usr_id", "m2m_usr_ing"."mui_ing_id", "m2m_usr_ing"."mui_quantity_type", "ingredient"."ing_id", "ingredient"."ing_name", "ingredient"."ing_exp_date", "ingredient"."ing_weight", "ingredient"."ing_calories", "ingredient"."ing_protein", "ingredient"."ing_fat", "ingredient"."ing_hydrates", "ingredient"."ing_igt_id", "ingredient"."ing_img_url", "ingredient_type"."igt_id", "ingredient_type"."igt_name", "ingredient_type"."igt_img_url" FROM "m2m_usr_ing" INNER JOIN "ingredient" ON ("m2m_usr_ing"."mui_ing_id" = "ingredient"."ing_id") INNER JOIN "ingredient_type" ON ("ingredient"."ing_igt_id" = "ingredient_type"."igt_id") WHERE ("m2m_usr_ing"."mui_usr_id" = 66 AND "m2m_usr_ing"."mui_id" = 285) LIMIT 21; args=(66, 285); alias=default
 DEBUG 2025-05-11 12:23:24,847 utils 29984 30320 (0.000) SELECT "user"."password", "user"."usr_id", "user"."usr_name", "user"."usr_pas_hash", "user"."usr_mail", "user"."usr_height", "user"."usr_weight", "user"."usr_age", "user"."usr_cal_day", "user"."usr_gender", "user"."is_staff", "user"."is_active", "user"."is_superuser", "user"."last_login", "user"."date_joined" FROM "user" WHERE "user"."usr_id" = 66 LIMIT 21; args=(66,); alias=default
 DEBUG 2025-05-11 12:23:24,851 utils 29984 30320 (0.000) DELETE FROM "m2m_usr_ing" WHERE "m2m_usr_ing"."mui_id" IN (285); args=(285,); alias=default
+DEBUG 2025-05-11 12:56:31,224 utils 7304 29928 (0.031) 
+            SELECT
+                c.relname,
+                CASE
+                    WHEN c.relispartition THEN 'p'
+                    WHEN c.relkind IN ('m', 'v') THEN 'v'
+                    ELSE 't'
+                END,
+                obj_description(c.oid, 'pg_class')
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('f', 'm', 'p', 'r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid)
+        ; args=None; alias=default
+DEBUG 2025-05-11 12:56:31,231 utils 7304 29928 (0.015) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default

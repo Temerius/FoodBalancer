@@ -746,6 +746,38 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
                   'Углеводы:',
                   '${ingredient.carbs} г',
                 ),
+
+                // Add allergens display
+                const SizedBox(height: 16),
+                const Divider(),
+                const SizedBox(height: 16),
+                Text(
+                  'Аллергены',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 8),
+                if (ingredient.allergens.isEmpty)
+                  Text(
+                    'Аллергены не указаны',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Colors.grey[600],
+                    ),
+                  )
+                else
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 4,
+                    children: ingredient.allergens.map((allergen) =>
+                        Chip(
+                          label: Text(
+                            allergen.name,
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                          backgroundColor: Colors.orange.withOpacity(0.2),
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                        )
+                    ).toList(),
+                  ),
               ],
 
               const SizedBox(height: 24),

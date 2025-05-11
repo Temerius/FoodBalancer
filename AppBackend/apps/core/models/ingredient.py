@@ -21,6 +21,36 @@ class IngredientType(models.Model):
         return self.igt_name
 
 
+class IngredientToAllergen(models.Model):
+    """Связь между ингредиентом и аллергеном (существующая таблица)"""
+    # Используем правильные имена полей из существующей таблицы
+    mia_ing_id = models.ForeignKey(
+        'Ingredient',
+        on_delete=models.CASCADE,
+        db_column='mia_ing_id',
+        related_name='allergen_links',
+        verbose_name=_('Ингредиент')
+    )
+    mia_alg_id = models.ForeignKey(
+        'Allergen',
+        on_delete=models.CASCADE,
+        db_column='mia_alg_id',
+        related_name='ingredient_links',
+        verbose_name=_('Аллерген')
+    )
+
+    class Meta:
+        db_table = 'm2m_ing_alg'
+        unique_together = [['mia_ing_id', 'mia_alg_id']]
+        verbose_name = _('Связь ингредиент-аллерген')
+        verbose_name_plural = _('Связи ингредиент-аллерген')
+        managed = True  # Так как таблица уже существует
+
+    def __str__(self):
+        return f'{self.mia_ing_id.ing_name} - {self.mia_alg_id.alg_name}'
+
+
+# Update Ingredient model to include allergens relationship
 class Ingredient(models.Model):
     """Модель ингредиента"""
     ing_id = models.AutoField(primary_key=True)
@@ -39,6 +69,14 @@ class Ingredient(models.Model):
         verbose_name=_('Тип ингредиента')
     )
     ing_img_url = models.CharField(_('URL изображения'), max_length=256, null=True, blank=True)
+
+    # Many-to-many relationship with allergens
+    allergens = models.ManyToManyField(
+        'Allergen',
+        through='IngredientToAllergen',
+        related_name='ingredients',
+        verbose_name=_('Аллергены')
+    )
 
     class Meta:
         db_table = 'ingredient'

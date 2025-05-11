@@ -3,10 +3,10 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 from datetime import datetime, timedelta
 
-from ..models import IngredientType, Ingredient, M2MUsrIng
+from ..models import IngredientType, Ingredient, M2MUsrIng, IngredientToAllergen, Allergen
 from ..serializers import IngredientTypeSerializer, IngredientSerializer, IngredientDetailSerializer, \
     UserIngredientSerializer
 
@@ -56,7 +56,26 @@ class IngredientTypeViewSet(viewsets.ReadOnlyModelViewSet):
         return response
 
 
-class IngredientViewSet(viewsets.ModelViewSet):  # Изменено с ReadOnlyModelViewSet на ModelViewSet
+# AppBackend/apps/core/views/ingredient.py - Corrected version with existing table fields
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from django.db.models import Q, Prefetch
+from datetime import datetime, timedelta
+
+from ..models import IngredientType, Ingredient, M2MUsrIng, Allergen, IngredientToAllergen
+from ..serializers import IngredientTypeSerializer, IngredientSerializer, IngredientDetailSerializer, \
+    UserIngredientSerializer
+
+import logging
+import time
+
+# Создаем логгер для модуля ингредиентов
+logger = logging.getLogger('apps.core.refrigerator')
+
+
+class IngredientViewSet(viewsets.ModelViewSet):
     """API для доступа к ингредиентам"""
     queryset = Ingredient.objects.all()
     permission_classes = [IsAuthenticated]
@@ -70,7 +89,12 @@ class IngredientViewSet(viewsets.ModelViewSet):  # Изменено с ReadOnlyM
     def get_queryset(self):
         """Фильтрация ингредиентов по типу или названию"""
         start_time = time.time()
-        queryset = Ingredient.objects.all()
+
+        # Оптимизируем запрос с предзагрузкой связанных данных
+        queryset = Ingredient.objects.select_related('ing_igt_id').prefetch_related(
+            Prefetch('allergens', queryset=Allergen.objects.all()),
+            'allergen_links'
+        )
 
         # Фильтрация по типу
         type_id = self.request.query_params.get('type_id')
@@ -90,37 +114,8 @@ class IngredientViewSet(viewsets.ModelViewSet):  # Изменено с ReadOnlyM
 
         return queryset
 
-    def list(self, request, *args, **kwargs):
-        """Получение списка ингредиентов"""
-        start_time = time.time()
-        user_id = request.user.usr_id
-        search = request.query_params.get('search', '')
-        type_id = request.query_params.get('type_id', '')
-
-        log_params = f"search='{search}'" if search else ""
-        log_params += f", type_id={type_id}" if type_id else ""
-        logger.info(f"Listing ingredients: user_id={user_id}{', ' + log_params if log_params else ''}")
-
-        response = super().list(request, *args, **kwargs)
-        count = response.data['count'] if 'count' in response.data else 'unknown'
-        logger.info(f"Retrieved {count} ingredients for user_id={user_id}, time={time.time() - start_time:.2f}s")
-        return response
-
-    def retrieve(self, request, *args, **kwargs):
-        """Получение конкретного ингредиента"""
-        start_time = time.time()
-        instance = self.get_object()
-        user_id = request.user.usr_id
-        ingredient_id = instance.ing_id
-
-        logger.info(f"Retrieving ingredient: ingredient_id={ingredient_id}, user_id={user_id}")
-        response = super().retrieve(request, *args, **kwargs)
-        logger.info(
-            f"Retrieved ingredient: ingredient_id={ingredient_id}, name='{instance.ing_name}', user_id={user_id}, time={time.time() - start_time:.2f}s")
-        return response
-
     def create(self, request, *args, **kwargs):
-        """Создание нового ингредиента"""
+        """Создание нового ингредиента с поддержкой аллергенов"""
         start_time = time.time()
         user_id = request.user.usr_id
 
@@ -130,14 +125,32 @@ class IngredientViewSet(viewsets.ModelViewSet):  # Изменено с ReadOnlyM
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
-            self.perform_create(serializer)
+            # Создаем ингредиент
+            ingredient = serializer.save()
+
+            # Обработка аллергенов
+            allergen_ids = request.data.get('allergen_ids', [])
+            if allergen_ids:
+                logger.info(
+                    f"Adding allergens to ingredient: ingredient_id={ingredient.ing_id}, allergen_ids={allergen_ids}")
+
+                # Создаем связи с аллергенами
+                for allergen_id in allergen_ids:
+                    try:
+                        IngredientToAllergen.objects.create(
+                            mia_ing_id=ingredient,
+                            mia_alg_id_id=allergen_id
+                        )
+                    except Exception as e:
+                        logger.error(f"Error creating allergen link: allergen_id={allergen_id}, error={e}")
+
             headers = self.get_success_headers(serializer.data)
 
             # Логируем успешное создание
             logger.info(
-                f"Ingredient created successfully: ingredient_id={serializer.data['ing_id']}, "
-                f"name='{serializer.data['ing_name']}', type_id={serializer.data['ing_igt_id']}, "
-                f"user_id={user_id}, time={time.time() - start_time:.2f}s"
+                f"Ingredient created successfully: ingredient_id={ingredient.ing_id}, "
+                f"name='{ingredient.ing_name}', type_id={ingredient.ing_igt_id.igt_id}, "
+                f"allergens={allergen_ids}, user_id={user_id}, time={time.time() - start_time:.2f}s"
             )
 
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
@@ -146,7 +159,7 @@ class IngredientViewSet(viewsets.ModelViewSet):  # Изменено с ReadOnlyM
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
-        """Обновление ингредиента"""
+        """Обновление ингредиента с поддержкой аллергенов"""
         start_time = time.time()
         instance = self.get_object()
         user_id = request.user.usr_id
@@ -154,6 +167,25 @@ class IngredientViewSet(viewsets.ModelViewSet):  # Изменено с ReadOnlyM
         ingredient_name = instance.ing_name
 
         logger.info(f"Updating ingredient: ingredient_id={ingredient_id}, name='{ingredient_name}', user_id={user_id}")
+
+        # Обработка аллергенов
+        allergen_ids = request.data.get('allergen_ids', None)
+        if allergen_ids is not None:
+            logger.info(
+                f"Updating allergens for ingredient: ingredient_id={ingredient_id}, new_allergen_ids={allergen_ids}")
+
+            # Удаляем старые связи
+            IngredientToAllergen.objects.filter(mia_ing_id=instance).delete()
+
+            # Создаем новые связи
+            for allergen_id in allergen_ids:
+                try:
+                    IngredientToAllergen.objects.create(
+                        mia_ing_id=instance,
+                        mia_alg_id_id=allergen_id
+                    )
+                except Exception as e:
+                    logger.error(f"Error updating allergen link: allergen_id={allergen_id}, error={e}")
 
         # Сохраняем старые значения для лога
         old_name = instance.ing_name
@@ -171,6 +203,8 @@ class IngredientViewSet(viewsets.ModelViewSet):  # Изменено с ReadOnlyM
                 changes.append(f"name: '{old_name}' -> '{new_name}'")
             if old_type_id != new_type_id:
                 changes.append(f"type_id: {old_type_id} -> {new_type_id}")
+            if allergen_ids is not None:
+                changes.append(f"allergens updated to: {allergen_ids}")
 
             if changes:
                 logger.info(
@@ -187,34 +221,6 @@ class IngredientViewSet(viewsets.ModelViewSet):  # Изменено с ReadOnlyM
             )
 
         return response
-
-    def destroy(self, request, *args, **kwargs):
-        """Удаление ингредиента"""
-        start_time = time.time()
-        instance = self.get_object()
-        user_id = request.user.usr_id
-        ingredient_id = instance.ing_id
-        ingredient_name = instance.ing_name
-
-        logger.info(f"Deleting ingredient: ingredient_id={ingredient_id}, name='{ingredient_name}', user_id={user_id}")
-
-        # Проверяем, используется ли этот ингредиент в холодильниках пользователей
-        users_count = M2MUsrIng.objects.filter(mui_ing_id=ingredient_id).count()
-
-        if users_count > 0:
-            logger.warning(
-                f"Cannot delete ingredient: ingredient_id={ingredient_id} is used by {users_count} users, user_id={user_id}"
-            )
-            return Response(
-                {"error": f"Этот ингредиент используется в {users_count} холодильниках. Удаление невозможно."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        self.perform_destroy(instance)
-        logger.info(
-            f"Ingredient deleted: ingredient_id={ingredient_id}, name='{ingredient_name}', user_id={user_id}, time={time.time() - start_time:.2f}s"
-        )
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class RefrigeratorViewSet(viewsets.ModelViewSet):
