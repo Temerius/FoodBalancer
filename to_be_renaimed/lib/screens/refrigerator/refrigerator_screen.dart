@@ -30,15 +30,15 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
 
-    // ИСПРАВЛЕНИЕ: Сохраняем выбранную категорию при смене вкладок
+    // ИСПРАВЛЕНО: Сбрасываем категорию при переключении вкладок
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
-        print('TAB CHANGED to index: ${_tabController.index}');
-
-        // При переключении на вкладку истекающих, не сбрасываем категорию
-        // Просто вызываем setState для перестройки UI
+        // После завершения анимации переключения
         if (mounted) {
-          setState(() {});
+          setState(() {
+            // Сбрасываем категорию при переключении вкладок
+            _selectedCategory = 'Все';
+          });
         }
       }
     });
@@ -325,14 +325,35 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
       List<RefrigeratorItem> expiringItems,
       List<IngredientType> userCategories,
       ) {
-    final categoryNames = ['Все', ...userCategories.map((cat) => cat.name)];
+    // ИСПРАВЛЕНО: Выбираем категории в зависимости от активной вкладки
+    final List<String> categoryNames;
+
+    if (_tabController.index == 0) {
+      // На основной вкладке - все категории из холодильника
+      categoryNames = ['Все', ...userCategories.map((cat) => cat.name)];
+    } else {
+      // На вкладке истекающих - только категории из истекающих продуктов
+      categoryNames = _getUniqueCategories(expiringItems);
+    }
+
+    // Проверяем, существует ли выбранная категория в текущем списке
+    if (!categoryNames.contains(_selectedCategory)) {
+      // Если текущей категории нет в списке, сбрасываем на "Все"
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_selectedCategory != 'Все') {
+          setState(() {
+            _selectedCategory = 'Все';
+          });
+        }
+      });
+    }
 
     // Фильтруем истекающие продукты с учетом поиска и категории
     final filteredExpiringItems = _filterExpiringItems(expiringItems);
 
     return Column(
       children: [
-        // ИСПРАВЛЕНО: Поиск на ОБЕИХ вкладках
+        // Поиск на обеих вкладках
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: TextField(
@@ -363,7 +384,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
           ),
         ),
 
-        // Фильтр категорий на обеих вкладках
+        // Фильтр категорий (теперь динамический для каждой вкладки)
         if (categoryNames.length > 1)
           SizedBox(
             height: 50,
@@ -404,12 +425,25 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
             controller: _tabController,
             children: [
               _buildProductsList(filteredItems, isMainTab: true),
-              _buildProductsList(filteredExpiringItems, isMainTab: false), // Передаем отфильтрованные истекающие
+              _buildProductsList(filteredExpiringItems, isMainTab: false),
             ],
           ),
         ),
       ],
     );
+  }
+
+
+  List<String> _getUniqueCategories(List<RefrigeratorItem> items) {
+    final categories = <String>{};
+
+    for (var item in items) {
+      if (item.ingredient?.type?.name != null) {
+        categories.add(item.ingredient!.type!.name);
+      }
+    }
+
+    return ['Все', ...categories.toList()..sort()];
   }
 
   Widget _buildProductsList(List<RefrigeratorItem> products, {required bool isMainTab}) {
