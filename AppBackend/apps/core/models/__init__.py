@@ -1,6 +1,6 @@
 # AppBackend/apps/core/models/__init__.py
 from .base import TimeStampedModel
-from .allergen import Allergen, M2MIngAlg, M2MUsrAlg
+from .allergen import Allergen, M2MUsrAlg
 from .equipment import Equipment, M2MUsrEqp, M2MRcpEqp
 from .ingredient import IngredientType, Ingredient, M2MUsrIng, IngredientToAllergen
 from .recipe import Recipe, Step, Image, M2MStpIgt, FavoriteRecipe

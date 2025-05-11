@@ -9,8 +9,7 @@ from django.views.decorators.cache import cache_page
 
 from ..models import (
     Recipe, Step, M2MStpIgt, FavoriteRecipe,
-    IngredientType, Ingredient, M2MUsrIng,
-    M2MIngAlg
+    IngredientType, Ingredient, M2MUsrIng, IngredientToAllergen
 )
 from ..serializers import (
     RecipeListSerializer, RecipeDetailSerializer,
@@ -101,7 +100,7 @@ class RecipeViewSet(viewsets.ReadOnlyModelViewSet):
             # Получаем ингредиенты с аллергенами
             allergen_ingredients = Ingredient.objects.filter(
                 Exists(
-                    M2MIngAlg.objects.filter(
+                    IngredientToAllergen.objects.filter(
                         mia_ing_id=OuterRef('pk'),
                         mia_alg_id__in=user_allergen_ids
                     )
