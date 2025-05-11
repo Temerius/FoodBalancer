@@ -497,8 +497,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        flex: 2,
+                      // Поле для количества
+                      SizedBox(
+                        width: 120, // Фиксированная ширина
                         child: TextFormField(
                           controller: _quantityController,
                           decoration: const InputDecoration(
@@ -518,18 +519,27 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         ),
                       ),
                       const SizedBox(width: 16),
+                      // Выпадающий список единиц измерения
                       Expanded(
-                        flex: 3,
                         child: DropdownButtonFormField<QuantityType>(
                           value: _quantityType,
                           decoration: const InputDecoration(
                             labelText: 'Единица измерения',
                             prefixIcon: Icon(Icons.straighten),
+                            // Добавляем contentPadding для лучшего отображения
+                            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                           ),
+                          // Уменьшаем padding для элементов списка
+                          isExpanded: true,
                           items: _allowedQuantityTypes.map((type) {
                             return DropdownMenuItem<QuantityType>(
                               value: type,
-                              child: Text(type.toDisplayString()),
+                              child: Text(
+                                type.toDisplayString(),
+                                // Добавляем стиль с меньшим размером шрифта
+                                style: const TextStyle(fontSize: 14),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             );
                           }).toList(),
                           onChanged: (value) {

@@ -36,7 +36,8 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
-        _loadData();
+
+        _refreshData();
       }
     });
   }
@@ -79,7 +80,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
         await _loadExpiringItems();
       }
 
-      // Всегда загружаем статистику
+      // ИСПРАВЛЕНИЕ: Всегда принудительно загружаем статистику
       print('_loadData: Loading statistics');
       await _loadStats();
 
@@ -136,15 +137,49 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     }
   }
 
+  // В файле lib/screens/refrigerator/refrigerator_screen.dart
+
+// 2. Исправить вкладку "Скоро истекают"
   Future<void> _loadExpiringItems() async {
     final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
 
     try {
-      final items = await dataRepository.getExpiringItems();
+      // ИСПРАВЛЕНИЕ: Принудительно загружаем все продукты сначала
+      final allItems = await dataRepository.getRefrigeratorItems(forceRefresh: true);
+
+      // Затем фильтруем истекающие
+      final now = DateTime.now();
+      final today = DateTime(now.year, now.month, now.day);
+      final threeDaysLater = today.add(const Duration(days: 3));
+
+      final expiringItems = allItems.where((item) {
+        if (item.ingredient?.expiryDate == null) return false;
+
+        final expiryDate = DateTime(
+          item.ingredient!.expiryDate!.year,
+          item.ingredient!.expiryDate!.month,
+          item.ingredient!.expiryDate!.day,
+        );
+
+        // Включаем продукты, которые истекают сегодня или в ближайшие 3 дня
+        return !expiryDate.isBefore(today) && !expiryDate.isAfter(threeDaysLater);
+      }).toList();
+
+      // Сортируем по дате истечения (ближайшие первые)
+      expiringItems.sort((a, b) {
+        final aDate = a.ingredient!.expiryDate!;
+        final bDate = b.ingredient!.expiryDate!;
+        return aDate.compareTo(bDate);
+      });
 
       setState(() {
-        _expiringItems = items;
+        _expiringItems = expiringItems;
       });
+
+      print('LOAD EXPIRING ITEMS: Found ${expiringItems.length} expiring items');
+      for (var item in expiringItems) {
+        print('  - ${item.name}: expires ${item.ingredient?.expiryDate}');
+      }
     } catch (e) {
       print('Ошибка загрузки истекающих продуктов: $e');
       if (mounted) {
@@ -204,10 +239,27 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     try {
       final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
 
-      // Принудительно обновляем данные
+      // ИСПРАВЛЕНИЕ: Принудительно обновляем все данные
       await dataRepository.getRefrigeratorItems(forceRefresh: true);
       await dataRepository.getRefrigeratorCategories(forceRefresh: true);
+      await dataRepository.getRefrigeratorStats(forceRefresh: true);
+
+      // Перезагружаем данные
       await _loadData();
+
+      // ИСПРАВЛЕНИЕ: Обновляем правильные данные в зависимости от вкладки
+      if (_tabController.index == 0) {
+        // На основной вкладке обновляем все продукты
+        await _loadItems();
+        await _loadCategories();
+      } else {
+        // На вкладке истекающих обновляем только истекающие
+        await _loadExpiringItems();
+      }
+
+      // Всегда обновляем статистику
+      await _loadStats();
+
     } catch (e) {
       print('Error in _refreshData: $e');
       throw e; // Перебрасываем исключение для обработки выше
@@ -233,7 +285,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
           _expiringItems.removeWhere((i) => i.id == item.id);
         });
 
-        // После удаления проверяем, остались ли продукты этого типа
+        // Проверяем, остались ли продукты этого типа
         final removedItemType = item.ingredient?.type;
         if (removedItemType != null) {
           // Проверяем, есть ли еще продукты этого типа
@@ -254,6 +306,13 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
             });
           }
         }
+
+        // ИСПРАВЛЕНИЕ: Принудительно обновляем статистику после удаления
+        await _loadStats();
+
+        // ИСПРАВЛЕНИЕ: Обновляем данные в репозитории
+        await dataRepository.getRefrigeratorItems(forceRefresh: true);
+        await dataRepository.getRefrigeratorStats(forceRefresh: true);
 
         // Показываем уведомление
         if (mounted) {
@@ -504,7 +563,6 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
   }
 
   Widget _buildProductsList(List<RefrigeratorItem> products) {
-    // ... rest of the build methods remain the same ...
     if (products.isEmpty) {
       return Center(
         child: Column(
@@ -642,16 +700,11 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
                     ),
                   ],
                 ),
-                trailing: IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      '/refrigerator/add-product',
-                      arguments: {'productId': item.id},
-                    ).then((result) => _handleNavigationReturn(result));
-                  },
-                ),
+                // УБРАНА КНОПКА РЕДАКТИРОВАНИЯ!
+                // trailing: IconButton(
+                //   icon: const Icon(Icons.edit),
+                //   onPressed: () { ... },
+                // ),
                 onTap: () {
                   _showProductDetails(context, item);
                 },
@@ -666,9 +719,13 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
   void _showProductDetails(BuildContext context, RefrigeratorItem item) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true,
+      isScrollControlled: true, // Важно для контроля размера
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      // Добавляем ограничение максимальной высоты
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.9,
       ),
       builder: (context) {
         final daysLeft = item.daysLeft;
@@ -676,146 +733,136 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
 
         return Container(
           padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                item.name,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 16),
-
-              if (ingredient != null) ...[
-                _buildDetailRow(
-                  context,
-                  'Тип:',
-                  ingredient.type?.name ?? 'Не указан',
-                ),
-              ],
-
-              _buildDetailRow(
-                context,
-                'Количество:',
-                item.formattedQuantity,
-              ),
-
-              if (ingredient?.expiryDate != null) _buildDetailRow(
-                context,
-                'Срок годности:',
-                ingredient!.expiryDate!.toIso8601String().split('T')[0],
-              ),
-
-              if (daysLeft != null) _buildDetailRow(
-                context,
-                'Осталось дней:',
-                daysLeft.toString(),
-                valueColor: daysLeft <= 0
-                    ? Colors.red
-                    : daysLeft <= 3
-                    ? Colors.orange
-                    : null,
-              ),
-
-              if (ingredient != null) ...[
-                const SizedBox(height: 16),
-                const Divider(),
-                const SizedBox(height: 16),
+          // Делаем содержимое прокручиваемым
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(
-                  'Пищевая ценность',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  item.name,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
-                const SizedBox(height: 8),
-                _buildDetailRow(
-                  context,
-                  'Калории:',
-                  '${ingredient.calories} ккал',
-                ),
-                _buildDetailRow(
-                  context,
-                  'Белки:',
-                  '${ingredient.protein} г',
-                ),
-                _buildDetailRow(
-                  context,
-                  'Жиры:',
-                  '${ingredient.fat} г',
-                ),
-                _buildDetailRow(
-                  context,
-                  'Углеводы:',
-                  '${ingredient.carbs} г',
-                ),
-
-                // Add allergens display
                 const SizedBox(height: 16),
-                const Divider(),
-                const SizedBox(height: 16),
-                Text(
-                  'Аллергены',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 8),
-                if (ingredient.allergens.isEmpty)
-                  Text(
-                    'Аллергены не указаны',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.grey[600],
-                    ),
-                  )
-                else
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 4,
-                    children: ingredient.allergens.map((allergen) =>
-                        Chip(
-                          label: Text(
-                            allergen.name,
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                          backgroundColor: Colors.orange.withOpacity(0.2),
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                        )
-                    ).toList(),
-                  ),
-              ],
 
-              const SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(
-                          context,
-                          '/refrigerator/add-product',
-                          arguments: {'productId': item.id},
-                        ).then((_) => _refreshData());
-                      },
-                      icon: const Icon(Icons.edit),
-                      label: const Text('Редактировать'),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(
-                          context,
-                          '/recipes',
-                          arguments: {'ingredient': item},
-                        );
-                      },
-                      icon: const Icon(Icons.restaurant),
-                      label: const Text('Рецепты'),
-                    ),
+                if (ingredient != null) ...[
+                  _buildDetailRow(
+                    context,
+                    'Тип:',
+                    ingredient.type?.name ?? 'Не указан',
                   ),
                 ],
-              ),
-            ],
+
+                _buildDetailRow(
+                  context,
+                  'Количество:',
+                  item.formattedQuantity,
+                ),
+
+                if (ingredient?.expiryDate != null) _buildDetailRow(
+                  context,
+                  'Срок годности:',
+                  ingredient!.expiryDate!.toIso8601String().split('T')[0],
+                ),
+
+                if (daysLeft != null) _buildDetailRow(
+                  context,
+                  'Осталось дней:',
+                  daysLeft.toString(),
+                  valueColor: daysLeft <= 0
+                      ? Colors.red
+                      : daysLeft <= 3
+                      ? Colors.orange
+                      : null,
+                ),
+
+                if (ingredient != null) ...[
+                  const SizedBox(height: 16),
+                  const Divider(),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Пищевая ценность',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 8),
+                  _buildDetailRow(
+                    context,
+                    'Калории:',
+                    '${ingredient.calories} ккал',
+                  ),
+                  _buildDetailRow(
+                    context,
+                    'Белки:',
+                    '${ingredient.protein} г',
+                  ),
+                  _buildDetailRow(
+                    context,
+                    'Жиры:',
+                    '${ingredient.fat} г',
+                  ),
+                  _buildDetailRow(
+                    context,
+                    'Углеводы:',
+                    '${ingredient.carbs} г',
+                  ),
+
+                  // Добавляем отображение аллергенов
+                  const SizedBox(height: 16),
+                  const Divider(),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Аллергены',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 8),
+                  if (ingredient.allergens.isEmpty)
+                    Text(
+                      'Аллергены не указаны',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.grey[600],
+                      ),
+                    )
+                  else
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 4,
+                      children: ingredient.allergens.map((allergen) =>
+                          Chip(
+                            label: Text(
+                              allergen.name,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                            backgroundColor: Colors.orange.withOpacity(0.2),
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                          )
+                      ).toList(),
+                    ),
+                ],
+
+                const SizedBox(height: 24),
+
+                // УБРАНА КНОПКА РЕДАКТИРОВАНИЯ!
+                // Оставляем только кнопку "Рецепты"
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(
+                        context,
+                        '/recipes',
+                        arguments: {'ingredient': item},
+                      );
+                    },
+                    icon: const Icon(Icons.restaurant),
+                    label: const Text('Рецепты'),
+                  ),
+                ),
+
+                // Добавляем отступ снизу для избежания обрезания
+                const SizedBox(height: 16),
+              ],
+            ),
           ),
         );
       },
