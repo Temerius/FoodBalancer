@@ -1,4 +1,3 @@
-# AppBackend/apps/core/urls.py - CORRECTED VERSION
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
@@ -9,6 +8,7 @@ from .views import (
     MealPlanViewSet, DailyMealPlanViewSet, ActualMealViewSet,
     ShoppingListViewSet
 )
+from .barcode.views import get_product_by_barcode  # Исправленный импорт
 
 app_name = 'core'
 
@@ -30,4 +30,5 @@ router.register(r'shopping-list', ShoppingListViewSet, basename='shopping-list')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('barcode/', get_product_by_barcode, name='barcode'),
 ]
