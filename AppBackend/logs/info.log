@@ -5107,3 +5107,112 @@ INFO 2025-05-11 21:47:12,383 basehttp 2820 24480 "POST /api/refrigerator/ HTTP/1
 INFO 2025-05-11 21:47:12,621 ingredient 2820 24480 Listing refrigerator ingredients: user_id=66
 INFO 2025-05-11 21:47:12,647 ingredient 2820 24480 Retrieved 4 refrigerator ingredients for user_id=66, time=0.03s
 INFO 2025-05-11 21:47:12,667 basehttp 2820 24480 "GET /api/refrigerator/ HTTP/1.1" 200 2088
+INFO 2025-05-11 22:38:23,468 autoreload 21228 14980 Watching for file changes with StatReloader
+INFO 2025-05-11 22:38:23,773 wsgi 21228 7608 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-11 22:38:23,773 wsgi 21228 7608 Environment: config.settings
+INFO 2025-05-11 22:38:23,773 wsgi 21228 7608 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-11 22:38:23,778 wsgi 21228 7608 Application initialized successfully
+INFO 2025-05-11 22:57:02,291 views 21228 14512 Profile accessed: user_id=66
+INFO 2025-05-11 22:57:02,431 basehttp 21228 14512 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 22:57:02,528 ingredient 21228 14512 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 22:57:02,548 basehttp 21228 14512 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 22:57:02,645 views 21228 14512 Profile accessed: user_id=66
+INFO 2025-05-11 22:57:02,655 basehttp 21228 14512 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 22:57:02,737 allergen 21228 14512 Listing all allergens: user_id=66
+INFO 2025-05-11 22:57:02,741 allergen 21228 14512 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-11 22:57:02,754 basehttp 21228 14512 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-11 22:57:02,831 equipment 21228 14512 Listing all equipment: user_id=66
+INFO 2025-05-11 22:57:02,837 equipment 21228 14512 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 22:57:02,847 basehttp 21228 14512 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-11 22:57:02,938 ingredient 21228 14512 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 22:57:02,970 ingredient 21228 14512 Retrieved 4 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-11 22:57:03,010 basehttp 21228 14512 "GET /api/refrigerator/ HTTP/1.1" 200 2088
+INFO 2025-05-11 22:57:03,153 recipe 21228 14512 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 22:57:03,375 basehttp 21228 14512 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 22:57:03,455 recipe 21228 14512 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 22:57:03,592 basehttp 21228 14512 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 22:57:03,793 basehttp 21228 14512 "GET /api/favorites/ HTTP/1.1" 200 1063
+INFO 2025-05-11 22:57:03,882 ingredient 21228 14512 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 22:57:03,905 ingredient 21228 14512 Retrieved 4 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 22:57:03,948 basehttp 21228 14512 "GET /api/refrigerator/ HTTP/1.1" 200 2088
+INFO 2025-05-11 22:57:04,106 allergen 21228 14512 Listing user allergens: user_id=66
+INFO 2025-05-11 22:57:04,116 allergen 21228 14512 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-11 22:57:04,136 basehttp 21228 14512 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-11 22:57:04,203 equipment 21228 14512 Listing user equipment: user_id=66
+INFO 2025-05-11 22:57:04,213 equipment 21228 14512 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 22:57:04,237 basehttp 21228 14512 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-11 22:57:12,892 ingredient 21228 14512 Getting refrigerator categories: user_id=66
+INFO 2025-05-11 22:57:12,897 ingredient 21228 14512 Found 3 categories in refrigerator for user_id=66, time=0.00s
+INFO 2025-05-11 22:57:12,909 basehttp 21228 14512 "GET /api/refrigerator/categories/ HTTP/1.1" 200 461
+INFO 2025-05-11 22:57:14,166 ingredient 21228 14512 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 22:57:14,179 basehttp 21228 14512 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 22:58:51,117 ingredient 21228 15952 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 22:58:51,128 basehttp 21228 15952 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 22:59:04,043 ingredient 21228 15952 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 22:59:04,064 ingredient 21228 15952 Retrieved 4 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 22:59:04,079 basehttp 21228 15952 "GET /api/refrigerator/ HTTP/1.1" 200 2088
+INFO 2025-05-11 22:59:04,133 ingredient 21228 15952 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 22:59:04,152 ingredient 21228 15952 Retrieved 4 refrigerator ingredients for user_id=66, time=0.02s
+INFO 2025-05-11 22:59:04,168 basehttp 21228 15952 "GET /api/refrigerator/ HTTP/1.1" 200 2088
+INFO 2025-05-11 23:02:38,120 ingredient 21228 6872 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 23:02:38,139 basehttp 21228 6872 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 23:15:42,894 views 21228 11984 Profile accessed: user_id=66
+INFO 2025-05-11 23:15:42,910 basehttp 21228 11984 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 23:15:43,010 ingredient 21228 11984 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-11 23:15:43,030 basehttp 21228 11984 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-11 23:15:43,166 views 21228 11984 Profile accessed: user_id=66
+INFO 2025-05-11 23:15:43,179 basehttp 21228 11984 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-11 23:15:43,279 allergen 21228 11984 Listing all allergens: user_id=66
+INFO 2025-05-11 23:15:43,283 allergen 21228 11984 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-11 23:15:43,300 basehttp 21228 11984 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-11 23:15:43,387 equipment 21228 11984 Listing all equipment: user_id=66
+INFO 2025-05-11 23:15:43,392 equipment 21228 11984 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 23:15:43,409 basehttp 21228 11984 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-11 23:15:43,530 ingredient 21228 11984 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 23:15:43,565 ingredient 21228 11984 Retrieved 4 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-11 23:15:43,589 basehttp 21228 11984 "GET /api/refrigerator/ HTTP/1.1" 200 2088
+INFO 2025-05-11 23:15:43,902 recipe 21228 11984 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 23:15:44,164 basehttp 21228 11984 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 23:15:44,269 recipe 21228 11984 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-11 23:15:44,417 basehttp 21228 11984 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-11 23:15:44,606 basehttp 21228 11984 "GET /api/favorites/ HTTP/1.1" 200 1063
+INFO 2025-05-11 23:15:44,712 ingredient 21228 11984 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-11 23:15:44,743 ingredient 21228 11984 Retrieved 4 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-11 23:15:44,791 basehttp 21228 11984 "GET /api/refrigerator/ HTTP/1.1" 200 2088
+INFO 2025-05-11 23:15:44,875 allergen 21228 11984 Listing user allergens: user_id=66
+INFO 2025-05-11 23:15:44,884 allergen 21228 11984 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-11 23:15:44,907 basehttp 21228 11984 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-11 23:15:45,028 equipment 21228 11984 Listing user equipment: user_id=66
+INFO 2025-05-11 23:15:45,036 equipment 21228 11984 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-11 23:15:45,058 basehttp 21228 11984 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-12 00:34:09,157 views 21228 8948 Profile accessed: user_id=66
+INFO 2025-05-12 00:34:09,205 basehttp 21228 8948 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-12 00:34:09,286 ingredient 21228 8948 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-12 00:34:09,491 basehttp 21228 8948 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388
+INFO 2025-05-12 00:34:09,669 views 21228 8948 Profile accessed: user_id=66
+INFO 2025-05-12 00:34:09,680 basehttp 21228 8948 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-12 00:34:09,789 allergen 21228 8948 Listing all allergens: user_id=66
+INFO 2025-05-12 00:34:09,794 allergen 21228 8948 Retrieved unknown allergens, user_id=66, time=0.01s
+INFO 2025-05-12 00:34:09,807 basehttp 21228 8948 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 1711
+INFO 2025-05-12 00:34:09,904 equipment 21228 8948 Listing all equipment: user_id=66
+INFO 2025-05-12 00:34:09,910 equipment 21228 8948 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-12 00:34:09,931 basehttp 21228 8948 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 13914
+INFO 2025-05-12 00:34:10,035 ingredient 21228 8948 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-12 00:34:10,089 ingredient 21228 8948 Retrieved 4 refrigerator ingredients for user_id=66, time=0.05s
+INFO 2025-05-12 00:34:10,147 basehttp 21228 8948 "GET /api/refrigerator/ HTTP/1.1" 200 2088
+INFO 2025-05-12 00:34:10,939 recipe 21228 8948 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-12 00:34:11,272 basehttp 21228 8948 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-12 00:34:11,368 recipe 21228 8948 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-12 00:34:11,536 basehttp 21228 8948 "GET /api/recipes/?limit=100 HTTP/1.1" 200 17502
+INFO 2025-05-12 00:34:11,753 basehttp 21228 8948 "GET /api/favorites/ HTTP/1.1" 200 1063
+INFO 2025-05-12 00:34:11,878 ingredient 21228 8948 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-12 00:34:11,906 ingredient 21228 8948 Retrieved 4 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-12 00:34:11,948 basehttp 21228 8948 "GET /api/refrigerator/ HTTP/1.1" 200 2088
+INFO 2025-05-12 00:34:12,062 allergen 21228 8948 Listing user allergens: user_id=66
+INFO 2025-05-12 00:34:12,073 allergen 21228 8948 Retrieved 3 user allergens, user_id=66, time=0.01s
+INFO 2025-05-12 00:34:12,098 basehttp 21228 8948 "GET /api/user-allergens/ HTTP/1.1" 200 100
+INFO 2025-05-12 00:34:12,200 equipment 21228 8948 Listing user equipment: user_id=66
+INFO 2025-05-12 00:34:12,209 equipment 21228 8948 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-12 00:34:12,229 basehttp 21228 8948 "GET /api/user-equipment/ HTTP/1.1" 200 392
+INFO 2025-05-12 00:34:17,971 ingredient 21228 8948 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-12 00:34:17,984 basehttp 21228 8948 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 14388

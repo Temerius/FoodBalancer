@@ -27,6 +27,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final _proteinController = TextEditingController();
   final _fatController = TextEditingController();
   final _carbsController = TextEditingController();
+  final _barcodeController = TextEditingController();
   DateTime _expiryDate = DateTime.now().add(const Duration(days: 7));
   QuantityType _quantityType = QuantityType.grams;
 
@@ -51,13 +52,80 @@ class _AddProductScreenState extends State<AddProductScreen> {
     QuantityType.liters,
   ];
 
+  void _prefillFromScannedData(Map<String, dynamic> data) {
+    if (data['name'] != null && data['name'].isNotEmpty) {
+      _productNameController.text = data['name'];
+    }
+    if (data['calories'] != null) {
+      _caloriesController.text = data['calories'].toString();
+    }
+    if (data['protein'] != null) {
+      _proteinController.text = data['protein'].toString();
+    }
+    if (data['fat'] != null) {
+      _fatController.text = data['fat'].toString();
+    }
+    if (data['carbs'] != null) {
+      _carbsController.text = data['carbs'].toString();
+    }
+
+    // Здесь можно также установить категорию, если она есть в данных
+    if (data['category'] != null) {
+      final categoryName = data['category'] as String;
+
+      // Поиск ближайшей категории по имени
+      IngredientType? foundType;
+
+      // Сначала ищем точное совпадение
+      for (var type in _allTypes) {
+        if (type.name.toLowerCase() == categoryName.toLowerCase()) {
+          foundType = type;
+          break;
+        }
+      }
+
+      // Если не нашли точное совпадение, ищем частичное
+      if (foundType == null) {
+        for (var type in _allTypes) {
+          if (type.name.toLowerCase().contains(categoryName.toLowerCase()) ||
+              categoryName.toLowerCase().contains(type.name.toLowerCase())) {
+            foundType = type;
+            break;
+          }
+        }
+      }
+
+      if (foundType != null) {
+        setState(() {
+          _selectedType = foundType;
+          _typeSearchController.text = foundType!.name;
+        });
+      }
+    }
+
+    // Отображаем штрих-код, если он есть
+    if (data['barcode'] != null) {
+      print('Product barcode: ${data['barcode']}');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _isEditing = widget.productId != null;
 
-    // Задержка инициализации до получения контекста
+    // Получаем данные от сканера, если есть
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+      if (args != null && args['scanned_data'] != null) {
+        final scannedData = args['scanned_data'] as Map<String, dynamic>;
+        _prefillFromScannedData(scannedData);
+      } else if (args != null && args['barcode'] != null) {
+        // Если только штрих-код без данных
+        _barcodeController.text = args['barcode'];
+      }
+
       _initializeData();
     });
   }
@@ -215,6 +283,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     _proteinController.dispose();
     _fatController.dispose();
     _carbsController.dispose();
+    _barcodeController.dispose();
     super.dispose();
   }
 
