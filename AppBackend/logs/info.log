@@ -394,3 +394,113 @@ INFO 2025-05-14 18:41:28,972 wsgi 17308 8876 ==== Starting FoodBalancer Backend 
 INFO 2025-05-14 18:41:28,972 wsgi 17308 8876 Environment: config.settings
 INFO 2025-05-14 18:41:28,972 wsgi 17308 8876 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
 INFO 2025-05-14 18:41:28,977 wsgi 17308 8876 Application initialized successfully
+INFO 2025-05-14 18:47:23,835 views 17308 30524 Profile accessed: user_id=66
+INFO 2025-05-14 18:47:24,146 basehttp 17308 30524 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-14 18:47:24,240 ingredient 17308 30524 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-14 18:47:24,317 basehttp 17308 30524 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-14 18:47:24,463 views 17308 30524 Profile accessed: user_id=66
+INFO 2025-05-14 18:47:24,483 basehttp 17308 30524 "GET /api/users/profile/ HTTP/1.1" 200 151
+INFO 2025-05-14 18:47:24,578 allergen 17308 30524 Listing all allergens: user_id=66
+INFO 2025-05-14 18:47:24,601 allergen 17308 30524 Retrieved unknown allergens, user_id=66, time=0.02s
+INFO 2025-05-14 18:47:24,618 basehttp 17308 30524 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 2058
+INFO 2025-05-14 18:47:24,705 equipment 17308 30524 Listing all equipment: user_id=66
+INFO 2025-05-14 18:47:24,733 equipment 17308 30524 Retrieved unknown equipment items, user_id=66, time=0.03s
+INFO 2025-05-14 18:47:24,758 basehttp 17308 30524 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 15147
+INFO 2025-05-14 18:47:24,845 ingredient 17308 30524 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-14 18:47:24,924 ingredient 17308 30524 Retrieved 4 refrigerator ingredients for user_id=66, time=0.08s
+INFO 2025-05-14 18:47:24,976 basehttp 17308 30524 "GET /api/refrigerator/ HTTP/1.1" 200 2213
+INFO 2025-05-14 18:47:25,097 recipe 17308 30524 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-14 18:47:25,462 basehttp 17308 30524 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20085
+INFO 2025-05-14 18:47:25,545 recipe 17308 30524 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-14 18:47:25,730 basehttp 17308 30524 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20085
+INFO 2025-05-14 18:47:25,879 basehttp 17308 30524 "GET /api/favorites/ HTTP/1.1" 200 1262
+INFO 2025-05-14 18:47:25,950 ingredient 17308 30524 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-14 18:47:25,984 ingredient 17308 30524 Retrieved 4 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-14 18:47:26,052 basehttp 17308 30524 "GET /api/refrigerator/ HTTP/1.1" 200 2213
+INFO 2025-05-14 18:47:26,137 allergen 17308 30524 Listing user allergens: user_id=66
+INFO 2025-05-14 18:47:26,164 allergen 17308 30524 Retrieved 3 user allergens, user_id=66, time=0.03s
+INFO 2025-05-14 18:47:26,187 basehttp 17308 30524 "GET /api/user-allergens/ HTTP/1.1" 200 133
+INFO 2025-05-14 18:47:26,309 equipment 17308 30524 Listing user equipment: user_id=66
+INFO 2025-05-14 18:47:26,332 equipment 17308 30524 Retrieved 2 user equipment items, user_id=66, time=0.02s
+INFO 2025-05-14 18:47:26,358 basehttp 17308 30524 "GET /api/user-equipment/ HTTP/1.1" 200 432
+INFO 2025-05-14 18:47:55,832 views 17308 17924 Запрос информации по штрихкоду: 4810067087007
+INFO 2025-05-14 18:48:08,995 views 17308 17924 Найден продукт по штрихкоду 4810067087007: Вафли Черноморские Топ Спартак
+INFO 2025-05-14 18:48:09,050 views 17308 17924 Получено 96 типов ингредиентов и 50 аллергенов из БД
+INFO 2025-05-14 18:48:09,050 ai_helper 17308 17924 Инициализация AIHelper с endpoint: https://flowprompt-useast.openai.azure.com/
+INFO 2025-05-14 18:48:09,499 ai_helper 17308 17924 Клиент OpenAI успешно инициализирован, время: 0.45s
+INFO 2025-05-14 18:48:09,500 ai_helper 17308 17924 Начало классификации продукта: 'Вафли Черноморские Топ Спартак'
+INFO 2025-05-14 18:48:11,863 ai_helper 17308 17924 Продукт 'Вафли Черноморские Топ Спартак' классифицирован как 'Вафли' с аллергенами: ['Молоко', 'Яйцо', 'Пшеница'], время: 2.36s
+INFO 2025-05-14 18:48:11,863 views 17308 17924 Успешно обработан запрос для штрихкода 4810067087007, время выполнения: 16.03s
+INFO 2025-05-14 18:48:11,883 basehttp 17308 17924 "GET /api/barcode/?barcode=4810067087007 HTTP/1.1" 200 1165
+INFO 2025-05-14 18:49:22,178 views 17308 21076 Запрос информации по штрихкоду: 4810067087007
+INFO 2025-05-14 18:49:34,849 views 17308 21076 Найден продукт по штрихкоду 4810067087007: Вафли Черноморские Топ Спартак
+INFO 2025-05-14 18:49:34,859 views 17308 21076 Получено 96 типов ингредиентов и 50 аллергенов из БД
+INFO 2025-05-14 18:49:34,860 ai_helper 17308 21076 Инициализация AIHelper с endpoint: https://flowprompt-useast.openai.azure.com/
+INFO 2025-05-14 18:49:35,252 ai_helper 17308 21076 Клиент OpenAI успешно инициализирован, время: 0.39s
+INFO 2025-05-14 18:49:35,253 ai_helper 17308 21076 Начало классификации продукта: 'Вафли Черноморские Топ Спартак'
+INFO 2025-05-14 18:49:36,858 ai_helper 17308 21076 Продукт 'Вафли Черноморские Топ Спартак' классифицирован как 'Вафли' с аллергенами: ['Молоко', 'Яйцо', 'Пшеница'], время: 1.61s
+INFO 2025-05-14 18:49:36,859 views 17308 21076 Успешно обработан запрос для штрихкода 4810067087007, время выполнения: 14.68s
+INFO 2025-05-14 18:49:36,878 basehttp 17308 21076 "GET /api/barcode/?barcode=4810067087007 HTTP/1.1" 200 1165
+INFO 2025-05-14 18:49:38,464 ingredient 17308 21076 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-14 18:49:38,503 basehttp 17308 21076 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-14 18:50:02,253 ingredient 17308 12576 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-14 18:50:02,288 basehttp 17308 12576 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-14 18:50:05,006 ingredient 17308 12576 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-14 18:50:05,035 basehttp 17308 12576 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-14 18:50:21,745 ingredient 17308 20536 Creating new ingredient: user_id=66, data={'ing_name': 'Вафли Черноморские Топ Спартак', 'ing_exp_date': '2025-05-19', 'ing_weight': 100, 'ing_calories': 520, 'ing_protein': 6, 'ing_fat': 29, 'ing_hydrates': 60, 'ing_igt_id': 94, 'allergen_ids': []}
+INFO 2025-05-14 18:50:21,829 ingredient 17308 20536 Ingredient created successfully: ingredient_id=125, name='Вафли Черноморские Топ Спартак', type_id=94, user_id=66, time=0.08s
+INFO 2025-05-14 18:50:21,856 basehttp 17308 20536 "POST /api/ingredients/ HTTP/1.1" 201 231
+INFO 2025-05-14 18:50:21,984 ingredient 17308 20536 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-14 18:50:22,050 ingredient 17308 20536 Ingredient added to refrigerator: ingredient_id=125, name='Вафли Черноморские Топ Спартак', quantity=87 grams, user_id=66, time=0.07s
+INFO 2025-05-14 18:50:22,092 basehttp 17308 20536 "POST /api/refrigerator/ HTTP/1.1" 201 508
+INFO 2025-05-14 18:51:03,315 views 17308 19312 Запрос информации по штрихкоду: 4620004250926
+INFO 2025-05-14 18:51:20,784 views 17308 19312 Найден продукт по штрихкоду 4620004250926: Козинак подсолнечный
+INFO 2025-05-14 18:51:20,794 views 17308 19312 Получено 96 типов ингредиентов и 50 аллергенов из БД
+INFO 2025-05-14 18:51:20,794 ai_helper 17308 19312 Инициализация AIHelper с endpoint: https://flowprompt-useast.openai.azure.com/
+INFO 2025-05-14 18:51:21,225 ai_helper 17308 19312 Клиент OpenAI успешно инициализирован, время: 0.43s
+INFO 2025-05-14 18:51:21,225 ai_helper 17308 19312 Начало классификации продукта: 'Козинак подсолнечный'
+INFO 2025-05-14 18:51:22,670 ai_helper 17308 19312 Продукт 'Козинак подсолнечный' классифицирован как 'Козинак' с аллергенами: ['Арахис', 'Кунжут', 'Миндаль', 'Фундук', 'Грецкий орех'], время: 1.44s
+INFO 2025-05-14 18:51:22,671 views 17308 19312 Успешно обработан запрос для штрихкода 4620004250926, время выполнения: 19.36s
+INFO 2025-05-14 18:51:22,689 basehttp 17308 19312 "GET /api/barcode/?barcode=4620004250926 HTTP/1.1" 200 893
+INFO 2025-05-14 18:51:23,980 views 17308 19312 Запрос информации по штрихкоду: 4620004250926
+INFO 2025-05-14 18:51:42,432 views 17308 19312 Найден продукт по штрихкоду 4620004250926: Козинак подсолнечный
+INFO 2025-05-14 18:51:42,442 views 17308 19312 Получено 96 типов ингредиентов и 50 аллергенов из БД
+INFO 2025-05-14 18:51:42,442 ai_helper 17308 19312 Инициализация AIHelper с endpoint: https://flowprompt-useast.openai.azure.com/
+INFO 2025-05-14 18:51:42,820 ai_helper 17308 19312 Клиент OpenAI успешно инициализирован, время: 0.38s
+INFO 2025-05-14 18:51:42,821 ai_helper 17308 19312 Начало классификации продукта: 'Козинак подсолнечный'
+INFO 2025-05-14 18:51:44,348 ai_helper 17308 19312 Продукт 'Козинак подсолнечный' классифицирован как 'Козинак' с аллергенами: ['Арахис', 'Кунжут', 'Миндаль', 'Фундук', 'Грецкий орех'], время: 1.53s
+INFO 2025-05-14 18:51:44,348 views 17308 19312 Успешно обработан запрос для штрихкода 4620004250926, время выполнения: 20.37s
+INFO 2025-05-14 18:51:44,369 basehttp 17308 19312 "GET /api/barcode/?barcode=4620004250926 HTTP/1.1" 200 893
+INFO 2025-05-14 18:52:29,843 views 17308 12196 Запрос информации по штрихкоду: 4620004250926
+INFO 2025-05-14 18:52:48,764 views 17308 12196 Найден продукт по штрихкоду 4620004250926: Козинак подсолнечный
+INFO 2025-05-14 18:52:48,772 views 17308 12196 Получено 96 типов ингредиентов и 50 аллергенов из БД
+INFO 2025-05-14 18:52:48,773 ai_helper 17308 12196 Инициализация AIHelper с endpoint: https://flowprompt-useast.openai.azure.com/
+INFO 2025-05-14 18:52:49,121 ai_helper 17308 12196 Клиент OpenAI успешно инициализирован, время: 0.35s
+INFO 2025-05-14 18:52:49,122 ai_helper 17308 12196 Начало классификации продукта: 'Козинак подсолнечный'
+INFO 2025-05-14 18:52:50,386 ai_helper 17308 12196 Продукт 'Козинак подсолнечный' классифицирован как 'Козинак' с аллергенами: ['Арахис', 'Кунжут', 'Миндаль', 'Фундук', 'Грецкий орех'], время: 1.26s
+INFO 2025-05-14 18:52:50,386 views 17308 12196 Успешно обработан запрос для штрихкода 4620004250926, время выполнения: 20.54s
+INFO 2025-05-14 18:52:50,404 basehttp 17308 12196 "GET /api/barcode/?barcode=4620004250926 HTTP/1.1" 200 893
+INFO 2025-05-14 18:53:03,880 views 17308 12196 Запрос информации по штрихкоду: 4620004250926
+INFO 2025-05-14 18:53:20,893 views 17308 12196 Найден продукт по штрихкоду 4620004250926: Козинак подсолнечный
+INFO 2025-05-14 18:53:20,905 views 17308 12196 Получено 96 типов ингредиентов и 50 аллергенов из БД
+INFO 2025-05-14 18:53:20,905 ai_helper 17308 12196 Инициализация AIHelper с endpoint: https://flowprompt-useast.openai.azure.com/
+INFO 2025-05-14 18:53:21,340 ai_helper 17308 12196 Клиент OpenAI успешно инициализирован, время: 0.44s
+INFO 2025-05-14 18:53:21,341 ai_helper 17308 12196 Начало классификации продукта: 'Козинак подсолнечный'
+INFO 2025-05-14 18:53:23,060 ai_helper 17308 12196 Продукт 'Козинак подсолнечный' классифицирован как 'Козинак' с аллергенами: ['Арахис', 'Кунжут', 'Миндаль', 'Фундук', 'Грецкий орех'], время: 1.72s
+INFO 2025-05-14 18:53:23,061 views 17308 12196 Успешно обработан запрос для штрихкода 4620004250926, время выполнения: 19.18s
+INFO 2025-05-14 18:53:23,084 basehttp 17308 12196 "GET /api/barcode/?barcode=4620004250926 HTTP/1.1" 200 893
+INFO 2025-05-14 18:53:59,189 views 17308 31464 Запрос информации по штрихкоду: 4810067087007
+INFO 2025-05-14 18:54:11,171 views 17308 31464 Найден продукт по штрихкоду 4810067087007: Вафли Черноморские Топ Спартак
+INFO 2025-05-14 18:54:11,181 views 17308 31464 Получено 96 типов ингредиентов и 50 аллергенов из БД
+INFO 2025-05-14 18:54:11,181 ai_helper 17308 31464 Инициализация AIHelper с endpoint: https://flowprompt-useast.openai.azure.com/
+INFO 2025-05-14 18:54:11,696 ai_helper 17308 31464 Клиент OpenAI успешно инициализирован, время: 0.51s
+INFO 2025-05-14 18:54:11,697 ai_helper 17308 31464 Начало классификации продукта: 'Вафли Черноморские Топ Спартак'
+INFO 2025-05-14 18:54:13,311 ai_helper 17308 31464 Продукт 'Вафли Черноморские Топ Спартак' классифицирован как 'Вафли' с аллергенами: ['Молоко', 'Яйцо', 'Пшеница'], время: 1.61s
+INFO 2025-05-14 18:54:13,311 views 17308 31464 Успешно обработан запрос для штрихкода 4810067087007, время выполнения: 14.12s
+INFO 2025-05-14 18:54:13,330 basehttp 17308 31464 "GET /api/barcode/?barcode=4810067087007 HTTP/1.1" 200 1165
+INFO 2025-05-14 18:54:14,671 ingredient 17308 31464 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-14 18:54:14,709 basehttp 17308 31464 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-14 18:54:34,861 ingredient 17308 19748 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-14 18:54:34,883 basehttp 17308 19748 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-14 18:54:36,625 ingredient 17308 19748 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-14 18:54:36,647 basehttp 17308 19748 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563

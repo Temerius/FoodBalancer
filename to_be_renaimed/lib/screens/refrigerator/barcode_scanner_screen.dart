@@ -156,8 +156,16 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
       print('\n===== PROCESSING BARCODE WITH OUR API =====');
       print('Sending barcode to server: $barcode');
 
+      // Показываем индикатор загрузки с сообщением о длительной обработке
+      _showLoadingDialog('Запрос обрабатывается. Это может занять до 60 секунд...');
+
       // Получаем данные о продукте через наш API
       final productData = await _barcodeService.fetchProductByBarcode(barcode);
+
+      // Закрываем диалог загрузки после получения ответа
+      if (mounted) {
+        Navigator.pop(context);
+      }
 
       // Подробный вывод ответа сервера
       print('\n===== SERVER RESPONSE =====');
@@ -215,6 +223,11 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
         _showBarcodeInfo(barcode);
       }
     } catch (e) {
+      // Закрываем диалог загрузки при ошибке
+      if (mounted) {
+        Navigator.pop(context);
+      }
+
       print('\n===== ERROR PROCESSING BARCODE =====');
       print('Error type: ${e.runtimeType}');
       print('Error message: $e');
@@ -225,7 +238,13 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
         setState(() {
           _scanStatus = 'Ошибка поиска продукта';
         });
-        _showBarcodeInfo(barcode);
+
+        // Показываем различные сообщения в зависимости от типа ошибки
+        if (e.toString().contains('TimeoutException')) {
+          _showTimeoutErrorDialog(barcode);
+        } else {
+          _showBarcodeInfo(barcode);
+        }
       }
     } finally {
       if (mounted) {
@@ -236,6 +255,51 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
         });
       }
     }
+  }
+
+  // Новый метод для отображения индикатора загрузки
+  void _showLoadingDialog(String message) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(height: 20),
+              Text(message, textAlign: TextAlign.center),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // Новый метод для отображения ошибки таймаута
+  void _showTimeoutErrorDialog(String barcode) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Превышено время ожидания'),
+          content: const Text(
+              'Сервер не успел обработать запрос в отведенное время. '
+                  'Это может быть вызвано повышенной нагрузкой или сложностью обработки данного штрих-кода.'
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _showBarcodeInfo(barcode);
+              },
+              child: const Text('Понятно'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _goToAddProductWithData(Map<String, dynamic> data) {

@@ -14,9 +14,13 @@ class BarcodeService {
       print('\n===== FETCHING PRODUCT BY BARCODE =====');
       print('Barcode: $barcode');
       print('Sending request to: /api/barcode/?barcode=$barcode');
+      print('Using extended timeout for barcode processing...');
 
-      // Вызываем наш API-эндпоинт
-      final response = await _apiService.get('/api/barcode/?barcode=$barcode');
+      // Вызываем наш API-эндпоинт с увеличенным таймаутом в 60 секунд
+      final response = await _apiService.getWithExtendedTimeout(
+        '/api/barcode/?barcode=$barcode',
+        timeout: const Duration(seconds: 60),
+      );
 
       print('\n===== SERVER RESPONSE RAW =====');
       print('Response type: ${response.runtimeType}');
@@ -48,6 +52,15 @@ class BarcodeService {
       print('\n===== ERROR FETCHING PRODUCT =====');
       print('Error type: ${e.runtimeType}');
       print('Error message: $e');
+
+      // Добавляем понятное сообщение для пользователя в случае таймаута
+      if (e is TimeoutException || e.toString().contains('TimeoutException')) {
+        print('SERVER IS PROCESSING REQUEST LONGER THAN EXPECTED');
+
+        // Можно будет показать пользователю соответствующее сообщение
+        // о том, что сервер выполняет долгую операцию
+      }
+
       return null;
     }
   }

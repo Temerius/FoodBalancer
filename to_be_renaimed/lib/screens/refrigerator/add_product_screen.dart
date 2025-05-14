@@ -28,6 +28,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final _fatController = TextEditingController();
   final _carbsController = TextEditingController();
   final _barcodeController = TextEditingController();
+  Map<String, dynamic>? _pendingScannedData;
   DateTime _expiryDate = DateTime.now().add(const Duration(days: 7));
   QuantityType _quantityType = QuantityType.grams;
 
@@ -89,6 +90,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
     print('Data received: $data');
 
     try {
+      // Проверяем, загружены ли необходимые данные
+      if (_allTypes.isEmpty || _allAllergens.isEmpty) {
+        print('Types or allergens not loaded yet, saving data for later');
+        _pendingScannedData = Map<String, dynamic>.from(data);
+        return;
+      }
+
       // Заполняем название продукта
       if (data['name'] != null && data['name'].toString().isNotEmpty) {
         _productNameController.text = data['name'].toString();
@@ -123,7 +131,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       }
 
       // Устанавливаем тип ингредиента по ID (из классификации ИИ)
-      if (data['ingredient_type_id'] != null && _allTypes.isNotEmpty) {
+      if (data['ingredient_type_id'] != null) {
         final typeId = data['ingredient_type_id'];
 
         // Ищем и устанавливаем соответствующий тип
@@ -145,24 +153,27 @@ class _AddProductScreenState extends State<AddProductScreen> {
       }
 
       // Устанавливаем аллергены, если они есть
-      if (data['allergen_ids'] != null && data['allergen_ids'] is List && _allAllergens.isNotEmpty) {
+      if (data['allergen_ids'] != null && data['allergen_ids'] is List) {
         print('Setting allergens from IDs: ${data['allergen_ids']}');
         List<dynamic> allergenIds = data['allergen_ids'];
 
         // Сбрасываем текущие выбранные аллергены
         _selectedAllergens.clear();
-        for (var allergen in _allAllergens) {
-          allergen.isSelected = false;
-        }
 
         // Отмечаем аллергены как выбранные
-        for (var allergen in _allAllergens) {
-          if (allergenIds.contains(allergen.id)) {
-            print('Setting allergen as selected: ${allergen.name} (ID: ${allergen.id})');
-            allergen.isSelected = true;
-            _selectedAllergens.add(allergen);
+        setState(() {
+          for (var allergen in _allAllergens) {
+            // Сначала сбрасываем статус
+            allergen.isSelected = false;
+
+            // Затем устанавливаем по списку ID
+            if (allergenIds.contains(allergen.id)) {
+              print('Setting allergen as selected: ${allergen.name} (ID: ${allergen.id})');
+              allergen.isSelected = true;
+              _selectedAllergens.add(allergen);
+            }
           }
-        }
+        });
       }
 
       // Отображаем штрих-код, если он есть
@@ -171,11 +182,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
         print('Set barcode: ${data['barcode']}');
       }
 
-      // Если есть информация о составе, сохраняем ее
+      // Если есть информация о составе, сохраняем ее (в будущем можно добавить поле)
       if (data['ingredients'] != null && data['ingredients'].toString().isNotEmpty) {
         print('Product ingredients: ${data['ingredients']}');
-        // Здесь можно добавить поле для состава, если нужно
       }
+
+      // Отладка состояния контроллеров
+      _debugPrintControllers();
 
       print('Prefilling complete');
     } catch (e) {
@@ -237,12 +250,45 @@ class _AddProductScreenState extends State<AddProductScreen> {
   }
 
   Future<void> _initializeData() async {
-    _dataRepository = Provider.of<DataRepository>(context, listen: false);
-    await _loadIngredientTypes();
-    await _loadAllergens();
+    setState(() {
+      _isLoading = true;
+    });
 
-    if (_isEditing) {
-      await _loadExistingProduct();
+    try {
+      final dataRepository = Provider.of<DataRepository>(context, listen: false);
+
+      // Инициализируем dataRepository, если не был инициализирован
+      if (_dataRepository == null) {
+        _dataRepository = dataRepository;
+      }
+
+      print('\n===== LOADING TYPES AND ALLERGENS =====');
+
+      // Загружаем типы ингредиентов
+      await _loadIngredientTypes();
+
+      // Загружаем аллергены
+      await _loadAllergens();
+
+      // Теперь, когда данные загружены, мы можем использовать отложенные данные
+      if (_pendingScannedData != null) {
+        print('Found pending scanned data, applying it now that types and allergens are loaded');
+        _prefillFromScannedData(_pendingScannedData!);
+        _pendingScannedData = null; // Очищаем, так как мы их уже использовали
+      }
+
+      if (_isEditing) {
+        await _loadExistingProduct();
+      }
+    } catch (e) {
+      print('Error in _initializeData: $e');
+      setState(() {
+        _error = e.toString();
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -261,10 +307,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
         final scannedData = args['scanned_data'] as Map<String, dynamic>;
         print('Scanned data: $scannedData');
 
-        // Заполняем форму полученными данными
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          _prefillFromScannedData(scannedData);
-        });
+        // Сохраняем данные, но не заполняем сразу
+        // Заполнение будет в _initializeData после загрузки типов и аллергенов
+        _pendingScannedData = Map<String, dynamic>.from(scannedData);
       } else if (args.containsKey('barcode')) {
         // Если только штрих-код без данных
         print('Found barcode in arguments: ${args['barcode']}');
@@ -509,29 +554,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   ),
                   const SizedBox(height: 12),
                   TextFormField(
-                    controller: _typeSearchController,
+                    controller: _productNameController,
                     decoration: InputDecoration(
-                      labelText: 'Тип продукта',
-                      hintText: 'Например: Молочные продукты, Овощи',
-                      prefixIcon: const Icon(Icons.category),
-                      suffixIcon: _selectedType != null
-                          ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          setState(() {
-                            _selectedType = null;
-                            _typeSearchController.clear();
-                            _searchResults = _allTypes;
-                          });
-                        },
-                      )
-                          : null,
+                      labelText: 'Название продукта',
+                      hintText: 'Например: Молоко 3.2%, Помидоры черри',
+                      prefixIcon: const Icon(Icons.fastfood),
                     ),
-                    enabled: !_isEditing,
-                    onChanged: _searchTypes,
+                    // Удалено условие enabled, теперь поле всегда активно
                     validator: (value) {
-                      if (_selectedType == null) {
-                        return 'Пожалуйста, выберите тип продукта';
+                      if (value == null || value.isEmpty) {
+                        return 'Введите название продукта';
                       }
                       return null;
                     },

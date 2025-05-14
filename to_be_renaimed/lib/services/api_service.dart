@@ -307,6 +307,53 @@ class ApiService {
     }
   }
 
+  Future<Map<String, dynamic>> getWithExtendedTimeout(String endpoint, {Duration timeout = const Duration(seconds: 60)}) async {
+    // Check connection before making request
+    final hasConnection = await _networkUtil.checkConnection();
+    if (!hasConnection) {
+      throw NoConnectionException(
+          'Нет подключения к интернету. Запрос: GET $endpoint'
+      );
+    }
+
+    try {
+      if (DEBUG) {
+        print('API Request (Extended Timeout: ${timeout.inSeconds}s): GET $baseUrl$endpoint');
+        print('Headers: $_headers');
+      }
+
+      final response = await _client.get(
+        Uri.parse('$baseUrl$endpoint'),
+        headers: _headers,
+      ).timeout(timeout); // Используем увеличенный таймаут
+
+      if (DEBUG) {
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body.substring(0,
+            response.body.length > 200 ? 200 : response.body.length)}...');
+      }
+
+      return _handleResponse(response);
+    } catch (e) {
+      if (e is TimeoutException) {
+        // Специфичная обработка для таймаутов
+        if (DEBUG) {
+          print('API Request Timeout: $e');
+        }
+        throw TimeoutException(
+            'Превышено время ожидания ответа от сервера (${timeout.inSeconds} сек). '
+                'Возможно, сервер занят обработкой других запросов. Запрос: GET $endpoint'
+        );
+      } else {
+        // Общая обработка ошибок
+        if (DEBUG) {
+          print('API Error: $e');
+        }
+        throw ApiException('Ошибка при запросе: $e. Запрос: GET $endpoint');
+      }
+    }
+  }
+
   // Handle response
   Map<String, dynamic> _handleResponse(http.Response response) {
     if (response.statusCode >= 200 && response.statusCode < 300) {
