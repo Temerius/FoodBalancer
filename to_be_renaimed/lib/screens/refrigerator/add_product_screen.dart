@@ -34,6 +34,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
   DateTime _expiryDate = DateTime.now().add(const Duration(days: 7));
   QuantityType _quantityType = QuantityType.grams;
 
+  int? _pendingTypeId;
+
   bool _isEditing = false;
   bool _isLoading = false;
   bool _isSearchingTypes = false;
@@ -361,7 +363,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    // Получаем аргументы от сканера
+    // Получаем аргументы от сканера или списка покупок
     final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
     print('\n===== CHECKING ROUTE ARGUMENTS =====');
     print('Arguments: $args');
@@ -380,6 +382,53 @@ class _AddProductScreenState extends State<AddProductScreen> {
         print('Found barcode in arguments: ${args['barcode']}');
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _barcodeController.text = args['barcode'].toString();
+        });
+      } else if (args.containsKey('prefill_data')) {
+        // Обработка данных из списка покупок
+        print('Found prefill_data in arguments');
+        final prefillData = args['prefill_data'] as Map<String, dynamic>;
+        print('Prefill data: $prefillData');
+
+        // Заполняем форму данными из списка покупок
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          // Заполняем название продукта
+          if (prefillData.containsKey('name') && prefillData['name'] != null) {
+            _productNameController.text = prefillData['name'].toString();
+            print('Set product name: ${prefillData['name']}');
+          }
+
+          // Заполняем количество
+          if (prefillData.containsKey('quantity') && prefillData['quantity'] != null) {
+            _quantityController.text = prefillData['quantity'].toString();
+            print('Set quantity: ${prefillData['quantity']}');
+          }
+
+          // Устанавливаем тип единицы измерения
+          if (prefillData.containsKey('quantity_type') && prefillData['quantity_type'] != null) {
+            final quantityType = prefillData['quantity_type'] as QuantityType;
+            _quantityType = quantityType;
+            print('Set quantity type: ${quantityType.toString()}');
+          }
+
+          // Запоминаем ID типа ингредиента, чтобы установить его после загрузки списка типов
+          if (prefillData.containsKey('ingredient_type_id') && prefillData['ingredient_type_id'] != null) {
+            int typeId = prefillData['ingredient_type_id'] as int;
+
+            // Находим тип по ID среди загруженных типов или ждем загрузки
+            if (_allTypes.isNotEmpty) {
+              _findTypeById(typeId);
+            } else {
+              // Сохраняем ID для поиска после загрузки типов
+              _pendingTypeId = typeId;
+
+              // Если есть название типа, пока устанавливаем его в поле поиска
+              if (prefillData.containsKey('ingredient_type_name') &&
+                  prefillData['ingredient_type_name'] != null) {
+                _typeSearchController.text = prefillData['ingredient_type_name'].toString();
+                print('Set type name: ${prefillData['ingredient_type_name']}');
+              }
+            }
+          }
         });
       }
     } else {
@@ -406,6 +455,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
         print('Loaded ${_allTypes.length} ingredient types');
 
+        if (_pendingTypeId != null) {
+          print('Applying pending ingredient type ID: $_pendingTypeId');
+          _findTypeById(_pendingTypeId!);
+          _pendingTypeId = null;
+        }
         // Если у нас есть отложенные данные и в них есть ingredient_type_id,
         // применяем его теперь, когда типы загружены
         if (_pendingScannedData != null && _pendingScannedData!.containsKey('ingredient_type_id')) {

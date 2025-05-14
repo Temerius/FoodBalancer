@@ -110,24 +110,40 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     if (result == 'scan') {
       // Переходим к сканеру штрих-кода
       if (mounted) {
+        // Сразу помечаем элемент как выбранный
+        _toggleItemChecked(item, true);
+
+        // Переходим к сканеру штрих-кода
         Navigator.pushNamed(context, '/refrigerator/barcode-scanner')
-            .then((value) {
-          // Когда возвращаемся из сканера штрих-кода, проверяем, был ли продукт добавлен в холодильник
-          if (value == true) {
-            // Помечаем элемент как выбранный в списке покупок
-            _toggleItemChecked(item, true);
-          }
-          _loadData(); // Перезагружаем данные списка покупок
+            .then((_) {
+          // Просто перезагружаем данные при возврате
+          _loadData();
         });
       }
     } else if (result == 'manual') {
-      // Переходим к экрану добавления продукта
+      // Переходим к экрану добавления продукта с предварительно заполненными данными
       if (mounted) {
-        Navigator.pushNamed(context, '/refrigerator/add-product')
-            .then((value) {
+        // Создаем аргументы для передачи в экран добавления продукта
+        final args = {
+          'prefill_data': {
+            'name': item.name, // Название продукта
+            'quantity': item.quantity.toString(), // Количество
+            'quantity_type': item.quantityType, // Тип единицы измерения
+            'ingredient_type_id': item.ingredientTypeId, // ID типа ингредиента
+            'ingredient_type_name': item.ingredientType?.name, // Название типа ингредиента
+          },
+          'shopping_item_id': item.id // ID элемента списка покупок
+        };
+
+        // Открываем экран добавления с данными
+        Navigator.pushNamed(
+          context,
+          '/refrigerator/add-product',
+          arguments: args,
+        ).then((value) {
           // Когда возвращаемся после добавления продукта вручную, проверяем был ли добавлен продукт
           if (value == true) {
-            // Помечаем элемент как выбранный в списке покупок
+            // Помечаем элемент как выбранный в списке покупок только при успешном добавлении
             _toggleItemChecked(item, true);
           }
           _loadData(); // Перезагружаем данные списка покупок
