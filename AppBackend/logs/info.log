@@ -286,3 +286,409 @@ INFO 2025-05-14 23:48:40,087 basehttp 31292 32096 "POST /api/ingredients/ HTTP/1
 INFO 2025-05-14 23:48:40,180 ingredient 31292 32096 Adding ingredient to refrigerator: user_id=66
 INFO 2025-05-14 23:48:40,198 ingredient 31292 32096 Ingredient added to refrigerator: ingredient_id=135, name='Вафли Черноморские Топ Спартак', quantity=87 grams, user_id=66, time=0.02s
 INFO 2025-05-14 23:48:40,226 basehttp 31292 32096 "POST /api/refrigerator/ HTTP/1.1" 201 661
+INFO 2025-05-15 00:04:15,976 autoreload 32304 32280 Watching for file changes with StatReloader
+INFO 2025-05-15 00:04:17,722 wsgi 32304 17680 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-15 00:04:17,722 wsgi 32304 17680 Environment: config.settings
+INFO 2025-05-15 00:04:17,722 wsgi 32304 17680 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-15 00:04:17,726 wsgi 32304 17680 Application initialized successfully
+INFO 2025-05-15 00:06:29,892 views 32304 29420 Profile accessed: user_id=66
+INFO 2025-05-15 00:06:29,949 basehttp 32304 29420 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-15 00:06:30,173 ingredient 32304 29420 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 00:06:30,189 basehttp 32304 29420 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 00:06:30,328 views 32304 29420 Profile accessed: user_id=66
+INFO 2025-05-15 00:06:30,337 basehttp 32304 29420 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-15 00:06:30,544 allergen 32304 29420 Listing all allergens: user_id=66
+INFO 2025-05-15 00:06:30,549 allergen 32304 29420 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-15 00:06:30,563 basehttp 32304 29420 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 2058
+INFO 2025-05-15 00:06:30,652 equipment 32304 29420 Listing all equipment: user_id=66
+INFO 2025-05-15 00:06:30,660 equipment 32304 29420 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-15 00:06:30,674 basehttp 32304 29420 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 15147
+INFO 2025-05-15 00:06:30,834 ingredient 32304 29420 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-15 00:06:30,878 ingredient 32304 29420 Retrieved 8 refrigerator ingredients for user_id=66, time=0.04s
+INFO 2025-05-15 00:06:30,924 basehttp 32304 29420 "GET /api/refrigerator/ HTTP/1.1" 200 4681
+INFO 2025-05-15 00:06:31,044 recipe 32304 29420 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-15 00:06:31,242 basehttp 32304 29420 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20084
+INFO 2025-05-15 00:06:31,315 recipe 32304 29420 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-15 00:06:31,428 basehttp 32304 29420 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20084
+INFO 2025-05-15 00:06:31,543 basehttp 32304 29420 "GET /api/favorites/ HTTP/1.1" 200 1688
+INFO 2025-05-15 00:06:31,603 ingredient 32304 29420 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-15 00:06:31,637 ingredient 32304 29420 Retrieved 8 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-15 00:06:31,691 basehttp 32304 29420 "GET /api/refrigerator/ HTTP/1.1" 200 4681
+INFO 2025-05-15 00:06:31,768 allergen 32304 29420 Listing user allergens: user_id=66
+INFO 2025-05-15 00:06:31,774 allergen 32304 29420 Retrieved 1 user allergens, user_id=66, time=0.01s
+INFO 2025-05-15 00:06:31,788 basehttp 32304 29420 "GET /api/user-allergens/ HTTP/1.1" 200 40
+INFO 2025-05-15 00:06:31,906 equipment 32304 29420 Listing user equipment: user_id=66
+INFO 2025-05-15 00:06:31,914 equipment 32304 29420 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-15 00:06:31,928 basehttp 32304 29420 "GET /api/user-equipment/ HTTP/1.1" 200 432
+INFO 2025-05-15 00:06:32,036 basehttp 32304 29420 "GET /api/shopping-list/ HTTP/1.1" 200 26
+INFO 2025-05-15 00:06:32,097 shopping_list 32304 29420 Retrieved 0 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:06:32,112 basehttp 32304 29420 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 24
+INFO 2025-05-15 00:06:34,247 basehttp 32304 29420 "GET /api/shopping-list/ HTTP/1.1" 200 26
+INFO 2025-05-15 00:06:34,287 shopping_list 32304 29420 Retrieved 0 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:06:34,299 basehttp 32304 29420 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 24
+INFO 2025-05-15 00:07:02,821 basehttp 32304 25524 "GET /api/shopping-list/ HTTP/1.1" 200 26
+INFO 2025-05-15 00:07:02,919 shopping_list 32304 25524 Adding item to shopping list: user_id=66
+INFO 2025-05-15 00:07:02,939 shopping_list 32304 25524 Added new item to shopping list: item_id=253, type='Артишок', quantity=50 grams, user_id=66, time=0.02s
+INFO 2025-05-15 00:07:02,956 basehttp 32304 25524 "POST /api/shopping-list/0/add_item/ HTTP/1.1" 201 240
+INFO 2025-05-15 00:07:03,213 basehttp 32304 25524 "GET /api/shopping-list/ HTTP/1.1" 200 266
+INFO 2025-05-15 00:07:03,278 shopping_list 32304 25524 Retrieved 1 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:07:03,290 basehttp 32304 25524 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 264
+INFO 2025-05-15 00:07:22,691 basehttp 32304 13964 "GET /api/shopping-list/ HTTP/1.1" 200 266
+INFO 2025-05-15 00:07:22,755 shopping_list 32304 13964 Retrieved 1 shopping list items for user_id=66, time=0.01s
+INFO 2025-05-15 00:07:22,768 basehttp 32304 13964 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 264
+INFO 2025-05-15 00:07:23,982 basehttp 32304 13964 "GET /api/shopping-list/ HTTP/1.1" 200 266
+INFO 2025-05-15 00:07:24,034 shopping_list 32304 13964 Retrieved 1 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:07:24,046 basehttp 32304 13964 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 264
+INFO 2025-05-15 00:07:26,525 basehttp 32304 13964 "GET /api/shopping-list/ HTTP/1.1" 200 266
+INFO 2025-05-15 00:07:26,581 shopping_list 32304 13964 Retrieved 1 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:07:26,594 basehttp 32304 13964 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 264
+INFO 2025-05-15 00:07:46,664 basehttp 32304 4156 "GET /api/shopping-list/ HTTP/1.1" 200 266
+INFO 2025-05-15 00:07:46,734 shopping_list 32304 4156 Adding item to shopping list: user_id=66
+INFO 2025-05-15 00:07:46,744 shopping_list 32304 4156 Added new item to shopping list: item_id=254, type='Вафли', quantity=100 grams, user_id=66, time=0.01s
+INFO 2025-05-15 00:07:46,761 basehttp 32304 4156 "POST /api/shopping-list/0/add_item/ HTTP/1.1" 201 237
+INFO 2025-05-15 00:07:46,964 basehttp 32304 4156 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:07:47,029 shopping_list 32304 4156 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:07:47,043 basehttp 32304 4156 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 502
+INFO 2025-05-15 00:08:07,161 views 32304 14560 Запрос информации по штрихкоду: 4810067087007
+INFO 2025-05-15 00:08:19,947 views 32304 14560 Найден продукт по штрихкоду 4810067087007: Вафли Черноморские Топ Спартак
+INFO 2025-05-15 00:08:19,954 views 32304 14560 Получено 96 типов ингредиентов и 50 аллергенов из БД
+INFO 2025-05-15 00:08:19,954 ai_helper 32304 14560 Инициализация AIHelper с endpoint: https://flowprompt-useast.openai.azure.com/
+INFO 2025-05-15 00:08:20,233 ai_helper 32304 14560 Клиент OpenAI успешно инициализирован, время: 0.28s
+INFO 2025-05-15 00:08:20,233 ai_helper 32304 14560 Начало классификации продукта: 'Вафли Черноморские Топ Спартак'
+INFO 2025-05-15 00:08:22,063 ai_helper 32304 14560 Продукт 'Вафли Черноморские Топ Спартак' классифицирован как 'Вафли' с аллергенами: ['Молоко', 'Яйцо', 'Пшеница'], время: 1.83s
+INFO 2025-05-15 00:08:22,063 views 32304 14560 Успешно обработан запрос для штрихкода 4810067087007, время выполнения: 14.90s
+INFO 2025-05-15 00:08:22,073 basehttp 32304 14560 "GET /api/barcode/?barcode=4810067087007 HTTP/1.1" 200 1165
+INFO 2025-05-15 00:08:23,214 ingredient 32304 14560 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 00:08:23,230 basehttp 32304 14560 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 00:08:27,025 ingredient 32304 14560 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 00:08:27,039 basehttp 32304 14560 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 00:08:31,165 ingredient 32304 14560 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 00:08:31,175 basehttp 32304 14560 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 00:08:32,941 ingredient 32304 14560 Creating new ingredient: user_id=66, data={'ing_name': 'Вафли Черноморские Топ Спартак', 'ing_exp_date': '2025-07-31', 'ing_weight': 100, 'ing_calories': 520, 'ing_protein': 6, 'ing_fat': 29, 'ing_hydrates': 60, 'ing_igt_id': 94, 'allergen_ids': [3, 4, 8]}
+INFO 2025-05-15 00:08:32,974 ingredient 32304 14560 Ingredient created successfully: ingredient_id=136, name='Вафли Черноморские Топ Спартак', type_id=94, user_id=66, time=0.03s
+INFO 2025-05-15 00:08:32,998 basehttp 32304 14560 "POST /api/ingredients/ HTTP/1.1" 201 231
+INFO 2025-05-15 00:08:33,102 ingredient 32304 14560 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-15 00:08:33,128 ingredient 32304 14560 Ingredient added to refrigerator: ingredient_id=136, name='Вафли Черноморские Топ Спартак', quantity=87 grams, user_id=66, time=0.03s
+INFO 2025-05-15 00:08:33,149 basehttp 32304 14560 "POST /api/refrigerator/ HTTP/1.1" 201 622
+INFO 2025-05-15 00:08:36,533 basehttp 32304 14560 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:08:36,603 shopping_list 32304 14560 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:08:36,617 basehttp 32304 14560 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 502
+INFO 2025-05-15 00:08:41,315 basehttp 32304 14560 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:08:41,409 shopping_list 32304 14560 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:08:41,424 basehttp 32304 14560 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 502
+INFO 2025-05-15 00:08:44,607 basehttp 32304 14560 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:08:44,653 shopping_list 32304 14560 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:08:44,668 basehttp 32304 14560 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 502
+INFO 2025-05-15 00:08:45,722 basehttp 32304 14560 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:08:45,768 shopping_list 32304 14560 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:08:45,783 basehttp 32304 14560 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 502
+INFO 2025-05-15 00:08:50,400 basehttp 32304 14560 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:08:50,465 shopping_list 32304 14560 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:08:50,481 basehttp 32304 14560 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 502
+INFO 2025-05-15 00:08:52,054 basehttp 32304 14560 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:08:52,122 shopping_list 32304 14560 Retrieved 2 shopping list items for user_id=66, time=0.01s
+INFO 2025-05-15 00:08:52,137 basehttp 32304 14560 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 502
+INFO 2025-05-15 00:09:22,375 views 32304 14992 Profile accessed: user_id=66
+INFO 2025-05-15 00:09:22,384 basehttp 32304 14992 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-15 00:09:22,452 ingredient 32304 14992 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 00:09:22,463 basehttp 32304 14992 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 00:09:22,532 views 32304 14992 Profile accessed: user_id=66
+INFO 2025-05-15 00:09:22,541 basehttp 32304 14992 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-15 00:09:22,654 allergen 32304 14992 Listing all allergens: user_id=66
+INFO 2025-05-15 00:09:22,656 allergen 32304 14992 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-15 00:09:22,665 basehttp 32304 14992 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 2058
+INFO 2025-05-15 00:09:22,730 equipment 32304 14992 Listing all equipment: user_id=66
+INFO 2025-05-15 00:09:22,733 equipment 32304 14992 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-15 00:09:22,743 basehttp 32304 14992 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 15147
+INFO 2025-05-15 00:09:22,808 ingredient 32304 14992 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-15 00:09:22,839 ingredient 32304 14992 Retrieved 9 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-15 00:09:22,859 basehttp 32304 14992 "GET /api/refrigerator/ HTTP/1.1" 200 5304
+INFO 2025-05-15 00:09:22,947 recipe 32304 14992 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-15 00:09:23,108 basehttp 32304 14992 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20084
+INFO 2025-05-15 00:09:23,200 recipe 32304 14992 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-15 00:09:23,302 basehttp 32304 14992 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20084
+INFO 2025-05-15 00:09:23,420 basehttp 32304 14992 "GET /api/favorites/ HTTP/1.1" 200 1688
+INFO 2025-05-15 00:09:23,493 ingredient 32304 14992 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-15 00:09:23,523 ingredient 32304 14992 Retrieved 9 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-15 00:09:23,568 basehttp 32304 14992 "GET /api/refrigerator/ HTTP/1.1" 200 5304
+INFO 2025-05-15 00:09:23,648 allergen 32304 14992 Listing user allergens: user_id=66
+INFO 2025-05-15 00:09:23,652 allergen 32304 14992 Retrieved 1 user allergens, user_id=66, time=0.00s
+INFO 2025-05-15 00:09:23,663 basehttp 32304 14992 "GET /api/user-allergens/ HTTP/1.1" 200 40
+INFO 2025-05-15 00:09:23,755 equipment 32304 14992 Listing user equipment: user_id=66
+INFO 2025-05-15 00:09:23,760 equipment 32304 14992 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-15 00:09:23,773 basehttp 32304 14992 "GET /api/user-equipment/ HTTP/1.1" 200 432
+INFO 2025-05-15 00:09:23,884 basehttp 32304 14992 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:09:23,945 shopping_list 32304 14992 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:09:23,961 basehttp 32304 14992 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 502
+INFO 2025-05-15 00:09:26,922 basehttp 32304 14992 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:09:26,985 shopping_list 32304 14992 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:09:27,000 basehttp 32304 14992 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 502
+INFO 2025-05-15 00:09:29,764 basehttp 32304 14992 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:09:29,811 shopping_list 32304 14992 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:09:29,825 basehttp 32304 14992 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 502
+INFO 2025-05-15 00:12:31,245 basehttp 32304 15064 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:12:31,293 shopping_list 32304 15064 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:12:31,309 basehttp 32304 15064 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 502
+INFO 2025-05-15 00:43:17,234 views 32304 14492 Profile accessed: user_id=66
+INFO 2025-05-15 00:43:17,267 basehttp 32304 14492 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-15 00:43:17,386 ingredient 32304 14492 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 00:43:17,414 basehttp 32304 14492 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 00:43:17,644 views 32304 14492 Profile accessed: user_id=66
+INFO 2025-05-15 00:43:17,657 basehttp 32304 14492 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-15 00:43:17,796 allergen 32304 14492 Listing all allergens: user_id=66
+INFO 2025-05-15 00:43:17,801 allergen 32304 14492 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-15 00:43:17,810 basehttp 32304 14492 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 2058
+INFO 2025-05-15 00:43:17,873 equipment 32304 14492 Listing all equipment: user_id=66
+INFO 2025-05-15 00:43:17,878 equipment 32304 14492 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-15 00:43:17,889 basehttp 32304 14492 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 15147
+INFO 2025-05-15 00:43:17,967 ingredient 32304 14492 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-15 00:43:18,017 ingredient 32304 14492 Retrieved 9 refrigerator ingredients for user_id=66, time=0.05s
+INFO 2025-05-15 00:43:18,043 basehttp 32304 14492 "GET /api/refrigerator/ HTTP/1.1" 200 5304
+INFO 2025-05-15 00:43:18,163 recipe 32304 14492 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-15 00:43:18,380 basehttp 32304 14492 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20084
+INFO 2025-05-15 00:43:18,524 recipe 32304 14492 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-15 00:43:18,638 basehttp 32304 14492 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20084
+INFO 2025-05-15 00:43:18,748 basehttp 32304 14492 "GET /api/favorites/ HTTP/1.1" 200 1688
+INFO 2025-05-15 00:43:18,837 ingredient 32304 14492 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-15 00:43:18,885 ingredient 32304 14492 Retrieved 9 refrigerator ingredients for user_id=66, time=0.05s
+INFO 2025-05-15 00:43:18,968 basehttp 32304 14492 "GET /api/refrigerator/ HTTP/1.1" 200 5304
+INFO 2025-05-15 00:43:19,082 allergen 32304 14492 Listing user allergens: user_id=66
+INFO 2025-05-15 00:43:19,093 allergen 32304 14492 Retrieved 1 user allergens, user_id=66, time=0.01s
+INFO 2025-05-15 00:43:19,131 basehttp 32304 14492 "GET /api/user-allergens/ HTTP/1.1" 200 40
+INFO 2025-05-15 00:43:19,225 equipment 32304 14492 Listing user equipment: user_id=66
+INFO 2025-05-15 00:43:19,238 equipment 32304 14492 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-15 00:43:19,290 basehttp 32304 14492 "GET /api/user-equipment/ HTTP/1.1" 200 432
+INFO 2025-05-15 00:43:19,506 basehttp 32304 14492 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:43:19,579 shopping_list 32304 14492 Retrieved 2 shopping list items for user_id=66, time=0.01s
+INFO 2025-05-15 00:43:19,614 basehttp 32304 14492 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 502
+INFO 2025-05-15 00:43:23,879 ingredient 32304 14492 Getting refrigerator categories: user_id=66
+INFO 2025-05-15 00:43:23,886 ingredient 32304 14492 Found 7 categories in refrigerator for user_id=66, time=0.01s
+INFO 2025-05-15 00:43:23,897 basehttp 32304 14492 "GET /api/refrigerator/categories/ HTTP/1.1" 200 1128
+INFO 2025-05-15 00:43:26,463 basehttp 32304 14492 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:43:26,527 shopping_list 32304 14492 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:43:26,542 basehttp 32304 14492 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 502
+INFO 2025-05-15 00:43:44,447 basehttp 32304 2092 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:43:44,524 shopping_list 32304 2092 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:43:44,549 basehttp 32304 2092 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 502
+WARNING 2025-05-15 00:44:12,989 basehttp 32304 23868 "GET /api/shopping-list/ HTTP/1.1" 401 82
+INFO 2025-05-15 00:44:13,773 views 32304 11472 Registration attempt: email=test_kdez4s0g@example.com
+INFO 2025-05-15 00:44:14,108 views 32304 11472 User registered successfully: user_id=119, email=test_kdez4s0g@example.com, time=0.34s
+INFO 2025-05-15 00:44:14,130 basehttp 32304 11472 "POST /api/users/register/ HTTP/1.1" 201 233
+INFO 2025-05-15 00:44:14,194 views 32304 2112 Login attempt: email=test_kdez4s0g@example.com
+INFO 2025-05-15 00:44:14,447 views 32304 2112 User login successful: user_id=119, email=test_kdez4s0g@example.com, time=0.25s
+INFO 2025-05-15 00:44:14,462 basehttp 32304 2112 "POST /api/users/login/ HTTP/1.1" 200 233
+INFO 2025-05-15 00:44:14,535 views 32304 31764 Profile accessed: user_id=119
+INFO 2025-05-15 00:44:14,549 basehttp 32304 31764 "GET /api/users/profile/ HTTP/1.1" 200 173
+INFO 2025-05-15 00:44:14,657 ingredient 32304 32296 Listing refrigerator ingredients: user_id=119
+INFO 2025-05-15 00:44:14,666 ingredient 32304 32296 Retrieved 0 refrigerator ingredients for user_id=119, time=0.01s
+INFO 2025-05-15 00:44:14,684 basehttp 32304 32296 "GET /api/refrigerator/ HTTP/1.1" 200 80
+INFO 2025-05-15 00:44:14,764 basehttp 32304 7408 "GET /api/favorites/ HTTP/1.1" 200 2
+INFO 2025-05-15 00:44:14,829 allergen 32304 1944 Listing all allergens: user_id=119
+INFO 2025-05-15 00:44:14,831 allergen 32304 1944 Retrieved unknown allergens, user_id=119, time=0.00s
+INFO 2025-05-15 00:44:14,842 basehttp 32304 1944 "GET /api/allergens/ HTTP/1.1" 200 2058
+INFO 2025-05-15 00:44:14,906 equipment 32304 20184 Listing all equipment: user_id=119
+INFO 2025-05-15 00:44:14,910 equipment 32304 20184 Retrieved unknown equipment items, user_id=119, time=0.00s
+INFO 2025-05-15 00:44:14,923 basehttp 32304 20184 "GET /api/equipment/ HTTP/1.1" 200 15147
+INFO 2025-05-15 00:44:14,981 views 32304 1652 Logout attempt: user_id=119
+INFO 2025-05-15 00:44:14,990 views 32304 1652 User logged out successfully: user_id=119
+INFO 2025-05-15 00:44:15,001 basehttp 32304 1652 "POST /api/users/logout/ HTTP/1.1" 200 16
+INFO 2025-05-15 00:44:25,961 views 32304 23868 Login attempt: email=w0rkma1lmoc@gmail.com
+WARNING 2025-05-15 00:44:26,193 views 32304 23868 Failed login attempt: email=w0rkma1lmoc@gmail.com, time=0.23s
+WARNING 2025-05-15 00:44:26,205 basehttp 32304 23868 "POST /api/users/login/ HTTP/1.1" 401 54
+INFO 2025-05-15 00:44:33,991 views 32304 23868 Login attempt: email=w0rkma1lmoc@gmail.com
+INFO 2025-05-15 00:44:34,255 views 32304 23868 User login successful: user_id=66, email=w0rkma1lmoc@gmail.com, time=0.26s
+INFO 2025-05-15 00:44:34,266 basehttp 32304 23868 "POST /api/users/login/ HTTP/1.1" 200 213
+INFO 2025-05-15 00:44:34,329 ingredient 32304 23868 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 00:44:34,343 basehttp 32304 23868 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 00:44:34,439 views 32304 23868 Profile accessed: user_id=66
+INFO 2025-05-15 00:44:34,448 basehttp 32304 23868 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-15 00:44:34,532 allergen 32304 23868 Listing all allergens: user_id=66
+INFO 2025-05-15 00:44:34,537 allergen 32304 23868 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-15 00:44:34,546 basehttp 32304 23868 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 2058
+INFO 2025-05-15 00:44:34,626 equipment 32304 23868 Listing all equipment: user_id=66
+INFO 2025-05-15 00:44:34,629 equipment 32304 23868 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-15 00:44:34,638 basehttp 32304 23868 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 15147
+INFO 2025-05-15 00:44:34,733 recipe 32304 23868 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-15 00:44:34,907 basehttp 32304 23868 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20084
+INFO 2025-05-15 00:44:35,072 basehttp 32304 23868 "GET /api/favorites/ HTTP/1.1" 200 1688
+INFO 2025-05-15 00:44:35,133 ingredient 32304 23868 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-15 00:44:35,167 ingredient 32304 23868 Retrieved 9 refrigerator ingredients for user_id=66, time=0.03s
+INFO 2025-05-15 00:44:35,214 basehttp 32304 23868 "GET /api/refrigerator/ HTTP/1.1" 200 5304
+INFO 2025-05-15 00:44:35,404 allergen 32304 23868 Listing all allergens: user_id=66
+INFO 2025-05-15 00:44:35,407 allergen 32304 23868 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-15 00:44:35,416 basehttp 32304 23868 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 2058
+INFO 2025-05-15 00:44:35,498 equipment 32304 23868 Listing all equipment: user_id=66
+INFO 2025-05-15 00:44:35,501 equipment 32304 23868 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-15 00:44:35,511 basehttp 32304 23868 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 15147
+INFO 2025-05-15 00:44:35,603 allergen 32304 23868 Listing user allergens: user_id=66
+INFO 2025-05-15 00:44:35,608 allergen 32304 23868 Retrieved 1 user allergens, user_id=66, time=0.01s
+INFO 2025-05-15 00:44:35,619 basehttp 32304 23868 "GET /api/user-allergens/ HTTP/1.1" 200 40
+INFO 2025-05-15 00:44:41,784 basehttp 32304 23868 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:44:41,882 basehttp 32304 23868 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:44:41,931 shopping_list 32304 23868 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:44:41,950 basehttp 32304 23868 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 502
+INFO 2025-05-15 00:44:55,550 basehttp 32304 23868 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:44:55,592 shopping_list 32304 23868 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:44:55,609 basehttp 32304 23868 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 502
+INFO 2025-05-15 00:45:29,926 basehttp 32304 28028 "GET /api/shopping-list/ HTTP/1.1" 200 504
+INFO 2025-05-15 00:45:30,004 shopping_list 32304 28028 Adding item to shopping list: user_id=66
+INFO 2025-05-15 00:45:30,016 shopping_list 32304 28028 Added new item to shopping list: item_id=255, type='Картофель', quantity=5 pieces, user_id=66, time=0.01s
+INFO 2025-05-15 00:45:30,034 basehttp 32304 28028 "POST /api/shopping-list/0/add_item/ HTTP/1.1" 201 243
+INFO 2025-05-15 00:45:30,183 basehttp 32304 28028 "GET /api/shopping-list/ HTTP/1.1" 200 748
+INFO 2025-05-15 00:45:30,278 shopping_list 32304 28028 Retrieved 3 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:45:30,296 basehttp 32304 28028 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 746
+INFO 2025-05-15 00:45:52,733 views 32304 14596 Запрос информации по штрихкоду: 4810067087007
+INFO 2025-05-15 00:46:05,422 views 32304 14596 Найден продукт по штрихкоду 4810067087007: Вафли Черноморские Топ Спартак
+INFO 2025-05-15 00:46:05,428 views 32304 14596 Получено 96 типов ингредиентов и 50 аллергенов из БД
+INFO 2025-05-15 00:46:05,428 ai_helper 32304 14596 Инициализация AIHelper с endpoint: https://flowprompt-useast.openai.azure.com/
+INFO 2025-05-15 00:46:05,744 ai_helper 32304 14596 Клиент OpenAI успешно инициализирован, время: 0.32s
+INFO 2025-05-15 00:46:05,745 ai_helper 32304 14596 Начало классификации продукта: 'Вафли Черноморские Топ Спартак'
+INFO 2025-05-15 00:46:07,236 ai_helper 32304 14596 Продукт 'Вафли Черноморские Топ Спартак' классифицирован как 'Вафли' с аллергенами: ['Молоко', 'Яйцо', 'Пшеница'], время: 1.49s
+INFO 2025-05-15 00:46:07,236 views 32304 14596 Успешно обработан запрос для штрихкода 4810067087007, время выполнения: 14.50s
+INFO 2025-05-15 00:46:07,250 basehttp 32304 14596 "GET /api/barcode/?barcode=4810067087007 HTTP/1.1" 200 1165
+INFO 2025-05-15 00:46:08,398 ingredient 32304 14596 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 00:46:08,414 basehttp 32304 14596 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 00:46:11,986 ingredient 32304 14596 Creating new ingredient: user_id=66, data={'ing_name': 'Вафли Черноморские Топ Спартак', 'ing_exp_date': '2025-05-22', 'ing_weight': 100, 'ing_calories': 520, 'ing_protein': 6, 'ing_fat': 29, 'ing_hydrates': 60, 'ing_igt_id': 94, 'allergen_ids': [3, 4, 8]}
+INFO 2025-05-15 00:46:12,024 ingredient 32304 14596 Ingredient created successfully: ingredient_id=137, name='Вафли Черноморские Топ Спартак', type_id=94, user_id=66, time=0.04s
+INFO 2025-05-15 00:46:12,070 basehttp 32304 14596 "POST /api/ingredients/ HTTP/1.1" 201 231
+INFO 2025-05-15 00:46:12,187 ingredient 32304 14596 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-15 00:46:12,197 ingredient 32304 14596 Ingredient added to refrigerator: ingredient_id=137, name='Вафли Черноморские Топ Спартак', quantity=87 grams, user_id=66, time=0.01s
+INFO 2025-05-15 00:46:12,225 basehttp 32304 14596 "POST /api/refrigerator/ HTTP/1.1" 201 622
+INFO 2025-05-15 00:46:14,919 basehttp 32304 14596 "GET /api/shopping-list/ HTTP/1.1" 200 748
+INFO 2025-05-15 00:46:14,978 shopping_list 32304 14596 Retrieved 3 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:46:15,001 basehttp 32304 14596 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 746
+INFO 2025-05-15 00:47:54,731 shopping_list 32304 11220 Removing item from shopping list: item_id=253, user_id=66
+INFO 2025-05-15 00:47:54,740 shopping_list 32304 11220 Item removed from shopping list: item_id=253, type='Артишок', user_id=66, time=0.01s
+INFO 2025-05-15 00:47:54,759 basehttp 32304 11220 "POST /api/shopping-list/0/remove_item/ HTTP/1.1" 204 0
+INFO 2025-05-15 00:47:54,825 shopping_list 32304 11220 Removing item from shopping list: item_id=254, user_id=66
+INFO 2025-05-15 00:47:54,835 shopping_list 32304 11220 Item removed from shopping list: item_id=254, type='Вафли', user_id=66, time=0.01s
+INFO 2025-05-15 00:47:54,853 basehttp 32304 11220 "POST /api/shopping-list/0/remove_item/ HTTP/1.1" 204 0
+INFO 2025-05-15 00:47:58,969 shopping_list 32304 11220 Clearing all items from shopping list: user_id=66
+INFO 2025-05-15 00:47:58,976 shopping_list 32304 11220 Cleared all 1 items from shopping list: user_id=66, time=0.01s
+INFO 2025-05-15 00:47:58,992 basehttp 32304 11220 "POST /api/shopping-list/0/clear_all/ HTTP/1.1" 200 19
+INFO 2025-05-15 00:48:35,743 basehttp 32304 29380 "GET /api/shopping-list/ HTTP/1.1" 200 26
+INFO 2025-05-15 00:48:35,807 shopping_list 32304 29380 Adding item to shopping list: user_id=66
+INFO 2025-05-15 00:48:35,818 shopping_list 32304 29380 Added new item to shopping list: item_id=256, type='Молоко', quantity=1 liters, user_id=66, time=0.01s
+INFO 2025-05-15 00:48:35,843 basehttp 32304 29380 "POST /api/shopping-list/0/add_item/ HTTP/1.1" 201 238
+INFO 2025-05-15 00:48:35,953 basehttp 32304 29380 "GET /api/shopping-list/ HTTP/1.1" 200 264
+INFO 2025-05-15 00:48:36,025 shopping_list 32304 29380 Retrieved 1 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:48:36,044 basehttp 32304 29380 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 262
+INFO 2025-05-15 00:48:39,202 ingredient 32304 29380 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 00:48:39,224 basehttp 32304 29380 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 00:48:40,504 basehttp 32304 29380 "GET /api/shopping-list/ HTTP/1.1" 200 264
+INFO 2025-05-15 00:48:40,567 shopping_list 32304 29380 Retrieved 1 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:48:40,586 basehttp 32304 29380 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 262
+INFO 2025-05-15 00:53:10,742 shopping_list 32304 23112 Removing item from shopping list: item_id=256, user_id=66
+INFO 2025-05-15 00:53:10,749 shopping_list 32304 23112 Item removed from shopping list: item_id=256, type='Молоко', user_id=66, time=0.01s
+INFO 2025-05-15 00:53:10,768 basehttp 32304 23112 "POST /api/shopping-list/0/remove_item/ HTTP/1.1" 204 0
+INFO 2025-05-15 00:53:36,914 basehttp 32304 13752 "GET /api/shopping-list/ HTTP/1.1" 200 26
+INFO 2025-05-15 00:53:36,974 shopping_list 32304 13752 Adding item to shopping list: user_id=66
+INFO 2025-05-15 00:53:36,986 shopping_list 32304 13752 Added new item to shopping list: item_id=257, type='Молоко', quantity=900 milliliters, user_id=66, time=0.01s
+INFO 2025-05-15 00:53:37,008 basehttp 32304 13752 "POST /api/shopping-list/0/add_item/ HTTP/1.1" 201 245
+INFO 2025-05-15 00:53:37,152 basehttp 32304 13752 "GET /api/shopping-list/ HTTP/1.1" 200 271
+INFO 2025-05-15 00:53:37,215 shopping_list 32304 13752 Retrieved 1 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:53:37,234 basehttp 32304 13752 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 269
+INFO 2025-05-15 00:53:55,499 basehttp 32304 23056 "GET /api/shopping-list/ HTTP/1.1" 200 271
+INFO 2025-05-15 00:53:55,559 shopping_list 32304 23056 Retrieved 1 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 00:53:55,577 basehttp 32304 23056 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 269
+INFO 2025-05-15 00:53:56,945 basehttp 32304 23056 "GET /api/shopping-list/ HTTP/1.1" 200 271
+INFO 2025-05-15 00:53:57,001 shopping_list 32304 23056 Retrieved 1 shopping list items for user_id=66, time=0.01s
+INFO 2025-05-15 00:53:57,022 basehttp 32304 23056 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 269
+INFO 2025-05-15 01:06:03,209 views 32304 14460 Profile accessed: user_id=66
+INFO 2025-05-15 01:06:03,224 basehttp 32304 14460 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-15 01:06:03,315 ingredient 32304 14460 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 01:06:03,330 basehttp 32304 14460 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 01:06:03,440 views 32304 14460 Profile accessed: user_id=66
+INFO 2025-05-15 01:06:03,452 basehttp 32304 14460 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-15 01:06:03,594 allergen 32304 14460 Listing all allergens: user_id=66
+INFO 2025-05-15 01:06:03,599 allergen 32304 14460 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-15 01:06:03,612 basehttp 32304 14460 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 2058
+INFO 2025-05-15 01:06:03,687 equipment 32304 14460 Listing all equipment: user_id=66
+INFO 2025-05-15 01:06:03,692 equipment 32304 14460 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-15 01:06:03,705 basehttp 32304 14460 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 15147
+INFO 2025-05-15 01:06:03,781 ingredient 32304 14460 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-15 01:06:03,834 ingredient 32304 14460 Retrieved 10 refrigerator ingredients for user_id=66, time=0.05s
+INFO 2025-05-15 01:06:03,866 basehttp 32304 14460 "GET /api/refrigerator/ HTTP/1.1" 200 5929
+INFO 2025-05-15 01:06:03,983 recipe 32304 14460 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-15 01:06:04,239 basehttp 32304 14460 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20084
+INFO 2025-05-15 01:06:04,314 recipe 32304 14460 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-15 01:06:04,481 basehttp 32304 14460 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20084
+INFO 2025-05-15 01:06:05,254 basehttp 32304 14460 "GET /api/favorites/ HTTP/1.1" 200 1688
+INFO 2025-05-15 01:06:05,323 ingredient 32304 14460 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-15 01:06:05,365 ingredient 32304 14460 Retrieved 10 refrigerator ingredients for user_id=66, time=0.04s
+INFO 2025-05-15 01:06:05,432 basehttp 32304 14460 "GET /api/refrigerator/ HTTP/1.1" 200 5929
+INFO 2025-05-15 01:06:05,503 allergen 32304 14460 Listing user allergens: user_id=66
+INFO 2025-05-15 01:06:05,508 allergen 32304 14460 Retrieved 1 user allergens, user_id=66, time=0.00s
+INFO 2025-05-15 01:06:05,525 basehttp 32304 14460 "GET /api/user-allergens/ HTTP/1.1" 200 40
+INFO 2025-05-15 01:06:05,644 equipment 32304 14460 Listing user equipment: user_id=66
+INFO 2025-05-15 01:06:05,650 equipment 32304 14460 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-15 01:06:05,670 basehttp 32304 14460 "GET /api/user-equipment/ HTTP/1.1" 200 432
+INFO 2025-05-15 01:06:05,779 basehttp 32304 14460 "GET /api/shopping-list/ HTTP/1.1" 200 271
+INFO 2025-05-15 01:06:05,866 shopping_list 32304 14460 Retrieved 1 shopping list items for user_id=66, time=0.01s
+INFO 2025-05-15 01:06:05,893 basehttp 32304 14460 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 269
+INFO 2025-05-15 01:06:08,561 basehttp 32304 14460 "GET /api/shopping-list/ HTTP/1.1" 200 271
+INFO 2025-05-15 01:06:08,622 shopping_list 32304 14460 Retrieved 1 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 01:06:08,640 basehttp 32304 14460 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 269
+INFO 2025-05-15 01:06:26,671 basehttp 32304 25000 "GET /api/shopping-list/ HTTP/1.1" 200 271
+INFO 2025-05-15 01:06:26,779 shopping_list 32304 25000 Adding item to shopping list: user_id=66
+INFO 2025-05-15 01:06:26,792 shopping_list 32304 25000 Added new item to shopping list: item_id=258, type='Картофель', quantity=1000 grams, user_id=66, time=0.02s
+INFO 2025-05-15 01:06:26,816 basehttp 32304 25000 "POST /api/shopping-list/0/add_item/ HTTP/1.1" 201 245
+INFO 2025-05-15 01:06:26,999 basehttp 32304 25000 "GET /api/shopping-list/ HTTP/1.1" 200 517
+INFO 2025-05-15 01:06:27,237 shopping_list 32304 25000 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 01:06:27,268 basehttp 32304 25000 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 515
+INFO 2025-05-15 01:06:31,816 ingredient 32304 25000 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 01:06:31,837 basehttp 32304 25000 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 01:06:50,975 ingredient 32304 23632 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 01:06:50,990 basehttp 32304 23632 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 01:06:54,307 ingredient 32304 23632 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 01:06:54,321 basehttp 32304 23632 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 01:06:59,179 ingredient 32304 23632 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 01:06:59,196 basehttp 32304 23632 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 01:07:00,856 ingredient 32304 23632 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 01:07:00,871 basehttp 32304 23632 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 01:07:02,443 ingredient 32304 23632 Creating new ingredient: user_id=66, data={'ing_name': 'Картошка мытая', 'ing_exp_date': '2025-05-16', 'ing_weight': 100, 'ing_calories': 5, 'ing_protein': 0, 'ing_fat': 0, 'ing_hydrates': 0, 'ing_igt_id': 6, 'allergen_ids': []}
+INFO 2025-05-15 01:07:02,455 ingredient 32304 23632 Ingredient created successfully: ingredient_id=138, name='Картошка мытая', type_id=6, user_id=66, time=0.01s
+INFO 2025-05-15 01:07:02,471 basehttp 32304 23632 "POST /api/ingredients/ HTTP/1.1" 201 196
+INFO 2025-05-15 01:07:02,572 ingredient 32304 23632 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-15 01:07:02,593 ingredient 32304 23632 Ingredient added to refrigerator: ingredient_id=138, name='Картошка мытая', quantity=500 milliliters, user_id=66, time=0.02s
+INFO 2025-05-15 01:07:02,633 basehttp 32304 23632 "POST /api/refrigerator/ HTTP/1.1" 201 488
+INFO 2025-05-15 01:07:02,837 basehttp 32304 23632 "GET /api/shopping-list/ HTTP/1.1" 200 517
+INFO 2025-05-15 01:07:02,978 shopping_list 32304 23632 Retrieved 2 shopping list items for user_id=66, time=0.01s
+INFO 2025-05-15 01:07:03,006 basehttp 32304 23632 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 515
+INFO 2025-05-15 01:07:06,525 shopping_list 32304 23632 Removing item from shopping list: item_id=258, user_id=66
+INFO 2025-05-15 01:07:06,534 shopping_list 32304 23632 Item removed from shopping list: item_id=258, type='Картофель', user_id=66, time=0.01s
+INFO 2025-05-15 01:07:06,551 basehttp 32304 23632 "POST /api/shopping-list/0/remove_item/ HTTP/1.1" 204 0
+INFO 2025-05-15 01:07:35,349 basehttp 32304 436 "GET /api/shopping-list/ HTTP/1.1" 200 271
+INFO 2025-05-15 01:07:35,411 shopping_list 32304 436 Retrieved 1 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 01:07:35,430 basehttp 32304 436 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 269
+INFO 2025-05-15 01:07:39,886 basehttp 32304 436 "GET /api/shopping-list/ HTTP/1.1" 200 271
+INFO 2025-05-15 01:07:39,948 shopping_list 32304 436 Retrieved 1 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 01:07:39,967 basehttp 32304 436 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 269
+INFO 2025-05-15 01:07:41,125 basehttp 32304 436 "GET /api/shopping-list/ HTTP/1.1" 200 271
+INFO 2025-05-15 01:07:41,188 shopping_list 32304 436 Retrieved 1 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 01:07:41,214 basehttp 32304 436 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 269
+INFO 2025-05-15 01:07:41,914 basehttp 32304 436 "GET /api/shopping-list/ HTTP/1.1" 200 271
+INFO 2025-05-15 01:07:41,974 shopping_list 32304 436 Retrieved 1 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 01:07:41,993 basehttp 32304 436 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 269
+INFO 2025-05-15 01:07:43,087 basehttp 32304 436 "GET /api/shopping-list/ HTTP/1.1" 200 271
+INFO 2025-05-15 01:07:43,155 shopping_list 32304 436 Retrieved 1 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 01:07:43,174 basehttp 32304 436 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 269
+INFO 2025-05-15 01:07:57,479 basehttp 32304 436 "GET /api/shopping-list/ HTTP/1.1" 200 271
+INFO 2025-05-15 01:07:57,604 shopping_list 32304 436 Adding item to shopping list: user_id=66
+INFO 2025-05-15 01:07:57,613 shopping_list 32304 436 Added new item to shopping list: item_id=259, type='Уксус', quantity=1 liters, user_id=66, time=0.01s
+INFO 2025-05-15 01:07:57,639 basehttp 32304 436 "POST /api/shopping-list/0/add_item/ HTTP/1.1" 201 237
+INFO 2025-05-15 01:07:57,806 basehttp 32304 436 "GET /api/shopping-list/ HTTP/1.1" 200 509
+INFO 2025-05-15 01:07:57,928 shopping_list 32304 436 Retrieved 2 shopping list items for user_id=66, time=0.01s
+INFO 2025-05-15 01:07:57,948 basehttp 32304 436 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 507
+INFO 2025-05-15 01:07:59,025 basehttp 32304 436 "GET /api/shopping-list/ HTTP/1.1" 200 509
+INFO 2025-05-15 01:07:59,163 shopping_list 32304 436 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 01:07:59,184 basehttp 32304 436 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 507
+INFO 2025-05-15 01:08:00,535 basehttp 32304 436 "GET /api/shopping-list/ HTTP/1.1" 200 509
+INFO 2025-05-15 01:08:00,586 shopping_list 32304 436 Retrieved 2 shopping list items for user_id=66, time=0.01s
+INFO 2025-05-15 01:08:00,608 basehttp 32304 436 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 507
+INFO 2025-05-15 01:08:01,649 basehttp 32304 436 "GET /api/shopping-list/ HTTP/1.1" 200 509
+INFO 2025-05-15 01:08:01,700 shopping_list 32304 436 Retrieved 2 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 01:08:01,720 basehttp 32304 436 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 507
+INFO 2025-05-15 01:08:02,241 basehttp 32304 436 "GET /api/shopping-list/ HTTP/1.1" 200 509
+INFO 2025-05-15 01:08:02,301 shopping_list 32304 436 Retrieved 2 shopping list items for user_id=66, time=0.01s
+INFO 2025-05-15 01:08:02,321 basehttp 32304 436 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 507

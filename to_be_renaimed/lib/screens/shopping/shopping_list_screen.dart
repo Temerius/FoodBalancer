@@ -1,10 +1,9 @@
-// lib/screens/shopping/shopping_list_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../providers/auth_provider.dart';
 import '../../repositories/data_repository.dart';
 import '../../models/enums.dart';
-import '../../models/ingredient.dart'; // Using the existing model
+import '../../models/ingredient.dart'; // Используем существующую модель
 
 class ShoppingListScreen extends StatefulWidget {
   const ShoppingListScreen({Key? key}) : super(key: key);
@@ -15,8 +14,8 @@ class ShoppingListScreen extends StatefulWidget {
 
 class _ShoppingListScreenState extends State<ShoppingListScreen> {
   bool _isLoading = false;
-  // Show only unchecked items by default
-  bool _showOnlyUnchecked = true;
+  // По умолчанию показываем все элементы
+  bool _showOnlyUnchecked = false;
   String? _errorMessage;
   List<ShoppingListItem> _items = [];
 
@@ -35,7 +34,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     }
 
     try {
-      // Load shopping list items
+      // Загружаем элементы списка покупок из репозитория
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
       final items = await dataRepository.getShoppingListItems(
         onlyUnchecked: _showOnlyUnchecked,
@@ -45,38 +44,119 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
       if (mounted) {
         setState(() {
           _items = items;
+          _isLoading = false;
         });
       }
     } catch (e) {
       if (mounted) {
         setState(() {
           _errorMessage = 'Ошибка загрузки данных: $e';
-        });
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
           _isLoading = false;
         });
       }
     }
   }
 
-  Future<void> _toggleItemChecked(ShoppingListItem item) async {
+  // Показываем диалог при нажатии на элемент
+  Future<void> _onItemTap(ShoppingListItem item) async {
+    final result = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Выберите действие'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              item.name,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              item.formattedQuantity,
+              style: TextStyle(
+                color: Colors.grey[600],
+                fontSize: 14,
+              ),
+            ),
+            const SizedBox(height: 16),
+            const Text('Что вы хотите сделать?'),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'scan'),
+            child: const Text('Сканировать штрих-код'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'manual'),
+            child: const Text('Добавить вручную'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'toggle'),
+            child: Text(item.isChecked ? 'Отметить как не куплено' : 'Отметить как куплено'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'cancel'),
+            child: const Text('Отмена'),
+          ),
+        ],
+      ),
+    );
+
+    if (result == 'scan') {
+      // Переходим к сканеру штрих-кода
+      if (mounted) {
+        Navigator.pushNamed(context, '/refrigerator/barcode-scanner')
+            .then((value) {
+          // Когда возвращаемся из сканера штрих-кода, проверяем, был ли продукт добавлен в холодильник
+          if (value == true) {
+            // Помечаем элемент как выбранный в списке покупок
+            _toggleItemChecked(item, true);
+          }
+          _loadData(); // Перезагружаем данные списка покупок
+        });
+      }
+    } else if (result == 'manual') {
+      // Переходим к экрану добавления продукта
+      if (mounted) {
+        Navigator.pushNamed(context, '/refrigerator/add-product')
+            .then((value) {
+          // Когда возвращаемся после добавления продукта вручную, проверяем был ли добавлен продукт
+          if (value == true) {
+            // Помечаем элемент как выбранный в списке покупок
+            _toggleItemChecked(item, true);
+          }
+          _loadData(); // Перезагружаем данные списка покупок
+        });
+      }
+    } else if (result == 'toggle') {
+      // Переключаем состояние выбранности
+      _toggleItemChecked(item, !item.isChecked);
+    }
+  }
+
+  // Переключаем статус выбранности элемента
+  Future<void> _toggleItemChecked(ShoppingListItem item, bool isChecked) async {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
+
+      // Используем репозиторий для обновления элемента в кэше
       await dataRepository.updateShoppingListItem(
         itemId: item.id!,
-        isChecked: !item.isChecked,
+        isChecked: isChecked,
       );
 
-      // Update local state
+      // Обновляем локальное состояние
       setState(() {
-        item.isChecked = !item.isChecked;
+        item.isChecked = isChecked;
       });
 
-      // If we're showing only unchecked items and this item was just checked,
-      // remove it from the list
+      // Если показываем только невыбранные элементы и этот элемент был только что выбран,
+      // удаляем его из списка
       if (_showOnlyUnchecked && item.isChecked) {
         setState(() {
           _items.remove(item);
@@ -91,13 +171,16 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     }
   }
 
+  // Удаляем отдельный элемент из списка покупок
   Future<void> _removeItem(ShoppingListItem item) async {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
+
+      // Удаляем с сервера через репозиторий (который также обновляет кэш)
       final success = await dataRepository.removeShoppingListItem(item.id!);
 
       if (success && mounted) {
-        // Remove from local state
+        // Удаляем из локального состояния, если успешно
         setState(() {
           _items.remove(item);
         });
@@ -108,7 +191,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
             action: SnackBarAction(
               label: 'Отменить',
               onPressed: () {
-                // Here you would re-add the item if possible
+                // Здесь можно добавить функцию восстановления элемента
               },
             ),
           ),
@@ -123,13 +206,16 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     }
   }
 
+  // Удаляем все выбранные элементы
   Future<void> _clearCheckedItems() async {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
+
+      // Это удалит выбранные элементы с сервера и из кэша
       final success = await dataRepository.clearCheckedShoppingListItems();
 
       if (success && mounted) {
-        // Update local state - remove checked items
+        // Обновляем локальное состояние - удаляем выбранные элементы
         setState(() {
           _items.removeWhere((item) => item.isChecked);
         });
@@ -147,8 +233,9 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     }
   }
 
+  // Очищаем весь список покупок
   Future<void> _clearAllItems() async {
-    // Show confirmation dialog
+    // Показываем диалог подтверждения
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -170,10 +257,12 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     if (confirmed == true) {
       try {
         final dataRepository = Provider.of<DataRepository>(context, listen: false);
+
+        // Это удалит все элементы и с сервера, и из кэша
         final success = await dataRepository.clearAllShoppingListItems();
 
         if (success && mounted) {
-          // Clear local state
+          // Очищаем локальное состояние
           setState(() {
             _items.clear();
           });
@@ -198,7 +287,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
       appBar: AppBar(
         title: const Text('Список покупок'),
         actions: [
-          // Toggle display mode
+          // Переключатель режима отображения
           IconButton(
             icon: Icon(_showOnlyUnchecked
                 ? Icons.check_box_outline_blank
@@ -206,14 +295,14 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
             onPressed: () {
               setState(() {
                 _showOnlyUnchecked = !_showOnlyUnchecked;
-                _loadData(); // Reload data with new filter
+                _loadData(); // Перезагружаем данные с новым фильтром
               });
             },
             tooltip: _showOnlyUnchecked
                 ? 'Показать все'
-                : 'Показать только невыполненные',
+                : 'Показать только невыбранные',
           ),
-          // Options menu
+          // Меню опций
           PopupMenuButton<String>(
             onSelected: (value) {
               if (value == 'clear_checked') {
@@ -225,7 +314,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
             itemBuilder: (context) => [
               const PopupMenuItem(
                 value: 'clear_checked',
-                child: Text('Удалить выполненные'),
+                child: Text('Удалить выбранные'),
               ),
               const PopupMenuItem(
                 value: 'clear_all',
@@ -240,11 +329,11 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
           : _buildShoppingList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigate to add item screen
+          // Переход к экрану добавления элемента
           Navigator.pushNamed(
               context,
               '/shopping-list/add'
-          ).then((_) => _loadData()); // Reload data after returning from add screen
+          ).then((_) => _loadData()); // Перезагружаем данные после возврата
         },
         child: const Icon(Icons.add),
       ),
@@ -252,7 +341,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
   }
 
   Widget _buildShoppingList() {
-    // Show error message if there is one
+    // Показываем сообщение об ошибке, если оно есть
     if (_errorMessage != null) {
       return Center(
         child: Column(
@@ -279,7 +368,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
       );
     }
 
-    // Show empty state if there are no items
+    // Показываем пустое состояние, если нет элементов
     if (_items.isEmpty) {
       return Center(
         child: Column(
@@ -313,29 +402,18 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
       );
     }
 
-    // Get all items from the repository to calculate progress
-    final allItems = [..._items];
-    if (_showOnlyUnchecked) {
-      // Add checked items from repo if we need them for progress calculation
-      final dataRepository = Provider.of<DataRepository>(context);
-      final repoItems = dataRepository.shoppingListItems;
+    // Получаем все элементы из репозитория для расчета прогресса
+    final dataRepository = Provider.of<DataRepository>(context);
+    final allItems = dataRepository.shoppingListItems;
 
-      // Add checked items that aren't in our current list
-      for (var repoItem in repoItems) {
-        if (repoItem.isChecked && !_items.any((item) => item.id == repoItem.id)) {
-          allItems.add(repoItem);
-        }
-      }
-    }
-
-    // Calculate progress
+    // Рассчитываем прогресс
     final checkedCount = allItems.where((item) => item.isChecked).length;
     final progress = allItems.isEmpty ? 0.0 : checkedCount / allItems.length;
 
-    // Build the list with progress indicators
+    // Строим список с индикаторами прогресса
     return Column(
       children: [
-        // Progress bar
+        // Индикатор прогресса
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: LinearProgressIndicator(
@@ -345,7 +423,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
           ),
         ),
 
-        // Progress statistics
+        // Статистика прогресса
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Row(
@@ -369,7 +447,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
           ),
         ),
 
-        // Shopping list items
+        // Элементы списка покупок
         Expanded(
           child: RefreshIndicator(
             onRefresh: _loadData,
@@ -387,6 +465,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     );
   }
 
+  // Элемент списка покупок с правильным зачеркиванием и взаимодействием
   Widget _buildShoppingItem(ShoppingListItem item) {
     return Dismissible(
       key: Key('shopping_item_${item.id}'),
@@ -405,26 +484,56 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
       },
       child: Card(
         margin: const EdgeInsets.only(bottom: 8),
-        child: CheckboxListTile(
-          value: item.isChecked,
-          onChanged: (value) {
-            _toggleItemChecked(item);
-          },
-          title: Text(
-            item.name,
-            style: TextStyle(
-              decoration: item.isChecked ? TextDecoration.lineThrough : null,
-              color: item.isChecked ? Colors.grey : null,
+        child: InkWell(
+          onTap: () => _onItemTap(item),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+            child: Row(
+              children: [
+                // Чекбокс
+                Checkbox(
+                  value: item.isChecked,
+                  onChanged: (value) {
+                    if (value != null) {
+                      _toggleItemChecked(item, value);
+                    }
+                  },
+                  activeColor: Theme.of(context).colorScheme.primary,
+                ),
+                // Контент
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.name,
+                        style: TextStyle(
+                          decoration: item.isChecked ? TextDecoration.lineThrough : null,
+                          color: item.isChecked ? Colors.grey : null,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        item.formattedQuantity,
+                        style: TextStyle(
+                          decoration: item.isChecked ? TextDecoration.lineThrough : null,
+                          color: item.isChecked ? Colors.grey : Colors.grey[600],
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Иконка дополнительных действий
+                IconButton(
+                  icon: const Icon(Icons.more_vert),
+                  onPressed: () => _onItemTap(item),
+                ),
+              ],
             ),
           ),
-          subtitle: Text(
-            item.formattedQuantity,
-            style: TextStyle(
-              decoration: item.isChecked ? TextDecoration.lineThrough : null,
-              color: item.isChecked ? Colors.grey : null,
-            ),
-          ),
-          activeColor: Theme.of(context).colorScheme.primary,
         ),
       ),
     );
