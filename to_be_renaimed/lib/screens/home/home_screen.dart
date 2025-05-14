@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/enums.dart';
+import '../../models/refrigerator_item.dart';
 import '../../providers/auth_provider.dart';
 import '../../repositories/data_repository.dart';
 import '../../models/recipe.dart';
@@ -20,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _isLoadingRefrigerator = false;
 
   List<Recipe> _recommendedRecipes = [];
-  List<UserIngredient> _expiringProducts = [];
+  List<RefrigeratorItem> _expiringProducts = [];
 
   @override
   void initState() {
@@ -70,82 +71,9 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     try {
-      // In a real implementation, this would fetch from the repository
-      // For now, we'll use the mock data from the existing RefrigeratorScreen
-
-      // This is simulating data that would come from a repository
-      final mockProducts = [
-        UserIngredient(
-          id: 1,
-          userId: 1,
-          ingredientId: 1,
-          quantity: 500,
-          quantityType: QuantityType.grams,
-          ingredient: Ingredient(
-            id: 1,
-            name: 'Помидоры',
-            expiryDate: DateTime.now().add(const Duration(days: 2)),
-            weight: 500,
-            calories: 18,
-            protein: 1,
-            fat: 0,
-            carbs: 4,
-            ingredientTypeId: 1,
-          ),
-        ),
-        UserIngredient(
-          id: 2,
-          userId: 1,
-          ingredientId: 2,
-          quantity: 300,
-          quantityType: QuantityType.grams,
-          ingredient: Ingredient(
-            id: 2,
-            name: 'Огурцы',
-            expiryDate: DateTime.now().add(const Duration(days: 1)),
-            weight: 300,
-            calories: 15,
-            protein: 1,
-            fat: 0,
-            carbs: 3,
-            ingredientTypeId: 1,
-          ),
-        ),
-        UserIngredient(
-          id: 3,
-          userId: 1,
-          ingredientId: 3,
-          quantity: 1,
-          quantityType: QuantityType.liters,
-          ingredient: Ingredient(
-            id: 3,
-            name: 'Молоко',
-            expiryDate: DateTime.now().add(const Duration(days: 3)),
-            weight: 1000,
-            calories: 60,
-            protein: 3,
-            fat: 3,
-            carbs: 5,
-            ingredientTypeId: 4,
-          ),
-        ),
-      ];
-
-      // Filter products expiring within 3 days
-      _expiringProducts = mockProducts.where((item) {
-        final ingredient = item.ingredient;
-        if (ingredient?.expiryDate == null) return false;
-
-        final daysLeft = ingredient!.expiryDate!.difference(DateTime.now()).inDays;
-        return daysLeft >= 0 && daysLeft <= 3;
-      }).toList();
-
-      // Sort by expiration date (closest first)
-      _expiringProducts.sort((a, b) {
-        final aDaysLeft = a.ingredient!.expiryDate!.difference(DateTime.now()).inDays;
-        final bDaysLeft = b.ingredient!.expiryDate!.difference(DateTime.now()).inDays;
-        return aDaysLeft.compareTo(bDaysLeft);
-      });
+      final dataRepository = Provider.of<DataRepository>(context, listen: false);
+      // Используем существующий метод для получения срочных продуктов
+      _expiringProducts = await dataRepository.getExpiringItems();
     } catch (e) {
       print('Error loading expiring products: $e');
     } finally {
@@ -155,6 +83,36 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       }
     }
+  }
+
+  // Функция для получения даты начала текущей недели (понедельник)
+  DateTime _getStartOfWeek() {
+    final now = DateTime.now();
+    // Получаем разницу между текущим днем недели и понедельником (1)
+    final difference = now.weekday - 1;
+    // Вычитаем разницу дней, чтобы получить понедельник
+    return DateTime(now.year, now.month, now.day - difference);
+  }
+
+  // Функция для получения даты конца текущей недели (воскресенье)
+  DateTime _getEndOfWeek() {
+    final startOfWeek = _getStartOfWeek();
+    // Добавляем 6 дней к понедельнику, чтобы получить воскресенье
+    return DateTime(startOfWeek.year, startOfWeek.month, startOfWeek.day + 6);
+  }
+
+  // Функция для форматирования даты в виде "день месяц"
+  String _formatDate(DateTime date) {
+    final months = [
+      'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+      'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
+    ];
+    return '${date.day} ${months[date.month - 1]}';
+  }
+
+  // Функция для получения текущего дня недели (от 1 до 7)
+  int _getCurrentDayOfWeek() {
+    return DateTime.now().weekday;
   }
 
   @override
@@ -202,20 +160,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 24),
 
                 // Recommended recipes
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Рекомендуемые рецепты',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/recipes');
-                      },
-                      child: const Text('Все рецепты'),
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Рекомендуемые рецепты',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/recipes');
+                        },
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          minimumSize: Size.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        child: const Text('Все'),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 12),
                 _isLoadingRecipes
@@ -317,20 +283,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 24),
 
                 // Expiring products
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Срочные продукты',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/refrigerator');
-                      },
-                      child: const Text('Все продукты'),
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Срочные продукты',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/refrigerator');
+                        },
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          minimumSize: Size.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        child: const Text('Все'),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 12),
                 _isLoadingRefrigerator
@@ -348,7 +322,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: _expiringProducts.length,
                     itemBuilder: (context, index) {
                       final product = _expiringProducts[index];
-                      final daysLeft = product.ingredient!.expiryDate!.difference(DateTime.now()).inDays;
+                      // Добавляем +1 к количеству дней до истечения срока
+                      final daysLeft = product.ingredient!.expiryDate!.difference(DateTime.now()).inDays + 1;
 
                       return ListTile(
                         leading: Container(
@@ -394,12 +369,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                       ),
                       const SizedBox(height: 8),
-                      const Text('29 апреля - 5 мая 2025'),
+                      Text(
+                        '${_formatDate(_getStartOfWeek())} - ${_formatDate(_getEndOfWeek())} ${_getEndOfWeek().year}',
+                      ),
                       const SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Прогресс: 3/7 дней'),
+                          Text('Прогресс: ${_getCurrentDayOfWeek()}/7 дней'),
                           ElevatedButton(
                             onPressed: () {
                               Navigator.pushNamed(context, '/meal-plan/weekly');
@@ -515,16 +492,22 @@ class _HomeScreenState extends State<HomeScreen> {
       String label,
       VoidCallback onTap,
       ) {
+    // Рассчитываем ширину, вычитая отступы и деля на 3
+    // Отнимаем еще 6px, чтобы избежать возможных проблем с переполнением
+    final buttonWidth = (MediaQuery.of(context).size.width - 48 - 6) / 3;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: MediaQuery.of(context).size.width / 3.5,
+        width: buttonWidth,
+        height: 110, // Фиксированная высота для всех кнопок
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondaryContainer,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center, // Центрируем содержимое
           children: [
             Icon(icon, color: Theme.of(context).colorScheme.primary, size: 32),
             const SizedBox(height: 8),
@@ -532,7 +515,7 @@ class _HomeScreenState extends State<HomeScreen> {
               label,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 9,
                 color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
