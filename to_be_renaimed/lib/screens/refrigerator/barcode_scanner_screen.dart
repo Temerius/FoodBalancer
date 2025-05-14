@@ -157,7 +157,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
       print('Sending barcode to server: $barcode');
 
       // Показываем индикатор загрузки с сообщением о длительной обработке
-      _showLoadingDialog('Запрос обрабатывается. Это может занять до 60 секунд...');
+      _showLoadingDialog('Запрос обрабатывается. Это может занять до 20 секунд...');
 
       // Получаем данные о продукте через наш API
       final productData = await _barcodeService.fetchProductByBarcode(barcode);

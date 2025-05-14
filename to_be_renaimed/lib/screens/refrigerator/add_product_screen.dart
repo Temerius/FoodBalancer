@@ -1,4 +1,6 @@
 // lib/screens/refrigerator/add_product_screen.dart - Improved version
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../repositories/data_repository.dart';
@@ -133,18 +135,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
       // Устанавливаем тип ингредиента по ID (из классификации ИИ)
       if (data['ingredient_type_id'] != null) {
         final typeId = data['ingredient_type_id'];
+        print('Setting ingredient type by ID: $typeId');
 
-        // Ищем и устанавливаем соответствующий тип
-        for (var type in _allTypes) {
-          if (type.id == typeId) {
-            print('Found matching type: ${type.name} (ID: ${type.id})');
-            setState(() {
-              _selectedType = type;
-              _typeSearchController.text = type.name;
-            });
-            break;
-          }
-        }
+        // Используем специальный метод для поиска типа по ID
+        _findTypeById(typeId);
       }
       // Если тип ингредиента не задан по ID, но есть категория в виде строки
       else if (data['category'] != null && data['category'].toString().isNotEmpty) {
@@ -200,6 +194,46 @@ class _AddProductScreenState extends State<AddProductScreen> {
     }
   }
 
+  void _findTypeById(int typeId) {
+    if (_allTypes.isEmpty) {
+      // Если типы еще не загружены, запомним ID для последующего применения
+      print('Types not loaded yet, saving typeId: $typeId');
+      return;
+    }
+
+    print('\n===== FINDING TYPE BY ID: $typeId =====');
+    print('Available types: ${_allTypes.length}');
+
+    // Выводим первые 5 типов для отладки
+    for (int i = 0; i < min(_allTypes.length, 5); i++) {
+      print('Type ${i+1}: ID=${_allTypes[i].id}, Name=${_allTypes[i].name}');
+    }
+
+    IngredientType? foundType;
+
+    // Ищем тип по ID
+    for (var type in _allTypes) {
+      if (type.id == typeId) {
+        foundType = type;
+        print('FOUND EXACT MATCH: ${type.name} (ID: ${type.id})');
+        break;
+      }
+    }
+
+    // Если тип не найден, выводим предупреждение
+    if (foundType == null) {
+      print('WARNING: Type with ID $typeId not found in loaded types!');
+      return;
+    }
+
+    // Применяем найденный тип
+    setState(() {
+      _selectedType = foundType;
+      _typeSearchController.text = foundType!.name;
+    });
+
+    print('Type set to: ${_selectedType?.name} (ID: ${_selectedType?.id})');
+  }
 
   void _findTypeByCategory(String category) {
     if (_allTypes.isEmpty) return;
@@ -326,7 +360,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   Future<void> _loadIngredientTypes() async {
     try {
-      final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
+      print('\n===== LOADING INGREDIENT TYPES =====');
+      final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
       // Загружаем все типы ингредиентов из API через DataRepository
       final response = await dataRepository.apiService.get('/api/ingredient-types/?limit=1000');
@@ -336,8 +371,19 @@ class _AddProductScreenState extends State<AddProductScreen> {
           _allTypes = (response['results'] as List)
               .map((json) => IngredientType.fromJson(json))
               .toList();
-          _searchResults = _allTypes;
         });
+
+        print('Loaded ${_allTypes.length} ingredient types');
+
+        // Если у нас есть отложенные данные и в них есть ingredient_type_id,
+        // применяем его теперь, когда типы загружены
+        if (_pendingScannedData != null && _pendingScannedData!.containsKey('ingredient_type_id')) {
+          int? typeId = _pendingScannedData!['ingredient_type_id'];
+          if (typeId != null) {
+            print('Applying pending ingredient type ID: $typeId');
+            _findTypeById(typeId);
+          }
+        }
       }
     } catch (e) {
       print('Error loading ingredient types: $e');
