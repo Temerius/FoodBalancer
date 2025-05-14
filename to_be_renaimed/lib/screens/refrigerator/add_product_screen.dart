@@ -52,60 +52,177 @@ class _AddProductScreenState extends State<AddProductScreen> {
     QuantityType.liters,
   ];
 
-  void _prefillFromScannedData(Map<String, dynamic> data) {
-    if (data['name'] != null && data['name'].isNotEmpty) {
-      _productNameController.text = data['name'];
-    }
-    if (data['calories'] != null) {
-      _caloriesController.text = data['calories'].toString();
-    }
-    if (data['protein'] != null) {
-      _proteinController.text = data['protein'].toString();
-    }
-    if (data['fat'] != null) {
-      _fatController.text = data['fat'].toString();
-    }
-    if (data['carbs'] != null) {
-      _carbsController.text = data['carbs'].toString();
-    }
+  String _extractNumericValue(dynamic value) {
+    if (value == null) return "0";
 
-    // Здесь можно также установить категорию, если она есть в данных
-    if (data['category'] != null) {
-      final categoryName = data['category'] as String;
+    // Если value уже число, просто возвращаем его
+    if (value is int) return value.toString();
+    if (value is double) return value.toString();
 
-      // Поиск ближайшей категории по имени
-      IngredientType? foundType;
+    // Если value строка, извлекаем из нее число
+    if (value is String) {
+      if (value.isEmpty) return "0";
 
-      // Сначала ищем точное совпадение
-      for (var type in _allTypes) {
-        if (type.name.toLowerCase() == categoryName.toLowerCase()) {
-          foundType = type;
-          break;
+      // Регулярное выражение для поиска числа
+      final RegExp regExp = RegExp(r'(\d+(?:[.,]\d+)?)');
+      final match = regExp.firstMatch(value);
+
+      if (match != null) {
+        // Заменяем запятую на точку (для корректного парсинга)
+        String numberStr = match.group(1)!.replaceAll(',', '.');
+        try {
+          // Пытаемся преобразовать в число для проверки
+          double.parse(numberStr);
+          return numberStr;
+        } catch (e) {
+          print('Error parsing numeric value: $e');
         }
       }
+    }
 
-      // Если не нашли точное совпадение, ищем частичное
-      if (foundType == null) {
+    return "0";
+  }
+
+  // Улучшенная версия метода _prefillFromScannedData
+  void _prefillFromScannedData(Map<String, dynamic> data) {
+    print('\n===== PREFILLING FROM SCANNED DATA =====');
+    print('Data received: $data');
+
+    try {
+      // Заполняем название продукта
+      if (data['name'] != null && data['name'].toString().isNotEmpty) {
+        _productNameController.text = data['name'].toString();
+        print('Set name: ${data['name']}');
+      }
+
+      // Заполняем БЖУ и калории
+      if (data['calories'] != null) {
+        _caloriesController.text = data['calories'].toString();
+        print('Set calories: ${data['calories']}');
+      }
+
+      if (data['protein'] != null) {
+        _proteinController.text = data['protein'].toString();
+        print('Set protein: ${data['protein']}');
+      }
+
+      if (data['fat'] != null) {
+        _fatController.text = data['fat'].toString();
+        print('Set fat: ${data['fat']}');
+      }
+
+      if (data['carbs'] != null) {
+        _carbsController.text = data['carbs'].toString();
+        print('Set carbs: ${data['carbs']}');
+      }
+
+      // Количество продукта (если есть)
+      if (data['weight'] != null) {
+        _quantityController.text = data['weight'].toString();
+        print('Set quantity: ${data['weight']}');
+      }
+
+      // Устанавливаем тип ингредиента по ID (из классификации ИИ)
+      if (data['ingredient_type_id'] != null && _allTypes.isNotEmpty) {
+        final typeId = data['ingredient_type_id'];
+
+        // Ищем и устанавливаем соответствующий тип
         for (var type in _allTypes) {
-          if (type.name.toLowerCase().contains(categoryName.toLowerCase()) ||
-              categoryName.toLowerCase().contains(type.name.toLowerCase())) {
-            foundType = type;
+          if (type.id == typeId) {
+            print('Found matching type: ${type.name} (ID: ${type.id})');
+            setState(() {
+              _selectedType = type;
+              _typeSearchController.text = type.name;
+            });
             break;
           }
         }
       }
+      // Если тип ингредиента не задан по ID, но есть категория в виде строки
+      else if (data['category'] != null && data['category'].toString().isNotEmpty) {
+        print('No type ID, but category string found: ${data['category']}');
+        _findTypeByCategory(data['category'].toString());
+      }
 
-      if (foundType != null) {
-        setState(() {
-          _selectedType = foundType;
-          _typeSearchController.text = foundType!.name;
-        });
+      // Устанавливаем аллергены, если они есть
+      if (data['allergen_ids'] != null && data['allergen_ids'] is List && _allAllergens.isNotEmpty) {
+        print('Setting allergens from IDs: ${data['allergen_ids']}');
+        List<dynamic> allergenIds = data['allergen_ids'];
+
+        // Сбрасываем текущие выбранные аллергены
+        _selectedAllergens.clear();
+        for (var allergen in _allAllergens) {
+          allergen.isSelected = false;
+        }
+
+        // Отмечаем аллергены как выбранные
+        for (var allergen in _allAllergens) {
+          if (allergenIds.contains(allergen.id)) {
+            print('Setting allergen as selected: ${allergen.name} (ID: ${allergen.id})');
+            allergen.isSelected = true;
+            _selectedAllergens.add(allergen);
+          }
+        }
+      }
+
+      // Отображаем штрих-код, если он есть
+      if (data['barcode'] != null) {
+        _barcodeController.text = data['barcode'].toString();
+        print('Set barcode: ${data['barcode']}');
+      }
+
+      // Если есть информация о составе, сохраняем ее
+      if (data['ingredients'] != null && data['ingredients'].toString().isNotEmpty) {
+        print('Product ingredients: ${data['ingredients']}');
+        // Здесь можно добавить поле для состава, если нужно
+      }
+
+      print('Prefilling complete');
+    } catch (e) {
+      print('\n===== ERROR IN PREFILLING =====');
+      print('Error type: ${e.runtimeType}');
+      print('Error message: $e');
+      print('Stacktrace:');
+      print(StackTrace.current);
+    }
+  }
+
+
+  void _findTypeByCategory(String category) {
+    if (_allTypes.isEmpty) return;
+
+    final categoryLower = category.toLowerCase();
+    IngredientType? foundType;
+
+    // Сначала ищем точное совпадение
+    for (var type in _allTypes) {
+      if (type.name.toLowerCase() == categoryLower) {
+        foundType = type;
+        print('Found exact match for category: ${type.name}');
+        break;
       }
     }
 
-    // Отображаем штрих-код, если он есть
-    if (data['barcode'] != null) {
-      print('Product barcode: ${data['barcode']}');
+    // Если не нашли точное совпадение, ищем частичное
+    if (foundType == null) {
+      for (var type in _allTypes) {
+        if (type.name.toLowerCase().contains(categoryLower) ||
+            categoryLower.contains(type.name.toLowerCase())) {
+          foundType = type;
+          print('Found partial match for category: ${type.name}');
+          break;
+        }
+      }
+    }
+
+    // Если нашли тип, устанавливаем его
+    if (foundType != null) {
+      setState(() {
+        _selectedType = foundType;
+        _typeSearchController.text = foundType!.name;
+      });
+    } else {
+      print('No matching type found for category: $category');
     }
   }
 
@@ -114,20 +231,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
     super.initState();
     _isEditing = widget.productId != null;
 
-    // Получаем данные от сканера, если есть
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-
-      if (args != null && args['scanned_data'] != null) {
-        final scannedData = args['scanned_data'] as Map<String, dynamic>;
-        _prefillFromScannedData(scannedData);
-      } else if (args != null && args['barcode'] != null) {
-        // Если только штрих-код без данных
-        _barcodeController.text = args['barcode'];
-      }
-
-      _initializeData();
-    });
+    // Отладочный вывод
+    print('\n===== ADD PRODUCT SCREEN INITIALIZED =====');
+    print('Is editing mode: $_isEditing');
   }
 
   Future<void> _initializeData() async {
@@ -138,6 +244,39 @@ class _AddProductScreenState extends State<AddProductScreen> {
     if (_isEditing) {
       await _loadExistingProduct();
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // Получаем аргументы от сканера
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    print('\n===== CHECKING ROUTE ARGUMENTS =====');
+    print('Arguments: $args');
+
+    if (args != null) {
+      if (args.containsKey('scanned_data')) {
+        print('Found scanned_data in arguments');
+        final scannedData = args['scanned_data'] as Map<String, dynamic>;
+        print('Scanned data: $scannedData');
+
+        // Заполняем форму полученными данными
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _prefillFromScannedData(scannedData);
+        });
+      } else if (args.containsKey('barcode')) {
+        // Если только штрих-код без данных
+        print('Found barcode in arguments: ${args['barcode']}');
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _barcodeController.text = args['barcode'].toString();
+        });
+      }
+    } else {
+      print('No arguments found');
+    }
+
+    _initializeData();
   }
 
   Future<void> _loadIngredientTypes() async {
@@ -287,9 +426,40 @@ class _AddProductScreenState extends State<AddProductScreen> {
     super.dispose();
   }
 
+  void _debugPrintControllers() {
+    print('\n===== DEBUG: TEXT CONTROLLERS STATE =====');
+    print('_typeSearchController: ${_typeSearchController.text}');
+    print('_productNameController: ${_productNameController.text}');
+    print('_quantityController: ${_quantityController.text}');
+    print('_caloriesController: ${_caloriesController.text}');
+    print('_proteinController: ${_proteinController.text}');
+    print('_fatController: ${_fatController.text}');
+    print('_carbsController: ${_carbsController.text}');
+    print('_barcodeController: ${_barcodeController.text}');
+    print('_selectedType: ${_selectedType?.name}');
+    print('_allTypes count: ${_allTypes.length}');
+    print('_selectedAllergens count: ${_selectedAllergens.length}');
+  }
+
   @override
   Widget build(BuildContext context) {
-    print('AddProductScreen: build called');
+    // Проверяем аргументы при каждом перестроении UI
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    print('\n===== BUILD: CHECKING ROUTE ARGUMENTS =====');
+    print('Arguments in build: $args');
+    if (args != null && args.containsKey('scanned_data')) {
+      print('Found scanned_data in arguments (build method)');
+      final scannedData = args['scanned_data'] as Map<String, dynamic>;
+
+      // Если данные есть, но контроллеры пустые - заполняем их
+      if (_productNameController.text.isEmpty && scannedData.containsKey('name')) {
+        print('Form seems empty, filling again from arguments!');
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _prefillFromScannedData(scannedData);
+          _debugPrintControllers();
+        });
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(

@@ -41,3 +41,5 @@ Traceback (most recent call last):
   File "C:\Users\artem\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 356, in raw_decode
     raise JSONDecodeError("Expecting value", s, err.value) from None
 json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+ERROR 2025-05-14 02:35:34,846 middleware 23480 8236 404 Not Found: GET /api/barcode/
+ERROR 2025-05-14 02:36:36,714 middleware 23480 21060 404 Not Found: GET /api/barcode/

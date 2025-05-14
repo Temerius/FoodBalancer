@@ -2,8 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import '../../repositories/data_repository.dart';
+import '../../services/barcode_service.dart';
+import '../refrigerator/add_product_screen.dart'; // Добавляем импорт
 
 class BarcodeScannerScreen extends StatefulWidget {
   const BarcodeScannerScreen({Key? key}) : super(key: key);
@@ -18,11 +20,21 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
   String _scanStatus = 'Наведите камеру на штрих-код продукта';
   bool _isProcessing = false;
   bool _isFlashOn = false;
+  late BarcodeService _barcodeService;
+  DataRepository? _dataRepository;
 
   @override
   void initState() {
     super.initState();
     _checkCameraPermission();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Инициализация сервиса
+    _dataRepository = Provider.of<DataRepository>(context, listen: false);
+    _barcodeService = BarcodeService(apiService: _dataRepository!.apiService);
   }
 
   Future<void> _checkCameraPermission() async {
@@ -67,157 +79,112 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
       print('Raw Value: $barcodeData');
 
       if (barcodeData != null) {
-        // Проверяем, содержит ли штрих-код URL
-        if (barcodeData.startsWith('http://') || barcodeData.startsWith('https://')) {
-          print('DETECTED URL: $barcodeData');
-          setState(() {
-            _scanStatus = 'Найден URL: $barcodeData';
-          });
+        // Останавливаем сканирование и показываем диалог с отсканированным штрих-кодом
+        controller.stop();
+        setState(() {
+          _scanStatus = 'Штрих-код распознан';
+        });
 
-          // Здесь позже отправим URL на сервер
-          await _processBarcode(barcodeData);
-
-        } else {
-          // Обычный штрих-код (EAN, UPC и т.д.)
-          print('DETECTED BARCODE: $barcodeData');
-          setState(() {
-            _scanStatus = 'Штрих-код: $barcodeData';
-          });
-
-          // Здесь позже можно будет использовать API для поиска по штрих-коду
-          await _processBarcodeDigits(barcodeData);
+        if (mounted) {
+          // Показываем диалог с отсканированным штрих-кодом и кнопкой обработки
+          _showScannedBarcodeDialog(barcodeData);
         }
       }
     }
-
-    // Ждем 2 секунды перед следующим сканированием
-    await Future.delayed(const Duration(seconds: 2));
 
     setState(() {
       _isProcessing = false;
     });
   }
 
-  Future<void> _processBarcode(String url) async {
-    print('\n===== PROCESSING URL =====');
-    print('URL: $url');
-
-    // TODO: Отправить URL на сервер для скрэпинга
-    // Пока просто симулируем обработку
-    await Future.delayed(const Duration(seconds: 1));
-
-    setState(() {
-      _scanStatus = 'Обрабатываем данные...';
-    });
-
-    // Симуляция получения данных
-    await Future.delayed(const Duration(seconds: 2));
-
-    if (mounted) {
-      // Симулируем получение данных и переход к добавлению
-      Navigator.pushReplacementNamed(
-        context,
-        '/refrigerator/add-product',
-        arguments: {
-          'scanned_data': {
-            'name': 'Молоко 3.2%',
-            'calories': 58,
-            'protein': 2.9,
-            'fat': 3.2,
-            'carbs': 4.7,
-            'category': 'Молочные продукты',
-          }
-        },
-      );
-    }
+  // Новый метод для отображения диалога с отсканированным штрих-кодом
+  void _showScannedBarcodeDialog(String barcode) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: const Text('Штрих-код отсканирован'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('Выберите действие для штрих-кода:'),
+            const SizedBox(height: 16),
+            Text(
+              barcode,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              // Продолжаем сканирование
+              controller.start();
+              setState(() {
+                _scanStatus = 'Наведите камеру на штрих-код продукта';
+              });
+            },
+            child: const Text('Отмена'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              setState(() {
+                _scanStatus = 'Обработка штрих-кода...';
+              });
+              // Обрабатываем штрих-код
+              _processBarcodeWithOurAPI(barcode);
+            },
+            child: const Text('Обработать'),
+          ),
+        ],
+      ),
+    );
   }
 
-  Future<Map<String, dynamic>?> _searchOpenFoodFacts(String barcode) async {
+  Future<void> _processBarcodeWithOurAPI(String barcode) async {
     try {
-      final url = 'https://world.openfoodfacts.org/api/v2/product/$barcode';
+      setState(() {
+        _isProcessing = true;
+        _scanStatus = 'Поиск информации о продукте...';
+      });
 
-      final response = await http.get(Uri.parse(url));
+      print('\n===== PROCESSING BARCODE WITH OUR API =====');
+      print('Sending barcode to server: $barcode');
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+      // Получаем данные о продукте через наш API
+      final productData = await _barcodeService.fetchProductByBarcode(barcode);
 
-        if (data['status'] == 1 && data['product'] != null) {
-          final product = data['product'];
+      // Подробный вывод ответа сервера
+      print('\n===== SERVER RESPONSE =====');
+      if (productData != null) {
+        print('Response received successfully!');
+        print('Product name: ${productData['name'] ?? "Not available"}');
+        print('Product weight: ${productData['weight'] ?? "Not available"}');
+        print('Calories: ${productData['calories'] ?? "Not available"}');
+        print('Protein: ${productData['protein'] ?? "Not available"}');
+        print('Fat: ${productData['fat'] ?? "Not available"}');
+        print('Carbs: ${productData['carbs'] ?? "Not available"}');
 
-          // Извлекаем нужные данные
-          final String name = product['product_name'] ?? product['generic_name'] ?? '';
-          final String? brand = product['brands'];
-
-          // Пищевая ценность (на 100г)
-          final nutriments = product['nutriments'] ?? {};
-
-          // Формируем структурированные данные
-          return {
-            'name': brand != null ? '$brand $name' : name,
-            'calories': nutriments['energy-kcal_100g']?.toInt() ?? 0,
-            'protein': nutriments['proteins_100g']?.toDouble() ?? 0.0,
-            'fat': nutriments['fat_100g']?.toDouble() ?? 0.0,
-            'carbs': nutriments['carbohydrates_100g']?.toDouble() ?? 0.0,
-            'category': _extractCategory(product),
-            'image_url': product['image_url'],
-            'barcode': barcode,
-          };
+        // Вывод классификации
+        if (productData.containsKey('classification')) {
+          final classification = productData['classification'];
+          print('Classification:');
+          print('  - Type ID: ${classification['ingredient_type_id'] ?? "None"}');
+          print('  - Type name: ${classification['ingredient_type_name'] ?? "None"}');
+          print('  - Allergen IDs: ${classification['allergen_ids'] ?? "[]"}');
+          print('  - Allergen names: ${classification['allergen_names'] ?? "[]"}');
+        } else {
+          print('No classification data available');
         }
-      }
 
-      return null;
-    } catch (e) {
-      print('ERROR in _searchOpenFoodFacts: $e');
-      return null;
-    }
-  }
+        // Вывод информации о магазине
+        print('Store: ${productData['store'] ?? "Not available"}');
 
-  String _extractCategory(Map<String, dynamic> product) {
-    // Попробуем получить категорию из различных полей
-    if (product['categories'] != null && product['categories'].isNotEmpty) {
-      final categories = product['categories'].split(',');
-
-      // Преобразуем некоторые категории на русский
-      for (var category in categories) {
-        category = category.trim().toLowerCase();
-
-        if (category.contains('dairy') || category.contains('milk')) {
-          return 'Молочные продукты';
-        }
-        if (category.contains('vegetable') || category.contains('produce')) {
-          return 'Овощи';
-        }
-        if (category.contains('fruit')) {
-          return 'Фрукты';
-        }
-        if (category.contains('meat')) {
-          return 'Мясо';
-        }
-        if (category.contains('beverage') || category.contains('drink')) {
-          return 'Напитки';
-        }
-        if (category.contains('cereal') || category.contains('grain')) {
-          return 'Крупы';
-        }
-      }
-    }
-
-    return 'Разное';
-  }
-
-  Future<void> _processBarcodeDigits(String barcode) async {
-    print('\n===== PROCESSING BARCODE DIGITS =====');
-    print('Barcode: $barcode');
-
-    setState(() {
-      _scanStatus = 'Поиск товара...';
-    });
-
-    try {
-      // Ищем товар через OpenFoodFacts API
-      final productInfo = await _searchOpenFoodFacts(barcode);
-
-      if (productInfo != null && mounted) {
         setState(() {
           _scanStatus = 'Товар найден!';
         });
@@ -225,31 +192,68 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
         // Ждем немного, чтобы пользователь увидел сообщение
         await Future.delayed(const Duration(seconds: 1));
 
-        // Переходим к форме добавления с найденными данными
-        Navigator.pushReplacementNamed(
-          context,
-          '/refrigerator/add-product',
-          arguments: {
-            'scanned_data': productInfo,
-            'barcode': barcode,
-          },
-        );
-      } else if (mounted) {
-        setState(() {
-          _scanStatus = 'Товар не найден';
+        // Форматируем данные для AddProductScreen
+        final formattedData = _barcodeService.formatProductData(productData);
+        formattedData['barcode'] = barcode;
+
+        print('\n===== FORMATTED DATA =====');
+        formattedData.forEach((key, value) {
+          print('$key: $value');
         });
 
-        // Показываем информацию о том, что товар не найден
+        // Переходим к форме добавления с найденными данными
+        _goToAddProductWithData({
+          'scanned_data': formattedData,
+          'barcode': barcode,
+        });
+      } else {
+        print('No product data received from server');
+        // Если через наш API продукт не найден, показываем информацию
+        setState(() {
+          _scanStatus = 'Продукт не найден';
+        });
         _showBarcodeInfo(barcode);
       }
     } catch (e) {
-      print('ERROR SEARCHING PRODUCT: $e');
+      print('\n===== ERROR PROCESSING BARCODE =====');
+      print('Error type: ${e.runtimeType}');
+      print('Error message: $e');
+      print('Stacktrace:');
+      print(StackTrace.current);
+
       if (mounted) {
         setState(() {
-          _scanStatus = 'Ошибка поиска';
+          _scanStatus = 'Ошибка поиска продукта';
         });
         _showBarcodeInfo(barcode);
       }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isProcessing = false;
+          // Возобновляем сканирование
+          controller.start();
+        });
+      }
+    }
+  }
+
+  void _goToAddProductWithData(Map<String, dynamic> data) {
+    if (mounted) {
+      print('\n===== NAVIGATING TO ADD_PRODUCT_SCREEN =====');
+      print('Data being passed: $data');
+
+      // Используем явный MaterialPageRoute вместо маршрута по имени
+      // для гарантии передачи аргументов
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AddProductScreen(),
+          settings: RouteSettings(
+            arguments: data,
+          ),
+        ),
+      );
     }
   }
 
@@ -274,23 +278,29 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
             Row(
               children: [
                 Expanded(
-                  child: ElevatedButton(
+                  child: OutlinedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      // Здесь можно добавить поиск по штрих-коду
+                      // Пытаемся снова найти продукт
+                      _processBarcodeWithOurAPI(barcode);
                     },
-                    child: const Text('Поиск товара'),
+                    child: const Text('Повторить поиск'),
                   ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: OutlinedButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      Navigator.pushReplacementNamed(
+                      // Используем прямой вызов вместо pushReplacementNamed
+                      Navigator.push(
                         context,
-                        '/refrigerator/add-product',
-                        arguments: {'barcode': barcode},
+                        MaterialPageRoute(
+                          builder: (context) => AddProductScreen(),
+                          settings: RouteSettings(
+                            arguments: {'barcode': barcode},
+                          ),
+                        ),
                       );
                     },
                     child: const Text('Добавить вручную'),
@@ -391,7 +401,13 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
         padding: const EdgeInsets.all(16),
         child: OutlinedButton.icon(
           onPressed: () {
-            Navigator.pushReplacementNamed(context, '/refrigerator/add-product');
+            // Используем прямой вызов вместо pushReplacementNamed
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddProductScreen(),
+              ),
+            );
           },
           icon: const Icon(Icons.edit),
           label: const Text('Ввести вручную'),
