@@ -43,17 +43,10 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
         shopping_list = self.get_object()
         user_id = request.user.usr_id
 
-        # Получаем все элементы или только невыполненные
-        only_unchecked = request.query_params.get('unchecked', 'false').lower() == 'true'
-
-        if only_unchecked:
-            logger.info(f"Getting unchecked shopping list items: user_id={user_id}")
-            items = M2MIngSpl.objects.filter(mis_spl_id=shopping_list, is_checked=False)
-        else:
-            logger.info(f"Getting all shopping list items: user_id={user_id}")
-            items = M2MIngSpl.objects.filter(mis_spl_id=shopping_list)
-
+        # Получаем все элементы списка покупок
+        items = M2MIngSpl.objects.filter(mis_spl_id=shopping_list)
         item_count = items.count()
+
         logger.info(
             f"Retrieved {item_count} shopping list items for user_id={user_id}, time={time.time() - start_time:.2f}s")
         serializer = ShoppingListItemSerializer(items, many=True)
@@ -103,7 +96,6 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
             # Обновляем количество существующего элемента
             old_quantity = existing_item.mis_quantity
             existing_item.mis_quantity += int(request.data['mis_quantity'])
-            existing_item.is_checked = False  # Сбрасываем статус "выполнено"
             existing_item.save()
             logger.info(
                 f"Updated existing item quantity: item_id={existing_item.mis_id}, type='{ingredient_type.igt_name}', "
@@ -119,8 +111,7 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
             mis_spl_id=shopping_list,
             mis_igt_id_id=ingredient_type_id,
             mis_quantity=quantity,
-            mis_quantity_type=quantity_type,
-            is_checked=False
+            mis_quantity_type=quantity_type
         )
 
         logger.info(f"Added new item to shopping list: item_id={item.mis_id}, type='{ingredient_type.igt_name}', "
@@ -157,7 +148,6 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
         # Сохраняем старые значения для лога
         old_quantity = item.mis_quantity
         old_quantity_type = item.mis_quantity_type
-        old_is_checked = item.is_checked
 
         # Обновление данных
         if 'mis_quantity' in request.data:
@@ -165,9 +155,6 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
 
         if 'mis_quantity_type' in request.data:
             item.mis_quantity_type = request.data['mis_quantity_type']
-
-        if 'is_checked' in request.data:
-            item.is_checked = request.data['is_checked']
 
         item.save()
 
@@ -177,8 +164,6 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
             changes.append(f"quantity: {old_quantity} -> {item.mis_quantity}")
         if old_quantity_type != item.mis_quantity_type:
             changes.append(f"type: {old_quantity_type} -> {item.mis_quantity_type}")
-        if old_is_checked != item.is_checked:
-            changes.append(f"checked: {old_is_checked} -> {item.is_checked}")
 
         if changes:
             logger.info(
@@ -219,25 +204,6 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
                 {"error": "Элемент не найден в списке покупок"},
                 status=status.HTTP_404_NOT_FOUND
             )
-
-    @action(detail=True, methods=['post'])
-    def clear_checked(self, request, pk=None):
-        """Удаление всех выполненных элементов из списка покупок"""
-        start_time = time.time()
-        shopping_list = self.get_object()
-        user_id = request.user.usr_id
-
-        logger.info(f"Clearing checked items from shopping list: user_id={user_id}")
-
-        checked_count = M2MIngSpl.objects.filter(mis_spl_id=shopping_list, is_checked=True).count()
-        deleted_count, _ = M2MIngSpl.objects.filter(mis_spl_id=shopping_list, is_checked=True).delete()
-
-        logger.info(
-            f"Cleared {deleted_count} checked items from shopping list: user_id={user_id}, time={time.time() - start_time:.2f}s")
-        return Response(
-            {"deleted_count": deleted_count},
-            status=status.HTTP_200_OK
-        )
 
     @action(detail=True, methods=['post'])
     def clear_all(self, request, pk=None):

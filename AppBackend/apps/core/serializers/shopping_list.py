@@ -9,7 +9,7 @@ class ShoppingListItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = M2MIngSpl
-        fields = ['mis_id', 'mis_quantity', 'mis_quantity_type', 'is_checked', 'ingredient_type']
+        fields = ['mis_id', 'mis_quantity', 'mis_quantity_type', 'ingredient_type']
 
 
 class ShoppingListSerializer(serializers.ModelSerializer):

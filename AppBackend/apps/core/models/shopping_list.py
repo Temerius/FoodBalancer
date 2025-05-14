@@ -50,8 +50,7 @@ class M2MIngSpl(models.Model):
         choices=QuantityTypeChoices.choices,
         default=QuantityTypeChoices.GRAMS
     )
-    # Дополнительное поле для отслеживания статуса
-    is_checked = models.BooleanField(_('Отмечено'), default=False)
+    # Removed the is_checked field that doesn't exist in the database
 
     class Meta:
         db_table = 'm2m_ing_spl'

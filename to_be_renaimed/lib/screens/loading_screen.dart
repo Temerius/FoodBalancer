@@ -129,12 +129,22 @@ class _LoadingScreenState extends State<LoadingScreen> {
       }
 
       setState(() {
+        _statusMessage = "Загрузка списка покупок...";
+        _progress = 0.93;
+      });
+
+// Load shopping list data
+      await dataRepository.getShoppingListItems(forceRefresh: true);
+
+      setState(() {
         _progress = 1.0;
         _statusMessage = "Готово!";
       });
 
       // Небольшая задержка, чтобы пользователь увидел полный прогресс бар
       await Future.delayed(const Duration(milliseconds: 500));
+
+
 
       // Переход на соответствующий экран
       if (mounted) {

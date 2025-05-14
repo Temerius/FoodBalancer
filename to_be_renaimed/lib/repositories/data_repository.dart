@@ -1,6 +1,7 @@
 // lib/repositories/data_repository.dart
 import 'package:flutter/foundation.dart';
 import 'package:to_be_renaimed/repositories/repositories/refrigerator_repository.dart';
+import 'package:to_be_renaimed/repositories/repositories/shopping_list_repository.dart';
 import '../models/enums.dart';
 import '../models/ingredient.dart';
 import '../models/ingredient_type.dart';
@@ -15,6 +16,8 @@ import 'repositories/user_repository.dart';
 import 'repositories/allergen_repository.dart';
 import 'repositories/equipment_repository.dart';
 import 'repositories/recipe_repository.dart';
+import '../services/shopping_list_service.dart';
+import 'repositories/shopping_list_repository.dart';
 
 
 import 'models/cache_config.dart';
@@ -30,6 +33,15 @@ class DataRepository with ChangeNotifier {
   late final EquipmentRepository _equipmentRepository;
   late final RecipeRepository _recipeRepository;
   late final RefrigeratorRepository _refrigeratorRepository;
+
+  late final ShoppingListRepository _shoppingListRepository;
+  bool _isLoadingShoppingList = false;
+  DateTime? _lastShoppingListUpdate;
+
+// Add these getters to the DataRepository class
+  bool get isLoadingShoppingList => _isLoadingShoppingList;
+  List<ShoppingListItem> get shoppingListItems => _shoppingListRepository.items;
+  double get shoppingListProgress => _shoppingListRepository.progress;
 
   // Данные
   List<Recipe> _recipes = [];
@@ -87,24 +99,11 @@ class DataRepository with ChangeNotifier {
     _allergenRepository = AllergenRepository(apiService: _apiService);
     _equipmentRepository = EquipmentRepository(apiService: _apiService);
     _recipeRepository = RecipeRepository(apiService: _apiService);
+    final shoppingListService = ShoppingListService(apiService: _apiService);
+    _shoppingListRepository = ShoppingListRepository(shoppingListService: shoppingListService);
 
     final refrigeratorService = RefrigeratorService(apiService: _apiService);
     _refrigeratorRepository = RefrigeratorRepository(refrigeratorService: refrigeratorService);
-  }
-
-  // Инициализация тестовых рецептов (пока API не готов)
-  void _initializeMockRecipes() {
-    _recipes = List.generate(
-      10,
-          (index) => Recipe(
-        id: index + 1,
-        title: 'Рецепт ${index + 1}',
-        description: 'Описание рецепта ${index + 1}. Вкусное и полезное блюдо для всей семьи.',
-        calories: 250 + (index * 50),
-        portionCount: 2 + (index % 4),
-        isFavorite: index % 3 == 0, // Каждый третий рецепт в избранном
-      ),
-    );
   }
 
 
@@ -130,6 +129,147 @@ class DataRepository with ChangeNotifier {
     }
   }
 
+  Future<List<ShoppingListItem>> getShoppingListItems({
+    bool onlyUnchecked = false,
+    bool forceRefresh = false
+  }) async {
+    // Check if we need to update data
+    if (!forceRefresh && _shoppingListRepository.items.isNotEmpty && !_needsUpdate(_lastShoppingListUpdate)) {
+      return onlyUnchecked
+          ? _shoppingListRepository.items.where((item) => !item.isChecked).toList()
+          : _shoppingListRepository.items;
+    }
+
+    _isLoadingShoppingList = true;
+    notifyListeners();
+
+    try {
+      print("\n===== GETTING SHOPPING LIST ITEMS (forceRefresh: $forceRefresh, onlyUnchecked: $onlyUnchecked) =====");
+      final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
+      final items = await _shoppingListRepository.getItems(onlyUnchecked: onlyUnchecked, config: config);
+
+      // Update last update time
+      _lastShoppingListUpdate = DateTime.now();
+
+      notifyListeners();
+      return items;
+    } catch (e) {
+      print("ERROR GETTING SHOPPING LIST ITEMS: $e");
+      _setError(e.toString());
+      return [];
+    } finally {
+      _isLoadingShoppingList = false;
+      notifyListeners();
+    }
+  }
+
+// Add an item to the shopping list
+  Future<ShoppingListItem?> addShoppingListItem({
+    required int ingredientTypeId,
+    required int quantity,
+    required QuantityType quantityType,
+  }) async {
+    try {
+      print("\n===== ADDING ITEM TO SHOPPING LIST =====");
+      final item = await _shoppingListRepository.addItem(
+        ingredientTypeId: ingredientTypeId,
+        quantity: quantity,
+        quantityType: quantityType,
+      );
+
+      // Update last update time
+      _lastShoppingListUpdate = DateTime.now();
+
+      notifyListeners();
+      return item;
+    } catch (e) {
+      print("ERROR ADDING ITEM TO SHOPPING LIST: $e");
+      _setError(e.toString());
+      return null;
+    }
+  }
+
+// Update an item in the shopping list
+  Future<ShoppingListItem?> updateShoppingListItem({
+    required int itemId,
+    int? quantity,
+    QuantityType? quantityType,
+    bool? isChecked,
+  }) async {
+    try {
+      print("\n===== UPDATING SHOPPING LIST ITEM =====");
+      final item = await _shoppingListRepository.updateItem(
+        itemId: itemId,
+        quantity: quantity,
+        quantityType: quantityType,
+        isChecked: isChecked,
+      );
+
+      // Update last update time
+      _lastShoppingListUpdate = DateTime.now();
+
+      notifyListeners();
+      return item;
+    } catch (e) {
+      print("ERROR UPDATING SHOPPING LIST ITEM: $e");
+      _setError(e.toString());
+      return null;
+    }
+  }
+
+// Remove an item from the shopping list
+  Future<bool> removeShoppingListItem(int itemId) async {
+    try {
+      print("\n===== REMOVING ITEM FROM SHOPPING LIST =====");
+      await _shoppingListRepository.removeItem(itemId);
+
+      // Update last update time
+      _lastShoppingListUpdate = DateTime.now();
+
+      notifyListeners();
+      return true;
+    } catch (e) {
+      print("ERROR REMOVING ITEM FROM SHOPPING LIST: $e");
+      _setError(e.toString());
+      return false;
+    }
+  }
+
+// Clear checked items from the shopping list
+  Future<bool> clearCheckedShoppingListItems() async {
+    try {
+      print("\n===== CLEARING CHECKED ITEMS FROM SHOPPING LIST =====");
+      final deletedCount = await _shoppingListRepository.clearCheckedItems();
+
+      // Update last update time
+      _lastShoppingListUpdate = DateTime.now();
+
+      notifyListeners();
+      return deletedCount > 0;
+    } catch (e) {
+      print("ERROR CLEARING CHECKED ITEMS FROM SHOPPING LIST: $e");
+      _setError(e.toString());
+      return false;
+    }
+  }
+
+// Clear all items from the shopping list
+  Future<bool> clearAllShoppingListItems() async {
+    try {
+      print("\n===== CLEARING ALL ITEMS FROM SHOPPING LIST =====");
+      final deletedCount = await _shoppingListRepository.clearAllItems();
+
+      // Update last update time
+      _lastShoppingListUpdate = DateTime.now();
+
+      notifyListeners();
+      return deletedCount > 0;
+    } catch (e) {
+      print("ERROR CLEARING ALL ITEMS FROM SHOPPING LIST: $e");
+      _setError(e.toString());
+      return false;
+    }
+  }
 // Обновление истекающих продуктов из текущего списка холодильника
   void _updateExpiringItems() {
     final now = DateTime.now();
