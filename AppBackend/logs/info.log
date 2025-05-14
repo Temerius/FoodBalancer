@@ -1007,3 +1007,173 @@ INFO 2025-05-15 01:57:46,812 ingredient 7792 16840 Listing ingredient types: use
 INFO 2025-05-15 01:57:46,827 basehttp 7792 16840 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
 INFO 2025-05-15 01:57:49,623 ingredient 7792 16840 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
 INFO 2025-05-15 01:57:49,638 basehttp 7792 16840 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:00:11,257 autoreload 17180 20832 Watching for file changes with StatReloader
+INFO 2025-05-15 02:00:12,595 wsgi 17180 29008 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-15 02:00:12,595 wsgi 17180 29008 Environment: config.settings
+INFO 2025-05-15 02:00:12,596 wsgi 17180 29008 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-15 02:00:12,604 wsgi 17180 29008 Application initialized successfully
+INFO 2025-05-15 02:00:17,582 basehttp 17180 32212 "GET /api/shopping-list/ HTTP/1.1" 200 989
+INFO 2025-05-15 02:00:17,680 shopping_list 17180 32212 Retrieved 4 shopping list items for user_id=66, time=0.01s
+INFO 2025-05-15 02:00:17,686 basehttp 17180 30928 "GET /api/shopping-list/ HTTP/1.1" 200 989
+INFO 2025-05-15 02:00:17,709 basehttp 17180 32212 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 987
+INFO 2025-05-15 02:00:26,449 views 17180 32212 Запрос информации по штрихкоду: 4810067087007
+INFO 2025-05-15 02:00:38,898 views 17180 32212 Найден продукт по штрихкоду 4810067087007: Вафли Черноморские Топ Спартак
+INFO 2025-05-15 02:00:38,905 views 17180 32212 Получено 96 типов ингредиентов и 50 аллергенов из БД
+INFO 2025-05-15 02:00:38,905 ai_helper 17180 32212 Инициализация AIHelper с endpoint: https://flowprompt-useast.openai.azure.com/
+INFO 2025-05-15 02:00:39,130 ai_helper 17180 32212 Клиент OpenAI успешно инициализирован, время: 0.22s
+INFO 2025-05-15 02:00:39,132 ai_helper 17180 32212 Начало классификации продукта: 'Вафли Черноморские Топ Спартак'
+INFO 2025-05-15 02:00:40,831 ai_helper 17180 32212 Продукт 'Вафли Черноморские Топ Спартак' классифицирован как 'Вафли' с аллергенами: ['Молоко', 'Яйцо', 'Пшеница'], время: 1.70s
+INFO 2025-05-15 02:00:40,831 views 17180 32212 Успешно обработан запрос для штрихкода 4810067087007, время выполнения: 14.38s
+INFO 2025-05-15 02:00:40,843 basehttp 17180 32212 "GET /api/barcode/?barcode=4810067087007 HTTP/1.1" 200 1165
+INFO 2025-05-15 02:00:41,982 ingredient 17180 32212 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 02:00:41,995 basehttp 17180 32212 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:00:45,315 basehttp 17180 32212 "GET /api/shopping-list/ HTTP/1.1" 200 989
+INFO 2025-05-15 02:00:45,422 shopping_list 17180 32212 Retrieved 4 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 02:00:45,442 basehttp 17180 32212 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 987
+INFO 2025-05-15 02:04:36,625 views 17180 26424 Profile accessed: user_id=66
+INFO 2025-05-15 02:04:36,640 basehttp 17180 26424 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-15 02:04:36,729 ingredient 17180 26424 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 02:04:36,744 basehttp 17180 26424 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:04:36,902 views 17180 26424 Profile accessed: user_id=66
+INFO 2025-05-15 02:04:36,915 basehttp 17180 26424 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-15 02:04:37,025 allergen 17180 26424 Listing all allergens: user_id=66
+INFO 2025-05-15 02:04:37,029 allergen 17180 26424 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-15 02:04:37,042 basehttp 17180 26424 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 2058
+INFO 2025-05-15 02:04:37,117 equipment 17180 26424 Listing all equipment: user_id=66
+INFO 2025-05-15 02:04:37,122 equipment 17180 26424 Retrieved unknown equipment items, user_id=66, time=0.01s
+INFO 2025-05-15 02:04:37,139 basehttp 17180 26424 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 15147
+INFO 2025-05-15 02:04:37,240 ingredient 17180 26424 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-15 02:04:37,340 ingredient 17180 26424 Retrieved 9 refrigerator ingredients for user_id=66, time=0.10s
+INFO 2025-05-15 02:04:37,412 basehttp 17180 26424 "GET /api/refrigerator/ HTTP/1.1" 200 5217
+INFO 2025-05-15 02:04:37,584 recipe 17180 26424 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-15 02:04:37,816 basehttp 17180 26424 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20084
+INFO 2025-05-15 02:04:37,924 recipe 17180 26424 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-15 02:04:38,064 basehttp 17180 26424 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20084
+INFO 2025-05-15 02:04:38,199 basehttp 17180 26424 "GET /api/favorites/ HTTP/1.1" 200 1688
+INFO 2025-05-15 02:04:38,267 ingredient 17180 26424 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-15 02:04:38,306 ingredient 17180 26424 Retrieved 9 refrigerator ingredients for user_id=66, time=0.04s
+INFO 2025-05-15 02:04:38,370 basehttp 17180 26424 "GET /api/refrigerator/ HTTP/1.1" 200 5217
+INFO 2025-05-15 02:04:38,451 allergen 17180 26424 Listing user allergens: user_id=66
+INFO 2025-05-15 02:04:38,456 allergen 17180 26424 Retrieved 1 user allergens, user_id=66, time=0.01s
+INFO 2025-05-15 02:04:38,472 basehttp 17180 26424 "GET /api/user-allergens/ HTTP/1.1" 200 40
+INFO 2025-05-15 02:04:38,619 equipment 17180 26424 Listing user equipment: user_id=66
+INFO 2025-05-15 02:04:38,627 equipment 17180 26424 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-15 02:04:38,647 basehttp 17180 26424 "GET /api/user-equipment/ HTTP/1.1" 200 432
+INFO 2025-05-15 02:04:38,810 basehttp 17180 26424 "GET /api/shopping-list/ HTTP/1.1" 200 989
+INFO 2025-05-15 02:04:38,887 shopping_list 17180 26424 Retrieved 4 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 02:04:38,914 basehttp 17180 26424 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 987
+INFO 2025-05-15 02:04:44,219 ingredient 17180 26424 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 02:04:44,236 basehttp 17180 26424 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:05:11,647 ingredient 17180 5704 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 02:05:11,662 basehttp 17180 5704 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:05:18,740 ingredient 17180 5704 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 02:05:18,756 basehttp 17180 5704 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:05:22,842 ingredient 17180 5704 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 02:05:22,859 basehttp 17180 5704 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:05:24,046 ingredient 17180 5704 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 02:05:24,060 basehttp 17180 5704 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:05:27,201 ingredient 17180 5704 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 02:05:27,217 basehttp 17180 5704 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:05:28,653 ingredient 17180 5704 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 02:05:28,669 basehttp 17180 5704 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:09:17,952 views 17180 15456 Profile accessed: user_id=66
+INFO 2025-05-15 02:09:17,972 basehttp 17180 15456 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-15 02:09:18,071 ingredient 17180 15456 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 02:09:18,100 basehttp 17180 15456 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:09:18,218 views 17180 15456 Profile accessed: user_id=66
+INFO 2025-05-15 02:09:18,240 basehttp 17180 15456 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-15 02:09:18,389 allergen 17180 15456 Listing all allergens: user_id=66
+INFO 2025-05-15 02:09:18,393 allergen 17180 15456 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-15 02:09:18,407 basehttp 17180 15456 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 2058
+INFO 2025-05-15 02:09:18,480 equipment 17180 15456 Listing all equipment: user_id=66
+INFO 2025-05-15 02:09:18,484 equipment 17180 15456 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-15 02:09:18,504 basehttp 17180 15456 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 15147
+INFO 2025-05-15 02:09:18,590 ingredient 17180 15456 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-15 02:09:18,636 ingredient 17180 15456 Retrieved 9 refrigerator ingredients for user_id=66, time=0.05s
+INFO 2025-05-15 02:09:18,668 basehttp 17180 15456 "GET /api/refrigerator/ HTTP/1.1" 200 5217
+INFO 2025-05-15 02:09:18,778 recipe 17180 15456 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-15 02:09:19,025 basehttp 17180 15456 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20084
+INFO 2025-05-15 02:09:19,092 recipe 17180 15456 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-15 02:09:19,249 basehttp 17180 15456 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20084
+INFO 2025-05-15 02:09:19,388 basehttp 17180 15456 "GET /api/favorites/ HTTP/1.1" 200 1688
+INFO 2025-05-15 02:09:19,559 ingredient 17180 15456 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-15 02:09:19,619 ingredient 17180 15456 Retrieved 9 refrigerator ingredients for user_id=66, time=0.06s
+INFO 2025-05-15 02:09:19,702 basehttp 17180 15456 "GET /api/refrigerator/ HTTP/1.1" 200 5217
+INFO 2025-05-15 02:09:19,791 allergen 17180 15456 Listing user allergens: user_id=66
+INFO 2025-05-15 02:09:19,797 allergen 17180 15456 Retrieved 1 user allergens, user_id=66, time=0.01s
+INFO 2025-05-15 02:09:19,813 basehttp 17180 15456 "GET /api/user-allergens/ HTTP/1.1" 200 40
+INFO 2025-05-15 02:09:19,962 equipment 17180 15456 Listing user equipment: user_id=66
+INFO 2025-05-15 02:09:19,971 equipment 17180 15456 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-15 02:09:19,993 basehttp 17180 15456 "GET /api/user-equipment/ HTTP/1.1" 200 432
+INFO 2025-05-15 02:09:20,129 basehttp 17180 15456 "GET /api/shopping-list/ HTTP/1.1" 200 989
+INFO 2025-05-15 02:09:20,199 shopping_list 17180 15456 Retrieved 4 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 02:09:20,241 basehttp 17180 15456 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 987
+INFO 2025-05-15 02:09:24,126 ingredient 17180 15456 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 02:09:24,142 basehttp 17180 15456 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:09:32,937 ingredient 17180 15456 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 02:09:32,954 basehttp 17180 15456 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:09:36,156 ingredient 17180 15456 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 02:09:36,173 basehttp 17180 15456 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:15:58,242 views 17180 12300 Profile accessed: user_id=66
+INFO 2025-05-15 02:15:58,254 basehttp 17180 12300 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-15 02:15:58,426 ingredient 17180 12300 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 02:15:58,447 basehttp 17180 12300 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:15:58,583 views 17180 12300 Profile accessed: user_id=66
+INFO 2025-05-15 02:15:58,595 basehttp 17180 12300 "GET /api/users/profile/ HTTP/1.1" 200 153
+INFO 2025-05-15 02:15:58,781 allergen 17180 12300 Listing all allergens: user_id=66
+INFO 2025-05-15 02:15:58,784 allergen 17180 12300 Retrieved unknown allergens, user_id=66, time=0.00s
+INFO 2025-05-15 02:15:58,799 basehttp 17180 12300 "GET /api/allergens/?limit=1000 HTTP/1.1" 200 2058
+INFO 2025-05-15 02:15:58,880 equipment 17180 12300 Listing all equipment: user_id=66
+INFO 2025-05-15 02:15:58,883 equipment 17180 12300 Retrieved unknown equipment items, user_id=66, time=0.00s
+INFO 2025-05-15 02:15:58,897 basehttp 17180 12300 "GET /api/equipment/?limit=1000 HTTP/1.1" 200 15147
+INFO 2025-05-15 02:15:58,968 ingredient 17180 12300 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-15 02:15:59,006 ingredient 17180 12300 Retrieved 9 refrigerator ingredients for user_id=66, time=0.04s
+INFO 2025-05-15 02:15:59,036 basehttp 17180 12300 "GET /api/refrigerator/ HTTP/1.1" 200 5217
+INFO 2025-05-15 02:15:59,153 recipe 17180 12300 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-15 02:15:59,372 basehttp 17180 12300 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20084
+INFO 2025-05-15 02:15:59,464 recipe 17180 12300 Listing recipes: user_id=66, params=<QueryDict: {'limit': ['100']}>
+INFO 2025-05-15 02:15:59,648 basehttp 17180 12300 "GET /api/recipes/?limit=100 HTTP/1.1" 200 20084
+INFO 2025-05-15 02:15:59,789 basehttp 17180 12300 "GET /api/favorites/ HTTP/1.1" 200 1688
+INFO 2025-05-15 02:15:59,863 ingredient 17180 12300 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-15 02:15:59,902 ingredient 17180 12300 Retrieved 9 refrigerator ingredients for user_id=66, time=0.04s
+INFO 2025-05-15 02:15:59,966 basehttp 17180 12300 "GET /api/refrigerator/ HTTP/1.1" 200 5217
+INFO 2025-05-15 02:16:00,037 allergen 17180 12300 Listing user allergens: user_id=66
+INFO 2025-05-15 02:16:00,043 allergen 17180 12300 Retrieved 1 user allergens, user_id=66, time=0.01s
+INFO 2025-05-15 02:16:00,060 basehttp 17180 12300 "GET /api/user-allergens/ HTTP/1.1" 200 40
+INFO 2025-05-15 02:16:00,188 equipment 17180 12300 Listing user equipment: user_id=66
+INFO 2025-05-15 02:16:00,196 equipment 17180 12300 Retrieved 2 user equipment items, user_id=66, time=0.01s
+INFO 2025-05-15 02:16:00,214 basehttp 17180 12300 "GET /api/user-equipment/ HTTP/1.1" 200 432
+INFO 2025-05-15 02:16:00,334 basehttp 17180 12300 "GET /api/shopping-list/ HTTP/1.1" 200 989
+INFO 2025-05-15 02:16:00,396 shopping_list 17180 12300 Retrieved 4 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 02:16:00,432 basehttp 17180 12300 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 987
+INFO 2025-05-15 02:16:03,696 basehttp 17180 12300 "GET /api/shopping-list/ HTTP/1.1" 200 989
+INFO 2025-05-15 02:16:03,757 shopping_list 17180 12300 Retrieved 4 shopping list items for user_id=66, time=0.00s
+INFO 2025-05-15 02:16:03,785 basehttp 17180 12300 "GET /api/shopping-list/0/items/ HTTP/1.1" 200 987
+INFO 2025-05-15 02:16:06,140 ingredient 17180 12300 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 02:16:06,165 basehttp 17180 12300 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:16:27,437 ingredient 17180 8956 Creating new ingredient: user_id=66, data={'ing_name': 'п', 'ing_exp_date': '2025-05-16', 'ing_weight': 100, 'ing_calories': 50, 'ing_protein': 120, 'ing_fat': 50, 'ing_hydrates': 0, 'ing_igt_id': 32, 'allergen_ids': [1, 2]}
+INFO 2025-05-15 02:16:27,492 ingredient 17180 8956 Ingredient created successfully: ingredient_id=143, name='п', type_id=32, user_id=66, time=0.06s
+INFO 2025-05-15 02:16:27,523 basehttp 17180 8956 "POST /api/ingredients/ HTTP/1.1" 201 176
+INFO 2025-05-15 02:16:27,621 ingredient 17180 8956 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-15 02:16:27,644 ingredient 17180 8956 Ingredient added to refrigerator: ingredient_id=143, name='п', quantity=50 grams, user_id=66, time=0.02s
+INFO 2025-05-15 02:16:27,669 basehttp 17180 8956 "POST /api/refrigerator/ HTTP/1.1" 201 552
+INFO 2025-05-15 02:16:27,978 ingredient 17180 8956 Listing refrigerator ingredients: user_id=66
+INFO 2025-05-15 02:16:28,028 ingredient 17180 8956 Retrieved 10 refrigerator ingredients for user_id=66, time=0.05s
+INFO 2025-05-15 02:16:28,070 basehttp 17180 8956 "GET /api/refrigerator/ HTTP/1.1" 200 5772
+INFO 2025-05-15 02:16:54,877 views 17180 3964 Запрос информации по штрихкоду: 4810067087007
+INFO 2025-05-15 02:17:07,543 views 17180 3964 Найден продукт по штрихкоду 4810067087007: Вафли Черноморские Топ Спартак
+INFO 2025-05-15 02:17:07,548 views 17180 3964 Получено 96 типов ингредиентов и 50 аллергенов из БД
+INFO 2025-05-15 02:17:07,548 ai_helper 17180 3964 Инициализация AIHelper с endpoint: https://flowprompt-useast.openai.azure.com/
+INFO 2025-05-15 02:17:07,847 ai_helper 17180 3964 Клиент OpenAI успешно инициализирован, время: 0.30s
+INFO 2025-05-15 02:17:07,847 ai_helper 17180 3964 Начало классификации продукта: 'Вафли Черноморские Топ Спартак'
+INFO 2025-05-15 02:17:09,435 ai_helper 17180 3964 Продукт 'Вафли Черноморские Топ Спартак' классифицирован как 'Вафли' с аллергенами: ['Молоко', 'Яйцо', 'Пшеница'], время: 1.59s
+INFO 2025-05-15 02:17:09,436 views 17180 3964 Успешно обработан запрос для штрихкода 4810067087007, время выполнения: 14.56s
+INFO 2025-05-15 02:17:09,457 basehttp 17180 3964 "GET /api/barcode/?barcode=4810067087007 HTTP/1.1" 200 1165
+INFO 2025-05-15 02:17:10,590 ingredient 17180 3964 Listing ingredient types: user_id=66, params=<QueryDict: {'limit': ['1000']}>
+INFO 2025-05-15 02:17:10,606 basehttp 17180 3964 "GET /api/ingredient-types/?limit=1000 HTTP/1.1" 200 15563
+INFO 2025-05-15 02:17:19,803 ingredient 17180 3964 Creating new ingredient: user_id=66, data={'ing_name': 'Вафли Черноморские Топ Спартак', 'ing_exp_date': '2025-05-15', 'ing_weight': 100, 'ing_calories': 520, 'ing_protein': 6, 'ing_fat': 29, 'ing_hydrates': 60, 'ing_igt_id': 94, 'allergen_ids': [3, 4, 8]}
+INFO 2025-05-15 02:17:19,837 ingredient 17180 3964 Ingredient created successfully: ingredient_id=144, name='Вафли Черноморские Топ Спартак', type_id=94, user_id=66, time=0.03s
+INFO 2025-05-15 02:17:19,884 basehttp 17180 3964 "POST /api/ingredients/ HTTP/1.1" 201 231
+INFO 2025-05-15 02:17:19,958 ingredient 17180 3964 Adding ingredient to refrigerator: user_id=66
+INFO 2025-05-15 02:17:19,970 ingredient 17180 3964 Ingredient added to refrigerator: ingredient_id=144, name='Вафли Черноморские Топ Спартак', quantity=87 grams, user_id=66, time=0.01s
+INFO 2025-05-15 02:17:19,998 basehttp 17180 3964 "POST /api/refrigerator/ HTTP/1.1" 201 622

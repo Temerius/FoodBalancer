@@ -34,7 +34,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
   DateTime _expiryDate = DateTime.now().add(const Duration(days: 7));
   QuantityType _quantityType = QuantityType.grams;
 
+  int? _shoppingItemId;
   int? _pendingTypeId;
+  bool _isInitialized = false;
 
   bool _isEditing = false;
   bool _isLoading = false;
@@ -55,6 +57,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     QuantityType.grams,
     QuantityType.milliliters,
     QuantityType.liters,
+    QuantityType.pieces,
   ];
 
   String _extractNumericValue(dynamic value) {
@@ -368,74 +371,85 @@ class _AddProductScreenState extends State<AddProductScreen> {
     print('\n===== CHECKING ROUTE ARGUMENTS =====');
     print('Arguments: $args');
 
-    if (args != null) {
-      if (args.containsKey('scanned_data')) {
-        print('Found scanned_data in arguments');
-        final scannedData = args['scanned_data'] as Map<String, dynamic>;
-        print('Scanned data: $scannedData');
+    // ВАЖНОЕ ИЗМЕНЕНИЕ: Инициализация только один раз!
+    if (!_isInitialized) {
+      if (args != null) {
+        if (args.containsKey('scanned_data')) {
+          print('Found scanned_data in arguments');
+          final scannedData = args['scanned_data'] as Map<String, dynamic>;
+          print('Scanned data: $scannedData');
 
-        // Сохраняем данные, но не заполняем сразу
-        // Заполнение будет в _initializeData после загрузки типов и аллергенов
-        _pendingScannedData = Map<String, dynamic>.from(scannedData);
-      } else if (args.containsKey('barcode')) {
-        // Если только штрих-код без данных
-        print('Found barcode in arguments: ${args['barcode']}');
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          _barcodeController.text = args['barcode'].toString();
-        });
-      } else if (args.containsKey('prefill_data')) {
-        // Обработка данных из списка покупок
-        print('Found prefill_data in arguments');
-        final prefillData = args['prefill_data'] as Map<String, dynamic>;
-        print('Prefill data: $prefillData');
+          // Сохраняем данные, но не заполняем сразу
+          // Заполнение будет в _initializeData после загрузки типов и аллергенов
+          _pendingScannedData = Map<String, dynamic>.from(scannedData);
+        } else if (args.containsKey('barcode')) {
+          // Если только штрих-код без данных
+          print('Found barcode in arguments: ${args['barcode']}');
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _barcodeController.text = args['barcode'].toString();
+          });
+        } else if (args.containsKey('prefill_data')) {
+          // Обработка данных из списка покупок
+          print('Found prefill_data in arguments');
+          final prefillData = args['prefill_data'] as Map<String, dynamic>;
+          print('Prefill data: $prefillData');
 
-        // Заполняем форму данными из списка покупок
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          // Заполняем название продукта
-          if (prefillData.containsKey('name') && prefillData['name'] != null) {
-            _productNameController.text = prefillData['name'].toString();
-            print('Set product name: ${prefillData['name']}');
-          }
+          // Заполняем форму данными из списка покупок
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            // Заполняем название продукта
+            if (prefillData.containsKey('name') && prefillData['name'] != null) {
+              _productNameController.text = prefillData['name'].toString();
+              print('Set product name: ${prefillData['name']}');
+            }
 
-          // Заполняем количество
-          if (prefillData.containsKey('quantity') && prefillData['quantity'] != null) {
-            _quantityController.text = prefillData['quantity'].toString();
-            print('Set quantity: ${prefillData['quantity']}');
-          }
+            // Заполняем количество
+            if (prefillData.containsKey('quantity') && prefillData['quantity'] != null) {
+              _quantityController.text = prefillData['quantity'].toString();
+              print('Set quantity: ${prefillData['quantity']}');
+            }
 
-          // Устанавливаем тип единицы измерения
-          if (prefillData.containsKey('quantity_type') && prefillData['quantity_type'] != null) {
-            final quantityType = prefillData['quantity_type'] as QuantityType;
-            _quantityType = quantityType;
-            print('Set quantity type: ${quantityType.toString()}');
-          }
+            // Устанавливаем тип единицы измерения
+            if (prefillData.containsKey('quantity_type') && prefillData['quantity_type'] != null) {
+              final quantityType = prefillData['quantity_type'] as QuantityType;
+              _quantityType = quantityType;
+              print('Set quantity type: ${quantityType.toString()}');
+            }
 
-          // Запоминаем ID типа ингредиента, чтобы установить его после загрузки списка типов
-          if (prefillData.containsKey('ingredient_type_id') && prefillData['ingredient_type_id'] != null) {
-            int typeId = prefillData['ingredient_type_id'] as int;
+            // Запоминаем ID типа ингредиента, чтобы установить его после загрузки списка типов
+            if (prefillData.containsKey('ingredient_type_id') && prefillData['ingredient_type_id'] != null) {
+              int typeId = prefillData['ingredient_type_id'] as int;
 
-            // Находим тип по ID среди загруженных типов или ждем загрузки
-            if (_allTypes.isNotEmpty) {
-              _findTypeById(typeId);
-            } else {
-              // Сохраняем ID для поиска после загрузки типов
-              _pendingTypeId = typeId;
+              // Находим тип по ID среди загруженных типов или ждем загрузки
+              if (_allTypes.isNotEmpty) {
+                _findTypeById(typeId);
+              } else {
+                // Сохраняем ID для поиска после загрузки типов
+                _pendingTypeId = typeId;
 
-              // Если есть название типа, пока устанавливаем его в поле поиска
-              if (prefillData.containsKey('ingredient_type_name') &&
-                  prefillData['ingredient_type_name'] != null) {
-                _typeSearchController.text = prefillData['ingredient_type_name'].toString();
-                print('Set type name: ${prefillData['ingredient_type_name']}');
+                // Если есть название типа, пока устанавливаем его в поле поиска
+                if (prefillData.containsKey('ingredient_type_name') &&
+                    prefillData['ingredient_type_name'] != null) {
+                  _typeSearchController.text = prefillData['ingredient_type_name'].toString();
+                  print('Set type name: ${prefillData['ingredient_type_name']}');
+                }
               }
             }
-          }
-        });
-      }
-    } else {
-      print('No arguments found');
-    }
+          });
+        }
 
-    _initializeData();
+        // Запоминаем ID элемента списка покупок, если есть
+        if (args.containsKey('shopping_item_id')) {
+          _shoppingItemId = args['shopping_item_id'] as int?;
+          print('Found shopping item ID: $_shoppingItemId');
+        }
+      } else {
+        print('No arguments found');
+      }
+
+      // Инициализируем только один раз
+      _initializeData();
+      _isInitialized = true;
+    }
   }
 
   Future<void> _loadIngredientTypes() async {
@@ -455,11 +469,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
         print('Loaded ${_allTypes.length} ingredient types');
 
-        if (_pendingTypeId != null) {
-          print('Applying pending ingredient type ID: $_pendingTypeId');
-          _findTypeById(_pendingTypeId!);
-          _pendingTypeId = null;
-        }
         // Если у нас есть отложенные данные и в них есть ingredient_type_id,
         // применяем его теперь, когда типы загружены
         if (_pendingScannedData != null && _pendingScannedData!.containsKey('ingredient_type_id')) {
@@ -468,6 +477,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
             print('Applying pending ingredient type ID: $typeId');
             _findTypeById(typeId);
           }
+        }
+
+        // Обрабатываем pendingTypeId, если он был установлен
+        if (_pendingTypeId != null) {
+          print('Applying pending ingredient type ID: $_pendingTypeId');
+          _findTypeById(_pendingTypeId!);
+          _pendingTypeId = null; // Очищаем после применения
         }
       }
     } catch (e) {
@@ -619,24 +635,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Проверяем аргументы при каждом перестроении UI
-    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-    print('\n===== BUILD: CHECKING ROUTE ARGUMENTS =====');
-    print('Arguments in build: $args');
-    if (args != null && args.containsKey('scanned_data')) {
-      print('Found scanned_data in arguments (build method)');
-      final scannedData = args['scanned_data'] as Map<String, dynamic>;
-
-      // Если данные есть, но контроллеры пустые - заполняем их
-      if (_productNameController.text.isEmpty && scannedData.containsKey('name')) {
-        print('Form seems empty, filling again from arguments!');
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          _prefillFromScannedData(scannedData);
-          _debugPrintControllers();
-        });
-      }
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text(_isEditing ? 'Редактирование продукта' : 'Добавление продукта'),
@@ -672,378 +670,376 @@ class _AddProductScreenState extends State<AddProductScreen> {
       )
           : Form(
         key: _formKey,
-        child: CustomScrollView(
-          slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.all(16.0),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate([
-                  // Шаг 1: Выбор типа продукта
-                  Text(
-                    'Шаг 1: Выберите тип продукта',
-                    style: Theme.of(context).textTheme.titleMedium,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Шаг 1: Выбор типа продукта
+              Text(
+                'Шаг 1: Выберите тип продукта',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _typeSearchController,
+                decoration: InputDecoration(
+                  labelText: 'Тип продукта',
+                  hintText: 'Например: Молочные продукты, Овощи',
+                  prefixIcon: const Icon(Icons.category),
+                  suffixIcon: _selectedType != null
+                      ? IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      setState(() {
+                        _selectedType = null;
+                        _typeSearchController.clear();
+                        _searchResults = [];
+                      });
+                    },
+                  )
+                      : null,
+                ),
+                enabled: !_isEditing,
+                onChanged: _searchTypes,
+                validator: (value) {
+                  if (_selectedType == null) {
+                    return 'Пожалуйста, выберите тип продукта';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 12),
+
+              // Результаты поиска типов
+              if (_searchResults.isNotEmpty && _selectedType == null)
+                Container(
+                  height: 200,
+                  margin: const EdgeInsets.only(bottom: 16),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey[300]!),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    controller: _typeSearchController,
-                    decoration: InputDecoration(
-                      labelText: 'Тип продукта',
-                      hintText: 'Например: Молочные продукты, Овощи',
-                      prefixIcon: const Icon(Icons.category),
-                      suffixIcon: _selectedType != null
-                          ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
+                  child: ListView.builder(
+                    itemCount: _searchResults.length,
+                    itemBuilder: (context, index) {
+                      final type = _searchResults[index];
+                      return ListTile(
+                        leading: type.imageUrl != null
+                            ? Image.network(
+                          type.imageUrl!,
+                          width: 40,
+                          height: 40,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                          const Icon(Icons.category),
+                        )
+                            : const Icon(Icons.category),
+                        title: Text(type.name),
+                        onTap: () {
                           setState(() {
-                            _selectedType = null;
-                            _typeSearchController.clear();
-                            _searchResults = _allTypes;
+                            _selectedType = type;
+                            _typeSearchController.text = type.name;
+                            _searchResults = [];
                           });
                         },
-                      )
-                          : null,
-                    ),
-                    enabled: !_isEditing,
-                    onChanged: _searchTypes,
-                    validator: (value) {
-                      if (_selectedType == null) {
-                        return 'Пожалуйста, выберите тип продукта';
-                      }
-                      return null;
+                      );
                     },
                   ),
-                  const SizedBox(height: 12),
+                ),
 
-                  // Результаты поиска типов
-                  if (_searchResults.isNotEmpty && _selectedType == null)
-                    Container(
-                      height: 200, // Увеличили высоту
-                      margin: const EdgeInsets.only(bottom: 16),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey[300]!),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: ListView.builder(
-                        itemCount: _searchResults.length,
-                        itemBuilder: (context, index) {
-                          final type = _searchResults[index];
-                          return ListTile(
-                            leading: type.imageUrl != null
-                                ? Image.network(
-                              type.imageUrl!,
-                              width: 40,
-                              height: 40,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) =>
-                              const Icon(Icons.category),
-                            )
-                                : const Icon(Icons.category),
-                            title: Text(type.name),
-                            onTap: () {
-                              setState(() {
-                                _selectedType = type;
-                                _typeSearchController.text = type.name;
-                                _searchResults = [];
-                              });
-                            },
-                          );
-                        },
-                      ),
-                    ),
+              const SizedBox(height: 24),
 
-                  const SizedBox(height: 24),
-
-                  // Шаг 2: Название продукта
-                  Text(
-                    'Шаг 2: Введите название продукта',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    controller: _productNameController,
-                    decoration: InputDecoration(
-                      labelText: 'Название продукта',
-                      hintText: 'Например: Молоко 3.2%, Помидоры черри',
-                      prefixIcon: const Icon(Icons.fastfood),
-                    ),
-                    enabled: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Введите название продукта';
-                      }
-                      return null;
-                    },
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  // Шаг 3: Пищевая ценность
-                  Text(
-                    'Шаг 3: Пищевая ценность (на 100г/100мл)',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _caloriesController,
-                          decoration: const InputDecoration(
-                            labelText: 'Калории (ккал)',
-                            prefixIcon: Icon(Icons.local_fire_department),
-                          ),
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value != null && value.isNotEmpty) {
-                              if (int.tryParse(value) == null) {
-                                return 'Число';
-                              }
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _proteinController,
-                          decoration: const InputDecoration(
-                            labelText: 'Белки (г)',
-                            prefixIcon: Icon(Icons.fitness_center),
-                          ),
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value != null && value.isNotEmpty) {
-                              if (int.tryParse(value) == null) {
-                                return 'Число';
-                              }
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _fatController,
-                          decoration: const InputDecoration(
-                            labelText: 'Жиры (г)',
-                            prefixIcon: Icon(Icons.opacity),
-                          ),
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value != null && value.isNotEmpty) {
-                              if (int.tryParse(value) == null) {
-                                return 'Число';
-                              }
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _carbsController,
-                          decoration: const InputDecoration(
-                            labelText: 'Углеводы (г)',
-                            prefixIcon: Icon(Icons.grain),
-                          ),
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value != null && value.isNotEmpty) {
-                              if (int.tryParse(value) == null) {
-                                return 'Число';
-                              }
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  // Шаг 4: Аллергены
-                  Text(
-                    'Шаг 4: Выберите аллергены',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 12),
-                  if (_allAllergens.isEmpty)
-                    const Center(child: CircularProgressIndicator())
-                  else
-                    Container(
-                      height: 150,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey[300]!),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: ListView.builder(
-                        itemCount: _allAllergens.length,
-                        itemBuilder: (context, index) {
-                          final allergen = _allAllergens[index];
-                          return CheckboxListTile(
-                            title: Text(allergen.name),
-                            value: allergen.isSelected,
-                            onChanged: (bool? value) {
-                              _toggleAllergen(allergen);
-                            },
-                          );
-                        },
-                      ),
-                    ),
-
-                  const SizedBox(height: 24),
-                  const Divider(),
-                  const SizedBox(height: 24),
-
-                  // Шаг 5: Количество и единица измерения
-                  Text(
-                    'Шаг 5: Укажите количество',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Поле для количества
-                      SizedBox(
-                        width: 120, // Фиксированная ширина
-                        child: TextFormField(
-                          controller: _quantityController,
-                          decoration: const InputDecoration(
-                            labelText: 'Количество',
-                            prefixIcon: Icon(Icons.scale),
-                          ),
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Введите количество';
-                            }
-                            if (double.tryParse(value) == null) {
-                              return 'Введите число';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      // Выпадающий список единиц измерения
-                      Expanded(
-                        child: DropdownButtonFormField<QuantityType>(
-                          value: _quantityType,
-                          decoration: const InputDecoration(
-                            labelText: 'Единица измерения',
-                            prefixIcon: Icon(Icons.straighten),
-                            // Добавляем contentPadding для лучшего отображения
-                            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                          ),
-                          // Уменьшаем padding для элементов списка
-                          isExpanded: true,
-                          items: _allowedQuantityTypes.map((type) {
-                            return DropdownMenuItem<QuantityType>(
-                              value: type,
-                              child: Text(
-                                type.toDisplayString(),
-                                // Добавляем стиль с меньшим размером шрифта
-                                style: const TextStyle(fontSize: 14),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            if (value != null) {
-                              setState(() {
-                                _quantityType = value;
-                              });
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Шаг 6: Срок годности
-                  Text(
-                    'Шаг 6: Укажите срок годности',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 12),
-                  InkWell(
-                    onTap: () => _selectDate(context),
-                    child: InputDecorator(
-                      decoration: const InputDecoration(
-                        labelText: 'Срок годности',
-                        prefixIcon: Icon(Icons.calendar_today),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(DateFormatter.formatDate(_expiryDate)),
-                          const Icon(Icons.arrow_drop_down),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-
-                  // Кнопки действий
-                  Row(
-                    children: [
-                      if (_isEditing)
-                        Expanded(
-                          child: OutlinedButton.icon(
-                            onPressed: _deleteProduct,
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            label: const Text(
-                              'Удалить',
-                              style: TextStyle(color: Colors.red),
-                            ),
-                            style: OutlinedButton.styleFrom(
-                              side: const BorderSide(color: Colors.red),
-                            ),
-                          ),
-                        ),
-                      if (_isEditing) const SizedBox(width: 16),
-                      Expanded(
-                        child: ElevatedButton.icon(
-                          onPressed: _saveProduct,
-                          icon: Icon(_isEditing ? Icons.save : Icons.add),
-                          label: Text(_isEditing ? 'Сохранить' : 'Добавить'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24), // Дополнительный отступ внизу
-                ]),
+              // Шаг 2: Название продукта
+              Text(
+                'Шаг 2: Введите название продукта',
+                style: Theme.of(context).textTheme.titleMedium,
               ),
-            ),
-          ],
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _productNameController,
+                decoration: InputDecoration(
+                  labelText: 'Название продукта',
+                  hintText: 'Например: Молоко 3.2%, Помидоры черри',
+                  prefixIcon: const Icon(Icons.fastfood),
+                ),
+                enabled: true,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Введите название продукта';
+                  }
+                  return null;
+                },
+              ),
+
+              const SizedBox(height: 24),
+
+              // Шаг 3: Пищевая ценность
+              Text(
+                'Шаг 3: Пищевая ценность (на 100г/100мл)',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _caloriesController,
+                      decoration: const InputDecoration(
+                        labelText: 'Калории (ккал)',
+                        prefixIcon: Icon(Icons.local_fire_department),
+                      ),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value != null && value.isNotEmpty) {
+                          if (int.tryParse(value) == null) {
+                            return 'Число';
+                          }
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _proteinController,
+                      decoration: const InputDecoration(
+                        labelText: 'Белки (г)',
+                        prefixIcon: Icon(Icons.fitness_center),
+                      ),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value != null && value.isNotEmpty) {
+                          if (int.tryParse(value) == null) {
+                            return 'Число';
+                          }
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _fatController,
+                      decoration: const InputDecoration(
+                        labelText: 'Жиры (г)',
+                        prefixIcon: Icon(Icons.opacity),
+                      ),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value != null && value.isNotEmpty) {
+                          if (int.tryParse(value) == null) {
+                            return 'Число';
+                          }
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _carbsController,
+                      decoration: const InputDecoration(
+                        labelText: 'Углеводы (г)',
+                        prefixIcon: Icon(Icons.grain),
+                      ),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value != null && value.isNotEmpty) {
+                          if (int.tryParse(value) == null) {
+                            return 'Число';
+                          }
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 24),
+
+              // Шаг 4: Аллергены
+              Text(
+                'Шаг 4: Выберите аллергены',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 12),
+              if (_allAllergens.isEmpty)
+                const Center(child: CircularProgressIndicator())
+              else
+                Container(
+                  height: 150,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey[300]!),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: ListView.builder(
+                    itemCount: _allAllergens.length,
+                    itemBuilder: (context, index) {
+                      final allergen = _allAllergens[index];
+                      return CheckboxListTile(
+                        title: Text(allergen.name),
+                        value: allergen.isSelected,
+                        onChanged: (bool? value) {
+                          _toggleAllergen(allergen);
+                        },
+                      );
+                    },
+                  ),
+                ),
+
+              const SizedBox(height: 24),
+              const Divider(),
+              const SizedBox(height: 24),
+
+              // Шаг 5: Количество и единица измерения
+              Text(
+                'Шаг 5: Укажите количество',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 12),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Поле для количества
+                  SizedBox(
+                    width: 120, // Фиксированная ширина
+                    child: TextFormField(
+                      controller: _quantityController,
+                      decoration: const InputDecoration(
+                        labelText: 'Количество',
+                        prefixIcon: Icon(Icons.scale),
+                      ),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Введите количество';
+                        }
+                        if (double.tryParse(value) == null) {
+                          return 'Введите число';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  // Выпадающий список единиц измерения
+                  Expanded(
+                    child: DropdownButtonFormField<QuantityType>(
+                      value: _quantityType,
+                      decoration: const InputDecoration(
+                        labelText: 'Единица измерения',
+                        prefixIcon: Icon(Icons.straighten),
+                        // Добавляем contentPadding для лучшего отображения
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                      ),
+                      // Уменьшаем padding для элементов списка
+                      isExpanded: true,
+                      items: _allowedQuantityTypes.map((type) {
+                        return DropdownMenuItem<QuantityType>(
+                          value: type,
+                          child: Text(
+                            type.toDisplayString(),
+                            // Добавляем стиль с меньшим размером шрифта
+                            style: const TextStyle(fontSize: 14),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        if (value != null) {
+                          setState(() {
+                            _quantityType = value;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+
+              // Шаг 6: Срок годности
+              Text(
+                'Шаг 6: Укажите срок годности',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 12),
+              InkWell(
+                onTap: () => _selectDate(context),
+                child: InputDecorator(
+                  decoration: const InputDecoration(
+                    labelText: 'Срок годности',
+                    prefixIcon: Icon(Icons.calendar_today),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(DateFormatter.formatDate(_expiryDate)),
+                      const Icon(Icons.arrow_drop_down),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 32),
+
+              // Кнопки действий
+              Row(
+                children: [
+                  if (_isEditing)
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: _deleteProduct,
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        label: const Text(
+                          'Удалить',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          side: const BorderSide(color: Colors.red),
+                        ),
+                      ),
+                    ),
+                  if (_isEditing) const SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: _saveProduct,
+                      icon: Icon(_isEditing ? Icons.save : Icons.add),
+                      label: Text(_isEditing ? 'Сохранить' : 'Добавить'),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24), // Дополнительный отступ внизу
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+  Future<DateTime?> _selectDate(BuildContext context) async {
+    return showDatePicker(
       context: context,
       initialDate: _expiryDate,
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
-    );
-
-    if (picked != null && picked != _expiryDate) {
-      setState(() {
-        _expiryDate = picked;
-      });
-    }
+    ).then((picked) {
+      if (picked != null && picked != _expiryDate) {
+        setState(() {
+          _expiryDate = picked;
+        });
+      }
+      return picked;
+    });
   }
 
   Future<void> _saveProduct() async {
