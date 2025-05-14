@@ -2499,3 +2499,19 @@ DEBUG 2025-05-14 19:26:42,104 utils 17308 10412 (0.000) SELECT "allergen"."alg_i
 DEBUG 2025-05-14 19:26:42,107 utils 17308 10412 (0.000) SELECT COUNT(*) AS "__count" FROM "m2m_usr_ing" WHERE "m2m_usr_ing"."mui_usr_id" = 66; args=(66,); alias=default
 DEBUG 2025-05-14 19:26:42,111 utils 17308 10412 (0.000) SELECT COUNT(*) AS "__count" FROM "m2m_usr_ing" INNER JOIN "ingredient" ON ("m2m_usr_ing"."mui_ing_id" = "ingredient"."ing_id") WHERE ("ingredient"."ing_exp_date" >= '2025-05-14'::date AND "ingredient"."ing_exp_date" <= '2025-05-17'::date AND "m2m_usr_ing"."mui_usr_id" = 66); args=(datetime.date(2025, 5, 14), datetime.date(2025, 5, 17), 66); alias=default
 DEBUG 2025-05-14 19:26:42,113 utils 17308 10412 (0.000) SELECT COUNT(*) AS "__count" FROM "m2m_usr_ing" INNER JOIN "ingredient" ON ("m2m_usr_ing"."mui_ing_id" = "ingredient"."ing_id") WHERE ("ingredient"."ing_exp_date" < '2025-05-14'::date AND "m2m_usr_ing"."mui_usr_id" = 66); args=(datetime.date(2025, 5, 14), 66); alias=default
+DEBUG 2025-05-14 20:36:18,730 utils 9408 752 (0.000) 
+            SELECT
+                c.relname,
+                CASE
+                    WHEN c.relispartition THEN 'p'
+                    WHEN c.relkind IN ('m', 'v') THEN 'v'
+                    ELSE 't'
+                END,
+                obj_description(c.oid, 'pg_class')
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('f', 'm', 'p', 'r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid)
+        ; args=None; alias=default
+DEBUG 2025-05-14 20:36:18,737 utils 9408 752 (0.015) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default

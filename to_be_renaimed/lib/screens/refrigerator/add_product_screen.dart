@@ -87,6 +87,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
   }
 
   // Улучшенная версия метода _prefillFromScannedData
+  // ПОСЛЕДНЯЯ ВЕРСИЯ _prefillFromScannedData
+// Список типов отображается сразу, и название всегда активно
+
   void _prefillFromScannedData(Map<String, dynamic> data) {
     print('\n===== PREFILLING FROM SCANNED DATA =====');
     print('Data received: $data');
@@ -107,43 +110,65 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
       // Заполняем БЖУ и калории
       if (data['calories'] != null) {
-        _caloriesController.text = data['calories'].toString();
+        _caloriesController.text = _extractNumericValue(data['calories']);
         print('Set calories: ${data['calories']}');
       }
 
       if (data['protein'] != null) {
-        _proteinController.text = data['protein'].toString();
+        _proteinController.text = _extractNumericValue(data['protein']);
         print('Set protein: ${data['protein']}');
       }
 
       if (data['fat'] != null) {
-        _fatController.text = data['fat'].toString();
+        _fatController.text = _extractNumericValue(data['fat']);
         print('Set fat: ${data['fat']}');
       }
 
       if (data['carbs'] != null) {
-        _carbsController.text = data['carbs'].toString();
+        _carbsController.text = _extractNumericValue(data['carbs']);
         print('Set carbs: ${data['carbs']}');
       }
 
       // Количество продукта (если есть)
       if (data['weight'] != null) {
-        _quantityController.text = data['weight'].toString();
+        _quantityController.text = _extractNumericValue(data['weight']);
         print('Set quantity: ${data['weight']}');
       }
+
+      bool typeFound = false;
 
       // Устанавливаем тип ингредиента по ID (из классификации ИИ)
       if (data['ingredient_type_id'] != null) {
         final typeId = data['ingredient_type_id'];
-        print('Setting ingredient type by ID: $typeId');
 
-        // Используем специальный метод для поиска типа по ID
-        _findTypeById(typeId);
+        // Ищем и устанавливаем соответствующий тип
+        for (var type in _allTypes) {
+          if (type.id == typeId) {
+            print('Found matching type: ${type.name} (ID: ${type.id})');
+            setState(() {
+              _selectedType = type;
+              _typeSearchController.text = type.name;
+              _searchResults = [];
+            });
+            typeFound = true;
+            break;
+          }
+        }
       }
       // Если тип ингредиента не задан по ID, но есть категория в виде строки
       else if (data['category'] != null && data['category'].toString().isNotEmpty) {
         print('No type ID, but category string found: ${data['category']}');
-        _findTypeByCategory(data['category'].toString());
+        typeFound = _findTypeByCategory(data['category'].toString());
+      }
+
+      // ИСПРАВЛЕНИЕ: Если тип не найден, показываем все типы продуктов
+      if (!typeFound) {
+        print('No type found in scanned data, showing all types');
+        setState(() {
+          _selectedType = null;
+          _typeSearchController.text = '';
+          _searchResults = _allTypes;
+        });
       }
 
       // Устанавливаем аллергены, если они есть
@@ -235,8 +260,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
     print('Type set to: ${_selectedType?.name} (ID: ${_selectedType?.id})');
   }
 
-  void _findTypeByCategory(String category) {
-    if (_allTypes.isEmpty) return;
+  // КОРРЕКТНОЕ решение для _findTypeByCategory
+// Просто устанавливаем и тип, и текст в поле поиска
+
+  bool _findTypeByCategory(String category) {
+    if (_allTypes.isEmpty) return false;
 
     final categoryLower = category.toLowerCase();
     IngredientType? foundType;
@@ -267,9 +295,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
       setState(() {
         _selectedType = foundType;
         _typeSearchController.text = foundType!.name;
+        _searchResults = [];
       });
+      return true;
     } else {
       print('No matching type found for category: $category');
+      return false;
     }
   }
 
@@ -600,16 +631,29 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   ),
                   const SizedBox(height: 12),
                   TextFormField(
-                    controller: _productNameController,
+                    controller: _typeSearchController,
                     decoration: InputDecoration(
-                      labelText: 'Название продукта',
-                      hintText: 'Например: Молоко 3.2%, Помидоры черри',
-                      prefixIcon: const Icon(Icons.fastfood),
+                      labelText: 'Тип продукта',
+                      hintText: 'Например: Молочные продукты, Овощи',
+                      prefixIcon: const Icon(Icons.category),
+                      suffixIcon: _selectedType != null
+                          ? IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          setState(() {
+                            _selectedType = null;
+                            _typeSearchController.clear();
+                            _searchResults = _allTypes;
+                          });
+                        },
+                      )
+                          : null,
                     ),
-                    // Удалено условие enabled, теперь поле всегда активно
+                    enabled: !_isEditing,
+                    onChanged: _searchTypes,
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Введите название продукта';
+                      if (_selectedType == null) {
+                        return 'Пожалуйста, выберите тип продукта';
                       }
                       return null;
                     },
@@ -668,7 +712,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       hintText: 'Например: Молоко 3.2%, Помидоры черри',
                       prefixIcon: const Icon(Icons.fastfood),
                     ),
-                    enabled: _selectedType != null || _isEditing,
+                    enabled: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Введите название продукта';

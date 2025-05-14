@@ -657,3 +657,8 @@ INFO 2025-05-14 19:26:41,931 basehttp 17308 10412 "GET /api/refrigerator/ HTTP/1
 INFO 2025-05-14 19:26:42,056 ingredient 17308 10412 Listing refrigerator ingredients: user_id=66
 INFO 2025-05-14 19:26:42,115 ingredient 17308 10412 Retrieved 7 refrigerator ingredients for user_id=66, time=0.06s
 INFO 2025-05-14 19:26:42,149 basehttp 17308 10412 "GET /api/refrigerator/ HTTP/1.1" 200 4168
+INFO 2025-05-14 20:36:17,606 autoreload 9408 19140 Watching for file changes with StatReloader
+INFO 2025-05-14 20:36:18,740 wsgi 9408 752 ==== Starting FoodBalancer Backend Application ====
+INFO 2025-05-14 20:36:18,740 wsgi 9408 752 Environment: config.settings
+INFO 2025-05-14 20:36:18,740 wsgi 9408 752 Python version: 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)]
+INFO 2025-05-14 20:36:18,746 wsgi 9408 752 Application initialized successfully
