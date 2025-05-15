@@ -1,11 +1,11 @@
-# AppBackend/apps/core/enums.py
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 class GenderChoices(models.TextChoices):
     """Перечисление для пола"""
-    MALE = 'Male', _('Мужской')  # Value MUST match PostgreSQL enum value: 'Male'
-    FEMALE = 'Female', _('Женский')  # Value MUST match PostgreSQL enum value: 'Female'
+    MALE = 'Male', _('Мужской')  
+    FEMALE = 'Female', _('Женский')  
 
 class QuantityTypeChoices(models.TextChoices):
     """Перечисление для типов количества"""

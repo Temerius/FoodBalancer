@@ -1,4 +1,4 @@
-# AppBackend/apps/core/serializers/ingredient.py - Corrected version with existing table fields
+
 
 from rest_framework import serializers
 from ..models import IngredientType, Ingredient, M2MUsrIng, Allergen, IngredientToAllergen
@@ -40,28 +40,28 @@ class IngredientSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         print(f"Creating ingredient with data: {validated_data}")
 
-        # Извлекаем allergen_ids ПЕРЕД созданием объекта
+        
         allergen_ids = validated_data.pop('allergen_ids', [])
         print(f"Allergen IDs to create: {allergen_ids}")
 
-        # Создаем ингредиент
+        
         ingredient = super().create(validated_data)
         print(f"Created ingredient: {ingredient.ing_id} - {ingredient.ing_name}")
 
-        # Создаем связи с аллергенами
+        
         for allergen_id in allergen_ids:
             try:
-                # Проверяем, существует ли аллерген
+                
                 allergen = Allergen.objects.get(alg_id=allergen_id)
 
-                # Проверяем, существует ли уже такая связь
+                
                 if IngredientToAllergen.objects.filter(
                         mia_ing_id=ingredient,
                         mia_alg_id=allergen
                 ).exists():
                     print(f"Allergen link already exists: {ingredient.ing_name} - {allergen.alg_name}")
                 else:
-                    # Создаем связь без использования get_or_create
+                    
                     IngredientToAllergen.objects.create(
                         mia_ing_id=ingredient,
                         mia_alg_id=allergen
@@ -78,21 +78,21 @@ class IngredientSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         print(f"Updating ingredient {instance.ing_id} with data: {validated_data}")
 
-        # Извлекаем allergen_ids
+        
         allergen_ids = validated_data.pop('allergen_ids', None)
 
-        # Обновляем основные поля
+        
         instance = super().update(instance, validated_data)
 
-        # Обновляем аллергены, если они были переданы
+        
         if allergen_ids is not None:
             print(f"Updating allergens to: {allergen_ids}")
 
-            # Удаляем старые связи
+            
             IngredientToAllergen.objects.filter(mia_ing_id=instance).delete()
             print("Deleted old allergen links")
 
-            # Создаем новые связи
+            
             for allergen_id in allergen_ids:
                 try:
                     allergen = Allergen.objects.get(alg_id=allergen_id)
@@ -127,7 +127,7 @@ class UserIngredientSerializer(serializers.ModelSerializer):
     """Сериализатор для ингредиентов пользователя (холодильник)"""
     ingredient = IngredientDetailSerializer(source='mui_ing_id', read_only=True)
 
-    # Специальный метод для корректной сериализации mui_ing_id
+    
     mui_ing_id = serializers.SerializerMethodField()
     mui_usr_id = serializers.SerializerMethodField()
 
@@ -146,7 +146,7 @@ class UserIngredientSerializer(serializers.ModelSerializer):
 
     def to_internal_value(self, data):
         """Преобразует входящие данные для создания/обновления"""
-        # Сохраняем значение mui_ing_id как есть (как integer)
+        
         ret = super().to_internal_value(data)
         if 'mui_ing_id' in data:
             ret['mui_ing_id'] = data['mui_ing_id']

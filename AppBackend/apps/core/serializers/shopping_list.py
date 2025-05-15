@@ -1,4 +1,4 @@
-# AppBackend/apps/core/serializers/shopping_list.py
+
 from rest_framework import serializers
 from ..models import ShoppingList, M2MIngSpl
 from .ingredient import IngredientTypeSerializer

@@ -1,4 +1,4 @@
-# AppBackend/apps/core/views/equipment.py
+
 
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
@@ -11,7 +11,7 @@ from ..serializers import EquipmentSerializer, UserEquipmentSerializer
 import logging
 import time
 
-# Создаем логгер для модуля оборудования
+
 logger = logging.getLogger('apps.core.equipment')
 
 
@@ -67,28 +67,28 @@ class UserEquipmentViewSet(viewsets.ModelViewSet):
 
             logger.info(f"Equipment IDs to update: {equipment_ids}")
 
-            # Get your M2M model and Equipment model
+            
             from apps.core.models import M2MUsrEqp, Equipment
             from django.contrib.auth import get_user_model
 
             User = get_user_model()
             user_obj = User.objects.get(usr_id=user.usr_id)
 
-            # Clear existing user equipment
+            
             delete_count = M2MUsrEqp.objects.filter(mue_usr_id=user.usr_id).delete()
             logger.info(f"Deleted {delete_count} existing equipment records")
 
-            # Add new equipment
+            
             created_equipment = []
             for equipment_id in equipment_ids:
                 try:
-                    # Get the Equipment instance
+                    
                     equipment_obj = Equipment.objects.get(eqp_id=equipment_id)
 
-                    # Create the relationship with proper objects
+                    
                     M2MUsrEqp.objects.create(
-                        mue_usr_id=user_obj,  # User instance
-                        mue_eqp_id=equipment_obj  # Equipment instance
+                        mue_usr_id=user_obj,  
+                        mue_eqp_id=equipment_obj  
                     )
                     created_equipment.append(equipment_id)
                     logger.info(f"Created equipment mapping: user {user.usr_id} - equipment {equipment_id}")
@@ -146,7 +146,7 @@ class UserEquipmentViewSet(viewsets.ModelViewSet):
         equipment_id = request.data['mue_eqp_id']
         logger.info(f"Adding equipment to user: equipment_id={equipment_id}, user_id={user_id}")
 
-        # Проверка, существует ли уже такое оборудование у пользователя
+        
         if M2MUsrEqp.objects.filter(mue_usr_id=request.user, mue_eqp_id=equipment_id).exists():
             logger.info(f"Equipment already added to user: equipment_id={equipment_id}, user_id={user_id}")
             return Response(
@@ -154,7 +154,7 @@ class UserEquipmentViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Создание связи
+        
         try:
             equipment = Equipment.objects.get(eqp_id=equipment_id)
             equipment_rel = M2MUsrEqp.objects.create(
@@ -190,7 +190,7 @@ class UserEquipmentViewSet(viewsets.ModelViewSet):
         equipment_id = instance.mue_eqp_id.eqp_id
         equipment_type = instance.mue_eqp_id.eqp_type
 
-        # Проверка, принадлежит ли связь текущему пользователю
+        
         if instance.mue_usr_id != request.user:
             logger.warning(
                 f"Unauthorized equipment delete attempt: equipment_id={equipment_id}, requested_by={user_id}, owner={instance.mue_usr_id.usr_id}")
@@ -215,7 +215,7 @@ class UserEquipmentViewSet(viewsets.ModelViewSet):
 
         user_equipment = self.get_queryset()
 
-        # Получаем только ID оборудования для клиента
+        
         equipment_ids = [rel.mue_eqp_id.eqp_id for rel in user_equipment]
         count = len(equipment_ids)
 

@@ -22,7 +22,7 @@ class UserManager(BaseUserManager):
         Создание суперпользователя - принимает параметры соответствующие REQUIRED_FIELDS
         """
         if not usr_name:
-            usr_name = "Admin"  # Значение по умолчанию
+            usr_name = "Admin"  
 
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
@@ -37,7 +37,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    # Поля из вашей БД
+    
     usr_id = models.BigAutoField(primary_key=True)
     usr_name = models.CharField(max_length=100, null=True, blank=True)
     usr_pas_hash = models.CharField(max_length=32, null=True, blank=True)
@@ -55,14 +55,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True
     )
 
-    # Поля требуемые для Django
+    
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     last_login = models.DateTimeField(null=True, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True, null=True)
 
-    # Важно! Не используем поля из AbstractUser, которых нет в вашей БД
+    
     username = None
 
     objects = UserManager()
@@ -84,11 +84,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.usr_name or self.usr_mail
 
     def set_password(self, raw_password):
-        # Сохраняем MD5 хеш для обратной совместимости
+        
         if raw_password is not None:
             self.usr_pas_hash = hashlib.md5(raw_password.encode()).hexdigest()
         else:
             self.usr_pas_hash = None
 
-        # Вызываем родительский метод для хранения пароля в формате Django
+        
         super().set_password(raw_password)

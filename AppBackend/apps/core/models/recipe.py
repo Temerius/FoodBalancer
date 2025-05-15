@@ -1,4 +1,4 @@
-# AppBackend/apps/core/models/recipe.py
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
@@ -15,7 +15,7 @@ class Recipe(models.Model):
     rcp_portion_count = models.SmallIntegerField(_('Количество порций'), default=1)
     rcp_main_img = models.CharField(_('Основное изображение'), max_length=256, blank=True, null=True)
 
-    # Новые поля
+    
     rcp_weight = models.IntegerField(_('Вес порции (г)'), default=0)
     rcp_fat = models.IntegerField(_('Жиры (г)'), default=0)
     rcp_hydrates = models.IntegerField(_('Углеводы (г)'), default=0)
@@ -47,7 +47,7 @@ class Step(models.Model):
         db_table = 'step'
         verbose_name = _('Шаг рецепта')
         verbose_name_plural = _('Шаги рецепта')
-        ordering = ['stp_id']  # Шаги должны быть упорядочены
+        ordering = ['stp_id']  
 
     def __str__(self):
         return f"{self.stp_title} ({self.stp_rcp_id})"

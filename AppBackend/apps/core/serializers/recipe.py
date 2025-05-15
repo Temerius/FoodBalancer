@@ -1,4 +1,4 @@
-# AppBackend/apps/core/serializers/recipe.py
+
 from rest_framework import serializers
 from ..models import Recipe, Step, M2MStpIgt, Image, FavoriteRecipe
 from .ingredient import IngredientTypeSerializer
@@ -41,7 +41,7 @@ class RecipeListSerializer(serializers.ModelSerializer):
             'rcp_id', 'rcp_title', 'rcp_description', 'rcp_cal', 'rcp_portion_count',
             'rcp_main_img', 'rcp_weight', 'rcp_fat', 'rcp_hydrates', 'rcp_protein',
             'is_favorite'
-        ]  # Добавлены новые поля
+        ]  
 
     def get_is_favorite(self, obj):
         """Проверка, находится ли рецепт в избранном у пользователя"""
@@ -66,7 +66,7 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
             'rcp_id', 'rcp_title', 'rcp_description', 'rcp_cal', 'rcp_portion_count',
             'rcp_main_img', 'rcp_weight', 'rcp_fat', 'rcp_hydrates', 'rcp_protein',
             'steps', 'equipment', 'is_favorite'
-        ]  # Добавлены новые поля
+        ]  
 
     def get_is_favorite(self, obj):
         """Проверка, находится ли рецепт в избранном у пользователя"""

@@ -1,4 +1,4 @@
-# AppBackend/apps/core/models/meal_plan.py
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
@@ -61,8 +61,8 @@ class ActualDayMeal(models.Model):
         related_name='actual_meals',
         verbose_name=_('Пользователь')
     )
-    # Дополнительные поля для улучшения UX
-    adm_type = models.CharField(_('Тип приема пищи'), max_length=50, null=True, blank=True)  # Например, "Завтрак", "Обед", "Ужин"
+    
+    adm_type = models.CharField(_('Тип приема пищи'), max_length=50, null=True, blank=True)  
     adm_time = models.TimeField(_('Время'), null=True, blank=True)
 
     class Meta:

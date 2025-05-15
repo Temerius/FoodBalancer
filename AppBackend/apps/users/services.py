@@ -5,8 +5,8 @@ import jwt
 from django.conf import settings
 from .models import User
 
-# Хранилище токенов в памяти (для демонстрации)
-# В реальном проекте лучше использовать Redis или базу данных
+
+
 TOKEN_STORAGE = {}
 
 
@@ -39,7 +39,7 @@ def verify_password(user, plain_password):
     if not user.usr_pas_hash:
         return False
 
-    # Проверяем MD5 хеш
+    
     md5_hash = hashlib.md5(plain_password.encode()).hexdigest()
     return user.usr_pas_hash == md5_hash
 

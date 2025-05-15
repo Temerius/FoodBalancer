@@ -1,4 +1,4 @@
-# AppBackend/apps/core/views/ingredient.py
+
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -13,7 +13,7 @@ from ..serializers import IngredientTypeSerializer, IngredientSerializer, Ingred
 import logging
 import time
 
-# Создаем логгер для модуля ингредиентов
+
 logger = logging.getLogger('apps.core.refrigerator')
 
 
@@ -28,20 +28,20 @@ class IngredientTypeViewSet(viewsets.ReadOnlyModelViewSet):
         start_time = time.time()
         queryset = IngredientType.objects.all()
 
-        # Фильтрация по категории
+        
         category = self.request.query_params.get('category')
         if category:
             logger.debug(f"Filtering ingredient types by category: {category}")
             queryset = queryset.filter(category=category)
 
-        # Поиск по названию
+        
         search = self.request.query_params.get('search')
         if search:
             logger.info(f"Searching ingredient types: query='{search}', user_id={self.request.user.usr_id}")
             queryset = queryset.filter(igt_name__icontains=search)
 
         query_time = time.time() - start_time
-        if query_time > 0.5:  # Логируем долгие запросы
+        if query_time > 0.5:  
             logger.warning(f"Slow ingredient type query: {query_time:.2f}s, params={self.request.query_params}")
 
         return queryset
@@ -56,7 +56,7 @@ class IngredientTypeViewSet(viewsets.ReadOnlyModelViewSet):
         return response
 
 
-# AppBackend/apps/core/views/ingredient.py - Corrected version with existing table fields
+
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -71,7 +71,7 @@ from ..serializers import IngredientTypeSerializer, IngredientSerializer, Ingred
 import logging
 import time
 
-# Создаем логгер для модуля ингредиентов
+
 logger = logging.getLogger('apps.core.refrigerator')
 
 
@@ -90,26 +90,26 @@ class IngredientViewSet(viewsets.ModelViewSet):
         """Фильтрация ингредиентов по типу или названию"""
         start_time = time.time()
 
-        # Оптимизируем запрос с предзагрузкой связанных данных
+        
         queryset = Ingredient.objects.select_related('ing_igt_id').prefetch_related(
             Prefetch('allergens', queryset=Allergen.objects.all()),
             'allergen_links'
         )
 
-        # Фильтрация по типу
+        
         type_id = self.request.query_params.get('type_id')
         if type_id:
             logger.debug(f"Filtering ingredients by type: {type_id}")
             queryset = queryset.filter(ing_igt_id=type_id)
 
-        # Поиск по названию
+        
         search = self.request.query_params.get('search')
         if search:
             logger.info(f"Searching ingredients: query='{search}', user_id={self.request.user.usr_id}")
             queryset = queryset.filter(ing_name__icontains=search)
 
         query_time = time.time() - start_time
-        if query_time > 0.5:  # Логируем долгие запросы
+        if query_time > 0.5:  
             logger.warning(f"Slow ingredient query: {query_time:.2f}s, params={self.request.query_params}")
 
         return queryset
@@ -122,16 +122,16 @@ class IngredientViewSet(viewsets.ModelViewSet):
         print(f"Creating ingredient with data: {request.data}")
         logger.info(f"Creating new ingredient: user_id={user_id}, data={request.data}")
 
-        # Создаем сериализатор с данными
+        
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
-            # Создаем ингредиент
+            
             ingredient = serializer.save()
 
             headers = self.get_success_headers(serializer.data)
 
-            # Логируем успешное создание
+            
             logger.info(
                 f"Ingredient created successfully: ingredient_id={ingredient.ing_id}, "
                 f"name='{ingredient.ing_name}', type_id={ingredient.ing_igt_id.igt_id}, "
@@ -154,16 +154,16 @@ class IngredientViewSet(viewsets.ModelViewSet):
 
         logger.info(f"Updating ingredient: ingredient_id={ingredient_id}, name='{ingredient_name}', user_id={user_id}")
 
-        # Обработка аллергенов
+        
         allergen_ids = request.data.get('allergen_ids', None)
         if allergen_ids is not None:
             logger.info(
                 f"Updating allergens for ingredient: ingredient_id={ingredient_id}, new_allergen_ids={allergen_ids}")
 
-            # Удаляем старые связи
+            
             IngredientToAllergen.objects.filter(mia_ing_id=instance).delete()
 
-            # Создаем новые связи
+            
             for allergen_id in allergen_ids:
                 try:
                     IngredientToAllergen.objects.create(
@@ -173,13 +173,13 @@ class IngredientViewSet(viewsets.ModelViewSet):
                 except Exception as e:
                     logger.error(f"Error updating allergen link: allergen_id={allergen_id}, error={e}")
 
-        # Сохраняем старые значения для лога
+        
         old_name = instance.ing_name
         old_type_id = instance.ing_igt_id.igt_id
 
         response = super().update(request, *args, **kwargs)
 
-        # Логируем изменения
+        
         if response.status_code == status.HTTP_200_OK:
             new_name = response.data.get('ing_name', old_name)
             new_type_id = response.data.get('ing_igt_id', old_type_id)
@@ -219,7 +219,7 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
         user_id = self.request.user.usr_id
         logger.debug(f"Accessing refrigerator: user_id={user_id}")
 
-        # Используем select_related для оптимизации запросов
+        
         return M2MUsrIng.objects.filter(
             mui_usr_id=self.request.user
         ).select_related(
@@ -233,21 +233,21 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
         user_id = request.user.usr_id
         logger.info(f"Listing refrigerator ingredients: user_id={user_id}")
 
-        # Получаем параметры для фильтрации
+        
         search_query = request.query_params.get('search', '')
         category_filter = request.query_params.get('category', '')
         expiring_soon = request.query_params.get('expiring_soon', '').lower() == 'true'
 
         queryset = self.get_queryset()
 
-        # Фильтрация по поиску
+        
         if search_query:
             queryset = queryset.filter(
                 Q(mui_ing_id__ing_name__icontains=search_query) |
                 Q(mui_ing_id__ing_igt_id__igt_name__icontains=search_query)
             )
 
-        # Фильтрация по истекающему сроку годности (в течение 3 дней)
+        
         if expiring_soon:
             now = datetime.now().date()
             future = now + timedelta(days=3)
@@ -256,7 +256,7 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
                 mui_ing_id__ing_exp_date__gte=now
             )
 
-        # Пагинация
+        
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -264,7 +264,7 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
 
-        # Добавляем информацию о количестве и статистике
+        
         response_data = {
             'results': serializer.data,
             'count': len(serializer.data),
@@ -281,14 +281,14 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
         now = datetime.now().date()
         total_items = M2MUsrIng.objects.filter(mui_usr_id=user).count()
 
-        # Количество продуктов с истекающим сроком
+        
         expiring_count = M2MUsrIng.objects.filter(
             mui_usr_id=user,
             mui_ing_id__ing_exp_date__lte=now + timedelta(days=3),
             mui_ing_id__ing_exp_date__gte=now
         ).count()
 
-        # Просроченные продукты
+        
         expired_count = M2MUsrIng.objects.filter(
             mui_usr_id=user,
             mui_ing_id__ing_exp_date__lt=now
@@ -316,16 +316,16 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
 
         ingredient_id = request.data['mui_ing_id']
 
-        # Создание связи
+        
         try:
             ingredient = Ingredient.objects.get(ing_id=ingredient_id)
             quantity = int(request.data['mui_quantity'])
             quantity_type = request.data['mui_quantity_type']
 
-            # Создаем объект с правильными полями
+            
             refrigerator_item = M2MUsrIng.objects.create(
                 mui_usr_id=request.user,
-                mui_ing_id=ingredient,  # Передаем объект ингредиента
+                mui_ing_id=ingredient,  
                 mui_quantity=quantity,
                 mui_quantity_type=quantity_type
             )
@@ -335,10 +335,10 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
                 f"quantity={quantity} {quantity_type}, user_id={user_id}, time={time.time() - start_time:.2f}s"
             )
 
-            # Сериализуем созданный объект
+            
             serializer = self.get_serializer(refrigerator_item)
 
-            # Возвращаем данные с правильным статусом
+            
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         except Ingredient.DoesNotExist:
@@ -371,7 +371,7 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
         ingredient_id = instance.mui_ing_id.ing_id
         ingredient_name = instance.mui_ing_id.ing_name
 
-        # Проверка, принадлежит ли ингредиент текущему пользователю
+        
         if instance.mui_usr_id != request.user:
             logger.warning(
                 f"Unauthorized refrigerator update attempt: ingredient_id={ingredient_id}, requested_by={user_id}, owner={instance.mui_usr_id.usr_id}"
@@ -381,7 +381,7 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        # Сохраняем старые значения для лога
+        
         old_quantity = instance.mui_quantity
         old_quantity_type = instance.mui_quantity_type
 
@@ -390,7 +390,7 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
         )
         response = super().update(request, *args, **kwargs)
 
-        # Логируем изменения
+        
         if response.status_code == status.HTTP_200_OK:
             new_quantity = response.data.get('mui_quantity', old_quantity)
             new_quantity_type = response.data.get('mui_quantity_type', old_quantity_type)
@@ -425,7 +425,7 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
         ingredient_id = instance.mui_ing_id.ing_id
         ingredient_name = instance.mui_ing_id.ing_name
 
-        # Проверка, принадлежит ли ингредиент текущему пользователю
+        
         if instance.mui_usr_id != request.user:
             logger.warning(
                 f"Unauthorized refrigerator delete attempt: ingredient_id={ingredient_id}, requested_by={user_id}, owner={instance.mui_usr_id.usr_id}"
@@ -455,12 +455,12 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
         now = datetime.now().date()
         future = now + timedelta(days=3)
 
-        # Получаем ингредиенты пользователя
+        
         user_ingredients = M2MUsrIng.objects.filter(
             mui_usr_id=request.user
         ).select_related('mui_ing_id', 'mui_ing_id__ing_igt_id')
 
-        # Фильтруем по сроку годности
+        
         expiring_items = []
         for item in user_ingredients:
             if item.mui_ing_id.ing_exp_date and now <= item.mui_ing_id.ing_exp_date <= future:
@@ -480,7 +480,7 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
 
         logger.info(f"Getting refrigerator categories: user_id={user_id}")
 
-        # Получаем уникальные типы ингредиентов в холодильнике пользователя
+        
         ingredient_types = IngredientType.objects.filter(
             igt_id__in=M2MUsrIng.objects.filter(
                 mui_usr_id=request.user
@@ -521,10 +521,10 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
                 continue
 
             try:
-                # Проверяем, существует ли ингредиент
+                
                 ingredient = Ingredient.objects.get(ing_id=item['mui_ing_id'])
 
-                # Проверяем, нет ли уже такого ингредиента
+                
                 if M2MUsrIng.objects.filter(
                         mui_usr_id=request.user,
                         mui_ing_id=item['mui_ing_id']
@@ -535,7 +535,7 @@ class RefrigeratorViewSet(viewsets.ModelViewSet):
                     })
                     continue
 
-                # Создаем запись
+                
                 refrigerator_item = M2MUsrIng.objects.create(
                     mui_usr_id=request.user,
                     mui_ing_id=ingredient,

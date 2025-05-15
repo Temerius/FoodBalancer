@@ -1,4 +1,4 @@
-# AppBackend/apps/core/formatters.py
+
 import logging
 import json
 from datetime import datetime
@@ -23,14 +23,14 @@ class CustomJsonFormatter(logging.Formatter):
             'thread': record.thread,
         }
 
-        # Добавляем информацию об исключении, если оно есть
+        
         if record.exc_info:
             log_record['exception'] = {
                 'type': record.exc_info[0].__name__,
                 'message': str(record.exc_info[1]),
             }
 
-        # Добавляем дополнительную информацию, если она есть
+        
         if hasattr(record, 'status_code'):
             log_record['status_code'] = record.status_code
 
@@ -43,5 +43,5 @@ class CustomJsonFormatter(logging.Formatter):
         if hasattr(record, 'duration'):
             log_record['duration_ms'] = record.duration
 
-        # Конвертируем в JSON
+        
         return json.dumps(log_record)

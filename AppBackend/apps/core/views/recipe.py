@@ -1,4 +1,4 @@
-# AppBackend/apps/core/views/recipe.py
+
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -19,7 +19,7 @@ from ..serializers import (
 import logging
 import time
 
-# Создадим логгер для рецептов
+
 logger = logging.getLogger('apps.core.recipes')
 
 class RecipeViewSet(viewsets.ReadOnlyModelViewSet):
@@ -44,7 +44,7 @@ class RecipeViewSet(viewsets.ReadOnlyModelViewSet):
         start_time = time.time()
         queryset = Recipe.objects.all()
 
-        # Поиск по названию или описанию
+        
         search = self.request.query_params.get('search')
         if search:
             logger.info(f"Recipe search: user_id={self.request.user.usr_id}, query='{search}'")
@@ -53,7 +53,7 @@ class RecipeViewSet(viewsets.ReadOnlyModelViewSet):
             )
 
         query_time = time.time() - start_time
-        if query_time > 0.5:  # Логируем долгие запросы
+        if query_time > 0.5:  
             logger.warning(f"Slow recipe query: {query_time:.2f}s, params={self.request.query_params}")
         else:
             logger.debug(f"Recipe query executed in {query_time:.2f}s")
@@ -84,20 +84,20 @@ class RecipeViewSet(viewsets.ReadOnlyModelViewSet):
         start_time = time.time()
         logger.info(f"Requesting recommended recipes for user_id={request.user.usr_id}")
 
-        # Получаем ингредиенты пользователя
+        
         user_ingredients = M2MUsrIng.objects.filter(mui_usr_id=request.user)
         user_ingredient_ids = [item.mui_ing_id_id for item in user_ingredients]
 
-        # Получаем оборудование пользователя
+        
         user_equipment_ids = request.user.equipment.values_list('eqp_id', flat=True)
 
-        # Получаем аллергены пользователя
+        
         user_allergen_ids = request.user.allergens.values_list('alg_id', flat=True)
 
-        # Исключаем рецепты с ингредиентами-аллергенами
+        
         excluded_ingredient_ids = []
         if user_allergen_ids:
-            # Получаем ингредиенты с аллергенами
+            
             allergen_ingredients = Ingredient.objects.filter(
                 Exists(
                     IngredientToAllergen.objects.filter(
@@ -109,12 +109,12 @@ class RecipeViewSet(viewsets.ReadOnlyModelViewSet):
             excluded_ingredient_ids = list(allergen_ingredients.values_list('ing_id', flat=True))
             logger.info(f"Excluding {len(excluded_ingredient_ids)} ingredients due to user allergens")
 
-        # Базовый запрос для рецептов
+        
         queryset = Recipe.objects.prefetch_related('equipment', 'steps', 'steps__ingredient_types')
 
-        # Применяем фильтры
+        
         if excluded_ingredient_ids:
-            # Исключаем рецепты с аллергенами
+            
             queryset = queryset.exclude(
                 Exists(
                     Step.objects.filter(
@@ -132,18 +132,18 @@ class RecipeViewSet(viewsets.ReadOnlyModelViewSet):
                 )
             )
 
-        # Сортируем по соответствию с имеющимися ингредиентами и оборудованием
+        
         recipes = []
         for recipe in queryset:
             score = 0
 
-            # Проверяем оборудование
+            
             recipe_equipment_ids = recipe.equipment.values_list('eqp_id', flat=True)
             equipment_match = all(eqp_id in user_equipment_ids for eqp_id in recipe_equipment_ids)
             if equipment_match:
                 score += 10
 
-            # Проверяем ингредиенты
+            
             ingredient_match_count = 0
             recipe_steps = recipe.steps.all()
             required_ingredient_types = set()
@@ -153,7 +153,7 @@ class RecipeViewSet(viewsets.ReadOnlyModelViewSet):
                 for ing in step_ingredients:
                     required_ingredient_types.add(ing.msi_igt_id_id)
 
-            # Для каждого типа ингредиента проверяем, есть ли соответствующий ингредиент у пользователя
+            
             for ing_type_id in required_ingredient_types:
                 matching_ingredients = Ingredient.objects.filter(
                     ing_igt_id=ing_type_id,
@@ -167,14 +167,14 @@ class RecipeViewSet(viewsets.ReadOnlyModelViewSet):
 
             recipes.append((recipe, score))
 
-        # Сортируем по убыванию оценки
+        
         recipes.sort(key=lambda x: x[1], reverse=True)
 
-        # Берём топ-10 рецептов
+        
         top_recipes = [r[0] for r in recipes[:10]]
 
         processing_time = time.time() - start_time
-        if processing_time > 1.0:  # Логируем медленную обработку
+        if processing_time > 1.0:  
             logger.warning(f"Slow recommendation processing: {processing_time:.2f}s for user_id={request.user.usr_id}")
 
         logger.info(
@@ -253,7 +253,7 @@ class FavoriteRecipeViewSet(viewsets.ModelViewSet):
         recipe_id = request.data['fvr_rcp_id']
         logger.info(f"Adding recipe to favorites: user_id={user_id}, recipe_id={recipe_id}")
 
-        # Проверка, существует ли уже такой рецепт в избранном
+        
         if FavoriteRecipe.objects.filter(fvr_usr_id=request.user, fvr_rcp_id=recipe_id).exists():
             logger.info(f"Recipe already in favorites: user_id={user_id}, recipe_id={recipe_id}")
             return Response(
@@ -261,7 +261,7 @@ class FavoriteRecipeViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Создание связи
+        
         favorite = FavoriteRecipe.objects.create(
             fvr_usr_id=request.user,
             fvr_rcp_id_id=recipe_id
@@ -279,7 +279,7 @@ class FavoriteRecipeViewSet(viewsets.ModelViewSet):
         user_id = request.user.usr_id
         recipe_id = instance.fvr_rcp_id_id
 
-        # Проверка, принадлежит ли связь текущему пользователю
+        
         if instance.fvr_usr_id != request.user:
             logger.warning(
                 f"Unauthorized favorite delete attempt: user_id={user_id}, recipe_id={recipe_id}, owner_id={instance.fvr_usr_id.usr_id}")
@@ -310,7 +310,7 @@ class FavoriteRecipeViewSet(viewsets.ModelViewSet):
         recipe_id = request.data['fvr_rcp_id']
         logger.info(f"Removing recipe from favorites by ID: user_id={user_id}, recipe_id={recipe_id}")
 
-        # Находим запись и удаляем
+        
         try:
             favorite = FavoriteRecipe.objects.get(
                 fvr_usr_id=request.user,

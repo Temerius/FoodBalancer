@@ -1,4 +1,4 @@
-# AppBackend/apps/core/models/equipment.py
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
@@ -31,7 +31,7 @@ class M2MUsrEqp(models.Model):
         db_column='mue_eqp_id',
         related_name='user_equipment',
         verbose_name=_('Оборудование'),
-        primary_key=True  # Часть составного ключа
+        primary_key=True  
     )
     mue_usr_id = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -39,13 +39,13 @@ class M2MUsrEqp(models.Model):
         db_column='mue_usr_id',
         related_name='user_equipment',
         verbose_name=_('Пользователь'),
-        primary_key=False  # Не отмечаем как primary key в Django
+        primary_key=False  
     )
 
     class Meta:
         db_table = 'm2m_usr_eqp'
-        unique_together = ('mue_eqp_id', 'mue_usr_id')  # Это создает составной первичный ключ
-        managed = True  # Позволяем Django управлять этой моделью
+        unique_together = ('mue_eqp_id', 'mue_usr_id')  
+        managed = True  
 
     def __str__(self):
         return f"User {self.mue_usr_id_id} - Equipment {self.mue_eqp_id_id}"

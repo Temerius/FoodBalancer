@@ -1,4 +1,4 @@
-# AppBackend/apps/core/models/allergen.py
+
 
 from django.db import models
 from django.contrib.auth import get_user_model
@@ -28,7 +28,7 @@ class M2MUsrAlg(models.Model):
         db_column='mua_alg_id',
         related_name='user_allergens',
         verbose_name=_('Аллерген'),
-        primary_key=True  # Часть составного ключа
+        primary_key=True  
     )
     mua_usr_id = models.ForeignKey(
         User,
@@ -36,13 +36,13 @@ class M2MUsrAlg(models.Model):
         db_column='mua_usr_id',
         related_name='allergen_preferences',
         verbose_name=_('Пользователь'),
-        primary_key=False  # Не отмечаем как primary key в Django
+        primary_key=False  
     )
 
     class Meta:
         db_table = 'm2m_usr_alg'
-        unique_together = ('mua_alg_id', 'mua_usr_id')  # Это создает составной первичный ключ
-        managed = True  # Позволяем Django управлять этой моделью
+        unique_together = ('mua_alg_id', 'mua_usr_id')  
+        managed = True  
         verbose_name = _('Аллерген пользователя')
         verbose_name_plural = _('Аллергены пользователей')
 

@@ -1,4 +1,4 @@
-# AppBackend/apps/core/barcode/views.py
+
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -11,7 +11,7 @@ from .parser import search_product_by_barcode
 from .ai_helper import AIHelper
 from ..models import IngredientType, Allergen
 
-# Создаем логгер для модуля
+
 logger = logging.getLogger('apps.core.barcode')
 
 
@@ -32,7 +32,7 @@ def get_product_by_barcode(request):
 
     logger.info(f"Запрос информации по штрихкоду: {barcode}")
 
-    # Вызываем функцию поиска продукта
+    
     products = search_product_by_barcode(barcode)
 
     if not products:
@@ -43,19 +43,19 @@ def get_product_by_barcode(request):
 
     logger.info(f"Найден продукт по штрихкоду {barcode}: {products[0].get('name', 'Неизвестно')}")
 
-    # Получаем первый найденный продукт
+    
     product = products[0]
 
-    # Добавляем штрих-код в данные продукта
+    
     product['barcode'] = barcode
 
-    # Получаем типы ингредиентов и аллергены из БД
+    
     ingredient_types = list(IngredientType.objects.all())
     allergens = list(Allergen.objects.all())
 
     logger.info(f"Получено {len(ingredient_types)} типов ингредиентов и {len(allergens)} аллергенов из БД")
 
-    # Если в БД нет данных, возвращаем продукт без классификации
+    
     if not ingredient_types or not allergens:
         logger.warning("Нет данных о типах ингредиентов или аллергенах в БД, классификация невозможна")
         return Response({
@@ -64,27 +64,27 @@ def get_product_by_barcode(request):
             "warning": "Классификация невозможна из-за отсутствия данных в БД"
         })
 
-    # Инициализируем AI помощника
+    
     try:
         ai_helper = AIHelper()
 
-        # Классифицируем продукт
+        
         classification = ai_helper.classify_product(
             product, ingredient_types, allergens
         )
 
-        # Добавляем классификацию к продукту
+        
         product['classification'] = classification
 
     except Exception as e:
         logger.error(f"Ошибка при классификации продукта: {str(e)}")
-        # Если возникла ошибка при классификации, добавляем пустую классификацию
+        
         product['classification'] = {
             "ingredient_type_id": None,
             "allergen_ids": []
         }
 
-    # Добавляем имена для удобства клиента
+    
     if product['classification']['ingredient_type_id'] is not None:
         ingredient_type_id = product['classification']['ingredient_type_id']
         for itype in ingredient_types:
@@ -92,7 +92,7 @@ def get_product_by_barcode(request):
                 product['classification']['ingredient_type_name'] = itype.igt_name
                 break
 
-    # Добавляем имена аллергенов
+    
     if 'allergen_ids' in product['classification']:
         allergen_names = []
         for allergen in allergens:
@@ -100,13 +100,13 @@ def get_product_by_barcode(request):
                 allergen_names.append(allergen.alg_name)
         product['classification']['allergen_names'] = allergen_names
 
-    # Добавляем дополнительные поля для совместимости
+    
     product['weight_formatted'] = _format_weight(product.get('weight', ''))
 
-    # Преобразуем БЖУ и калории в единый формат, если они есть
+    
     _standardize_nutrient_format(product)
 
-    # Логируем результат
+    
     logger.info(
         f"Успешно обработан запрос для штрихкода {barcode}, "
         f"время выполнения: {time.time() - start_time:.2f}s"
@@ -123,46 +123,46 @@ def _format_weight(weight_str):
     if not weight_str:
         return ""
 
-    # Пытаемся привести к строке, если это не строка
+    
     if not isinstance(weight_str, str):
         weight_str = str(weight_str)
 
-    # Уже отформатированный вес
+    
     if 'г' in weight_str or 'кг' in weight_str or 'мл' in weight_str or 'л' in weight_str:
         return weight_str
 
-    # Пытаемся преобразовать строку в число для форматирования
+    
     try:
         weight = float(weight_str.replace(',', '.'))
 
-        # Определяем единицу измерения на основе значения
-        if weight < 10:  # Предполагаем, что это килограммы или литры
+        
+        if weight < 10:  
             return f"{weight} кг"
         else:
             return f"{weight} г"
     except:
-        # Если не удалось преобразовать, возвращаем как есть
+        
         return weight_str
 
 
 def _standardize_nutrient_format(product):
     """Стандартизирует формат информации о питательной ценности"""
-    # Калории
+    
     if 'calories' in product and product['calories']:
         if not isinstance(product['calories'], str) or 'ккал' not in product['calories']:
             product['calories'] = f"{product['calories']} ккал"
 
-    # Белки
+    
     if 'protein' in product and product['protein']:
         if not isinstance(product['protein'], str) or 'г' not in product['protein']:
             product['protein'] = f"{product['protein']} г"
 
-    # Жиры
+    
     if 'fat' in product and product['fat']:
         if not isinstance(product['fat'], str) or 'г' not in product['fat']:
             product['fat'] = f"{product['fat']} г"
 
-    # Углеводы
+    
     if 'carbs' in product and product['carbs']:
         if not isinstance(product['carbs'], str) or 'г' not in product['carbs']:
             product['carbs'] = f"{product['carbs']} г"

@@ -1,4 +1,4 @@
-# AppBackend/apps/core/views/meal_plan.py
+
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -18,7 +18,7 @@ from ..serializers import (
 import logging
 import time
 
-# Создаем логгер для модуля планов питания
+
 logger = logging.getLogger('apps.core.meal_plan')
 
 
@@ -146,7 +146,7 @@ class MealPlanViewSet(viewsets.ModelViewSet):
         user_id = request.user.usr_id
         plan_id = weekly_plan.wmp_id
 
-        # Проверка, принадлежит ли план текущему пользователю
+        
         if weekly_plan.wmp_usr_id != request.user:
             logger.warning(
                 f"Unauthorized access attempt to meal plan: plan_id={plan_id}, requested_by={user_id}, owner={weekly_plan.wmp_usr_id.usr_id}")
@@ -210,7 +210,7 @@ class DailyMealPlanViewSet(viewsets.ModelViewSet):
         plan_id = daily_plan.dmp_id
         date = daily_plan.dmp_date
 
-        # Проверка, принадлежит ли план текущему пользователю
+        
         if daily_plan.dmp_wmp_id.wmp_usr_id != request.user:
             logger.warning(
                 f"Unauthorized access attempt to daily plan: plan_id={plan_id}, requested_by={user_id}, owner={daily_plan.dmp_wmp_id.wmp_usr_id.usr_id}")
@@ -316,7 +316,7 @@ class ActualMealViewSet(viewsets.ModelViewSet):
         meal_id = meal.adm_id
         meal_type = meal.adm_type or 'unknown'
 
-        # Проверка, принадлежит ли прием пищи текущему пользователю
+        
         if meal.adm_usr_id != request.user:
             logger.warning(
                 f"Unauthorized access attempt to meal: meal_id={meal_id}, requested_by={user_id}, owner={meal.adm_usr_id.usr_id}")
@@ -347,7 +347,7 @@ class ActualMealViewSet(viewsets.ModelViewSet):
         meal_id = meal.adm_id
         meal_type = meal.adm_type or 'unknown'
 
-        # Проверка, принадлежит ли прием пищи текущему пользователю
+        
         if meal.adm_usr_id != request.user:
             logger.warning(
                 f"Unauthorized recipe add attempt to meal: meal_id={meal_id}, requested_by={user_id}, owner={meal.adm_usr_id.usr_id}")
@@ -366,7 +366,7 @@ class ActualMealViewSet(viewsets.ModelViewSet):
         recipe_id = request.data['recipe_id']
         logger.info(f"Adding recipe to meal: meal_id={meal_id}, recipe_id={recipe_id}, user_id={user_id}")
 
-        # Проверка, существует ли уже такой рецепт в приеме пищи
+        
         if M2MRcpAdm.objects.filter(mra_adm_id=meal, mra_rcp_id=recipe_id).exists():
             logger.info(f"Recipe already in meal: meal_id={meal_id}, recipe_id={recipe_id}, user_id={user_id}")
             return Response(
@@ -374,7 +374,7 @@ class ActualMealViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Создание связи
+        
         M2MRcpAdm.objects.create(mra_adm_id=meal, mra_rcp_id_id=recipe_id)
         logger.info(
             f"Recipe added to meal: meal_id={meal_id}, recipe_id={recipe_id}, user_id={user_id}, time={time.time() - start_time:.2f}s")
@@ -390,7 +390,7 @@ class ActualMealViewSet(viewsets.ModelViewSet):
         meal_id = meal.adm_id
         meal_type = meal.adm_type or 'unknown'
 
-        # Проверка, принадлежит ли прием пищи текущему пользователю
+        
         if meal.adm_usr_id != request.user:
             logger.warning(
                 f"Unauthorized recipe remove attempt from meal: meal_id={meal_id}, requested_by={user_id}, owner={meal.adm_usr_id.usr_id}")
@@ -409,7 +409,7 @@ class ActualMealViewSet(viewsets.ModelViewSet):
         recipe_id = request.data['recipe_id']
         logger.info(f"Removing recipe from meal: meal_id={meal_id}, recipe_id={recipe_id}, user_id={user_id}")
 
-        # Удаление связи
+        
         try:
             meal_recipe = M2MRcpAdm.objects.get(mra_adm_id=meal, mra_rcp_id=recipe_id)
             meal_recipe.delete()

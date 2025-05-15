@@ -1,4 +1,4 @@
-# AppBackend/apps/core/views/shopping_list.py
+
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -10,7 +10,7 @@ from ..serializers import ShoppingListSerializer, ShoppingListItemSerializer
 import logging
 import time
 
-# Создаем логгер для списка покупок
+
 logger = logging.getLogger('apps.core.shopping')
 
 
@@ -43,7 +43,7 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
         shopping_list = self.get_object()
         user_id = request.user.usr_id
 
-        # Получаем все элементы списка покупок
+        
         items = M2MIngSpl.objects.filter(mis_spl_id=shopping_list)
         item_count = items.count()
 
@@ -74,7 +74,7 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
 
         ingredient_type_id = request.data['mis_igt_id']
 
-        # Проверяем существование типа ингредиента
+        
         try:
             ingredient_type = IngredientType.objects.get(igt_id=ingredient_type_id)
             logger.debug(f"Found ingredient type: {ingredient_type.igt_name}")
@@ -85,7 +85,7 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Проверка, существует ли уже такой элемент в списке
+        
         existing_item = M2MIngSpl.objects.filter(
             mis_spl_id=shopping_list,
             mis_igt_id=ingredient_type_id,
@@ -93,7 +93,7 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
         ).first()
 
         if existing_item:
-            # Обновляем количество существующего элемента
+            
             old_quantity = existing_item.mis_quantity
             existing_item.mis_quantity += int(request.data['mis_quantity'])
             existing_item.save()
@@ -103,7 +103,7 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
             serializer = ShoppingListItemSerializer(existing_item)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
-        # Создание нового элемента
+        
         quantity = int(request.data['mis_quantity'])
         quantity_type = request.data['mis_quantity_type']
 
@@ -145,11 +145,11 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        # Сохраняем старые значения для лога
+        
         old_quantity = item.mis_quantity
         old_quantity_type = item.mis_quantity_type
 
-        # Обновление данных
+        
         if 'mis_quantity' in request.data:
             item.mis_quantity = request.data['mis_quantity']
 
@@ -158,7 +158,7 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
 
         item.save()
 
-        # Логируем изменения
+        
         changes = []
         if old_quantity != item.mis_quantity:
             changes.append(f"quantity: {old_quantity} -> {item.mis_quantity}")

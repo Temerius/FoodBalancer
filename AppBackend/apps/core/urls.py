@@ -8,7 +8,7 @@ from .views import (
     MealPlanViewSet, DailyMealPlanViewSet, ActualMealViewSet,
     ShoppingListViewSet
 )
-from .barcode.views import get_product_by_barcode  # Исправленный импорт
+from .barcode.views import get_product_by_barcode  
 
 app_name = 'core'
 

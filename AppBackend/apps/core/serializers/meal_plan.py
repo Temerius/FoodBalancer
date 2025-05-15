@@ -1,4 +1,4 @@
-# AppBackend/apps/core/serializers/meal_plan.py
+
 from rest_framework import serializers
 from ..models import (
     WeaklyMealPlan, DailyMealPlan, ActualDayMeal,

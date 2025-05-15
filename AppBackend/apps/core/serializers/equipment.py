@@ -1,4 +1,4 @@
-# AppBackend/apps/core/serializers/equipment.py
+
 from rest_framework import serializers
 from ..models import Equipment, M2MUsrEqp
 
@@ -20,6 +20,6 @@ class UserEquipmentSerializer(serializers.ModelSerializer):
         fields = ['equipment']
 
     def to_representation(self, instance):
-        # Упрощенное представление для более удобного использования на клиенте
+        
         representation = super().to_representation(instance)
         return representation['equipment']

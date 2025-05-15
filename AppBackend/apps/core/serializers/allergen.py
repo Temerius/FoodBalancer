@@ -1,4 +1,4 @@
-# AppBackend/apps/core/serializers/allergen.py
+
 from rest_framework import serializers
 from ..models import Allergen, M2MUsrAlg
 
@@ -20,6 +20,6 @@ class UserAllergenSerializer(serializers.ModelSerializer):
         fields = ['allergen']
 
     def to_representation(self, instance):
-        # Упрощенное представление для более удобного использования на клиенте
+        
         representation = super().to_representation(instance)
         return representation['allergen']

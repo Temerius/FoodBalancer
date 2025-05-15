@@ -1,4 +1,4 @@
-# AppBackend/apps/core/models/__init__.py
+
 from .base import TimeStampedModel
 from .allergen import Allergen, M2MUsrAlg
 from .equipment import Equipment, M2MUsrEqp, M2MRcpEqp

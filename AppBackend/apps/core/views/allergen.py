@@ -1,4 +1,4 @@
-# AppBackend/apps/core/views/allergen.py
+
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -11,7 +11,7 @@ from ..serializers import AllergenSerializer, UserAllergenSerializer
 import logging
 import time
 
-# Создаем логгер для модуля аллергенов
+
 logger = logging.getLogger('apps.core.allergens')
 
 
@@ -66,27 +66,27 @@ class UserAllergenViewSet(viewsets.ModelViewSet):
 
             logger.info(f"Allergen IDs to update: {allergen_ids}")
 
-            # Get your M2M model and Allergen model
+            
             from apps.core.models import M2MUsrAlg, Allergen
             from django.contrib.auth import get_user_model
 
             User = get_user_model()
             user_obj = User.objects.get(usr_id=user.usr_id)
 
-            # Clear existing user allergens
+            
             delete_count = M2MUsrAlg.objects.filter(mua_usr_id=user.usr_id).delete()
             logger.info(f"Deleted {delete_count} existing allergen records")
 
-            # Add new allergens
+            
             created_allergens = []
             for allergen_id in allergen_ids:
-                # Get the Allergen instance
+                
                 allergen_obj = Allergen.objects.get(alg_id=allergen_id)
 
-                # Create the relationship with proper objects
+                
                 allergen_relation = M2MUsrAlg.objects.create(
-                    mua_usr_id=user_obj,  # Use the User instance
-                    mua_alg_id=allergen_obj  # Use the Allergen instance
+                    mua_usr_id=user_obj,  
+                    mua_alg_id=allergen_obj  
                 )
                 created_allergens.append(allergen_id)
                 logger.info(f"Created allergen mapping: user {user.usr_id} - allergen {allergen_id}")
@@ -140,7 +140,7 @@ class UserAllergenViewSet(viewsets.ModelViewSet):
         allergen_id = request.data['mua_alg_id']
         logger.info(f"Adding allergen to user: allergen_id={allergen_id}, user_id={user_id}")
 
-        # Проверка, существует ли уже такой аллерген у пользователя
+        
         if M2MUsrAlg.objects.filter(mua_usr_id=request.user, mua_alg_id=allergen_id).exists():
             logger.info(f"Allergen already added to user: allergen_id={allergen_id}, user_id={user_id}")
             return Response(
@@ -148,7 +148,7 @@ class UserAllergenViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Создание связи
+        
         try:
             allergen = Allergen.objects.get(alg_id=allergen_id)
             allergen_rel = M2MUsrAlg.objects.create(
@@ -184,7 +184,7 @@ class UserAllergenViewSet(viewsets.ModelViewSet):
         allergen_id = instance.mua_alg_id.alg_id
         allergen_name = instance.mua_alg_id.alg_name
 
-        # Проверка, принадлежит ли связь текущему пользователю
+        
         if instance.mua_usr_id != request.user:
             logger.warning(
                 f"Unauthorized allergen delete attempt: allergen_id={allergen_id}, requested_by={user_id}, owner={instance.mua_usr_id.usr_id}")
@@ -209,7 +209,7 @@ class UserAllergenViewSet(viewsets.ModelViewSet):
 
         user_allergens = self.get_queryset()
 
-        # Получаем только ID аллергенов для клиента
+        
         allergen_ids = [rel.mua_alg_id.alg_id for rel in user_allergens]
         count = len(allergen_ids)
 

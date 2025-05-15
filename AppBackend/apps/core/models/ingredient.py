@@ -1,4 +1,4 @@
-# AppBackend/apps/core/models/ingredient.py
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
@@ -21,7 +21,7 @@ class IngredientType(models.Model):
         return self.igt_name
 
 
-# В AppBackend/apps/core/models/ingredient.py
+
 
 class IngredientToAllergen(models.Model):
     """Связь между ингредиентом и аллергеном"""
@@ -32,7 +32,7 @@ class IngredientToAllergen(models.Model):
         db_column='mia_ing_id',
         related_name='allergen_links',
         verbose_name=_('Ингредиент'),
-        primary_key=True  # Часть составного ключа
+        primary_key=True  
     )
     mia_alg_id = models.ForeignKey(
         'core.Allergen',
@@ -40,19 +40,19 @@ class IngredientToAllergen(models.Model):
         db_column='mia_alg_id',
         related_name='ingredient_links',
         verbose_name=_('Аллерген'),
-        primary_key=False  # Не отмечаем как primary key в Django
+        primary_key=False  
     )
 
     class Meta:
         db_table = 'm2m_ing_alg'
-        unique_together = ('mia_ing_id', 'mia_alg_id')  # Это создает составной первичный ключ
-        managed = True  # Позволяем Django управлять этой моделью
+        unique_together = ('mia_ing_id', 'mia_alg_id')  
+        managed = True  
 
     def __str__(self):
         return f'{self.mia_ing_id.ing_name} - {self.mia_alg_id.alg_name}'
 
 
-# Update Ingredient model to include allergens relationship
+
 class Ingredient(models.Model):
     """Модель ингредиента"""
     ing_id = models.AutoField(primary_key=True)
@@ -72,13 +72,13 @@ class Ingredient(models.Model):
     )
     ing_img_url = models.CharField(_('URL изображения'), max_length=256, null=True, blank=True)
 
-    # Many-to-many relationship with allergens
+    
     allergens = models.ManyToManyField(
         'Allergen',
         through='IngredientToAllergen',
         related_name='ingredients',
         verbose_name=_('Аллергены'),
-        through_fields=('mia_ing_id', 'mia_alg_id')  # ВАЖНО: указать поля
+        through_fields=('mia_ing_id', 'mia_alg_id')  
     )
 
     class Meta:

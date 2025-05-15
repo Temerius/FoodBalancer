@@ -1,4 +1,4 @@
-# AppBackend/apps/core/serializers/__init__.py
+
 from .allergen import AllergenSerializer, UserAllergenSerializer
 from .equipment import EquipmentSerializer, UserEquipmentSerializer
 from .ingredient import IngredientTypeSerializer, IngredientSerializer, IngredientDetailSerializer, UserIngredientSerializer

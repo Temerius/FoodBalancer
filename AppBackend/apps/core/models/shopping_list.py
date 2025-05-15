@@ -1,4 +1,4 @@
-# AppBackend/apps/core/models/shopping_list.py
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
@@ -50,7 +50,7 @@ class M2MIngSpl(models.Model):
         choices=QuantityTypeChoices.choices,
         default=QuantityTypeChoices.GRAMS
     )
-    # Removed the is_checked field that doesn't exist in the database
+    
 
     class Meta:
         db_table = 'm2m_ing_spl'
