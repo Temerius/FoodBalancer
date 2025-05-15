@@ -1,3 +1,4 @@
+// lib/screens/meal_plan/daily_plan_screen.dart
 import 'package:flutter/material.dart';
 import '../../utils/date_formatter.dart';
 
@@ -84,47 +85,55 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
           // Информация о калориях
           Card(
             margin: const EdgeInsets.all(16),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Container(
+              width: double.infinity,
+              child: Stack(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Всего калорий',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.local_fire_department,
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            '$_totalCalories ккал',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                  // Основное содержимое карточки
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Всего калорий',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.local_fire_department,
                               color: Theme.of(context).colorScheme.secondary,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            const SizedBox(width: 8),
+                            Text(
+                              '$_totalCalories ккал',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      _showCaloriesTargetDialog();
-                    },
-                    icon: const Icon(Icons.edit),
-                    label: const Text('Изменить цель'),
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                      minimumSize: Size.zero,
+
+                  // Кнопка изменения цели
+                  Positioned(
+                    right: 8,
+                    top: 8,
+                    child: IconButton(
+                      icon: const Icon(Icons.edit),
+                      onPressed: () {
+                        _showCaloriesTargetDialog();
+                      },
+                      tooltip: 'Изменить цель',
+                      iconSize: 20,
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
                     ),
                   ),
                 ],
@@ -172,33 +181,40 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      const Icon(Icons.restaurant),
-                      const SizedBox(width: 8),
-                      Text(
-                        meal['type'] as String,
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ],
-                  ),
+                Row(
+                  children: [
+                    const Icon(Icons.restaurant),
+                    const SizedBox(width: 8),
+                    Text(
+                      meal['type'] as String,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ],
                 ),
-                Text(
-                  meal['time'] as String,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () {
-                    _showEditMealDialog(meal);
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () {
-                    _showDeleteMealDialog(meal);
-                  },
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      meal['time'] as String,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.edit, size: 20),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      onPressed: () {
+                        _showEditMealDialog(meal);
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.red, size: 20),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      onPressed: () {
+                        _showDeleteMealDialog(meal);
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -220,12 +236,27 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
               ),
 
             // Кнопка добавления рецепта
-            TextButton.icon(
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 _showAddRecipeDialog(meal);
               },
-              icon: const Icon(Icons.add),
-              label: const Text('Добавить рецепт'),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.add, color: Theme.of(context).colorScheme.primary, size: 16),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Добавить рецепт',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
@@ -237,15 +268,16 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: Container(
-        width: 40,
-        height: 40,
+        width: 36,
+        height: 36,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(6),
         ),
         child: Icon(
           Icons.restaurant_menu,
           color: Theme.of(context).colorScheme.primary,
+          size: 20,
         ),
       ),
       title: Text(recipe['name'] as String),
@@ -254,7 +286,9 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
-            icon: const Icon(Icons.visibility),
+            icon: const Icon(Icons.visibility, size: 20),
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(),
             onPressed: () {
               Navigator.pushNamed(
                 context,
@@ -264,7 +298,9 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.delete, color: Colors.red),
+            icon: const Icon(Icons.delete, color: Colors.red, size: 20),
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(),
             onPressed: () {
               setState(() {
                 (meal['recipes'] as List).removeWhere(
