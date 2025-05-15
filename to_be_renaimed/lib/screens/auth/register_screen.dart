@@ -55,12 +55,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
 
       if (success) {
-        // Очищаем ошибки перед навигацией
+        
         authProvider.clearError();
 
-        // После успешной регистрации инициализируем данные пользователя
+        
         try {
-          // Показываем индикатор загрузки
+          
           showDialog(
             context: context,
             barrierDismissible: false,
@@ -76,29 +76,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           );
 
-          // Инициализируем репозитории
+          
           await dataRepository.initialize();
 
-          // Загружаем профиль пользователя
+          
           await dataRepository.getUserProfile();
 
-          // Загружаем полный список аллергенов
+          
           await dataRepository.getAllAllergens(forceRefresh: true);
 
-          // Загружаем полный список оборудования
+          
           await dataRepository.getEquipment(forceRefresh: true);
 
-          // Закрываем диалог с индикатором загрузки
+          
           if (mounted) {
             Navigator.pop(context);
           }
         } catch (e) {
-          // Закрываем диалог с индикатором загрузки в случае ошибки
+          
           if (mounted) {
             Navigator.pop(context);
           }
 
-          // Показываем сообщение об ошибке
+          
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Ошибка при инициализации профиля: ${e.toString()}'),
@@ -107,7 +107,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           );
         }
 
-        // Переходим на главный экран
+        
         Navigator.pushReplacementNamed(context, AppRoutes.home);
       }
     }
@@ -148,7 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(height: 32),
 
-                  // Имя пользователя
+                  
                   CustomTextField(
                     label: 'Имя',
                     controller: _nameController,
@@ -157,7 +157,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(height: 16),
 
-                  // Email
+                  
                   CustomTextField(
                     label: 'Email',
                     controller: _emailController,
@@ -167,7 +167,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(height: 16),
 
-                  // Пароль
+                  
                   CustomTextField(
                     label: 'Пароль',
                     controller: _passwordController,
@@ -177,7 +177,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(height: 16),
 
-                  // Подтверждение пароля
+                  
                   CustomTextField(
                     label: 'Подтверждение пароля',
                     controller: _confirmPasswordController,
@@ -190,7 +190,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(height: 24),
 
-                  // Согласие с условиями
+                  
                   Row(
                     children: [
                       Checkbox(
@@ -242,7 +242,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(height: 24),
 
-                  // Сообщение об ошибке
+                  
                   if (authProvider.error != null) ...[
                     Container(
                       padding: EdgeInsets.all(12),
@@ -271,7 +271,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(height: 24),
                   ],
 
-                  // Кнопка регистрации
+                  
                   CustomButton(
                     text: 'Зарегистрироваться',
                     onPressed: _register,
@@ -279,7 +279,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(height: 24),
 
-                  // Ссылка на вход
+                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -291,7 +291,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          // Очищаем ошибки перед навигацией
+                          
                           Provider.of<AuthProvider>(context, listen: false).clearError();
                           Navigator.pushReplacementNamed(context, AppRoutes.login);
                         },

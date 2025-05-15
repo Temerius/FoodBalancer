@@ -1,4 +1,4 @@
-// api_test_service.dart - Fixed version
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -6,27 +6,27 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 
 class ApiTestService {
-  // Base URL for your API
+  
   final String baseUrl;
 
-  // Headers
+  
   Map<String, String> headers = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   };
 
-  // Test data
+  
   late String testEmail;
   late String testPassword;
   late String testName;
   String? token;
 
-  // Constructor
+  
   ApiTestService({required this.baseUrl}) {
     _initTestData();
   }
 
-  // Initialize test data
+  
   void _initTestData() {
     final random = Random();
     final randomString = List.generate(8,
@@ -38,7 +38,7 @@ class ApiTestService {
     testName = 'Test User $randomString';
   }
 
-  // Run all tests
+  
   Future<List<String>> runAllTests() async {
     List<String> logs = [];
     void logCallback(String message) {
@@ -52,19 +52,19 @@ class ApiTestService {
     logCallback('Test user: $testEmail');
 
     try {
-      // User management tests
+      
       await _testRegisterUser(logCallback);
       await _testLoginUser(logCallback);
       await _testGetProfile(logCallback);
 
-      // Core API tests - ONLY run these if registration/login succeeded
+      
       if (token != null) {
         await _testGetRefrigerator(logCallback);
         await _testGetFavorites(logCallback);
         await _testGetAllAllergens(logCallback);
         await _testGetAllEquipment(logCallback);
 
-        // Logout
+        
         await _testLogoutUser(logCallback);
       } else {
         logCallback('❌ Authentication failed - skipping API tests');
@@ -78,7 +78,7 @@ class ApiTestService {
     return logs;
   }
 
-  // Helper to make API requests and log results
+  
   Future<dynamic> _makeRequest(
       String method,
       String endpoint,
@@ -89,10 +89,10 @@ class ApiTestService {
     final url = Uri.parse('$baseUrl$endpoint');
     Map<String, String> requestHeaders = {...headers};
 
-    // Proper token authentication with debug logging
+    
     if (requiresAuth && token != null) {
-      requestHeaders['Authorization'] = 'Token $token';  // Correct prefix "Token "
-      logCallback('Using token: ${token?.substring(0, min(token!.length, 10))}...');  // Logging for debugging
+      requestHeaders['Authorization'] = 'Token $token';  
+      logCallback('Using token: ${token?.substring(0, min(token!.length, 10))}...');  
     }
 
     http.Response response;
@@ -103,7 +103,7 @@ class ApiTestService {
         logCallback('REQUEST BODY: ${jsonEncode(data)}');
       }
 
-      // Log headers for debugging
+      
       logCallback('REQUEST HEADERS: ${requestHeaders.toString()}');
 
       switch (method) {
@@ -133,7 +133,7 @@ class ApiTestService {
 
       logCallback('RESPONSE STATUS: ${response.statusCode}');
 
-      // Try to parse JSON
+      
       dynamic responseData;
       if (response.body.isNotEmpty) {
         try {
@@ -153,11 +153,11 @@ class ApiTestService {
     }
   }
 
-  // Test 1: Register User
+  
   Future<void> _testRegisterUser(Function(String) logCallback) async {
     logCallback('\n=== TEST 1: Register User ===');
 
-    // Using lowercase for gender enum value to match PostgreSQL
+    
     final data = {
       'usr_mail': testEmail,
       'usr_name': testName,
@@ -180,7 +180,7 @@ class ApiTestService {
     }
   }
 
-  // Test 2: Login User
+  
   Future<void> _testLoginUser(Function(String) logCallback) async {
     logCallback('\n=== TEST 2: Login User ===');
 
@@ -205,7 +205,7 @@ class ApiTestService {
     }
   }
 
-  // Test 3: Get Profile
+  
   Future<void> _testGetProfile(Function(String) logCallback) async {
     logCallback('\n=== TEST 3: Get Profile ===');
 
@@ -218,11 +218,11 @@ class ApiTestService {
     }
   }
 
-  // Test 4: Get Refrigerator
+  
   Future<void> _testGetRefrigerator(Function(String) logCallback) async {
     logCallback('\n=== TEST 4: Get Refrigerator ===');
 
-    // Use correct URL - from core app, not users app
+    
     final response = await _makeRequest('GET', '/api/refrigerator/', null, logCallback);
 
     if (response != null) {
@@ -232,11 +232,11 @@ class ApiTestService {
     }
   }
 
-  // Test 5: Get Favorites
+  
   Future<void> _testGetFavorites(Function(String) logCallback) async {
     logCallback('\n=== TEST 5: Get Favorites ===');
 
-    // Use correct URL - from core app, not users app
+    
     final response = await _makeRequest('GET', '/api/favorites/', null, logCallback);
 
     if (response != null) {
@@ -246,11 +246,11 @@ class ApiTestService {
     }
   }
 
-  // Test 6: Get All Allergens
+  
   Future<void> _testGetAllAllergens(Function(String) logCallback) async {
     logCallback('\n=== TEST 6: Get All Allergens ===');
 
-    // Use correct URL - from core app
+    
     final response = await _makeRequest('GET', '/api/allergens/', null, logCallback);
 
     if (response != null) {
@@ -260,11 +260,11 @@ class ApiTestService {
     }
   }
 
-  // Test 7: Get All Equipment
+  
   Future<void> _testGetAllEquipment(Function(String) logCallback) async {
     logCallback('\n=== TEST 7: Get All Equipment ===');
 
-    // Use correct URL - from core app
+    
     final response = await _makeRequest('GET', '/api/equipment/', null, logCallback);
 
     if (response != null) {
@@ -274,7 +274,7 @@ class ApiTestService {
     }
   }
 
-  // Test 8: Logout User
+  
   Future<void> _testLogoutUser(Function(String) logCallback) async {
     logCallback('\n=== TEST 8: Logout User ===');
 

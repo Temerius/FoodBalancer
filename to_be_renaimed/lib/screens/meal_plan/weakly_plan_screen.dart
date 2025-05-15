@@ -1,4 +1,4 @@
-// lib/screens/meal_plan/weakly_plan_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../utils/date_formatter.dart';
@@ -15,67 +15,67 @@ class WeeklyPlanScreen extends StatefulWidget {
 }
 
 class _WeeklyPlanScreenState extends State<WeeklyPlanScreen> {
-  // Текущая неделя (первый день недели - понедельник)
+  
   late DateTime _currentWeekStart;
 
-  // Список дней недели
+  
   late List<DateTime> _weekDays;
 
-  // Выбранный день
+  
   late DateTime _selectedDay;
 
-  // Информация о приемах пищи для текущей недели (ключ - дата в формате yyyy-MM-dd)
+  
   final Map<String, Map<String, dynamic>> _mealPlanData = {};
 
-  // Сервис планов питания
+  
   final MealPlanService _mealPlanService = MealPlanService();
 
-  // Состояние загрузки
+  
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
 
-    // Инициализация текущей недели
+    
     final now = DateTime.now();
     _currentWeekStart = _getWeekStart(now);
     _selectedDay = now;
 
-    // Получение списка дней недели
+    
     _weekDays = List.generate(
       7,
           (index) => _currentWeekStart.add(Duration(days: index)),
     );
 
-    // Загружаем данные о планах питания из сервиса
+    
     _loadMealPlanData();
   }
 
-  // Загрузка данных о планах питания из сервиса
+  
   void _loadMealPlanData() {
     setState(() {
       _isLoading = true;
     });
 
     if (_mealPlanService.isInitialized) {
-      // Если сервис уже инициализирован, просто копируем данные
+      
       _updateMealPlanDataFromService();
       setState(() {
         _isLoading = false;
       });
     } else {
-      // Если сервис еще не инициализирован, загружаем рецепты и инициализируем
+      
       _loadRecipesAndInitData();
     }
   }
 
-  // Обновление данных из сервиса
+  
   void _updateMealPlanDataFromService() {
-    // Очищаем текущие данные
+    
     _mealPlanData.clear();
 
-    // Копируем данные из сервиса только для текущей недели
+    
     for (final day in _weekDays) {
       final dateString = DateFormatter.formatDateISO(day);
       final dayData = _mealPlanService.getMealPlanForDate(day);
@@ -86,16 +86,16 @@ class _WeeklyPlanScreenState extends State<WeeklyPlanScreen> {
     }
   }
 
-  // Загрузка рецептов и инициализация данных о приемах пищи
+  
   Future<void> _loadRecipesAndInitData() async {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
       final recipes = await dataRepository.getRecipes();
 
-      // Инициализация сервиса планов питания
+      
       await _mealPlanService.initializeWithRecipes(recipes);
 
-      // Копируем данные из сервиса
+      
       _updateMealPlanDataFromService();
 
       setState(() {
@@ -109,7 +109,7 @@ class _WeeklyPlanScreenState extends State<WeeklyPlanScreen> {
     }
   }
 
-  // Получение начала недели (понедельник)
+  
   DateTime _getWeekStart(DateTime date) {
     final weekDay = date.weekday;
     return date.subtract(Duration(days: weekDay - 1));
@@ -134,13 +134,13 @@ class _WeeklyPlanScreenState extends State<WeeklyPlanScreen> {
           ? const Center(child: CircularProgressIndicator())
           : Column(
         children: [
-          // Навигация по неделям
+          
           _buildWeekNavigation(),
 
-          // Дни недели
+          
           _buildWeekDaySelector(),
 
-          // План на выбранный день
+          
           Expanded(
             child: _buildDayPlan(),
           ),
@@ -278,15 +278,15 @@ class _WeeklyPlanScreenState extends State<WeeklyPlanScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Информация о калориях
+          
           Card(
             margin: const EdgeInsets.only(bottom: 16),
             child: Container(
               width: double.infinity,
               child: Stack(
                 children: [
-                  // Основное содержимое карточки с дополнительным отступом справа
-                  // чтобы текст не перекрывался с иконкой
+                  
+                  
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
@@ -308,7 +308,7 @@ class _WeeklyPlanScreenState extends State<WeeklyPlanScreen> {
                     ),
                   ),
 
-                  // Кнопка редактирования в виде карандаша
+                  
                   Positioned(
                     right: 8,
                     top: 8,
@@ -332,7 +332,7 @@ class _WeeklyPlanScreenState extends State<WeeklyPlanScreen> {
             ),
           ),
 
-          // Приемы пищи
+          
           ...(dayData['meals'] as List).map((meal) => _buildMealCard(meal)),
         ],
       ),
@@ -353,7 +353,7 @@ class _WeeklyPlanScreenState extends State<WeeklyPlanScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Заголовок приема пищи
+            
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -369,12 +369,12 @@ class _WeeklyPlanScreenState extends State<WeeklyPlanScreen> {
             ),
             const Divider(),
 
-            // Список рецептов
+            
             ...recipes.map((recipe) => _buildRecipeItem(recipe)),
 
             const Divider(),
 
-            // Итоговые калории
+            
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -409,14 +409,14 @@ class _WeeklyPlanScreenState extends State<WeeklyPlanScreen> {
     );
   }
 
-  // Проверка, является ли день тем же самым (без учета времени)
+  
   bool _isSameDay(DateTime day1, DateTime day2) {
     return day1.year == day2.year &&
         day1.month == day2.month &&
         day1.day == day2.day;
   }
 
-  // Получение сокращенного названия дня недели
+  
   String _getDayOfWeekShort(DateTime day) {
     final weekDays = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
     return weekDays[day.weekday - 1];

@@ -1,4 +1,4 @@
-// lib/screens/recipes/favorites_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../repositories/data_repository.dart';
@@ -173,7 +173,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: [
-                  // Recipe image
+                  
                   recipe.mainImageUrl != null && recipe.mainImageUrl!.isNotEmpty
                       ? ClipRRect(
                     borderRadius: BorderRadius.circular(8),
@@ -183,7 +183,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       height: 80,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
-                        // Если не удалось загрузить изображение, показываем заглушку
+                        
                         return Container(
                           width: 80,
                           height: 80,
@@ -215,7 +215,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                   ),
                   const SizedBox(width: 16),
 
-                  // Recipe information
+                  
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,7 +254,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     ),
                   ),
 
-                  // Remove from favorites button
+                  
                   IconButton(
                     icon: const Icon(Icons.favorite, color: Colors.red),
                     onPressed: () => _removeFromFavorites(recipe),

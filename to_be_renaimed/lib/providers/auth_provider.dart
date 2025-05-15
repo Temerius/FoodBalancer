@@ -1,4 +1,4 @@
-// lib/providers/auth_provider.dart
+
 import 'package:flutter/foundation.dart';
 import '../models/user.dart';
 import '../services/auth_service.dart';
@@ -15,14 +15,14 @@ class AuthProvider with ChangeNotifier {
   String? _error;
   bool _isAuthenticated = false;
 
-  // Геттеры
+  
   User? get user => _user;
   User? get currentUser => _user;
   bool get isLoading => _isLoading;
   String? get error => _error;
   bool get isAuthenticated => _isAuthenticated;
 
-  // Инициализация
+  
   Future<void> initialize() async {
     _setLoading(true);
     try {
@@ -34,7 +34,7 @@ class AuthProvider with ChangeNotifier {
           _user = await _authService.getCurrentUser();
           _isAuthenticated = true;
         } catch (e) {
-          // Если не удалось получить текущего пользователя, сбрасываем статус
+          
           await _authService.saveLoginStatus(false);
           _isAuthenticated = false;
         }
@@ -47,7 +47,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  // Регистрация
+  
   Future<bool> register(String name, String email, String password) async {
     _setLoading(true);
     _clearError();
@@ -65,7 +65,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  // Вход
+  
   Future<bool> login(String email, String password, {bool rememberMe = false}) async {
     _setLoading(true);
     _clearError();
@@ -88,7 +88,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  // Выход
+  
   Future<void> logout() async {
     _setLoading(true);
     _clearError();
@@ -105,7 +105,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  // Восстановление пароля
+  
   Future<bool> resetPassword(String email) async {
     _setLoading(true);
     _clearError();
@@ -121,7 +121,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  // Вспомогательные методы
+  
   void _setLoading(bool loading) {
     _isLoading = loading;
     notifyListeners();

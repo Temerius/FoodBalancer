@@ -1,11 +1,11 @@
-// lib/screens/refrigerator/barcode_scanner_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import '../../repositories/data_repository.dart';
 import '../../services/barcode_service.dart';
-import '../refrigerator/add_product_screen.dart'; // Добавляем импорт
+import '../refrigerator/add_product_screen.dart'; 
 
 class BarcodeScannerScreen extends StatefulWidget {
   const BarcodeScannerScreen({Key? key}) : super(key: key);
@@ -32,7 +32,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Инициализация сервиса
+    
     _dataRepository = Provider.of<DataRepository>(context, listen: false);
     _barcodeService = BarcodeService(apiService: _dataRepository!.apiService);
   }
@@ -70,7 +70,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
     if (barcodes.isNotEmpty) {
       final barcode = barcodes.first;
 
-      // Получаем данные штрих-кода
+      
       final String? barcodeData = barcode.rawValue;
 
       print('\n===== BARCODE DETECTED =====');
@@ -79,14 +79,14 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
       print('Raw Value: $barcodeData');
 
       if (barcodeData != null) {
-        // Останавливаем сканирование и показываем диалог с отсканированным штрих-кодом
+        
         controller.stop();
         setState(() {
           _scanStatus = 'Штрих-код распознан';
         });
 
         if (mounted) {
-          // Показываем диалог с отсканированным штрих-кодом и кнопкой обработки
+          
           _showScannedBarcodeDialog(barcodeData);
         }
       }
@@ -97,7 +97,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
     });
   }
 
-  // Новый метод для отображения диалога с отсканированным штрих-кодом
+  
   void _showScannedBarcodeDialog(String barcode) {
     showDialog(
       context: context,
@@ -122,7 +122,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              // Продолжаем сканирование
+              
               controller.start();
               setState(() {
                 _scanStatus = 'Наведите камеру на штрих-код продукта';
@@ -136,7 +136,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
               setState(() {
                 _scanStatus = 'Обработка штрих-кода...';
               });
-              // Обрабатываем штрих-код
+              
               _processBarcodeWithOurAPI(barcode);
             },
             child: const Text('Обработать'),
@@ -156,18 +156,18 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
       print('\n===== PROCESSING BARCODE WITH OUR API =====');
       print('Sending barcode to server: $barcode');
 
-      // Показываем индикатор загрузки с сообщением о длительной обработке
+      
       _showLoadingDialog('Запрос обрабатывается. Это может занять до 20 секунд...');
 
-      // Получаем данные о продукте через наш API
+      
       final productData = await _barcodeService.fetchProductByBarcode(barcode);
 
-      // Закрываем диалог загрузки после получения ответа
+      
       if (mounted) {
         Navigator.pop(context);
       }
 
-      // Подробный вывод ответа сервера
+      
       print('\n===== SERVER RESPONSE =====');
       if (productData != null) {
         print('Response received successfully!');
@@ -178,7 +178,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
         print('Fat: ${productData['fat'] ?? "Not available"}');
         print('Carbs: ${productData['carbs'] ?? "Not available"}');
 
-        // Вывод классификации
+        
         if (productData.containsKey('classification')) {
           final classification = productData['classification'];
           print('Classification:');
@@ -190,17 +190,17 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
           print('No classification data available');
         }
 
-        // Вывод информации о магазине
+        
         print('Store: ${productData['store'] ?? "Not available"}');
 
         setState(() {
           _scanStatus = 'Товар найден!';
         });
 
-        // Ждем немного, чтобы пользователь увидел сообщение
+        
         await Future.delayed(const Duration(seconds: 1));
 
-        // Форматируем данные для AddProductScreen
+        
         final formattedData = _barcodeService.formatProductData(productData);
         formattedData['barcode'] = barcode;
 
@@ -209,21 +209,21 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
           print('$key: $value');
         });
 
-        // Переходим к форме добавления с найденными данными
+        
         _goToAddProductWithData({
           'scanned_data': formattedData,
           'barcode': barcode,
         });
       } else {
         print('No product data received from server');
-        // Если через наш API продукт не найден, показываем информацию
+        
         setState(() {
           _scanStatus = 'Продукт не найден';
         });
         _showBarcodeInfo(barcode);
       }
     } catch (e) {
-      // Закрываем диалог загрузки при ошибке
+      
       if (mounted) {
         Navigator.pop(context);
       }
@@ -239,7 +239,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
           _scanStatus = 'Ошибка поиска продукта';
         });
 
-        // Показываем различные сообщения в зависимости от типа ошибки
+        
         if (e.toString().contains('TimeoutException')) {
           _showTimeoutErrorDialog(barcode);
         } else {
@@ -250,14 +250,14 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
       if (mounted) {
         setState(() {
           _isProcessing = false;
-          // Возобновляем сканирование
+          
           controller.start();
         });
       }
     }
   }
 
-  // Новый метод для отображения индикатора загрузки
+  
   void _showLoadingDialog(String message) {
     showDialog(
       context: context,
@@ -277,7 +277,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
     );
   }
 
-  // Новый метод для отображения ошибки таймаута
+  
   void _showTimeoutErrorDialog(String barcode) {
     showDialog(
       context: context,
@@ -307,8 +307,8 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
       print('\n===== NAVIGATING TO ADD_PRODUCT_SCREEN =====');
       print('Data being passed: $data');
 
-      // Используем явный MaterialPageRoute вместо маршрута по имени
-      // для гарантии передачи аргументов
+      
+      
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -345,7 +345,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
                   child: OutlinedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      // Пытаемся снова найти продукт
+                      
                       _processBarcodeWithOurAPI(barcode);
                     },
                     child: const Text('Повторить поиск'),
@@ -356,7 +356,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      // Используем прямой вызов вместо pushReplacementNamed
+                      
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -410,13 +410,13 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
       ),
       body: Stack(
         children: [
-          // Камера
+          
           MobileScanner(
             controller: controller,
             onDetect: _onDetect,
           ),
 
-          // Оверлей с рамкой сканирования
+          
           Center(
             child: Container(
               width: 300,
@@ -431,7 +431,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
             ),
           ),
 
-          // Статус сканирования
+          
           Positioned(
             bottom: 100,
             left: 0,
@@ -451,7 +451,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
             ),
           ),
 
-          // Индикатор загрузки
+          
           if (_isProcessing)
             Container(
               color: Colors.black.withOpacity(0.3),
@@ -465,7 +465,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
         padding: const EdgeInsets.all(16),
         child: OutlinedButton.icon(
           onPressed: () {
-            // Используем прямой вызов вместо pushReplacementNamed
+            
             Navigator.push(
               context,
               MaterialPageRoute(

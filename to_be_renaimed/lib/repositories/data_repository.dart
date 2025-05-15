@@ -1,4 +1,4 @@
-// lib/repositories/data_repository.dart
+
 import 'package:flutter/foundation.dart';
 import 'package:to_be_renaimed/repositories/repositories/refrigerator_repository.dart';
 import 'package:to_be_renaimed/repositories/repositories/shopping_list_repository.dart';
@@ -27,7 +27,7 @@ import 'services/cache_service.dart';
 class DataRepository with ChangeNotifier {
   final ApiService _apiService;
 
-  // Репозитории
+  
   late final UserRepository _userRepository;
   late final AllergenRepository _allergenRepository;
   late final EquipmentRepository _equipmentRepository;
@@ -38,15 +38,15 @@ class DataRepository with ChangeNotifier {
   bool _isLoadingShoppingList = false;
   DateTime? _lastShoppingListUpdate;
 
-// Add these getters to the DataRepository class
+
   bool get isLoadingShoppingList => _isLoadingShoppingList;
   List<ShoppingListItem> get shoppingListItems => _shoppingListRepository.items;
   double get shoppingListProgress => _shoppingListRepository.progress;
 
-  // Данные
+  
   List<Recipe> _recipes = [];
 
-  // Время последнего обновления
+  
   DateTime? _lastProfileUpdate;
   DateTime? _lastAllergensUpdate;
   DateTime? _lastEquipmentUpdate;
@@ -54,10 +54,10 @@ class DataRepository with ChangeNotifier {
   DateTime? _lastRefrigeratorUpdate;
   DateTime? _lastRefrigeratorCategoriesUpdate;
 
-  // Интервал обновления (по умолчанию 5 минут)
+  
   final Duration _updateInterval = const Duration(minutes: 5);
 
-  // Состояние загрузки
+  
   bool _isLoading = false;
   String? _error;
   bool _isInitialized = false;
@@ -65,7 +65,7 @@ class DataRepository with ChangeNotifier {
   bool _isLoadingAllergens = false;
   bool _isLoadingEquipment = false;
 
-  // Геттеры
+  
   bool get isLoading => _isLoading;
   String? get error => _error;
   bool get isInitialized => _isInitialized;
@@ -133,7 +133,7 @@ class DataRepository with ChangeNotifier {
     bool onlyUnchecked = false,
     bool forceRefresh = false
   }) async {
-    // Check if we need to update data
+    
     if (!forceRefresh && _shoppingListRepository.items.isNotEmpty && !_needsUpdate(_lastShoppingListUpdate)) {
       return onlyUnchecked
           ? _shoppingListRepository.items.where((item) => !item.isChecked).toList()
@@ -148,7 +148,7 @@ class DataRepository with ChangeNotifier {
       final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
       final items = await _shoppingListRepository.getItems(onlyUnchecked: onlyUnchecked, config: config);
 
-      // Update last update time
+      
       _lastShoppingListUpdate = DateTime.now();
 
       notifyListeners();
@@ -163,7 +163,7 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-// Add an item to the shopping list
+
   Future<ShoppingListItem?> addShoppingListItem({
     required int ingredientTypeId,
     required int quantity,
@@ -177,7 +177,7 @@ class DataRepository with ChangeNotifier {
         quantityType: quantityType,
       );
 
-      // Update last update time
+      
       _lastShoppingListUpdate = DateTime.now();
 
       notifyListeners();
@@ -189,7 +189,7 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-// Update an item in the shopping list
+
   Future<ShoppingListItem?> updateShoppingListItem({
     required int itemId,
     int? quantity,
@@ -205,7 +205,7 @@ class DataRepository with ChangeNotifier {
         isChecked: isChecked,
       );
 
-      // Update last update time
+      
       _lastShoppingListUpdate = DateTime.now();
 
       notifyListeners();
@@ -217,13 +217,13 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-// Remove an item from the shopping list
+
   Future<bool> removeShoppingListItem(int itemId) async {
     try {
       print("\n===== REMOVING ITEM FROM SHOPPING LIST =====");
       await _shoppingListRepository.removeItem(itemId);
 
-      // Update last update time
+      
       _lastShoppingListUpdate = DateTime.now();
 
       notifyListeners();
@@ -235,13 +235,13 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-// Clear checked items from the shopping list
+
   Future<bool> clearCheckedShoppingListItems() async {
     try {
       print("\n===== CLEARING CHECKED ITEMS FROM SHOPPING LIST =====");
       final deletedCount = await _shoppingListRepository.clearCheckedItems();
 
-      // Update last update time
+      
       _lastShoppingListUpdate = DateTime.now();
 
       notifyListeners();
@@ -253,13 +253,13 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-// Clear all items from the shopping list
+
   Future<bool> clearAllShoppingListItems() async {
     try {
       print("\n===== CLEARING ALL ITEMS FROM SHOPPING LIST =====");
       final deletedCount = await _shoppingListRepository.clearAllItems();
 
-      // Update last update time
+      
       _lastShoppingListUpdate = DateTime.now();
 
       notifyListeners();
@@ -270,7 +270,7 @@ class DataRepository with ChangeNotifier {
       return false;
     }
   }
-// Обновление истекающих продуктов из текущего списка холодильника
+
   void _updateExpiringItems() {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
@@ -288,7 +288,7 @@ class DataRepository with ChangeNotifier {
       return daysDifference >= 0 && daysDifference <= 3;
     }).toList();
 
-    // Сортируем по дате истечения
+    
     _expiringItems.sort((a, b) {
       final aDate = a.ingredient!.expiryDate!;
       final bDate = b.ingredient!.expiryDate!;
@@ -298,9 +298,9 @@ class DataRepository with ChangeNotifier {
     notifyListeners();
   }
 
-// Обновление категорий пользователя из текущего списка холодильника
+
   void _updateUserRefrigeratorCategories() {
-    // Извлекаем уникальные категории из продуктов пользователя
+    
     final uniqueCategories = <int, IngredientType>{};
 
     for (var item in refrigeratorItems) {
@@ -313,9 +313,9 @@ class DataRepository with ChangeNotifier {
     notifyListeners();
   }
 
-// Переписываем getRefrigeratorItems для обновления всех связанных данных
+
   Future<List<RefrigeratorItem>> getRefrigeratorItems({bool forceRefresh = false}) async {
-    // Проверяем, нужно ли обновлять данные
+    
     if (!forceRefresh && _refrigeratorRepository.items.isNotEmpty && !_needsUpdate(_lastRefrigeratorUpdate)) {
       return _refrigeratorRepository.items;
     }
@@ -326,11 +326,11 @@ class DataRepository with ChangeNotifier {
       final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
       final items = await _refrigeratorRepository.getItems(config: config);
 
-      // ИСПРАВЛЕНИЕ: После загрузки продуктов обновляем все связанные данные
+      
       _updateUserRefrigeratorCategories();
       _updateExpiringItems();
 
-      // Обновляем время последнего обновления
+      
       _lastRefrigeratorUpdate = DateTime.now();
 
       notifyListeners();
@@ -344,7 +344,7 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-// Переписываем addRefrigeratorItem
+
   Future<RefrigeratorItem?> addRefrigeratorItem({
     required int ingredientId,
     required int quantity,
@@ -358,11 +358,11 @@ class DataRepository with ChangeNotifier {
         quantityType: quantityType,
       );
 
-      // ИСПРАВЛЕНИЕ: После добавления обновляем все связанные данные
+      
       _updateUserRefrigeratorCategories();
       _updateExpiringItems();
 
-      // Обновляем время последнего обновления
+      
       _lastRefrigeratorUpdate = DateTime.now();
       _lastRefrigeratorCategoriesUpdate = DateTime.now();
 
@@ -375,17 +375,17 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-// Переписываем removeRefrigeratorItem
+
   Future<bool> removeRefrigeratorItem(int itemId) async {
     try {
       print("\n===== REMOVING ITEM FROM REFRIGERATOR =====");
       await _refrigeratorRepository.removeItem(itemId);
 
-      // ИСПРАВЛЕНИЕ: После удаления обновляем все связанные данные
+      
       _updateUserRefrigeratorCategories();
       _updateExpiringItems();
 
-      // Обновляем время последнего обновления
+      
       _lastRefrigeratorUpdate = DateTime.now();
       _lastRefrigeratorCategoriesUpdate = DateTime.now();
 
@@ -398,25 +398,25 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-// Переписываем initialize для загрузки всех данных
+
   Future<void> initialize() async {
     _setLoading(true);
     try {
       print("\n===== INITIALIZING DATA REPOSITORY =====");
 
-      // 1. Загружаем все категории (один раз)
+      
       await getAllIngredientTypes();
 
-      // 2. Загружаем данные пользователя
+      
       await _userRepository.getUserProfile();
       await _allergenRepository.getAllAllergens();
       await _equipmentRepository.getAllEquipment();
 
-      // 3. Загружаем продукты и рецепты
+      
       await getRecipes();
-      await getRefrigeratorItems(); // Это автоматически обновит категории и истекающие
+      await getRefrigeratorItems(); 
 
-      // 4. Устанавливаем время последнего обновления
+      
       _lastProfileUpdate = DateTime.now();
       _lastAllergensUpdate = DateTime.now();
       _lastEquipmentUpdate = DateTime.now();
@@ -433,7 +433,7 @@ class DataRepository with ChangeNotifier {
   }
 
 
-  // Метод для переключения статуса "избранное" у рецепта
+  
   Future<bool> toggleFavoriteRecipe(int recipeId) async {
     try {
       print("\n===== TOGGLING FAVORITE STATUS FOR RECIPE ID: $recipeId =====");
@@ -451,7 +451,7 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  // Проверка необходимости обновления данных по временной метке
+  
   bool _needsUpdate(DateTime? lastUpdate) {
     if (lastUpdate == null) return true;
     return DateTime.now().difference(lastUpdate) > _updateInterval;
@@ -467,7 +467,7 @@ class DataRepository with ChangeNotifier {
       print("\n===== GETTING FILTERED REFRIGERATOR ITEMS =====");
       final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
 
-      // Используем новый метод getFilteredItems вместо getItems с параметрами
+      
       final items = await _refrigeratorRepository.getFilteredItems(
         search: search,
         category: category,
@@ -516,7 +516,7 @@ class DataRepository with ChangeNotifier {
   }
 
   Future<List<IngredientType>> getRefrigeratorCategories({bool forceRefresh = false}) async {
-    // Проверяем, нужно ли обновлять данные
+    
     if (!forceRefresh && _refrigeratorRepository.categories.isNotEmpty && !_needsUpdate(_lastRefrigeratorCategoriesUpdate)) {
       return _refrigeratorRepository.categories;
     }
@@ -526,7 +526,7 @@ class DataRepository with ChangeNotifier {
       final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
       final categories = await _refrigeratorRepository.getCategories(config: config);
 
-      // Обновляем время последнего обновления
+      
       _lastRefrigeratorCategoriesUpdate = DateTime.now();
 
       notifyListeners();
@@ -551,7 +551,7 @@ class DataRepository with ChangeNotifier {
         quantityType: quantityType,
       );
 
-      // Обновляем время последнего обновления
+      
       _lastRefrigeratorUpdate = DateTime.now();
 
       notifyListeners();
@@ -563,7 +563,7 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  // Поиск ингредиентов
+  
   Future<List<Ingredient>> searchIngredients({
     required String query,
     int? typeId,
@@ -581,9 +581,9 @@ class DataRepository with ChangeNotifier {
   }
 
 
-  // Получение рецептов
+  
   Future<List<Recipe>> getRecipes({bool forceRefresh = false}) async {
-    // Check if we need to update data
+    
     if (!forceRefresh && _recipeRepository.recipes.isNotEmpty && !_needsUpdate(_lastRecipesUpdate)) {
       return _recipeRepository.recipes;
     }
@@ -594,7 +594,7 @@ class DataRepository with ChangeNotifier {
       final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
       final recipes = await _recipeRepository.getAllRecipes(config: config);
 
-      // Update last update time
+      
       _lastRecipesUpdate = DateTime.now();
 
       notifyListeners();
@@ -608,7 +608,7 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  // Получение избранных рецептов
+  
   Future<List<Recipe>> getFavoriteRecipes({bool forceRefresh = false}) async {
     _setLoading(true);
     try {
@@ -640,9 +640,9 @@ class DataRepository with ChangeNotifier {
   }
 
 
-  // Получение профиля пользователя
+  
   Future<User?> getUserProfile({bool forceRefresh = false}) async {
-    // Проверяем, нужно ли обновлять данные
+    
     if (!forceRefresh && user != null && !_needsUpdate(_lastProfileUpdate)) {
       return user;
     }
@@ -655,7 +655,7 @@ class DataRepository with ChangeNotifier {
       final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
       final userObj = await _userRepository.getUserProfile(config: config);
 
-      // Обновляем время последнего обновления
+      
       if (userObj != null) {
         _lastProfileUpdate = DateTime.now();
       }
@@ -672,11 +672,11 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  // Получение оборудования
+  
   Future<List<Equipment>> getEquipment({bool forceRefresh = false}) async {
-    // Проверяем, нужно ли обновлять данные
+    
     if (!forceRefresh && _equipmentRepository.equipment.isNotEmpty && !_needsUpdate(_lastEquipmentUpdate)) {
-      // Обновляем флаги isSelected для имеющихся данных
+      
       if (user != null) {
         for (var equipment in _equipmentRepository.equipment) {
           equipment.isSelected = user!.equipmentIds.contains(equipment.id);
@@ -693,14 +693,14 @@ class DataRepository with ChangeNotifier {
       final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
       final equipmentList = await _equipmentRepository.getAllEquipment(config: config);
 
-      // Если у пользователя есть оборудование, отмечаем его в списке
+      
       if (user != null) {
         for (var equipment in equipmentList) {
           equipment.isSelected = user!.equipmentIds.contains(equipment.id);
         }
       }
 
-      // Обновляем время последнего обновления
+      
       _lastEquipmentUpdate = DateTime.now();
 
       notifyListeners();
@@ -715,19 +715,19 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  // Обновление пользователя и его данных
+  
   Future<void> refreshUserData() async {
     _setLoading(true);
     try {
       print("\n===== REFRESHING USER DATA =====");
 
-      // Загрузка пользователя с принудительным обновлением только если прошло достаточно времени
+      
       if (_needsUpdate(_lastProfileUpdate)) {
         await _userRepository.getUserProfile(config: CacheConfig.refresh);
         _lastProfileUpdate = DateTime.now();
       }
 
-      // Обновляем аллергены и оборудование пользователя только если нужно
+      
       if (_needsUpdate(_lastAllergensUpdate)) {
         await refreshUserAllergens(silent: true);
         _lastAllergensUpdate = DateTime.now();
@@ -742,7 +742,7 @@ class DataRepository with ChangeNotifier {
         await _syncUserEquipment();
       }
 
-      // Обновляем рецепты только если нужно
+      
       if (_needsUpdate(_lastRecipesUpdate)) {
         await getRecipes(forceRefresh: true);
         _lastRecipesUpdate = DateTime.now();
@@ -753,7 +753,7 @@ class DataRepository with ChangeNotifier {
         _lastRefrigeratorUpdate = DateTime.now();
       }
 
-      // Обновляем категории холодильника
+      
       if (_needsUpdate(_lastRefrigeratorCategoriesUpdate)) {
         await getRefrigeratorCategories(forceRefresh: true);
         _lastRefrigeratorCategoriesUpdate = DateTime.now();
@@ -769,11 +769,11 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  // Получение всех аллергенов
+  
   Future<List<Allergen>> getAllAllergens({bool forceRefresh = false}) async {
-    // Проверяем, нужно ли обновлять данные
+    
     if (!forceRefresh && _allergenRepository.allergens.isNotEmpty && !_needsUpdate(_lastAllergensUpdate)) {
-      // Обновляем флаги isSelected для имеющихся данных
+      
       if (user != null) {
         for (var allergen in _allergenRepository.allergens) {
           allergen.isSelected = user!.allergenIds.contains(allergen.id);
@@ -789,17 +789,17 @@ class DataRepository with ChangeNotifier {
       print("\n===== GETTING ALL ALLERGENS (forceRefresh: $forceRefresh) =====");
       final config = forceRefresh ? CacheConfig.refresh : CacheConfig.defaultConfig;
 
-      // Получаем аллергены
+      
       final allergensData = await _allergenRepository.getAllAllergens(config: config);
 
-      // Если у пользователя есть аллергены, отмечаем их в списке
+      
       if (user != null && user!.allergenIds.isNotEmpty) {
         for (var allergen in allergensData) {
           allergen.isSelected = user!.allergenIds.contains(allergen.id);
         }
       }
 
-      // Обновляем время последнего обновления
+      
       _lastAllergensUpdate = DateTime.now();
 
       notifyListeners();
@@ -814,12 +814,12 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  // Синхронизация аллергенов пользователя с локальными данными (без загрузки с сервера)
+  
   Future<void> _syncUserAllergens() async {
     if (user == null || _allergenRepository.allergens.isEmpty) return;
 
     try {
-      // Обновляем флаги "выбрано" в списке аллергенов
+      
       for (var allergen in _allergenRepository.allergens) {
         allergen.isSelected = user!.allergenIds.contains(allergen.id);
       }
@@ -828,12 +828,12 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  // Синхронизация оборудования пользователя с локальными данными (без загрузки с сервера)
+  
   Future<void> _syncUserEquipment() async {
     if (user == null || _equipmentRepository.equipment.isEmpty) return;
 
     try {
-      // Обновляем флаги "выбрано" в списке оборудования
+      
       for (var equipment in _equipmentRepository.equipment) {
         equipment.isSelected = user!.equipmentIds.contains(equipment.id);
       }
@@ -842,7 +842,7 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  // Обновление аллергенов пользователя
+  
   Future<void> refreshUserAllergens({bool silent = false}) async {
     if (!silent) {
       _isLoadingAllergens = true;
@@ -852,21 +852,21 @@ class DataRepository with ChangeNotifier {
     try {
       print("\n===== REFRESHING USER ALLERGENS =====");
 
-      // Получаем ID аллергенов пользователя с пометкой принудительного обновления
+      
       final allergenIds = await _userRepository.getUserAllergenIds(config: CacheConfig.refresh);
 
-      // Обновляем пользователя в памяти, если он существует
+      
       if (user != null) {
-        // Обновляем список аллергенов в объекте пользователя
+        
         _userRepository.updateUserAllergensInMemory(allergenIds);
 
-        // Обновляем флаги "выбрано" в списке аллергенов
+        
         for (var allergen in _allergenRepository.allergens) {
           allergen.isSelected = allergenIds.contains(allergen.id);
         }
       }
 
-      // Обновляем время последнего обновления
+      
       _lastAllergensUpdate = DateTime.now();
 
       if (!silent) notifyListeners();
@@ -881,7 +881,7 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  // Обновление оборудования пользователя
+  
   Future<void> refreshUserEquipment({bool silent = false}) async {
     if (!silent) {
       _isLoadingEquipment = true;
@@ -891,21 +891,21 @@ class DataRepository with ChangeNotifier {
     try {
       print("\n===== REFRESHING USER EQUIPMENT =====");
 
-      // Получаем ID оборудования пользователя с пометкой принудительного обновления
+      
       final equipmentIds = await _userRepository.getUserEquipmentIds(config: CacheConfig.refresh);
 
-      // Обновляем пользователя в памяти, если он существует
+      
       if (user != null) {
-        // Обновляем список оборудования в объекте пользователя
+        
         _userRepository.updateUserEquipmentInMemory(equipmentIds);
 
-        // Обновляем флаги "выбрано" в списке оборудования
+        
         for (var equipment in _equipmentRepository.equipment) {
           equipment.isSelected = equipmentIds.contains(equipment.id);
         }
       }
 
-      // Обновляем время последнего обновления
+      
       _lastEquipmentUpdate = DateTime.now();
 
       if (!silent) notifyListeners();
@@ -920,18 +920,18 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  // Обновление профиля пользователя
+  
   Future<bool> updateUserProfile(User updatedUser) async {
     _isLoadingProfile = true;
     notifyListeners();
 
     try {
-      // Сначала устанавливаем данные локально, чтобы UI обновился быстрее
+      
       if (_userRepository.user != null) {
         _userRepository.updateUserAllergensInMemory(updatedUser.allergenIds);
         _userRepository.updateUserEquipmentInMemory(updatedUser.equipmentIds);
 
-        // Обновляем флаги выбора в списках аллергенов и оборудования
+        
         for (var allergen in _allergenRepository.allergens) {
           allergen.isSelected = updatedUser.allergenIds.contains(allergen.id);
         }
@@ -940,20 +940,20 @@ class DataRepository with ChangeNotifier {
           equipment.isSelected = updatedUser.equipmentIds.contains(equipment.id);
         }
 
-        // Уведомляем об изменении, чтобы UI обновился
+        
         notifyListeners();
       }
 
-      // Затем отправляем данные на сервер
+      
       final success = await _userRepository.updateUserProfile(updatedUser);
 
       if (success) {
-        // Обновляем время последнего обновления
+        
         _lastProfileUpdate = DateTime.now();
         _lastAllergensUpdate = DateTime.now();
         _lastEquipmentUpdate = DateTime.now();
 
-        // Уведомляем об изменении
+        
         notifyListeners();
       }
 
@@ -967,7 +967,7 @@ class DataRepository with ChangeNotifier {
     }
   }
 
-  // Вспомогательные методы
+  
   void _setLoading(bool loading) {
     _isLoading = loading;
     notifyListeners();
@@ -983,7 +983,7 @@ class DataRepository with ChangeNotifier {
     notifyListeners();
   }
 
-  // Очистка всего кэша
+  
   Future<void> clearAllCache() async {
     await _userRepository.clearCache();
     await _allergenRepository.clearCache();
@@ -991,7 +991,7 @@ class DataRepository with ChangeNotifier {
     await _recipeRepository.clearCache();
     await _refrigeratorRepository.clearCache();
 
-    // Сбрасываем временные метки
+    
     _lastProfileUpdate = null;
     _lastAllergensUpdate = null;
     _lastEquipmentUpdate = null;

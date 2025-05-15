@@ -16,12 +16,11 @@
     static const Color textLight = Color(0xFF9AA0A6);
   }
 
-  // Определение темы приложения
+
   final ThemeData appTheme = ThemeData(
     primaryColor: AppColors.primaryBlue,
     scaffoldBackgroundColor: AppColors.background,
 
-    // Цветовая схема
     colorScheme: ColorScheme(
       primary: AppColors.primaryBlue,
       primaryContainer: AppColors.darkBlue,
@@ -38,7 +37,6 @@
       brightness: Brightness.light,
     ),
 
-    // Шрифты
     textTheme: TextTheme(
       displayLarge: TextStyle(
         fontSize: 28,
@@ -70,7 +68,6 @@
       ),
     ),
 
-    // Кнопки
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primaryBlue,
@@ -86,7 +83,6 @@
       ),
     ),
 
-    // Поля ввода
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: Colors.white,
@@ -111,7 +107,6 @@
       labelStyle: TextStyle(color: AppColors.textMedium),
     ),
 
-    // Остальные настройки
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.primaryBlue,
       foregroundColor: Colors.white,

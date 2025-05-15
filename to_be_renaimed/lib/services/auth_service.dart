@@ -11,7 +11,7 @@ class AuthService {
         _apiService = apiService ?? ApiService();
   static const String _tokenKey = 'auth_token';
 
-  // Инициализация - проверяем наличие сохраненного токена
+  
   Future<void> initialize() async {
     final token = await _getToken();
     if (token != null) {
@@ -19,8 +19,8 @@ class AuthService {
     }
   }
 
-  // Регистрация
-  // В методе register в классе AuthService
+  
+  
   Future<User> register(String name, String email, String password) async {
     try {
       final response = await _apiService.post('/api/users/register/', {
@@ -39,7 +39,7 @@ class AuthService {
     } catch (e) {
       String errorMessage = e.toString();
 
-      // Обработка специфичных ошибок
+      
       if (errorMessage.contains("Unique") ||
           errorMessage.contains("unique") ||
           errorMessage.contains("уже существует") ||
@@ -47,18 +47,18 @@ class AuthService {
         throw Exception('Пользователь с таким email уже существует');
       }
 
-      // Обработка юникод-последовательностей в ошибке
+      
       if (errorMessage.contains('\\u')) {
         try {
-          // Извлекаем часть после "Exception: "
+          
           if (errorMessage.startsWith('Exception: ')) {
             errorMessage = errorMessage.substring('Exception: '.length);
           }
 
-          // Убираем экранирование для JSON
+          
           errorMessage = errorMessage.replaceAll('\\', '');
 
-          // Пытаемся распарсить JSON
+          
           var jsonStart = errorMessage.indexOf('{');
           var jsonEnd = errorMessage.lastIndexOf('}');
 
@@ -71,7 +71,7 @@ class AuthService {
             }
           }
         } catch (_) {
-          // Если не удалось обработать, оставляем как есть
+          
         }
       }
 
@@ -79,7 +79,7 @@ class AuthService {
     }
   }
 
-  // Вход
+  
   Future<User> login(String email, String password) async {
     final response = await _apiService.post(ApiService.loginUrl, {
       'email': email,
@@ -89,21 +89,21 @@ class AuthService {
     final String token = response['token'];
     final user = User.fromJson(response['user']);
 
-    // Устанавливаем токен в ApiService
+    
     _apiService.setToken(token);
 
-    // Сохраняем токен
+    
     await _saveToken(token);
 
     return user;
   }
 
-  // Выход
+  
   Future<void> logout() async {
     try {
       await _apiService.post(ApiService.logoutUrl, {});
     } catch (e) {
-      // Если выход не удался, все равно очищаем локальные данные
+      
       print('Error logging out: $e');
     }
 
@@ -111,14 +111,14 @@ class AuthService {
     _apiService.clearToken();
   }
 
-  // Восстановление пароля
+  
   Future<void> resetPassword(String email) async {
     await _apiService.post(ApiService.passwordResetUrl, {
       'email': email,
     });
   }
 
-  // Подтверждение восстановления пароля
+  
   Future<bool> confirmResetPassword(String token, String newPassword) async {
     try {
       await _apiService.post(ApiService.passwordResetConfirmUrl, {
@@ -132,24 +132,24 @@ class AuthService {
     }
   }
 
-  // Получение данных текущего пользователя
+  
   Future<User> getCurrentUser() async {
     final response = await _apiService.get(ApiService.profileUrl);
     return User.fromJson(response);
   }
 
-  // Обновление профиля пользователя
+  
   Future<User> updateProfile(Map<String, dynamic> data) async {
     final response = await _apiService.put(ApiService.profileUrl, data);
     return User.fromJson(response);
   }
 
-  // Проверка авторизации
+  
   Future<bool> isAuthenticated() async {
     return await _getToken() != null;
   }
 
-  // Методы для работы с токеном в SharedPreferences
+  
   Future<void> _saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_tokenKey, token);
@@ -167,19 +167,19 @@ class AuthService {
 
   static const String _isLoggedInKey = 'is_logged_in';
 
-// Сохранение статуса входа
+
   Future<void> saveLoginStatus(bool isLoggedIn) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_isLoggedInKey, isLoggedIn);
   }
 
-// Проверка статуса входа
+
   Future<bool> isLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool(_isLoggedInKey) ?? false;
   }
 
-  // В классе AuthService (services/auth_service.dart)
+  
   String? getToken() {
     return _tokenKey;
   }

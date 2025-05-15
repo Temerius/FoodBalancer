@@ -1,4 +1,4 @@
-// lib/screens/profile/edit_profile_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
@@ -49,7 +49,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   bool _validateFields() {
-    // Проверка обязательного поля
+    
     if (_nameController.text.trim().isEmpty) {
       setState(() {
         _errorMessage = 'Имя пользователя обязательно для заполнения';
@@ -57,7 +57,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       return false;
     }
 
-    // Проверка роста
+    
     if (_heightController.text.isNotEmpty) {
       final height = int.tryParse(_heightController.text);
       if (height == null || height <= 0 || height > 300) {
@@ -68,7 +68,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       }
     }
 
-    // Проверка веса
+    
     if (_weightController.text.isNotEmpty) {
       final weight = int.tryParse(_weightController.text);
       if (weight == null || weight <= 0 || weight > 500) {
@@ -79,7 +79,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       }
     }
 
-    // Проверка возраста
+    
     if (_ageController.text.isNotEmpty) {
       final age = int.tryParse(_ageController.text);
       if (age == null || age <= 0 || age > 120) {
@@ -90,7 +90,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       }
     }
 
-    // Проверка калорий
+    
     if (_caloriesController.text.isNotEmpty) {
       final calories = int.tryParse(_caloriesController.text);
       if (calories == null || calories <= 0 || calories > 10000) {
@@ -101,7 +101,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       }
     }
 
-    // Если все проверки пройдены, очищаем сообщение об ошибке
+    
     setState(() {
       _errorMessage = null;
     });
@@ -109,7 +109,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   Future<void> _saveProfile() async {
-    // Скрываем клавиатуру
+    
     FocusScope.of(context).unfocus();
 
     if (!_validateFields()) {
@@ -121,7 +121,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     });
 
     try {
-      // Получаем текущего пользователя из репозитория
+      
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
       final currentUser = dataRepository.user ??
           Provider.of<AuthProvider>(context, listen: false).currentUser;
@@ -134,7 +134,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         return;
       }
 
-      // Создаем обновленный объект пользователя
+      
       final updatedUser = User(
         id: currentUser.id,
         name: _nameController.text.trim(),
@@ -148,7 +148,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         equipmentIds: currentUser.equipmentIds,
       );
 
-      // Сохраняем профиль в репозитории
+      
       final success = await dataRepository.updateUserProfile(updatedUser);
 
       if (success) {
@@ -190,7 +190,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Сообщение об ошибке (если есть)
+                
                 if (_errorMessage != null) ...[
                   Container(
                     padding: const EdgeInsets.all(12),
@@ -225,7 +225,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
                 const SizedBox(height: 16),
 
-                // Имя пользователя
+                
                 TextFormField(
                   controller: _nameController,
                   decoration: const InputDecoration(
@@ -243,7 +243,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
                 const SizedBox(height: 16),
 
-                // Рост
+                
                 TextFormField(
                   controller: _heightController,
                   decoration: const InputDecoration(
@@ -255,7 +255,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                 const SizedBox(height: 16),
 
-                // Вес
+                
                 TextFormField(
                   controller: _weightController,
                   decoration: const InputDecoration(
@@ -267,7 +267,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                 const SizedBox(height: 16),
 
-                // Возраст
+                
                 TextFormField(
                   controller: _ageController,
                   decoration: const InputDecoration(
@@ -279,7 +279,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                 const SizedBox(height: 16),
 
-                // Пол
+                
                 Text('Пол', style: Theme.of(context).textTheme.bodyLarge),
                 const SizedBox(height: 8),
                 Row(
@@ -317,7 +317,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                 const SizedBox(height: 16),
 
-                // Дневная норма калорий
+                
                 TextFormField(
                   controller: _caloriesController,
                   decoration: const InputDecoration(
@@ -329,7 +329,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                 const SizedBox(height: 24),
 
-                // Кнопка автоматического расчета калорий
+                
                 if (_heightController.text.isNotEmpty &&
                     _weightController.text.isNotEmpty &&
                     _ageController.text.isNotEmpty &&
@@ -343,7 +343,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         final age = int.tryParse(_ageController.text) ?? 0;
 
                         if (height > 0 && weight > 0 && age > 0) {
-                          // Создаем временный объект пользователя для расчета
+                          
                           final tempUser = User(
                             id: 0,
                             name: 'temp',
@@ -354,7 +354,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             gender: _gender,
                           );
 
-                          // Рассчитываем калории и обновляем контроллер
+                          
                           final calories = tempUser.calculateDailyCalories();
                           setState(() {
                             _caloriesController.text = calories.toString();
@@ -366,7 +366,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                   ),
 
-                // Кнопка сохранения
+                
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(

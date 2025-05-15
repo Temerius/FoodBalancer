@@ -1,7 +1,7 @@
-// lib/screens/recipes/recipes_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cached_network_image/cached_network_image.dart'; // Добавлен импорт
+import 'package:cached_network_image/cached_network_image.dart'; 
 import '../../repositories/data_repository.dart';
 import '../../models/recipe.dart';
 
@@ -21,7 +21,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
 
   final FocusNode _searchFocusNode = FocusNode();
 
-  // Lists to store recipes
+  
   List<Recipe> _allRecipes = [];
   List<Recipe> _favoriteRecipes = [];
   List<Recipe> _recommendedRecipes = [];
@@ -31,7 +31,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
 
-    // Load data when screen is created
+    
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadData();
     });
@@ -45,7 +45,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
     super.dispose();
   }
 
-  // Load recipe data from repository
+  
   Future<void> _loadData({bool forceRefresh = false}) async {
     if (mounted) {
       setState(() {
@@ -57,9 +57,9 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Добавляем обработку ошибок с более подробными сообщениями
+      
       try {
-        // Load all recipes
+        
         _allRecipes = await dataRepository.getRecipes(forceRefresh: forceRefresh);
       } catch (e) {
         print("Error loading recipes: $e");
@@ -70,30 +70,30 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
             e.toString().contains("Connection")) {
           throw Exception('Ошибка соединения с сервером. Проверьте подключение к интернету.');
         } else {
-          throw e; // Пробрасываем другие ошибки
+          throw e; 
         }
       }
 
       try {
-        // Load favorite recipes
+        
         _favoriteRecipes = await dataRepository.getFavoriteRecipes(forceRefresh: forceRefresh);
       } catch (e) {
         print("Error loading favorite recipes: $e");
-        // Даже если не удалось загрузить избранное, продолжаем работу
+        
         _favoriteRecipes = [];
       }
 
-      // Get recommended recipes (for now, just take newest ones or most popular)
-      // In a real implementation, this would use a more sophisticated algorithm
+      
+      
       try {
         _recommendedRecipes = List.from(_allRecipes);
-        _recommendedRecipes.sort((a, b) => b.calories.compareTo(a.calories)); // Sort by calories for now
+        _recommendedRecipes.sort((a, b) => b.calories.compareTo(a.calories)); 
         if (_recommendedRecipes.length > 5) {
           _recommendedRecipes = _recommendedRecipes.sublist(0, 5);
         }
       } catch (e) {
         print("Error preparing recommended recipes: $e");
-        // Если не удалось подготовить рекомендации, просто оставляем пустой список
+        
         _recommendedRecipes = [];
       }
 
@@ -163,7 +163,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
       ),
       body: Column(
         children: [
-          // Error message if any
+          
           if (_errorMessage != null)
             Container(
               padding: const EdgeInsets.all(8.0),
@@ -188,7 +188,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
               ),
             ),
 
-          // Search bar
+          
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
@@ -222,22 +222,22 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
             ),
           ),
 
-          // Loading indicator
+          
           if (_isRefreshing)
             LinearProgressIndicator(),
 
-          // Recipe lists
+          
           Expanded(
             child: TabBarView(
               controller: _tabController,
               children: [
-                // All recipes tab
+                
                 _buildRecipesList(_getFilteredRecipes()),
 
-                // Recommended tab
+                
                 _buildRecipesList(_getFilteredRecommendedRecipes()),
 
-                // Favorites tab
+                
                 _buildRecipesList(_getFilteredFavoriteRecipes()),
               ],
             ),
@@ -246,7 +246,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Functionality for adding a custom recipe
+          
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Добавление рецепта будет доступно в будущем')),
           );
@@ -310,7 +310,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                 '/recipes/detail',
                 arguments: {'recipeId': recipe.id},
               ).then((_) {
-                // Refresh data when returning from details
+                
                 _loadData();
               });
             },
@@ -318,7 +318,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: [
-                  // Recipe image с использованием CachedNetworkImage
+                  
                   recipe.mainImageUrl != null && recipe.mainImageUrl!.isNotEmpty
                       ? ClipRRect(
                     borderRadius: const BorderRadius.only(
@@ -377,7 +377,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                   ),
                   const SizedBox(width: 16),
 
-                  // Recipe information
+                  
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -390,10 +390,10 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                         ),
                         const SizedBox(height: 8),
 
-                        // Исправленное отображение информации о рецепте
+                        
                         Row(
                           children: [
-                            // Калории
+                            
                             Icon(
                               Icons.local_fire_department,
                               size: 16,
@@ -404,9 +404,9 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                               '${recipe.calories} ккал',
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
-                            const SizedBox(width: 8), // Уменьшен отступ
+                            const SizedBox(width: 8), 
 
-                            // Время приготовления с ограничением ширины
+                            
                             Flexible(
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -433,7 +433,7 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
                     ),
                   ),
 
-                  // Favorite button
+                  
                   IconButton(
                     icon: Icon(
                       recipe.isFavorite
@@ -461,10 +461,10 @@ class _RecipesScreenState extends State<RecipesScreen> with SingleTickerProvider
       final success = await dataRepository.toggleFavoriteRecipe(recipeId);
 
       if (success) {
-        // Refresh data after toggling favorite
+        
         await _loadData();
       } else {
-        // Show error message
+        
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Не удалось обновить статус избранного')),
         );

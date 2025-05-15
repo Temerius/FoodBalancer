@@ -24,7 +24,7 @@ class RecipeCard extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Row(
             children: [
-              // Recipe image with CachedNetworkImage
+              
               recipe.mainImageUrl != null && recipe.mainImageUrl!.isNotEmpty
                   ? ClipRRect(
                 borderRadius: BorderRadius.circular(8),
@@ -74,7 +74,7 @@ class RecipeCard extends StatelessWidget {
               ),
               const SizedBox(width: 16),
 
-              // Recipe information
+              
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,10 +87,10 @@ class RecipeCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
 
-                    // Info row with proper constraints
+                    
                     Row(
                       children: [
-                        // Calories
+                        
                         Icon(
                           Icons.local_fire_department,
                           size: 16,
@@ -103,7 +103,7 @@ class RecipeCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
 
-                        // Prep time with constraints
+                        
                         Flexible(
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -130,7 +130,7 @@ class RecipeCard extends StatelessWidget {
                 ),
               ),
 
-              // Favorite button
+              
               IconButton(
                 icon: Icon(
                   recipe.isFavorite ? Icons.favorite : Icons.favorite_border,

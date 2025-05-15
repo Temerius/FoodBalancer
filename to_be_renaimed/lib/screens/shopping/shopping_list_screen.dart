@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../repositories/data_repository.dart';
 import '../../models/enums.dart';
-import '../../models/ingredient.dart'; // Используем существующую модель
+import '../../models/ingredient.dart'; 
 
 class ShoppingListScreen extends StatefulWidget {
   const ShoppingListScreen({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class ShoppingListScreen extends StatefulWidget {
 
 class _ShoppingListScreenState extends State<ShoppingListScreen> {
   bool _isLoading = false;
-  // По умолчанию показываем все элементы
+  
   bool _showOnlyUnchecked = false;
   String? _errorMessage;
   List<ShoppingListItem> _items = [];
@@ -34,7 +34,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     }
 
     try {
-      // Загружаем элементы списка покупок из репозитория
+      
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
       final items = await dataRepository.getShoppingListItems(
         onlyUnchecked: _showOnlyUnchecked,
@@ -57,7 +57,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     }
   }
 
-  // Показываем диалог при нажатии на элемент
+  
   Future<void> _onItemTap(ShoppingListItem item) async {
     final result = await showDialog<String>(
       context: context,
@@ -108,71 +108,71 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     );
 
     if (result == 'scan') {
-      // Переходим к сканеру штрих-кода
+      
       if (mounted) {
-        // Сразу помечаем элемент как выбранный
+        
         _toggleItemChecked(item, true);
 
-        // Переходим к сканеру штрих-кода
+        
         Navigator.pushNamed(context, '/refrigerator/barcode-scanner')
             .then((_) {
-          // Просто перезагружаем данные при возврате
+          
           _loadData();
         });
       }
     } else if (result == 'manual') {
-      // Переходим к экрану добавления продукта с предварительно заполненными данными
+      
       if (mounted) {
-        // Создаем аргументы для передачи в экран добавления продукта
+        
         final args = {
           'prefill_data': {
-            'name': item.name, // Название продукта
-            'quantity': item.quantity.toString(), // Количество
-            'quantity_type': item.quantityType, // Тип единицы измерения
-            'ingredient_type_id': item.ingredientTypeId, // ID типа ингредиента
-            'ingredient_type_name': item.ingredientType?.name, // Название типа ингредиента
+            'name': item.name, 
+            'quantity': item.quantity.toString(), 
+            'quantity_type': item.quantityType, 
+            'ingredient_type_id': item.ingredientTypeId, 
+            'ingredient_type_name': item.ingredientType?.name, 
           },
-          'shopping_item_id': item.id // ID элемента списка покупок
+          'shopping_item_id': item.id 
         };
 
-        // Открываем экран добавления с данными
+        
         Navigator.pushNamed(
           context,
           '/refrigerator/add-product',
           arguments: args,
         ).then((value) {
-          // Когда возвращаемся после добавления продукта вручную, проверяем был ли добавлен продукт
+          
           if (value == true) {
-            // Помечаем элемент как выбранный в списке покупок только при успешном добавлении
+            
             _toggleItemChecked(item, true);
           }
-          _loadData(); // Перезагружаем данные списка покупок
+          _loadData(); 
         });
       }
     } else if (result == 'toggle') {
-      // Переключаем состояние выбранности
+      
       _toggleItemChecked(item, !item.isChecked);
     }
   }
 
-  // Переключаем статус выбранности элемента
+  
   Future<void> _toggleItemChecked(ShoppingListItem item, bool isChecked) async {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Используем репозиторий для обновления элемента в кэше
+      
       await dataRepository.updateShoppingListItem(
         itemId: item.id!,
         isChecked: isChecked,
       );
 
-      // Обновляем локальное состояние
+      
       setState(() {
         item.isChecked = isChecked;
       });
 
-      // Если показываем только невыбранные элементы и этот элемент был только что выбран,
-      // удаляем его из списка
+      
+      
       if (_showOnlyUnchecked && item.isChecked) {
         setState(() {
           _items.remove(item);
@@ -187,16 +187,16 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     }
   }
 
-  // Удаляем отдельный элемент из списка покупок
+  
   Future<void> _removeItem(ShoppingListItem item) async {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Удаляем с сервера через репозиторий (который также обновляет кэш)
+      
       final success = await dataRepository.removeShoppingListItem(item.id!);
 
       if (success && mounted) {
-        // Удаляем из локального состояния, если успешно
+        
         setState(() {
           _items.remove(item);
         });
@@ -207,7 +207,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
             action: SnackBarAction(
               label: 'Отменить',
               onPressed: () {
-                // Здесь можно добавить функцию восстановления элемента
+                
               },
             ),
           ),
@@ -222,16 +222,16 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     }
   }
 
-  // Удаляем все выбранные элементы
+  
   Future<void> _clearCheckedItems() async {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Это удалит выбранные элементы с сервера и из кэша
+      
       final success = await dataRepository.clearCheckedShoppingListItems();
 
       if (success && mounted) {
-        // Обновляем локальное состояние - удаляем выбранные элементы
+        
         setState(() {
           _items.removeWhere((item) => item.isChecked);
         });
@@ -249,9 +249,9 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     }
   }
 
-  // Очищаем весь список покупок
+  
   Future<void> _clearAllItems() async {
-    // Показываем диалог подтверждения
+    
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -274,11 +274,11 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
       try {
         final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-        // Это удалит все элементы и с сервера, и из кэша
+        
         final success = await dataRepository.clearAllShoppingListItems();
 
         if (success && mounted) {
-          // Очищаем локальное состояние
+          
           setState(() {
             _items.clear();
           });
@@ -303,7 +303,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
       appBar: AppBar(
         title: const Text('Список покупок'),
         actions: [
-          // Переключатель режима отображения
+          
           IconButton(
             icon: Icon(_showOnlyUnchecked
                 ? Icons.check_box_outline_blank
@@ -311,14 +311,14 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
             onPressed: () {
               setState(() {
                 _showOnlyUnchecked = !_showOnlyUnchecked;
-                _loadData(); // Перезагружаем данные с новым фильтром
+                _loadData(); 
               });
             },
             tooltip: _showOnlyUnchecked
                 ? 'Показать все'
                 : 'Показать только невыбранные',
           ),
-          // Меню опций
+          
           PopupMenuButton<String>(
             onSelected: (value) {
               if (value == 'clear_checked') {
@@ -345,11 +345,11 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
           : _buildShoppingList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Переход к экрану добавления элемента
+          
           Navigator.pushNamed(
               context,
               '/shopping-list/add'
-          ).then((_) => _loadData()); // Перезагружаем данные после возврата
+          ).then((_) => _loadData()); 
         },
         child: const Icon(Icons.add),
       ),
@@ -357,7 +357,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
   }
 
   Widget _buildShoppingList() {
-    // Показываем сообщение об ошибке, если оно есть
+    
     if (_errorMessage != null) {
       return Center(
         child: Column(
@@ -384,7 +384,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
       );
     }
 
-    // Показываем пустое состояние, если нет элементов
+    
     if (_items.isEmpty) {
       return Center(
         child: Column(
@@ -418,18 +418,18 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
       );
     }
 
-    // Получаем все элементы из репозитория для расчета прогресса
+    
     final dataRepository = Provider.of<DataRepository>(context);
     final allItems = dataRepository.shoppingListItems;
 
-    // Рассчитываем прогресс
+    
     final checkedCount = allItems.where((item) => item.isChecked).length;
     final progress = allItems.isEmpty ? 0.0 : checkedCount / allItems.length;
 
-    // Строим список с индикаторами прогресса
+    
     return Column(
       children: [
-        // Индикатор прогресса
+        
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: LinearProgressIndicator(
@@ -439,7 +439,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
           ),
         ),
 
-        // Статистика прогресса
+        
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Row(
@@ -463,7 +463,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
           ),
         ),
 
-        // Элементы списка покупок
+        
         Expanded(
           child: RefreshIndicator(
             onRefresh: _loadData,
@@ -481,7 +481,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     );
   }
 
-  // Элемент списка покупок с правильным зачеркиванием и взаимодействием
+  
   Widget _buildShoppingItem(ShoppingListItem item) {
     return Dismissible(
       key: Key('shopping_item_${item.id}'),
@@ -506,7 +506,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
             padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
             child: Row(
               children: [
-                // Чекбокс
+                
                 Checkbox(
                   value: item.isChecked,
                   onChanged: (value) {
@@ -516,7 +516,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
                   },
                   activeColor: Theme.of(context).colorScheme.primary,
                 ),
-                // Контент
+                
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -542,7 +542,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
                     ],
                   ),
                 ),
-                // Иконка дополнительных действий
+                
                 IconButton(
                   icon: const Icon(Icons.more_vert),
                   onPressed: () => _onItemTap(item),

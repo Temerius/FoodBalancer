@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheManager {
-  // Ключи для хранения данных
+  
   static const String _userKey = 'user_data';
   static const String _allergensKey = 'allergens_data';
   static const String _equipmentKey = 'equipment_data';
@@ -15,24 +15,24 @@ class CacheManager {
   static const String _lastUpdateKey = 'last_update';
   static const String _expireTimeKey = 'expire_time';
 
-  // Время жизни кэша в миллисекундах (по умолчанию 24 часа)
+  
   static const int _defaultCacheLifetime = 24 * 60 * 60 * 1000;
 
-  // Получение SharedPreferences
+  
   static Future<SharedPreferences> get _prefs => SharedPreferences.getInstance();
 
-  // Сохранение данных в кэш
+  
   static Future<bool> saveData(String key, dynamic data, {int? expiryTimeMs}) async {
     final prefs = await _prefs;
 
-    // Сохраняем данные в формате JSON
+    
     final jsonString = jsonEncode(data);
     final result = await prefs.setString(key, jsonString);
 
-    // Обновляем время последнего обновления
+    
     await prefs.setInt(_lastUpdateKey, DateTime.now().millisecondsSinceEpoch);
 
-    // Если указано время истечения кэша, сохраняем его
+    
     if (expiryTimeMs != null) {
       await prefs.setInt(key + _expireTimeKey, expiryTimeMs);
     }
@@ -40,16 +40,16 @@ class CacheManager {
     return result;
   }
 
-  // Получение данных из кэша
+  
   static Future<dynamic> getData(String key, {bool checkExpiry = true}) async {
     final prefs = await _prefs;
 
-    // Проверяем, истек ли срок действия кэша
+    
     if (checkExpiry && await isExpired(key)) {
       return null;
     }
 
-    // Получаем данные
+    
     final jsonString = prefs.getString(key);
     if (jsonString == null) {
       return null;
@@ -58,52 +58,52 @@ class CacheManager {
     try {
       return jsonDecode(jsonString);
     } catch (e) {
-      // Если произошла ошибка при декодировании, удаляем поврежденные данные
+      
       await prefs.remove(key);
       return null;
     }
   }
 
-  // Проверка, истек ли срок действия кэша
+  
   static Future<bool> isExpired(String key) async {
     final prefs = await _prefs;
 
-    // Получаем время последнего обновления
+    
     final lastUpdate = prefs.getInt(_lastUpdateKey) ?? 0;
 
-    // Получаем указанное время жизни кэша для данного ключа или используем значение по умолчанию
+    
     final expireTime = prefs.getInt(key + _expireTimeKey) ?? _defaultCacheLifetime;
 
-    // Вычисляем, истек ли срок действия
+    
     final now = DateTime.now().millisecondsSinceEpoch;
     return (now - lastUpdate) > expireTime;
   }
 
-  // Удаление конкретного кэша
+  
   static Future<bool> removeData(String key) async {
     final prefs = await _prefs;
     final result = await prefs.remove(key);
 
-    // Удаляем также метаданные кэша
+    
     await prefs.remove(key + _expireTimeKey);
 
     return result;
   }
 
-  // Очистка всего кэша
+  
   static Future<bool> clearAll() async {
     final prefs = await _prefs;
     final result = await prefs.clear();
     return result;
   }
 
-  // Принудительное обновление времени кэша
+  
   static Future<void> touchCache() async {
     final prefs = await _prefs;
     await prefs.setInt(_lastUpdateKey, DateTime.now().millisecondsSinceEpoch);
   }
 
-  // Проверка, просрочен ли весь кэш
+  
   static Future<bool> isAllCacheExpired({int customExpiry = _defaultCacheLifetime}) async {
     final prefs = await _prefs;
     final lastUpdate = prefs.getInt(_lastUpdateKey) ?? 0;
@@ -111,9 +111,9 @@ class CacheManager {
     return (now - lastUpdate) > customExpiry;
   }
 
-  // Методы для работы с конкретными типами данных
+  
 
-  // Пользователь
+  
   static Future<bool> saveUser(Map<String, dynamic> userData) async {
     return saveData(_userKey, userData);
   }
@@ -123,7 +123,7 @@ class CacheManager {
     return data != null ? Map<String, dynamic>.from(data) : null;
   }
 
-  // Аллергены
+  
   static Future<bool> saveAllergens(List<Map<String, dynamic>> allergensData) async {
     final result = await saveData(_allergensKey, allergensData);
     if (result) {
@@ -145,7 +145,7 @@ class CacheManager {
     );
   }
 
-  // Оборудование
+  
   static Future<bool> saveEquipment(List<Map<String, dynamic>> equipmentData) async {
     return saveData(_equipmentKey, equipmentData);
   }
@@ -159,7 +159,7 @@ class CacheManager {
     );
   }
 
-  // Типы ингредиентов
+  
   static Future<bool> saveIngredientTypes(List<Map<String, dynamic>> typesData) async {
     return saveData(_ingredientTypesKey, typesData);
   }
@@ -173,7 +173,7 @@ class CacheManager {
     );
   }
 
-  // Рецепты
+  
   static Future<bool> saveRecipes(List<Map<String, dynamic>> recipesData) async {
     return saveData(_recipesKey, recipesData);
   }
@@ -187,7 +187,7 @@ class CacheManager {
     );
   }
 
-  // Детали рецептов
+  
   static Future<bool> saveRecipeDetails(Map<String, dynamic> detailsMap) async {
     return saveData(_recipesDetailsKey, detailsMap);
   }
@@ -197,7 +197,7 @@ class CacheManager {
     return data != null ? Map<String, dynamic>.from(data) : null;
   }
 
-  // План питания
+  
   static Future<bool> saveMealPlan(Map<String, dynamic> mealPlanData) async {
     return saveData(_mealPlanKey, mealPlanData);
   }
@@ -207,7 +207,7 @@ class CacheManager {
     return data != null ? Map<String, dynamic>.from(data) : null;
   }
 
-  // Список покупок
+  
   static Future<bool> saveShoppingList(Map<String, dynamic> shoppingListData) async {
     return saveData(_shoppingListKey, shoppingListData);
   }

@@ -15,10 +15,10 @@ class User {
   final int? age;
   final Gender? gender;
   final int? caloriesPerDay;
-  List<int> allergenIds = []; // Changed to be mutable with default empty list
-  List<int> equipmentIds = []; // Changed to be mutable with default empty list
+  List<int> allergenIds = []; 
+  List<int> equipmentIds = []; 
 
-  // Runtime properties that will be filled after initial loading
+  
   List<Allergen> allergens = [];
   List<Equipment> equipment = [];
   List<UserIngredient> refrigeratorItems = [];
@@ -78,13 +78,13 @@ class User {
     };
   }
 
-  // Calculate BMI (Body Mass Index)
+  
   double? get bmi {
     if (height == null || weight == null || height! <= 0) return null;
     return weight! / ((height! / 100) * (height! / 100));
   }
 
-  // Get BMI category
+  
   String get bmiCategory {
     final currentBmi = bmi;
     if (currentBmi == null) return 'Неизвестно';
@@ -95,13 +95,13 @@ class User {
     return 'Ожирение';
   }
 
-  // Calculate daily calorie needs based on height, weight, age, gender
+  
   int calculateDailyCalories() {
     if (height == null || weight == null || age == null || gender == null) {
-      return 2000; // Default value
+      return 2000; 
     }
 
-    // Basic Harris-Benedict equation
+    
     double bmr;
     if (gender == Gender.male) {
       bmr = 88.362 + (13.397 * weight!) + (4.799 * height!) - (5.677 * age!);
@@ -109,11 +109,11 @@ class User {
       bmr = 447.593 + (9.247 * weight!) + (3.098 * height!) - (4.330 * age!);
     }
 
-    // Assuming moderate activity level (1.55 multiplier)
+    
     return (bmr * 1.55).round();
   }
 
-  // Get expiring products in refrigerator (within 3 days)
+  
   List<UserIngredient> get expiringProducts {
     final now = DateTime.now();
     return refrigeratorItems.where((item) {
@@ -124,7 +124,7 @@ class User {
     }).toList();
   }
 
-  // Get daily meal plan for today
+  
   DailyMealPlan? get todayMealPlan {
     if (currentMealPlan == null) return null;
 

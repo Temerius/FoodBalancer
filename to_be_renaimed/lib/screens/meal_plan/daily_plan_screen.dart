@@ -1,4 +1,4 @@
-// lib/screens/meal_plan/daily_plan_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../utils/date_formatter.dart';
@@ -17,16 +17,16 @@ class DailyPlanScreen extends StatefulWidget {
 class _DailyPlanScreenState extends State<DailyPlanScreen> {
   late DateTime _selectedDate;
 
-  // Симуляция данных о приемах пищи
+  
   List<Map<String, dynamic>> _meals = [];
 
-  // Общее количество калорий
+  
   int _totalCalories = 0;
 
-  // Сервис планов питания
+  
   final MealPlanService _mealPlanService = MealPlanService();
 
-  // Состояние загрузки
+  
   bool _isLoading = true;
 
   @override
@@ -34,52 +34,52 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
     super.initState();
     _selectedDate = widget.date ?? DateTime.now();
 
-    // Загрузка данных
+    
     _loadData();
   }
 
-  // Загрузка данных о планах питания из сервиса
+  
   Future<void> _loadData() async {
     setState(() {
       _isLoading = true;
     });
 
     if (_mealPlanService.isInitialized) {
-      // Если сервис уже инициализирован, просто получаем данные
+      
       _loadDataFromService();
       setState(() {
         _isLoading = false;
       });
     } else {
-      // Если сервис еще не инициализирован, загружаем рецепты и инициализируем
+      
       await _initializeService();
     }
   }
 
-  // Загрузка данных из сервиса
+  
   void _loadDataFromService() {
     final dayData = _mealPlanService.getMealPlanForDate(_selectedDate);
 
     if (dayData != null) {
-      // Копируем данные из сервиса
+      
       _meals = List<Map<String, dynamic>>.from(dayData['meals']);
       _totalCalories = dayData['calories'];
     } else {
-      // Если нет данных для этого дня, инициализируем по умолчанию
+      
       _initMealData();
     }
   }
 
-  // Инициализация сервиса, если он еще не был инициализирован
+  
   Future<void> _initializeService() async {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
       final recipes = await dataRepository.getRecipes();
 
-      // Инициализация сервиса планов питания
+      
       await _mealPlanService.initializeWithRecipes(recipes);
 
-      // Загружаем данные из сервиса
+      
       _loadDataFromService();
 
       setState(() {
@@ -88,7 +88,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
     } catch (e) {
       print('Error initializing meal plan service: $e');
 
-      // В случае ошибки, инициализируем данные по умолчанию
+      
       _initMealData();
 
       setState(() {
@@ -97,7 +97,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
     }
   }
 
-  // Инициализация данных о приемах пищи (используется как запасной вариант)
+  
   void _initMealData() {
     _meals = [
       {
@@ -132,7 +132,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
     _updateTotalCalories();
   }
 
-  // Обновление общего количества калорий
+  
   void _updateTotalCalories() {
     _totalCalories = 0;
     for (final meal in _meals) {
@@ -141,7 +141,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
       }
     }
 
-    // Обновляем данные в сервисе
+    
     final dayData = {
       'calories': _totalCalories,
       'meals': _meals,
@@ -159,14 +159,14 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
           ? const Center(child: CircularProgressIndicator())
           : Column(
         children: [
-          // Информация о калориях
+          
           Card(
             margin: const EdgeInsets.all(16),
             child: Container(
               width: double.infinity,
               child: Stack(
                 children: [
-                  // Основное содержимое карточки
+                  
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
@@ -198,7 +198,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
                     ),
                   ),
 
-                  // Кнопка изменения цели
+                  
                   Positioned(
                     right: 8,
                     top: 8,
@@ -218,7 +218,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
             ),
           ),
 
-          // Список приемов пищи
+          
           Expanded(
             child: ReorderableListView(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -230,7 +230,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
                   }
                   final item = _meals.removeAt(oldIndex);
                   _meals.insert(newIndex, item);
-                  // Обновляем данные в сервисе после изменения порядка
+                  
                   _updateTotalCalories();
                 });
               },
@@ -256,7 +256,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Заголовок приема пищи
+            
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -299,7 +299,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
             ),
             const Divider(),
 
-            // Список рецептов
+            
             if ((meal['recipes'] as List).isEmpty)
               const Padding(
                 padding: EdgeInsets.all(8.0),
@@ -314,7 +314,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
                     (index) => _buildRecipeItem(meal['recipes'][index], meal),
               ),
 
-            // Кнопка добавления рецепта
+            
             InkWell(
               onTap: () {
                 _showAddRecipeDialog(meal);
@@ -394,7 +394,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
     );
   }
 
-  // Диалог для изменения цели по калориям
+  
   void _showCaloriesTargetDialog() {
     final caloriesController = TextEditingController(text: '2000');
 
@@ -420,7 +420,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              // Обновление цели (в реальном приложении)
+              
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Цель по калориям обновлена')),
               );
@@ -432,7 +432,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
     );
   }
 
-  // Диалог для добавления нового приема пищи
+  
   void _showAddMealDialog() {
     final typeController = TextEditingController();
     final timeController = TextEditingController(text: '12:00');
@@ -479,7 +479,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
                     'time': timeController.text,
                     'recipes': [],
                   });
-                  // Обновляем данные в сервисе после добавления
+                  
                   _updateTotalCalories();
                 });
                 Navigator.pop(context);
@@ -492,7 +492,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
     );
   }
 
-  // Диалог для редактирования приема пищи
+  
   void _showEditMealDialog(Map<String, dynamic> meal) {
     final typeController = TextEditingController(text: meal['type'] as String);
     final timeController = TextEditingController(text: meal['time'] as String);
@@ -534,7 +534,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
                 setState(() {
                   meal['type'] = typeController.text;
                   meal['time'] = timeController.text;
-                  // Обновляем данные в сервисе после редактирования
+                  
                   _updateTotalCalories();
                 });
                 Navigator.pop(context);
@@ -547,7 +547,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
     );
   }
 
-  // Диалог для удаления приема пищи
+  
   void _showDeleteMealDialog(Map<String, dynamic> meal) {
     showDialog(
       context: context,
@@ -565,7 +565,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
             onPressed: () {
               setState(() {
                 _meals.removeWhere((m) => m['id'] == meal['id']);
-                // Обновляем данные в сервисе после удаления
+                
                 _updateTotalCalories();
               });
               Navigator.pop(context);
@@ -577,9 +577,9 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
     );
   }
 
-  // Диалог для добавления рецепта
+  
   void _showAddRecipeDialog(Map<String, dynamic> meal) {
-    // Симуляция списка доступных рецептов
+    
     final availableRecipes = [
       {'id': 10, 'name': 'Каша овсяная', 'calories': 220},
       {'id': 11, 'name': 'Греческий салат', 'calories': 150},
@@ -605,7 +605,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
                 onTap: () {
                   setState(() {
                     (meal['recipes'] as List).add(recipe);
-                    // Обновляем данные в сервисе после добавления рецепта
+                    
                     _updateTotalCalories();
                   });
                   Navigator.pop(context);

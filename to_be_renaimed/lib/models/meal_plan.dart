@@ -8,7 +8,7 @@ class WeeklyMealPlan {
   final DateTime endDate;
   final int userId;
 
-  // Runtime properties
+  
   List<DailyMealPlan> dailyPlans = [];
 
   WeeklyMealPlan({
@@ -37,13 +37,13 @@ class WeeklyMealPlan {
     };
   }
 
-  // Check if a date is within this meal plan
+  
   bool containsDate(DateTime date) {
     final dayOnly = DateTime(date.year, date.month, date.day);
     return !dayOnly.isBefore(startDate) && !dayOnly.isAfter(endDate);
   }
 
-  // Get daily plan for a specific date
+  
   DailyMealPlan? getDailyPlan(DateTime date) {
     final dayOnly = DateTime(date.year, date.month, date.day);
     return dailyPlans.firstWhere(
@@ -87,7 +87,7 @@ class DailyMealPlan {
   final int caloriesPerDay;
   final int weeklyMealPlanId;
 
-  // Runtime properties
+  
   List<Meal> meals = [];
   List<DailyMealPlanIngredient> ingredients = [];
 
@@ -120,7 +120,7 @@ class DailyMealPlan {
     };
   }
 
-  // Calculate total calories from meals
+  
   int get totalCalories {
     int total = 0;
     for (var meal in meals) {
@@ -168,7 +168,7 @@ class DailyMealPlanIngredient {
   final int quantity;
   final QuantityType quantityType;
 
-  // Runtime properties
+  
   Ingredient? ingredient;
 
   DailyMealPlanIngredient({
@@ -197,7 +197,7 @@ class DailyMealPlanIngredient {
     };
   }
 
-  // Get formatted quantity with units
+  
   String get formattedQuantity {
     return '$quantity ${quantityType.getShortName()}';
   }
@@ -234,10 +234,10 @@ class Meal {
   final int id;
   final DateTime date;
   final int userId;
-  final String type; // 'Завтрак', 'Обед', 'Ужин', etc.
-  final String time; // Time of the meal, e.g., '08:00'
+  final String type;
+  final String time;
 
-  // Runtime properties
+  
   List<MealRecipe> recipes = [];
   List<MealIngredient> ingredients = [];
 
@@ -258,8 +258,8 @@ class Meal {
       id: json['adm_id'],
       date: DateTime.parse(json['adm_date']),
       userId: json['adm_usr_id'],
-      type: json['type'] ?? 'Прием пищи', // This might be a custom field
-      time: json['time'] ?? '12:00', // This might be a custom field too
+      type: json['type'] ?? 'Прием пищи',
+      time: json['time'] ?? '12:00',
     );
   }
 
@@ -268,12 +268,12 @@ class Meal {
       'adm_id': id,
       'adm_date': date.toIso8601String().split('T')[0],
       'adm_usr_id': userId,
-      'type': type, // Custom field
-      'time': time, // Custom field
+      'type': type,
+      'time': time,
     };
   }
 
-  // Calculate total calories
+  
   int get totalCalories {
     int total = 0;
     for (var recipe in recipes) {
@@ -283,12 +283,10 @@ class Meal {
     }
     for (var ingredient in ingredients) {
       if (ingredient.ingredient != null) {
-        // Scale based on quantity
+        
         final baseCalories = ingredient.ingredient!.calories;
         final baseWeight = ingredient.ingredient!.weight;
         if (baseWeight > 0 && ingredient.quantity > 0) {
-          // Convert quantities if needed
-          // This is a simplification - proper unit conversion would be needed
           total += (baseCalories * ingredient.quantity) ~/ baseWeight;
         }
       }
@@ -331,7 +329,7 @@ class MealRecipe {
   final int mealId;
   final int recipeId;
 
-  // Runtime properties
+  
   Recipe? recipe;
 
   MealRecipe({
@@ -384,7 +382,7 @@ class MealIngredient {
   final int quantity;
   final QuantityType quantityType;
 
-  // Runtime properties
+  
   Ingredient? ingredient;
 
   MealIngredient({
@@ -413,7 +411,7 @@ class MealIngredient {
     };
   }
 
-  // Get formatted quantity with units
+  
   String get formattedQuantity {
     return '$quantity ${quantityType.getShortName()}';
   }

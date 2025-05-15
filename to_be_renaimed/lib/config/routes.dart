@@ -1,4 +1,3 @@
-// lib/config/routes.dart - Update to add debug routes
 import 'package:flutter/material.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/auth/onboarding_screen.dart';
@@ -20,7 +19,7 @@ import '../screens/shopping/add_to_shopping_list_screen.dart';
 import '../screens/meal_plan/weakly_plan_screen.dart';
 import '../screens/meal_plan/daily_plan_screen.dart';
 import '../screens/meal_plan/generate_plan_screen.dart';
-import '../screens/debug/cache_debug_screen.dart';  // Добавляем импорт отладочного экрана
+import '../screens/debug/cache_debug_screen.dart';
 
 class AppRoutes {
   static const String onboarding = '/';
@@ -43,7 +42,7 @@ class AppRoutes {
   static const String weeklyPlan = '/meal-plan/weekly';
   static const String dailyPlan = '/meal-plan/daily';
   static const String generatePlan = '/meal-plan/generate';
-  static const String debugCache = '/debug/cache';  // Добавляем маршрут для отладки кэша
+  static const String debugCache = '/debug/cache';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -89,7 +88,7 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => DailyPlanScreen(date: args?['date']));
       case generatePlan:
         return MaterialPageRoute(builder: (_) => const GeneratePlanScreen());
-      case debugCache:  // Добавляем маршрут к отладочному экрану
+      case debugCache:
         return MaterialPageRoute(builder: (_) => const CacheDebugScreen());
       default:
         return MaterialPageRoute(

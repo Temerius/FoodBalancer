@@ -1,4 +1,3 @@
-// lib/models/refrigerator_item.dart
 import 'package:to_be_renaimed/models/ingredient.dart';
 import 'package:to_be_renaimed/models/enums.dart';
 
@@ -9,7 +8,7 @@ class RefrigeratorItem {
   final int quantity;
   final QuantityType quantityType;
 
-  // Runtime properties
+  
   Ingredient? ingredient;
 
   RefrigeratorItem({
@@ -26,13 +25,12 @@ class RefrigeratorItem {
     print('JSON TYPE: ${json.runtimeType}');
     print('JSON CONTENT: $json');
 
-    // Сначала получаем данные из сериализованной структуры
+
     Ingredient? ingredient;
     if (json['ingredient'] != null && json['ingredient'] is Map<String, dynamic>) {
       ingredient = Ingredient.fromJson(json['ingredient']);
     }
 
-    // Парсим enum для quantityType
     QuantityType quantityType = QuantityType.grams;
     try {
       quantityType = QuantityType.fromString(json['mui_quantity_type'] ?? 'grams');
@@ -40,7 +38,6 @@ class RefrigeratorItem {
       print('Error parsing quantity type: $e');
     }
 
-    // Правильно парсим числовые поля
     int id = 0;
     try {
       print('PARSING mui_id: ${json['mui_id']} (type: ${json['mui_id']?.runtimeType})');
@@ -73,10 +70,10 @@ class RefrigeratorItem {
       } else if (json['mui_ing_id'] is String) {
         ingredientId = int.tryParse(json['mui_ing_id']) ?? 0;
       } else if (json['mui_ing_id'] is Map && json['mui_ing_id']['ing_id'] != null) {
-        // Если mui_ing_id - это объект, извлекаем ID из него
+
         ingredientId = json['mui_ing_id']['ing_id'];
       } else if (ingredient != null) {
-        // Если не получилось извлечь ID из mui_ing_id, используем ID из ingredient
+
         ingredientId = ingredient.id;
       }
     } catch (e) {
@@ -124,19 +121,18 @@ class RefrigeratorItem {
     };
   }
 
-  // Получить отформатированное количество с единицами измерения
+
   String get formattedQuantity {
     return '$quantity ${quantityType.getShortName()}';
   }
 
-  // Получить название ингредиента
+
   String get name => ingredient?.name ?? 'Неизвестный продукт';
 
-  // Получить дни до истечения срока годности
+
   int? get daysLeft {
     if (ingredient?.expiryDate == null) return null;
 
-    // Получаем только даты без времени для правильного сравнения
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final expiry = DateTime(
@@ -145,19 +141,17 @@ class RefrigeratorItem {
       ingredient!.expiryDate!.day,
     );
 
-    // Считаем разницу в днях
     final difference = expiry.difference(today).inDays;
 
     return difference;
   }
 
-  // Проверить, истек ли срок годности
   bool get isExpired {
     final days = daysLeft;
     return days != null && days < 0;
   }
 
-  // Проверить, истекает ли срок годности в ближайшие дни
+
   bool isExpiringSoon(int days) {
     final daysLeft = this.daysLeft;
     return daysLeft != null && daysLeft >= 0 && daysLeft <= days;
@@ -192,7 +186,7 @@ class RefrigeratorItem {
   int get hashCode => id.hashCode;
 }
 
-// Статистика холодильника
+
 class RefrigeratorStats {
   final int totalItems;
   final int expiringSoon;

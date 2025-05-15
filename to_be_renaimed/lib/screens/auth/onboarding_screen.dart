@@ -26,14 +26,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void initState() {
     super.initState();
 
-    // Initialize the app and run API tests
+    
     _initializeApp();
   }
 
   Future<void> _initializeApp() async {
-    // Your existing initialization code...
+    
 
-    // Run API tests
+    
     WidgetsBinding.instance.addPostFrameCallback((_) {
       AppInitializer.runApiTests(context);
     });
@@ -84,14 +84,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // Кнопка пропустить
+            
             Align(
               alignment: Alignment.topRight,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextButton(
                   onPressed: () {
-                    // Очищаем ошибки перед навигацией
+                    
                     Provider.of<AuthProvider>(context, listen: false).clearError();
                     Navigator.pushReplacementNamed(context, AppRoutes.login);
                   },
@@ -106,7 +106,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
 
-            // Основной контент
+            
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
@@ -122,7 +122,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
 
-            // Индикаторы страниц
+            
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 24.0),
               child: Row(
@@ -134,7 +134,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
 
-            // Кнопки навигации
+            
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: _currentPage < _pages.length - 1
@@ -147,7 +147,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   CustomButton(
                     text: 'Создать аккаунт',
                     onPressed: () {
-                      // Очищаем ошибки перед навигацией
+                      
                       Provider.of<AuthProvider>(context, listen: false).clearError();
                       Navigator.pushReplacementNamed(context, AppRoutes.register);
                     },
@@ -156,7 +156,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   CustomButton(
                     text: 'Уже есть аккаунт?',
                     onPressed: () {
-                      // Очищаем ошибки перед навигацией
+                      
                       Provider.of<AuthProvider>(context, listen: false).clearError();
                       Navigator.pushReplacementNamed(context, AppRoutes.login);
                     },

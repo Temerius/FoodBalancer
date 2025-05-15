@@ -14,10 +14,10 @@ class Ingredient {
   final int ingredientTypeId;
   final String? imageUrl;
 
-  // Runtime properties
+
   IngredientType? type;
   bool isSelected = false;
-  List<Allergen> allergens = []; // Добавлено поле для аллергенов
+  List<Allergen> allergens = [];
 
   Ingredient({
     required this.id,
@@ -35,25 +35,20 @@ class Ingredient {
   });
 
   factory Ingredient.fromJson(Map<String, dynamic> json) {
-    // Правильно парсим ingredientTypeId
     int ingredientTypeId = 0;
     try {
       if (json['ing_igt_id'] is int) {
-        // Если это просто число
         ingredientTypeId = json['ing_igt_id'];
       } else if (json['ing_igt_id'] is Map<String, dynamic>) {
-        // Если это объект, извлекаем ID из него
         final typeMap = json['ing_igt_id'] as Map<String, dynamic>;
         ingredientTypeId = typeMap['igt_id'] ?? 0;
       } else if (json['ing_igt_id'] is String) {
-        // Если это строка, парсим её
         ingredientTypeId = int.tryParse(json['ing_igt_id']) ?? 0;
       }
     } catch (e) {
       print('Error parsing ing_igt_id: $e');
     }
 
-    // Также получаем объект IngredientType, если он есть
     IngredientType? type;
     try {
       if (json['ing_igt_id'] is Map<String, dynamic>) {
@@ -63,7 +58,6 @@ class Ingredient {
       print('Error parsing IngredientType from ing_igt_id: $e');
     }
 
-    // Парсим аллергены
     List<Allergen> allergens = [];
     try {
       if (json['allergens'] != null && json['allergens'] is List) {
@@ -85,7 +79,7 @@ class Ingredient {
       calories: json['ing_calories'] ?? 0,
       protein: json['ing_protein'] ?? 0,
       fat: json['ing_fat'] ?? 0,
-      carbs: json['ing_hydrates'] ?? 0, // Note: hydrates field mapped to carbs
+      carbs: json['ing_hydrates'] ?? 0,
       ingredientTypeId: ingredientTypeId,
       imageUrl: json['ing_img_url'],
       type: type,
@@ -102,14 +96,13 @@ class Ingredient {
       'ing_calories': calories,
       'ing_protein': protein,
       'ing_fat': fat,
-      'ing_hydrates': carbs, // Note: carbs mapped to hydrates field
+      'ing_hydrates': carbs,
       'ing_igt_id': ingredientTypeId,
       if (imageUrl != null) 'ing_img_url': imageUrl,
       'allergen_ids': allergens.map((allergen) => allergen.id).toList(),
     };
   }
 
-  // Calculate days until expiry
   int? get daysLeft {
     if (expiryDate == null) return null;
 
@@ -118,10 +111,8 @@ class Ingredient {
     return difference.inDays;
   }
 
-  // Get category from type (if available)
   String? get category => type?.category;
 
-  // Get allergen names as string
   String get allergensString {
     if (allergens.isEmpty) return 'Нет аллергенов';
     return allergens.map((allergen) => allergen.name).join(', ');
@@ -168,17 +159,17 @@ class Ingredient {
   int get hashCode => id.hashCode;
 }
 
-// Class for user's ingredient in refrigerator or shopping list
+
 class UserIngredient {
-  final int? id; // This is the m2m_usr_ing.mui_id (can be null for new items)
+  final int? id;
   final int userId;
   final int ingredientId;
   final int quantity;
   final QuantityType quantityType;
 
-  // Runtime properties
+  
   Ingredient? ingredient;
-  bool isChecked = false; // For shopping list
+  bool isChecked = false; 
 
   UserIngredient({
     this.id,
@@ -209,7 +200,7 @@ class UserIngredient {
     };
   }
 
-  // Get formatted quantity with units
+  
   String get formattedQuantity {
     return '$quantity ${quantityType.getShortName()}';
   }
@@ -244,15 +235,15 @@ class UserIngredient {
   int get hashCode => id.hashCode;
 }
 
-// Class for shopping list item
+
 class ShoppingListItem {
-  final int? id; // This is the m2m_ing_spl.mis_id
+  final int? id;
   final int shoppingListId;
   final int ingredientTypeId;
   final int quantity;
   final QuantityType quantityType;
 
-  // Runtime properties
+  
   IngredientType? ingredientType;
   bool isChecked = false;
 
@@ -285,12 +276,12 @@ class ShoppingListItem {
     };
   }
 
-  // Get formatted quantity with units
+  
   String get formattedQuantity {
     return '$quantity ${quantityType.getShortName()}';
   }
 
-  // Get ingredient type name (if available)
+  
   String get name => ingredientType?.name ?? 'Неизвестный продукт';
 
   ShoppingListItem copyWith({

@@ -12,21 +12,21 @@ class AllergenRepository {
   AllergenRepository({required ApiService apiService})
       : _apiService = apiService;
 
-  // Геттер для списка аллергенов
+  
   List<Allergen> get allergens => _allergens;
 
-  // Загрузка всех аллергенов
+  
   Future<List<Allergen>> getAllAllergens({CacheConfig? config}) async {
     final cacheConfig = config ?? CacheConfig.defaultConfig;
     print("\nё (forceRefresh: ${cacheConfig.forceRefresh}) =====");
 
-    // Если аллергены уже в памяти и не требуется обновление
+    
     if (_allergens.isNotEmpty && !cacheConfig.forceRefresh) {
       print("ALLERGENS ALREADY IN MEMORY: ${_allergens.length} items");
       return _allergens;
     }
 
-    // Пробуем загрузить из кэша
+    
     if (!cacheConfig.forceRefresh) {
       final cachedData = await CacheService.get(_cacheKey, cacheConfig);
 
@@ -40,12 +40,12 @@ class AllergenRepository {
           return _allergens;
         } catch (e) {
           print("ERROR PARSING ALLERGENS FROM CACHE: $e");
-          // Если произошла ошибка при парсинге, продолжаем загрузку из API
+          
         }
       }
     }
 
-    // Загружаем из API
+    
     try {
       print("FETCHING ALLERGENS FROM API...");
       final response = await _apiService.get('/api/allergens/?limit=1000');
@@ -57,10 +57,10 @@ class AllergenRepository {
 
         _allergens = allergensJson.map((json) => Allergen.fromJson(json)).toList();
 
-        // Выводим список загруженных аллергенов
+        
         print("ALLERGENS LOADED FROM API: ${_allergens.length} items");
 
-        // Сохраняем в кэш
+        
         print("SAVING ALLERGENS TO CACHE...");
         await CacheService.save(_cacheKey, allergensJson);
 
@@ -73,13 +73,13 @@ class AllergenRepository {
       print("ERROR FETCHING ALLERGENS FROM API: $e");
       if (_allergens.isNotEmpty) {
         print("RETURNING ALLERGENS FROM MEMORY DUE TO ERROR: ${_allergens.length} items");
-        return _allergens; // Возвращаем данные из памяти в случае ошибки
+        return _allergens; 
       }
       rethrow;
     }
   }
 
-  // Фильтрация аллергенов по ID
+  
   List<Allergen> filterByIds(List<int> ids) {
     print("\n===== FILTERING ALLERGENS BY IDS: $ids =====");
     final filteredAllergens = _allergens.where((allergen) => ids.contains(allergen.id)).toList();
@@ -87,7 +87,7 @@ class AllergenRepository {
     return filteredAllergens;
   }
 
-  // Поиск аллергена по ID
+  
   Allergen? findById(int id) {
     print("\n===== FINDING ALLERGEN BY ID: $id =====");
     for (var allergen in _allergens) {
@@ -100,7 +100,7 @@ class AllergenRepository {
     return null;
   }
 
-  // Очистка кэша
+  
   Future<void> clearCache() async {
     print("\n===== CLEARING ALLERGENS CACHE =====");
     await CacheService.clear(_cacheKey);

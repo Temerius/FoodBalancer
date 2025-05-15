@@ -75,11 +75,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
               },
             )
                 : null,
-            // Добавьте эти настройки для улучшения отображения ошибок
-            errorMaxLines: 3,  // Разрешаем до 3 строк для сообщения об ошибке
+            
+            errorMaxLines: 3,  
             errorStyle: TextStyle(
               color: AppColors.error,
-              fontSize: 12.0,  // Уменьшаем размер шрифта
+              fontSize: 12.0,  
             ),
           ),
         ),

@@ -1,4 +1,4 @@
-// lib/models/shopping_list_item.dart
+
 import 'package:to_be_renaimed/models/enums.dart';
 import 'package:to_be_renaimed/models/ingredient_type.dart';
 
@@ -22,7 +22,7 @@ class ShoppingListItem {
     print('JSON TYPE: ${json.runtimeType}');
     print('JSON CONTENT: $json');
 
-    // Parse quantity type
+    
     QuantityType quantityType = QuantityType.grams;
     try {
       quantityType = QuantityType.fromString(json['mis_quantity_type'] ?? 'grams');
@@ -30,7 +30,7 @@ class ShoppingListItem {
       print('Error parsing quantity type: $e');
     }
 
-    // Parse ingredient type
+    
     IngredientType? ingredientType;
     if (json['ingredient_type'] != null && json['ingredient_type'] is Map<String, dynamic>) {
       ingredientType = IngredientType.fromJson(json['ingredient_type']);
@@ -54,12 +54,12 @@ class ShoppingListItem {
     };
   }
 
-  // Get formatted quantity with units
+  
   String get formattedQuantity {
     return '$quantity ${quantityType.getShortName()}';
   }
 
-  // Get ingredient type name
+  
   String get name => ingredientType?.name ?? 'Неизвестный продукт';
 
   ShoppingListItem copyWith({
@@ -108,7 +108,7 @@ class ShoppingList {
 
     return ShoppingList(
       id: json['spl_id'] ?? 0,
-      userId: 0, // User ID is not typically sent from the server
+      userId: 0, 
       items: items,
     );
   }
@@ -120,13 +120,13 @@ class ShoppingList {
     };
   }
 
-  // Get checked items (for progress calculation)
+  
   List<ShoppingListItem> get checkedItems => items.where((item) => item.isChecked).toList();
 
-  // Get progress percentage
+  
   double get progress => items.isEmpty ? 0.0 : checkedItems.length / items.length;
 
-  // Get items by category
+  
   Map<String, List<ShoppingListItem>> get itemsByCategory {
     final Map<String, List<ShoppingListItem>> result = {};
 

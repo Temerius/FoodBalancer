@@ -1,7 +1,7 @@
 class Allergen {
   final int id;
   final String name;
-  bool isSelected; // Local property for UI state
+  bool isSelected;
 
   Allergen({
     required this.id,

@@ -1,4 +1,4 @@
-// app_initializer.dart
+
 import 'package:flutter/material.dart';
 import 'api_test_service.dart';
 
@@ -6,17 +6,17 @@ class AppInitializer {
   static bool _testsRun = false;
 
   static Future<void> runApiTests(BuildContext context) async {
-    if (_testsRun) return; // Only run once
+    if (_testsRun) return; 
 
     _testsRun = true;
 
-    // Create the test service
-    final apiTestService = ApiTestService(baseUrl: 'http://192.168.100.5:8000');
+    
+    final apiTestService = ApiTestService(baseUrl: 'http://192.168.151.120:8000');
 
-    // Run the tests
+    
     final logs = await apiTestService.runAllTests();
 
-    // Show the results in a dialog
+    
     if (context.mounted) {
       showDialog(
         context: context,

@@ -1,4 +1,4 @@
-// lib/screens/refrigerator/refrigerator_screen.dart - ИСПРАВЛЕНО
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../repositories/data_repository.dart';
@@ -30,13 +30,13 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
 
-    // ИСПРАВЛЕНО: Сбрасываем категорию при переключении вкладок
+    
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
-        // После завершения анимации переключения
+        
         if (mounted) {
           setState(() {
-            // Сбрасываем категорию при переключении вкладок
+            
             _selectedCategory = 'Все';
           });
         }
@@ -60,19 +60,19 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     super.dispose();
   }
 
-  // Новый метод для обработки возврата с других экранов
+  
   Future<void> _handleNavigationReturn(dynamic result) async {
     if (result == true) {
       final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
 
-      // Просто обновляем данные в репозитории
+      
       await dataRepository.getRefrigeratorItems(forceRefresh: true);
 
-      // UI обновится автоматически
+      
     }
   }
 
-  // Улучшенный метод обновления данных
+  
   Future<void> _refreshData() async {
     if (_isRefreshing) return;
 
@@ -83,11 +83,11 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     try {
       final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
 
-      // Просто принудительно обновляем данные в репозитории
+      
       await dataRepository.getRefrigeratorItems(forceRefresh: true);
       await dataRepository.getRefrigeratorStats(forceRefresh: true);
 
-      // UI обновится автоматически через Provider
+      
 
     } catch (e) {
       print('Error in _refreshData: $e');
@@ -108,7 +108,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     }
   }
 
-  // ИСПРАВЛЕНИЕ: Полностью переписан метод _removeItem для правильного обновления статистики
+  
   Future<void> _removeItem(RefrigeratorItem item) async {
     final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
 
@@ -117,11 +117,11 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
         _isRefreshing = true;
       });
 
-      // Просто вызываем метод репозитория
+      
       final success = await dataRepository.removeRefrigeratorItem(item.id);
 
       if (success && mounted) {
-        // ИСПРАВЛЕНО: Принудительно обновляем статистику после удаления
+        
         await dataRepository.getRefrigeratorStats(forceRefresh: true);
 
         ScaffoldMessenger.of(context).showSnackBar(
@@ -154,7 +154,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
   void _resetCategoryIfNeeded(List<IngredientType> userCategories) {
     final categoryNames = ['Все', ...userCategories.map((cat) => cat.name)];
 
-    // Если выбранная категория больше не существует, сбрасываем на "Все"
+    
     if (!categoryNames.contains(_selectedCategory)) {
       setState(() {
         _selectedCategory = 'Все';
@@ -167,7 +167,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
   List<RefrigeratorItem> _filterExpiringItems(List<RefrigeratorItem> items) {
     var filtered = items;
 
-    // Поиск (так же как для основных продуктов)
+    
     if (_searchQuery.isNotEmpty) {
       filtered = filtered.where((item) {
         final name = item.ingredient?.name?.toLowerCase() ?? '';
@@ -177,7 +177,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
       }).toList();
     }
 
-    // Категория
+    
     if (_selectedCategory != 'Все') {
       filtered = filtered.where((item) {
         return item.ingredient?.type?.name == _selectedCategory;
@@ -189,10 +189,10 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
 
   @override
   Widget build(BuildContext context) {
-    // ИСПРАВЛЕНИЕ: Получаем все данные из репозитория через Provider
+    
     return Consumer<DataRepository>(
       builder: (context, dataRepository, child) {
-        // Получаем данные из репозитория
+        
         final items = dataRepository.refrigeratorItems;
         final expiringItems = dataRepository.expiringItems;
         final userCategories = dataRepository.userRefrigeratorCategories;
@@ -203,7 +203,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
           _resetCategoryIfNeeded(userCategories);
         });
 
-        // Фильтрация основных продуктов
+        
         final filteredItems = _filterItems(items);
 
         return Scaffold(
@@ -249,7 +249,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
                     ],
                   ),
                   onPressed: () {
-                    _showStatsDialog(stats); // ИСПРАВЛЕНО: передаем правильный тип
+                    _showStatsDialog(stats); 
                   },
                 ),
             ],
@@ -299,7 +299,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
   List<RefrigeratorItem> _filterItems(List<RefrigeratorItem> items) {
     var filtered = items;
 
-    // Поиск
+    
     if (_searchQuery.isNotEmpty) {
       filtered = filtered.where((item) {
         final name = item.ingredient?.name?.toLowerCase() ?? '';
@@ -309,7 +309,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
       }).toList();
     }
 
-    // Категория
+    
     if (_selectedCategory != 'Все') {
       filtered = filtered.where((item) {
         return item.ingredient?.type?.name == _selectedCategory;
@@ -319,26 +319,26 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     return filtered;
   }
 
-  // ИСПРАВЛЕНИЕ: Упрощенный buildContent
+  
   Widget _buildContent(
       List<RefrigeratorItem> filteredItems,
       List<RefrigeratorItem> expiringItems,
       List<IngredientType> userCategories,
       ) {
-    // ИСПРАВЛЕНО: Выбираем категории в зависимости от активной вкладки
+    
     final List<String> categoryNames;
 
     if (_tabController.index == 0) {
-      // На основной вкладке - все категории из холодильника
+      
       categoryNames = ['Все', ...userCategories.map((cat) => cat.name)];
     } else {
-      // На вкладке истекающих - только категории из истекающих продуктов
+      
       categoryNames = _getUniqueCategories(expiringItems);
     }
 
-    // Проверяем, существует ли выбранная категория в текущем списке
+    
     if (!categoryNames.contains(_selectedCategory)) {
-      // Если текущей категории нет в списке, сбрасываем на "Все"
+      
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (_selectedCategory != 'Все') {
           setState(() {
@@ -348,12 +348,12 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
       });
     }
 
-    // Фильтруем истекающие продукты с учетом поиска и категории
+    
     final filteredExpiringItems = _filterExpiringItems(expiringItems);
 
     return Column(
       children: [
-        // Поиск на обеих вкладках
+        
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: TextField(
@@ -384,7 +384,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
           ),
         ),
 
-        // Фильтр категорий (теперь динамический для каждой вкладки)
+        
         if (categoryNames.length > 1)
           SizedBox(
             height: 50,
@@ -419,7 +419,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
             ),
           ),
 
-        // Список продуктов
+        
         Expanded(
           child: TabBarView(
             controller: _tabController,
@@ -464,7 +464,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
                   : 'Нет продуктов с истекающим сроком годности',
               style: TextStyle(color: Colors.grey[600]),
             ),
-            // ИСПРАВЛЕНИЕ: Кнопка добавить всегда показывается для пустого списка
+            
             const SizedBox(height: 24),
             ElevatedButton.icon(
               onPressed: () {
@@ -488,7 +488,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
           final item = products[index];
           final daysLeft = item.daysLeft;
 
-          // Определение цвета индикатора срока годности
+          
           Color statusColor;
           if (daysLeft == null) {
             statusColor = Colors.grey;
@@ -597,11 +597,11 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
   void _showProductDetails(BuildContext context, RefrigeratorItem item) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // Важно для контроля размера
+      isScrollControlled: true, 
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
-      // Добавляем ограничение максимальной высоты
+      
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.9,
       ),
@@ -611,7 +611,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
 
         return Container(
           padding: const EdgeInsets.all(24),
-          // Делаем содержимое прокручиваемым
+          
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -684,7 +684,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
                     '${ingredient.carbs} г',
                   ),
 
-                  // Добавляем отображение аллергенов
+                  
                   const SizedBox(height: 16),
                   const Divider(),
                   const SizedBox(height: 16),
@@ -735,7 +735,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
                   ),
                 ),
 
-                // Добавляем отступ снизу для избежания обрезания
+                
                 const SizedBox(height: 16),
               ],
             ),
@@ -772,7 +772,7 @@ class _RefrigeratorScreenState extends State<RefrigeratorScreen>
     );
   }
 
-  // ИСПРАВЛЕНИЕ: Исправлена сигнатура метода
+  
   void _showStatsDialog(RefrigeratorStats stats) {
     showDialog(
       context: context,

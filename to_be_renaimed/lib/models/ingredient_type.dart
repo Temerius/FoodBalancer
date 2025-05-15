@@ -1,10 +1,8 @@
-// lib/models/ingredient_type.dart - исправленная версия
 class IngredientType {
   final int id;
   final String name;
   final String? imageUrl;
 
-  // Локальное свойство (не приходит с сервера)
   String? _category;
 
   IngredientType({
@@ -21,7 +19,6 @@ class IngredientType {
       id: json['igt_id'],
       name: json['igt_name'] ?? '',
       imageUrl: json['igt_img_url'],
-      // Поле category не приходит с сервера, мы определяем его локально
       category: null,
     );
   }
@@ -31,19 +28,15 @@ class IngredientType {
       'igt_id': id,
       'igt_name': name,
       if (imageUrl != null) 'igt_img_url': imageUrl,
-      // Не отправляем category на сервер, так как там нет такого поля
     };
   }
 
-  // Геттер для категории
   String? get category => _category;
 
-  // Сеттер для категории
   set category(String? value) {
     _category = value;
   }
 
-  // Метод для определения категории на основе названия типа ингредиента
   void determineCategory() {
     final lowerName = name.toLowerCase();
 

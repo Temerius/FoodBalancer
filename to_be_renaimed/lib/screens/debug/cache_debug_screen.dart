@@ -1,4 +1,4 @@
-// lib/screens/debug/cache_debug_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../repositories/data_repository.dart';
@@ -30,7 +30,7 @@ class _CacheDebugScreenState extends State<CacheDebugScreen> {
     super.dispose();
   }
 
-  // Обновление данных кэша
+  
   Future<void> _refreshCacheData() async {
     setState(() {
       _isLoading = true;
@@ -38,11 +38,11 @@ class _CacheDebugScreenState extends State<CacheDebugScreen> {
     });
 
     try {
-      // Получаем данные из кэша
+      
       _userCache = await CacheService.get('user', CacheConfig.defaultConfig);
       _allergensCache = await CacheService.get('allergens', CacheConfig.defaultConfig);
 
-      // Выводим информацию о кэше
+      
       _appendLog("=== ДАННЫЕ КЭША ===\n");
 
       if (_userCache != null) {
@@ -80,7 +80,7 @@ class _CacheDebugScreenState extends State<CacheDebugScreen> {
         _appendLog("Аллергены не найдены в кэше\n");
       }
 
-      // Выводим список всех ключей кэша
+      
       await _listAllCacheKeys();
     } catch (e) {
       _appendLog("\nОШИБКА: $e\n");
@@ -91,11 +91,11 @@ class _CacheDebugScreenState extends State<CacheDebugScreen> {
     }
   }
 
-  // Вывод списка всех ключей кэша
+  
   Future<void> _listAllCacheKeys() async {
     try {
       _appendLog("\n=== ВСЕ КЛЮЧИ КЭША ===\n");
-      // Получаем все ключи кэша
+      
       await CacheService.listAllKeys();
       _appendLog("Список ключей выведен в консоль\n");
     } catch (e) {
@@ -103,7 +103,7 @@ class _CacheDebugScreenState extends State<CacheDebugScreen> {
     }
   }
 
-  // Очистка кэша
+  
   Future<void> _clearCache(String key) async {
     setState(() {
       _isLoading = true;
@@ -114,7 +114,7 @@ class _CacheDebugScreenState extends State<CacheDebugScreen> {
       await CacheService.clear(key);
       _appendLog("Кэш '$key' успешно очищен\n");
 
-      // Обновляем данные кэша
+      
       await _refreshCacheData();
     } catch (e) {
       _appendLog("ОШИБКА ОЧИСТКИ КЭША: $e\n");
@@ -125,7 +125,7 @@ class _CacheDebugScreenState extends State<CacheDebugScreen> {
     }
   }
 
-  // Принудительное обновление всех данных
+  
   Future<void> _forceRefreshAllData() async {
     setState(() {
       _isLoading = true;
@@ -135,17 +135,17 @@ class _CacheDebugScreenState extends State<CacheDebugScreen> {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Обновляем аллергены
+      
       _appendLog("Обновление аллергенов...\n");
       await dataRepository.getAllAllergens(forceRefresh: true);
 
-      // Обновляем данные пользователя
+      
       _appendLog("Обновление данных пользователя...\n");
       await dataRepository.refreshUserData();
 
       _appendLog("Обновление данных завершено!\n");
 
-      // Обновляем данные кэша
+      
       await _refreshCacheData();
     } catch (e) {
       _appendLog("ОШИБКА ОБНОВЛЕНИЯ ДАННЫХ: $e\n");
@@ -156,7 +156,7 @@ class _CacheDebugScreenState extends State<CacheDebugScreen> {
     }
   }
 
-  // Вывод полного дампа кэша
+  
   Future<void> _dumpFullCache() async {
     setState(() {
       _isLoading = true;
@@ -175,18 +175,18 @@ class _CacheDebugScreenState extends State<CacheDebugScreen> {
     }
   }
 
-  // Добавление текста в лог
+  
   void _appendLog(String text) {
     setState(() {
       _logController.text += text;
-      // Прокрутка в конец
+      
       _logController.selection = TextSelection.fromPosition(
         TextPosition(offset: _logController.text.length),
       );
     });
   }
 
-  // Очистка лога
+  
   void _clearLog() {
     setState(() {
       _logController.text = "";
@@ -210,14 +210,14 @@ class _CacheDebugScreenState extends State<CacheDebugScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Кнопки управления кэшем
+            
             Text(
               'Управление кэшем',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             SizedBox(height: 16),
 
-            // Индикатор загрузки
+            
             if (_isLoading)
               LinearProgressIndicator(
                 value: null,
@@ -263,7 +263,7 @@ class _CacheDebugScreenState extends State<CacheDebugScreen> {
 
             SizedBox(height: 16),
 
-            // Лог
+            
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

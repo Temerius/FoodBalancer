@@ -1,5 +1,5 @@
 class DateFormatter {
-  // Форматирует дату в формат dd.MM.yyyy
+  
   static String formatDate(DateTime date) {
     final day = date.day.toString().padLeft(2, '0');
     final month = date.month.toString().padLeft(2, '0');
@@ -7,7 +7,7 @@ class DateFormatter {
     return '$day.$month.$year';
   }
 
-  // Форматирует дату в формат yyyy-MM-dd
+  
   static String formatDateISO(DateTime date) {
     final day = date.day.toString().padLeft(2, '0');
     final month = date.month.toString().padLeft(2, '0');
@@ -15,7 +15,7 @@ class DateFormatter {
     return '$year-$month-$day';
   }
 
-  // Форматирует дату в формат d MMMM yyyy (например, 15 апреля 2025)
+  
   static String formatDateFull(DateTime date) {
     final day = date.day;
     final month = _getMonthName(date.month);
@@ -23,14 +23,14 @@ class DateFormatter {
     return '$day $month $year';
   }
 
-  // Форматирует дату в формат d MMMM (например, 15 апреля)
+  
   static String formatDateShort(DateTime date) {
     final day = date.day;
     final month = _getMonthName(date.month);
     return '$day $month';
   }
 
-  // Получение названия месяца по номеру
+  
   static String _getMonthName(int month) {
     switch (month) {
       case 1:
@@ -62,7 +62,7 @@ class DateFormatter {
     }
   }
 
-  // Получение короткого названия месяца по номеру
+  
   static String _getMonthShortName(int month) {
     switch (month) {
       case 1:
@@ -94,14 +94,14 @@ class DateFormatter {
     }
   }
 
-  // Форматирует дату в формат d MMM (например, 15 апр)
+  
   static String formatDateMonth(DateTime date) {
     final day = date.day;
     final month = _getMonthShortName(date.month);
     return '$day $month';
   }
 
-  // Форматирует дату в формат d MMM yyyy (например, 15 апр 2025)
+  
   static String formatDateMonthYear(DateTime date) {
     final day = date.day;
     final month = _getMonthShortName(date.month);

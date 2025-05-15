@@ -1,4 +1,4 @@
-// lib/screens/home_layout.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../repositories/data_repository.dart';
@@ -66,7 +66,7 @@ class _HomeLayoutState extends State<HomeLayout> {
           ),
         ],
       ),
-      // Добавляем кнопку обновления данных на главном экране
+      
       floatingActionButton: _currentIndex == 0 ? FloatingActionButton(
         mini: true,
         onPressed: () {
@@ -94,10 +94,10 @@ class _HomeLayoutState extends State<HomeLayout> {
     });
 
     try {
-      // Обновляем данные через репозиторий
+      
       await dataRepository.refreshUserData();
 
-      // Если обновление успешно
+      
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Данные успешно обновлены'),
@@ -105,7 +105,7 @@ class _HomeLayoutState extends State<HomeLayout> {
         ),
       );
     } catch (e) {
-      // В случае ошибки
+      
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Ошибка обновления данных: ${e.toString()}'),

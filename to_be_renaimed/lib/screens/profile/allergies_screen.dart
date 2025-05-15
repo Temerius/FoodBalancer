@@ -1,4 +1,4 @@
-// lib/screens/profile/allergies_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
@@ -33,23 +33,23 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Загружаем аллергены (используем кэшированные данные, если они есть и актуальны)
+      
       _allergens = await dataRepository.getAllAllergens();
 
-      // Получаем выбранные аллергены пользователя
+      
       final user = dataRepository.user ??
           Provider.of<AuthProvider>(context, listen: false).currentUser;
 
       if (user != null) {
         _selectedAllergenIds = Set<int>.from(user.allergenIds);
 
-        // Установка флажков "выбрано" для аллергенов
+        
         for (var allergen in _allergens) {
           allergen.isSelected = _selectedAllergenIds.contains(allergen.id);
         }
       }
 
-      // Отладочная информация
+      
       print("Loaded ${_allergens.length} allergens");
       print("User has ${_selectedAllergenIds.length} selected allergens");
 
@@ -82,16 +82,16 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
         return;
       }
 
-      // Создаем обновленного пользователя с новыми ID аллергенов
+      
       final updatedUser = user.copyWith(
         allergenIds: _selectedAllergenIds.toList(),
       );
 
-      // Обновляем профиль
+      
       final success = await dataRepository.updateUserProfile(updatedUser);
 
       if (success) {
-        // Возвращаемся на предыдущий экран с сигналом успеха
+        
         Navigator.pop(context, true);
       } else {
         setState(() {
@@ -155,7 +155,7 @@ class _AllergiesScreenState extends State<AllergiesScreen> {
             ),
           ),
 
-          // Индикатор количества аллергенов
+          
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(

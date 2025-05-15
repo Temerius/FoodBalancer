@@ -1,4 +1,3 @@
-// lib/models/recipe.dart
 import 'package:to_be_renaimed/models/enums.dart';
 import 'package:to_be_renaimed/models/equipment.dart';
 import 'package:to_be_renaimed/models/ingredient_type.dart';
@@ -11,20 +10,18 @@ class Recipe {
   final int portionCount;
   final String? mainImageUrl;
 
-  // Новые поля
   final int weight;
   final int fat;
   final int carbs;
   final int protein;
 
-  // Runtime properties
   bool isFavorite = false;
   List<RecipeStep> steps = [];
   List<RecipeIngredient> ingredients = [];
   List<Equipment> requiredEquipment = [];
 
-  // Calculated nutritional values
-  int? _prepTime; // Estimated preparation time in minutes
+  
+  int? _prepTime; 
 
   Recipe({
     required this.id,
@@ -33,10 +30,10 @@ class Recipe {
     required this.calories,
     required this.portionCount,
     this.mainImageUrl,
-    this.weight = 0,      // Новое поле - вес порции
-    this.fat = 0,         // Новое поле - жиры
-    this.carbs = 0,       // Новое поле - углеводы
-    this.protein = 0,     // Новое поле - белки
+    this.weight = 0,
+    this.fat = 0,
+    this.carbs = 0,
+    this.protein = 0,
     this.isFavorite = false,
     List<RecipeStep>? steps,
     List<RecipeIngredient>? ingredients,
@@ -48,10 +45,8 @@ class Recipe {
         requiredEquipment = requiredEquipment ?? [],
         _prepTime = prepTime;
 
-  // В lib/models/recipe.dart
   factory Recipe.fromJson(Map<String, dynamic> json) {
     try {
-      // Проверка базовых полей
       final recipeId = json['rcp_id'];
       final title = json['rcp_title'] ?? '';
       final description = json['rcp_description'] ?? '';
@@ -60,7 +55,6 @@ class Recipe {
         throw FormatException('Обязательное поле rcp_id отсутствует в данных рецепта');
       }
 
-      // Парсинг числовых полей
       int calories = 0;
       try {
         var calValue = json['rcp_cal'] ?? 0;
@@ -88,7 +82,6 @@ class Recipe {
         portionCount = 1;
       }
 
-      // Парсинг новых полей
       int weight = 0;
       try {
         var weightValue = json['rcp_weight'] ?? 0;
@@ -162,7 +155,6 @@ class Recipe {
         mainImageUrl = null;
       }
 
-      // Парсинг шагов рецепта
       List<RecipeStep> steps = [];
       try {
         if (json['steps'] != null && json['steps'] is List) {
@@ -175,7 +167,7 @@ class Recipe {
         steps = [];
       }
 
-      // Парсинг оборудования (если есть)
+
       List<Equipment> equipment = [];
       try {
         if (json['equipment'] != null && json['equipment'] is List) {
@@ -188,7 +180,7 @@ class Recipe {
         equipment = [];
       }
 
-      // Создание и возврат объекта Recipe
+
       final recipe = Recipe(
         id: recipeId is int ? recipeId : 0,
         title: title,
@@ -203,7 +195,6 @@ class Recipe {
         isFavorite: isFavorite,
       );
 
-      // Устанавливаем шаги и оборудование
       recipe.steps = steps;
       recipe.requiredEquipment = equipment;
 
@@ -222,38 +213,34 @@ class Recipe {
       'rcp_description': description,
       'rcp_cal': calories,
       'rcp_portion_count': portionCount,
-      'rcp_weight': weight,       // Новое поле
-      'rcp_fat': fat,             // Новое поле
-      'rcp_hydrates': carbs,      // Важно: в БД поле называется hydrates, а не carbs
-      'rcp_protein': protein,     // Новое поле
+      'rcp_weight': weight,
+      'rcp_fat': fat,
+      'rcp_hydrates': carbs,
+      'rcp_protein': protein,
       'is_favorite': isFavorite,
       if (mainImageUrl != null) 'rcp_main_img': mainImageUrl,
     };
   }
 
-  // Методы для расчета пищевой ценности на 100 г с округлением вверх
   int calculatePer100g(int value) {
     if (weight <= 0) return 0;
-    // Используем функцию .ceil() для округления вверх
     return (value * 100 / weight).ceil();
   }
 
-  // Геттеры для значений на 100 г
   int get caloriesPer100g => calculatePer100g(calories);
   int get proteinPer100g => calculatePer100g(protein);
   int get fatPer100g => calculatePer100g(fat);
   int get carbsPer100g => calculatePer100g(carbs);
 
-  // Getter for prep time (calculated if not set)
   int get prepTime {
     if (_prepTime != null) return _prepTime!;
-    if (steps.isEmpty) return 30; // Default value
+    if (steps.isEmpty) return 30;
 
-    // Basic calculation based on number of steps
-    return steps.length * 10; // 10 minutes per step as a basic estimate
+    
+    return steps.length * 10; 
   }
 
-  // Setter for prep time
+  
   set prepTime(int value) => _prepTime = value;
 
   Recipe copyWith({
@@ -302,7 +289,6 @@ class Recipe {
   @override
   int get hashCode => id.hashCode;
 
-  // Метод для отладочного вывода информации о рецепте
   void debugPrint() {
     print("\n===== RECIPE DEBUG INFO =====");
     print("ID: $id");
@@ -321,7 +307,6 @@ class Recipe {
   }
 }
 
-// В lib/models/recipe.dart
 class RecipeStep {
   final int id;
   final int recipeId;
@@ -341,7 +326,6 @@ class RecipeStep {
 
   factory RecipeStep.fromJson(Map<String, dynamic> json) {
     try {
-      // Парсинг изображений
       List<String> imageUrls = [];
       if (json['images'] != null && json['images'] is List) {
         imageUrls = (json['images'] as List)
@@ -356,7 +340,7 @@ class RecipeStep {
             .toList();
       }
 
-      // Парсинг ингредиентов шага
+
       List<RecipeStepIngredient> ingredients = [];
       if (json['ingredients'] != null && json['ingredients'] is List) {
         ingredients = (json['ingredients'] as List)
@@ -434,7 +418,7 @@ class RecipeIngredient {
   final int? quantity;
   final QuantityType? quantityType;
 
-  // Runtime properties
+  
   IngredientType? ingredientType;
 
   RecipeIngredient({
@@ -445,8 +429,6 @@ class RecipeIngredient {
     this.ingredientType,
   });
 
-  // For recipe ingredients, we'd expect a more custom data structure
-  // since there's no direct table mapping in the DB schema
   factory RecipeIngredient.fromJson(Map<String, dynamic> json) {
     return RecipeIngredient(
       recipeId: json['recipe_id'],
@@ -467,13 +449,11 @@ class RecipeIngredient {
     };
   }
 
-  // Get formatted quantity with units
   String? get formattedQuantity {
     if (quantity == null || quantityType == null) return null;
     return '$quantity ${quantityType!.getShortName()}';
   }
 
-  // Get ingredient name (if available)
   String get name => ingredientType?.name ?? 'Неизвестный ингредиент';
 
   RecipeIngredient copyWith({
@@ -504,7 +484,7 @@ class RecipeIngredient {
   int get hashCode => Object.hash(recipeId, ingredientTypeId);
 }
 
-// В lib/models/recipe.dart
+
 class RecipeStepIngredient {
   final int id;
   final int stepId;
@@ -512,7 +492,7 @@ class RecipeStepIngredient {
   final int quantity;
   final QuantityType quantityType;
 
-  // Runtime properties
+  
   IngredientType? ingredientType;
 
   RecipeStepIngredient({
@@ -526,7 +506,6 @@ class RecipeStepIngredient {
 
   factory RecipeStepIngredient.fromJson(Map<String, dynamic> json) {
     try {
-      // Парсинг типа ингредиента
       IngredientType? ingredientType;
       if (json['ingredient_type'] != null && json['ingredient_type'] is Map<String, dynamic>) {
         try {
@@ -537,7 +516,6 @@ class RecipeStepIngredient {
         }
       }
 
-      // Парсинг количества
       int quantity = 0;
       try {
         var quantityValue = json['msi_quantity'] ?? 0;
@@ -551,7 +529,6 @@ class RecipeStepIngredient {
         quantity = 0;
       }
 
-      // Парсинг типа количества
       QuantityType quantityType = QuantityType.grams;
       try {
         var quantityTypeValue = json['msi_quantity_type'] ?? 'grams';
@@ -587,12 +564,10 @@ class RecipeStepIngredient {
     };
   }
 
-  // Get formatted quantity with units
   String get formattedQuantity {
     return '$quantity ${quantityType.getShortName()}';
   }
 
-  // Get ingredient name (if available)
   String get name => ingredientType?.name ?? 'Неизвестный ингредиент';
 
   RecipeStepIngredient copyWith({

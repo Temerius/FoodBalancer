@@ -1,4 +1,4 @@
-// lib/screens/profile/profile_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
@@ -19,37 +19,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
 
-    // Легкая синхронизация данных при создании экрана (не делаем тяжелых запросов)
+    
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _syncData();
     });
   }
 
-  // Легкая синхронизация - только локальные данные, без запросов к серверу
+  
   void _syncData() {
     final dataRepository = Provider.of<DataRepository>(context, listen: false);
-    // Этот метод синхронизирует только локальные данные без обращения к серверу
+    
     dataRepository.refreshUserData();
   }
 
-  // Полное обновление данных с сервера
+  
   Future<void> _refreshData() async {
     setState(() {
       _isManuallyRefreshing = true;
     });
 
     try {
-      // Обновляем данные через репозиторий с форсированной загрузкой с сервера
+      
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Загружаем профиль пользователя с сервера
+      
       await dataRepository.getUserProfile(forceRefresh: true);
 
-      // Обновляем аллергены и оборудование
+      
       await dataRepository.refreshUserAllergens();
       await dataRepository.refreshUserEquipment();
 
-      // Показываем успешное обновление
+      
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -59,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         );
       }
     } catch (e) {
-      // Показываем ошибку
+      
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -95,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             icon: const Icon(Icons.edit),
             onPressed: () {
               Navigator.pushNamed(context, '/profile/edit').then((_) {
-                // После редактирования только синхронизируем локальные данные
+                
                 _syncData();
               });
             },
@@ -109,11 +109,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Индикатор загрузки, если идёт обновление профиля
+              
               if (isLoading)
                 const LinearProgressIndicator(),
 
-              // Аватар и имя пользователя
+              
               CircleAvatar(
                 radius: 50,
                 backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
@@ -138,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               const SizedBox(height: 32),
 
-              // Личная информация
+              
               Card(
                 margin: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -196,7 +196,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               const SizedBox(height: 16),
 
-              // Аллергии
+              
               Card(
                 margin: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -229,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 onPressed: () async {
                                   final result = await Navigator.pushNamed(context, '/profile/allergies');
                                   if (result == true && mounted) {
-                                    // После редактирования только синхронизируем локальные данные
+                                    
                                     _syncData();
                                   }
                                 },
@@ -240,7 +240,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       const SizedBox(height: 8),
 
-                      // Отображение аллергенов пользователя
+                      
                       _buildAllergensSection(context, user, dataRepository),
                     ],
                   ),
@@ -249,7 +249,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               const SizedBox(height: 16),
 
-              // Кухонное оборудование
+              
               Card(
                 margin: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -281,7 +281,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 icon: const Icon(Icons.edit),
                                 onPressed: () {
                                   Navigator.pushNamed(context, '/profile/equipment').then((_) {
-                                    // После редактирования только синхронизируем локальные данные
+                                    
                                     _syncData();
                                   });
                                 },
@@ -299,7 +299,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               const SizedBox(height: 24),
 
-              // Кнопка выхода
+              
               TextButton.icon(
                 onPressed: () async {
                   setState(() {
@@ -323,45 +323,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
 
-              // Отладочный блок
-              // const SizedBox(height: 8),
-              // Container(
-              //   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              //   color: Colors.grey[200],
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       Text(
-              //         'Отладка',
-              //         style: TextStyle(
-              //           fontSize: 12,
-              //           color: Colors.grey[600],
-              //         ),
-              //       ),
-              //       const SizedBox(width: 8),
-              //       Icon(Icons.bug_report, size: 14, color: Colors.grey[600]),
-              //       Expanded(
-              //         child: GestureDetector(
-              //           onTap: () {
-              //             Navigator.pushNamed(context, '/debug/cache');
-              //           },
-              //           child: Container(
-              //             alignment: Alignment.center,
-              //             padding: const EdgeInsets.symmetric(vertical: 4.0),
-              //             child: Text(
-              //               'Просмотр кэша',
-              //               style: TextStyle(
-              //                 fontSize: 12,
-              //                 color: Theme.of(context).colorScheme.primary,
-              //                 decoration: TextDecoration.underline,
-              //               ),
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
             ],
           ),
         ),
@@ -369,30 +369,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  // Виджет для отображения аллергенов
+  
   Widget _buildAllergensSection(BuildContext context, User? user, DataRepository dataRepository) {
-    // Получаем все аллергены из репозитория
+    
     final allAllergens = dataRepository.allergens;
 
-    // Получаем ID аллергенов пользователя
+    
     final userAllergenIds = user?.allergenIds ?? [];
 
-    // Если у пользователя нет аллергенов или список аллергенов пуст
+    
     if (userAllergenIds.isEmpty) {
       return const Text('Аллергии не указаны');
     }
 
-    // Находим аллергены пользователя по ID
+    
     final userAllergens = allAllergens.where(
             (allergen) => userAllergenIds.contains(allergen.id)
     ).toList();
 
-    // Если у пользователя нет аллергенов после фильтрации
+    
     if (userAllergens.isEmpty) {
       return const Text('Аллергии не указаны (проверьте настройки)');
     }
 
-    // Отображаем аллергены
+    
     return Wrap(
       spacing: 8,
       runSpacing: 8,
@@ -405,7 +405,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  // Виджет для отображения оборудования
+  
   Widget _buildEquipmentSection(BuildContext context, User? user, DataRepository dataRepository) {
     final allEquipment = dataRepository.equipment;
     final userEquipmentIds = user?.equipmentIds ?? [];

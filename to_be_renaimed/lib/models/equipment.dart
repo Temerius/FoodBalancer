@@ -4,8 +4,8 @@ class Equipment {
   final int power;
   final int capacity;
   final String? imageUrl;
-  bool isSelected; // Local property for UI state
-  String? customName; // For user-added equipment names
+  bool isSelected;
+  String? customName;
 
   Equipment({
     required this.id,
@@ -24,7 +24,7 @@ class Equipment {
       power: json['eqp_power'] ?? 0,
       capacity: json['eqp_capacity'] ?? 0,
       imageUrl: json['eqp_img_url'],
-      customName: json['custom_name'], // Optional field for user's custom naming
+      customName: json['custom_name'],
     );
   }
 

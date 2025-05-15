@@ -11,13 +11,13 @@ import 'screens/loading_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Создаем один экземпляр ApiService для всего приложения
+  
   final apiService = ApiService();
 
-  // Инициализация ApiService для получения сохраненного токена
+  
   await apiService.initialize();
 
-  // Создаем провайдеры
+  
   final authService = AuthService(apiService: apiService);
   final authProvider = AuthProvider(authService: authService);
   final dataRepository = DataRepository(apiService: apiService);
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       title: 'CookHelper',
       theme: appTheme,
       debugShowCheckedModeBanner: false,
-      home: const LoadingScreen(), // Используем экран загрузки как начальный
+      home: const LoadingScreen(), 
       onGenerateRoute: AppRoutes.generateRoute,
     );
   }

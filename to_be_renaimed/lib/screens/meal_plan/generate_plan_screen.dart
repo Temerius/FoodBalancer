@@ -9,14 +9,14 @@ class GeneratePlanScreen extends StatefulWidget {
 }
 
 class _GeneratePlanScreenState extends State<GeneratePlanScreen> {
-  // Даты начала и конца периода
+  
   DateTime _startDate = DateTime.now();
   DateTime _endDate = DateTime.now().add(const Duration(days: 6));
 
-  // Цель по калориям
+  
   final TextEditingController _caloriesController = TextEditingController(text: '2000');
 
-  // Выбранные диеты и предпочтения
+  
   final List<String> _diets = [
     'Обычная',
     'Вегетарианская',
@@ -27,7 +27,7 @@ class _GeneratePlanScreenState extends State<GeneratePlanScreen> {
   ];
   String _selectedDiet = 'Обычная';
 
-  // Предпочтения по приемам пищи
+  
   final Map<String, bool> _meals = {
     'Завтрак': true,
     'Обед': true,
@@ -35,7 +35,7 @@ class _GeneratePlanScreenState extends State<GeneratePlanScreen> {
     'Перекус': false,
   };
 
-  // Предпочтения по кухням
+  
   final Map<String, bool> _cuisines = {
     'Итальянская': false,
     'Азиатская': false,
@@ -44,7 +44,7 @@ class _GeneratePlanScreenState extends State<GeneratePlanScreen> {
     'Мексиканская': false,
   };
 
-  // Состояние генерации
+  
   bool _isGenerating = false;
 
   @override
@@ -71,7 +71,7 @@ class _GeneratePlanScreenState extends State<GeneratePlanScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Период планирования
+          
           Text(
             'Период планирования',
             style: Theme.of(context).textTheme.titleLarge,
@@ -108,7 +108,7 @@ class _GeneratePlanScreenState extends State<GeneratePlanScreen> {
           ),
           const SizedBox(height: 24),
 
-          // Цель по калориям
+          
           Text(
             'Цель по калориям',
             style: Theme.of(context).textTheme.titleLarge,
@@ -126,7 +126,7 @@ class _GeneratePlanScreenState extends State<GeneratePlanScreen> {
           ),
           const SizedBox(height: 24),
 
-          // Диета
+          
           Text(
             'Тип диеты',
             style: Theme.of(context).textTheme.titleLarge,
@@ -154,7 +154,7 @@ class _GeneratePlanScreenState extends State<GeneratePlanScreen> {
           ),
           const SizedBox(height: 24),
 
-          // Приемы пищи
+          
           Text(
             'Приемы пищи',
             style: Theme.of(context).textTheme.titleLarge,
@@ -174,7 +174,7 @@ class _GeneratePlanScreenState extends State<GeneratePlanScreen> {
           )),
           const SizedBox(height: 16),
 
-          // Предпочтения по кухням
+          
           Text(
             'Предпочтения по кухням',
             style: Theme.of(context).textTheme.titleLarge,
@@ -194,7 +194,7 @@ class _GeneratePlanScreenState extends State<GeneratePlanScreen> {
           )),
           const SizedBox(height: 32),
 
-          // Кнопка генерации
+          
           SizedBox(
             width: double.infinity,
             child: ElevatedButton.icon(
@@ -244,13 +244,13 @@ class _GeneratePlanScreenState extends State<GeneratePlanScreen> {
       setState(() {
         if (isStartDate) {
           _startDate = picked;
-          // Если выбранная дата начала после даты конца, обновляем дату конца
+          
           if (_startDate.isAfter(_endDate)) {
             _endDate = _startDate.add(const Duration(days: 6));
           }
         } else {
           _endDate = picked;
-          // Если выбранная дата конца до даты начала, обновляем дату начала
+          
           if (_endDate.isBefore(_startDate)) {
             _startDate = _endDate.subtract(const Duration(days: 6));
           }
@@ -260,7 +260,7 @@ class _GeneratePlanScreenState extends State<GeneratePlanScreen> {
   }
 
   void _generatePlan() {
-    // Валидация данных
+    
     if (_caloriesController.text.isEmpty || int.tryParse(_caloriesController.text) == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Пожалуйста, укажите корректное количество калорий')),
@@ -268,7 +268,7 @@ class _GeneratePlanScreenState extends State<GeneratePlanScreen> {
       return;
     }
 
-    // Проверка выбранных приемов пищи
+    
     if (!_meals.values.contains(true)) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Пожалуйста, выберите хотя бы один прием пищи')),
@@ -276,21 +276,21 @@ class _GeneratePlanScreenState extends State<GeneratePlanScreen> {
       return;
     }
 
-    // Начинаем генерацию плана
+    
     setState(() {
       _isGenerating = true;
     });
 
-    // Симуляция генерации плана
+    
     Future.delayed(const Duration(seconds: 3), () {
       setState(() {
         _isGenerating = false;
       });
 
-      // Переход на экран плана питания
+      
       Navigator.pushReplacementNamed(context, '/meal-plan/weekly');
 
-      // Показ сообщения об успешной генерации
+      
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('План питания успешно создан!')),
       );

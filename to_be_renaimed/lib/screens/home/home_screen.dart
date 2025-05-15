@@ -1,4 +1,4 @@
-// lib/screens/home/home_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/enums.dart';
@@ -43,15 +43,15 @@ class _HomeScreenState extends State<HomeScreen> {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
       final recipes = await dataRepository.getRecipes();
 
-      // For simplicity, we'll just choose 5 random recipes as recommendations
-      // In a real implementation, this would use a more sophisticated algorithm
-      // considering user preferences, ingredients available, etc.
+      
+      
+      
       if (recipes.isNotEmpty) {
-        // Sort by most calories (just as an example)
+        
         final sorted = List<Recipe>.from(recipes);
         sorted.sort((a, b) => b.calories.compareTo(a.calories));
 
-        // Take up to 5 recipes
+        
         _recommendedRecipes = sorted.take(sorted.length > 5 ? 5 : sorted.length).toList();
       }
     } catch (e) {
@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
-      // Используем существующий метод для получения срочных продуктов
+      
       _expiringProducts = await dataRepository.getExpiringItems();
     } catch (e) {
       print('Error loading expiring products: $e');
@@ -85,23 +85,23 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  // Функция для получения даты начала текущей недели (понедельник)
+  
   DateTime _getStartOfWeek() {
     final now = DateTime.now();
-    // Получаем разницу между текущим днем недели и понедельником (1)
+    
     final difference = now.weekday - 1;
-    // Вычитаем разницу дней, чтобы получить понедельник
+    
     return DateTime(now.year, now.month, now.day - difference);
   }
 
-  // Функция для получения даты конца текущей недели (воскресенье)
+  
   DateTime _getEndOfWeek() {
     final startOfWeek = _getStartOfWeek();
-    // Добавляем 6 дней к понедельнику, чтобы получить воскресенье
+    
     return DateTime(startOfWeek.year, startOfWeek.month, startOfWeek.day + 6);
   }
 
-  // Функция для форматирования даты в виде "день месяц"
+  
   String _formatDate(DateTime date) {
     final months = [
       'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return '${date.day} ${months[date.month - 1]}';
   }
 
-  // Функция для получения текущего дня недели (от 1 до 7)
+  
   int _getCurrentDayOfWeek() {
     return DateTime.now().weekday;
   }
@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // User greeting
+                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -159,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 const SizedBox(height: 24),
 
-                // Recommended recipes
+                
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Row(
@@ -233,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fit: BoxFit.cover,
                                     width: double.infinity,
                                     errorBuilder: (context, error, stackTrace) {
-                                      // В случае ошибки загрузки изображения
+                                      
                                       return Center(
                                         child: Icon(
                                           Icons.restaurant,
@@ -282,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 const SizedBox(height: 24),
 
-                // Expiring products
+                
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Row(
@@ -322,7 +322,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: _expiringProducts.length,
                     itemBuilder: (context, index) {
                       final product = _expiringProducts[index];
-                      // Добавляем +1 к количеству дней до истечения срока
+                      
                       final daysLeft = product.ingredient!.expiryDate!.difference(DateTime.now()).inDays + 1;
 
                       return ListTile(
@@ -348,7 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 const SizedBox(height: 24),
 
-                // Current meal plan
+                
                 Text(
                   'Текущий план питания',
                   style: Theme.of(context).textTheme.titleMedium,
@@ -395,7 +395,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 const SizedBox(height: 24),
 
-                // Quick access
+                
                 Text(
                   'Быстрый доступ',
                   style: Theme.of(context).textTheme.titleMedium,
@@ -492,22 +492,22 @@ class _HomeScreenState extends State<HomeScreen> {
       String label,
       VoidCallback onTap,
       ) {
-    // Рассчитываем ширину, вычитая отступы и деля на 3
-    // Отнимаем еще 6px, чтобы избежать возможных проблем с переполнением
+    
+    
     final buttonWidth = (MediaQuery.of(context).size.width - 48 - 6) / 3;
 
     return GestureDetector(
       onTap: onTap,
       child: Container(
         width: buttonWidth,
-        height: 110, // Фиксированная высота для всех кнопок
+        height: 110, 
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondaryContainer,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // Центрируем содержимое
+          mainAxisAlignment: MainAxisAlignment.center, 
           children: [
             Icon(icon, color: Theme.of(context).colorScheme.primary, size: 32),
             const SizedBox(height: 8),

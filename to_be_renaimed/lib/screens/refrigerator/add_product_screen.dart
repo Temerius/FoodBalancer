@@ -1,4 +1,4 @@
-// lib/screens/refrigerator/add_product_screen.dart - Improved version
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -52,7 +52,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   DataRepository? _dataRepository;
 
-  // Ограничиваем единицы измерения только нужными
+  
   final List<QuantityType> _allowedQuantityTypes = [
     QuantityType.grams,
     QuantityType.milliliters,
@@ -63,23 +63,23 @@ class _AddProductScreenState extends State<AddProductScreen> {
   String _extractNumericValue(dynamic value) {
     if (value == null) return "0";
 
-    // Если value уже число, просто возвращаем его
+    
     if (value is int) return value.toString();
     if (value is double) return value.toString();
 
-    // Если value строка, извлекаем из нее число
+    
     if (value is String) {
       if (value.isEmpty) return "0";
 
-      // Регулярное выражение для поиска числа
+      
       final RegExp regExp = RegExp(r'(\d+(?:[.,]\d+)?)');
       final match = regExp.firstMatch(value);
 
       if (match != null) {
-        // Заменяем запятую на точку (для корректного парсинга)
+        
         String numberStr = match.group(1)!.replaceAll(',', '.');
         try {
-          // Пытаемся преобразовать в число для проверки
+          
           double.parse(numberStr);
           return numberStr;
         } catch (e) {
@@ -91,29 +91,29 @@ class _AddProductScreenState extends State<AddProductScreen> {
     return "0";
   }
 
-  // Улучшенная версия метода _prefillFromScannedData
-  // ПОСЛЕДНЯЯ ВЕРСИЯ _prefillFromScannedData
-// Список типов отображается сразу, и название всегда активно
+  
+  
+
 
   void _prefillFromScannedData(Map<String, dynamic> data) {
     print('\n===== PREFILLING FROM SCANNED DATA =====');
     print('Data received: $data');
 
     try {
-      // Проверяем, загружены ли необходимые данные
+      
       if (_allTypes.isEmpty || _allAllergens.isEmpty) {
         print('Types or allergens not loaded yet, saving data for later');
         _pendingScannedData = Map<String, dynamic>.from(data);
         return;
       }
 
-      // Заполняем название продукта
+      
       if (data['name'] != null && data['name'].toString().isNotEmpty) {
         _productNameController.text = data['name'].toString();
         print('Set name: ${data['name']}');
       }
 
-      // Заполняем БЖУ и калории
+      
       if (data['calories'] != null) {
         _caloriesController.text = _extractNumericValue(data['calories']);
         print('Set calories: ${data['calories']}');
@@ -134,7 +134,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         print('Set carbs: ${data['carbs']}');
       }
 
-      // Количество продукта (если есть)
+      
       if (data['weight'] != null) {
         _quantityController.text = _extractNumericValue(data['weight']);
         print('Set quantity: ${data['weight']}');
@@ -142,11 +142,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
       bool typeFound = false;
 
-      // Устанавливаем тип ингредиента по ID (из классификации ИИ)
+      
       if (data['ingredient_type_id'] != null) {
         final typeId = data['ingredient_type_id'];
 
-        // Ищем и устанавливаем соответствующий тип
+        
         for (var type in _allTypes) {
           if (type.id == typeId) {
             print('Found matching type: ${type.name} (ID: ${type.id})');
@@ -160,13 +160,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
           }
         }
       }
-      // Если тип ингредиента не задан по ID, но есть категория в виде строки
+      
       else if (data['category'] != null && data['category'].toString().isNotEmpty) {
         print('No type ID, but category string found: ${data['category']}');
         typeFound = _findTypeByCategory(data['category'].toString());
       }
 
-      // ИСПРАВЛЕНИЕ: Если тип не найден, показываем все типы продуктов
+      
       if (!typeFound) {
         print('No type found in scanned data, showing all types');
         setState(() {
@@ -176,21 +176,21 @@ class _AddProductScreenState extends State<AddProductScreen> {
         });
       }
 
-      // Устанавливаем аллергены, если они есть
+      
       if (data['allergen_ids'] != null && data['allergen_ids'] is List) {
         print('Setting allergens from IDs: ${data['allergen_ids']}');
         List<dynamic> allergenIds = data['allergen_ids'];
 
-        // Сбрасываем текущие выбранные аллергены
+        
         _selectedAllergens.clear();
 
-        // Отмечаем аллергены как выбранные
+        
         setState(() {
           for (var allergen in _allAllergens) {
-            // Сначала сбрасываем статус
+            
             allergen.isSelected = false;
 
-            // Затем устанавливаем по списку ID
+            
             if (allergenIds.contains(allergen.id)) {
               print('Setting allergen as selected: ${allergen.name} (ID: ${allergen.id})');
               allergen.isSelected = true;
@@ -200,18 +200,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
         });
       }
 
-      // Отображаем штрих-код, если он есть
+      
       if (data['barcode'] != null) {
         _barcodeController.text = data['barcode'].toString();
         print('Set barcode: ${data['barcode']}');
       }
 
-      // Если есть информация о составе, сохраняем ее (в будущем можно добавить поле)
+      
       if (data['ingredients'] != null && data['ingredients'].toString().isNotEmpty) {
         print('Product ingredients: ${data['ingredients']}');
       }
 
-      // Отладка состояния контроллеров
+      
       _debugPrintControllers();
 
       print('Prefilling complete');
@@ -226,7 +226,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   void _findTypeById(int typeId) {
     if (_allTypes.isEmpty) {
-      // Если типы еще не загружены, запомним ID для последующего применения
+      
       print('Types not loaded yet, saving typeId: $typeId');
       return;
     }
@@ -234,14 +234,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
     print('\n===== FINDING TYPE BY ID: $typeId =====');
     print('Available types: ${_allTypes.length}');
 
-    // Выводим первые 5 типов для отладки
+    
     for (int i = 0; i < min(_allTypes.length, 5); i++) {
       print('Type ${i+1}: ID=${_allTypes[i].id}, Name=${_allTypes[i].name}');
     }
 
     IngredientType? foundType;
 
-    // Ищем тип по ID
+    
     for (var type in _allTypes) {
       if (type.id == typeId) {
         foundType = type;
@@ -250,13 +250,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
       }
     }
 
-    // Если тип не найден, выводим предупреждение
+    
     if (foundType == null) {
       print('WARNING: Type with ID $typeId not found in loaded types!');
       return;
     }
 
-    // Применяем найденный тип
+    
     setState(() {
       _selectedType = foundType;
       _typeSearchController.text = foundType!.name;
@@ -265,8 +265,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
     print('Type set to: ${_selectedType?.name} (ID: ${_selectedType?.id})');
   }
 
-  // КОРРЕКТНОЕ решение для _findTypeByCategory
-// Просто устанавливаем и тип, и текст в поле поиска
+  
+
 
   bool _findTypeByCategory(String category) {
     if (_allTypes.isEmpty) return false;
@@ -274,7 +274,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     final categoryLower = category.toLowerCase();
     IngredientType? foundType;
 
-    // Сначала ищем точное совпадение
+    
     for (var type in _allTypes) {
       if (type.name.toLowerCase() == categoryLower) {
         foundType = type;
@@ -283,7 +283,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       }
     }
 
-    // Если не нашли точное совпадение, ищем частичное
+    
     if (foundType == null) {
       for (var type in _allTypes) {
         if (type.name.toLowerCase().contains(categoryLower) ||
@@ -295,7 +295,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       }
     }
 
-    // Если нашли тип, устанавливаем его
+    
     if (foundType != null) {
       setState(() {
         _selectedType = foundType;
@@ -314,7 +314,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     super.initState();
     _isEditing = widget.productId != null;
 
-    // Отладочный вывод
+    
     print('\n===== ADD PRODUCT SCREEN INITIALIZED =====');
     print('Is editing mode: $_isEditing');
   }
@@ -327,24 +327,24 @@ class _AddProductScreenState extends State<AddProductScreen> {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Инициализируем dataRepository, если не был инициализирован
+      
       if (_dataRepository == null) {
         _dataRepository = dataRepository;
       }
 
       print('\n===== LOADING TYPES AND ALLERGENS =====');
 
-      // Загружаем типы ингредиентов
+      
       await _loadIngredientTypes();
 
-      // Загружаем аллергены
+      
       await _loadAllergens();
 
-      // Теперь, когда данные загружены, мы можем использовать отложенные данные
+      
       if (_pendingScannedData != null) {
         print('Found pending scanned data, applying it now that types and allergens are loaded');
         _prefillFromScannedData(_pendingScannedData!);
-        _pendingScannedData = null; // Очищаем, так как мы их уже использовали
+        _pendingScannedData = null; 
       }
 
       if (_isEditing) {
@@ -366,12 +366,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    // Получаем аргументы от сканера или списка покупок
+    
     final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
     print('\n===== CHECKING ROUTE ARGUMENTS =====');
     print('Arguments: $args');
 
-    // ВАЖНОЕ ИЗМЕНЕНИЕ: Инициализация только один раз!
+    
     if (!_isInitialized) {
       if (args != null) {
         if (args.containsKey('scanned_data')) {
@@ -379,54 +379,54 @@ class _AddProductScreenState extends State<AddProductScreen> {
           final scannedData = args['scanned_data'] as Map<String, dynamic>;
           print('Scanned data: $scannedData');
 
-          // Сохраняем данные, но не заполняем сразу
-          // Заполнение будет в _initializeData после загрузки типов и аллергенов
+          
+          
           _pendingScannedData = Map<String, dynamic>.from(scannedData);
         } else if (args.containsKey('barcode')) {
-          // Если только штрих-код без данных
+          
           print('Found barcode in arguments: ${args['barcode']}');
           WidgetsBinding.instance.addPostFrameCallback((_) {
             _barcodeController.text = args['barcode'].toString();
           });
         } else if (args.containsKey('prefill_data')) {
-          // Обработка данных из списка покупок
+          
           print('Found prefill_data in arguments');
           final prefillData = args['prefill_data'] as Map<String, dynamic>;
           print('Prefill data: $prefillData');
 
-          // Заполняем форму данными из списка покупок
+          
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            // Заполняем название продукта
+            
             if (prefillData.containsKey('name') && prefillData['name'] != null) {
               _productNameController.text = prefillData['name'].toString();
               print('Set product name: ${prefillData['name']}');
             }
 
-            // Заполняем количество
+            
             if (prefillData.containsKey('quantity') && prefillData['quantity'] != null) {
               _quantityController.text = prefillData['quantity'].toString();
               print('Set quantity: ${prefillData['quantity']}');
             }
 
-            // Устанавливаем тип единицы измерения
+            
             if (prefillData.containsKey('quantity_type') && prefillData['quantity_type'] != null) {
               final quantityType = prefillData['quantity_type'] as QuantityType;
               _quantityType = quantityType;
               print('Set quantity type: ${quantityType.toString()}');
             }
 
-            // Запоминаем ID типа ингредиента, чтобы установить его после загрузки списка типов
+            
             if (prefillData.containsKey('ingredient_type_id') && prefillData['ingredient_type_id'] != null) {
               int typeId = prefillData['ingredient_type_id'] as int;
 
-              // Находим тип по ID среди загруженных типов или ждем загрузки
+              
               if (_allTypes.isNotEmpty) {
                 _findTypeById(typeId);
               } else {
-                // Сохраняем ID для поиска после загрузки типов
+                
                 _pendingTypeId = typeId;
 
-                // Если есть название типа, пока устанавливаем его в поле поиска
+                
                 if (prefillData.containsKey('ingredient_type_name') &&
                     prefillData['ingredient_type_name'] != null) {
                   _typeSearchController.text = prefillData['ingredient_type_name'].toString();
@@ -437,7 +437,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           });
         }
 
-        // Запоминаем ID элемента списка покупок, если есть
+        
         if (args.containsKey('shopping_item_id')) {
           _shoppingItemId = args['shopping_item_id'] as int?;
           print('Found shopping item ID: $_shoppingItemId');
@@ -446,7 +446,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         print('No arguments found');
       }
 
-      // Инициализируем только один раз
+      
       _initializeData();
       _isInitialized = true;
     }
@@ -457,7 +457,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       print('\n===== LOADING INGREDIENT TYPES =====');
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Загружаем все типы ингредиентов из API через DataRepository
+      
       final response = await dataRepository.apiService.get('/api/ingredient-types/?limit=1000');
 
       if (response['results'] != null) {
@@ -469,8 +469,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
         print('Loaded ${_allTypes.length} ingredient types');
 
-        // Если у нас есть отложенные данные и в них есть ingredient_type_id,
-        // применяем его теперь, когда типы загружены
+        
+        
         if (_pendingScannedData != null && _pendingScannedData!.containsKey('ingredient_type_id')) {
           int? typeId = _pendingScannedData!['ingredient_type_id'];
           if (typeId != null) {
@@ -479,11 +479,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
           }
         }
 
-        // Обрабатываем pendingTypeId, если он был установлен
+        
         if (_pendingTypeId != null) {
           print('Applying pending ingredient type ID: $_pendingTypeId');
           _findTypeById(_pendingTypeId!);
-          _pendingTypeId = null; // Очищаем после применения
+          _pendingTypeId = null; 
         }
       }
     } catch (e) {
@@ -526,12 +526,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
     try {
       final dataRepository = _dataRepository ?? Provider.of<DataRepository>(context, listen: false);
 
-      // Получаем продукты из DataRepository
+      
       final items = dataRepository.refrigeratorItems;
 
       RefrigeratorItem? item;
       if (items.isEmpty) {
-        // Если список пустой, загружаем из API
+        
         await dataRepository.getRefrigeratorItems();
         final updatedItems = dataRepository.refrigeratorItems;
         item = updatedItems.firstWhere(
@@ -675,7 +675,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Шаг 1: Выбор типа продукта
+              
               Text(
                 'Шаг 1: Выберите тип продукта',
                 style: Theme.of(context).textTheme.titleMedium,
@@ -711,7 +711,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
               ),
               const SizedBox(height: 12),
 
-              // Результаты поиска типов
+              
               if (_searchResults.isNotEmpty && _selectedType == null)
                 Container(
                   height: 200,
@@ -750,7 +750,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
               const SizedBox(height: 24),
 
-              // Шаг 2: Название продукта
+              
               Text(
                 'Шаг 2: Введите название продукта',
                 style: Theme.of(context).textTheme.titleMedium,
@@ -774,7 +774,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
               const SizedBox(height: 24),
 
-              // Шаг 3: Пищевая ценность
+              
               Text(
                 'Шаг 3: Пищевая ценность (на 100г/100мл)',
                 style: Theme.of(context).textTheme.titleMedium,
@@ -866,7 +866,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
               const SizedBox(height: 24),
 
-              // Шаг 4: Аллергены
+              
               Text(
                 'Шаг 4: Выберите аллергены',
                 style: Theme.of(context).textTheme.titleMedium,
@@ -900,7 +900,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
               const Divider(),
               const SizedBox(height: 24),
 
-              // Шаг 5: Количество и единица измерения
+              
               Text(
                 'Шаг 5: Укажите количество',
                 style: Theme.of(context).textTheme.titleMedium,
@@ -909,9 +909,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Поле для количества
+                  
                   SizedBox(
-                    width: 120, // Фиксированная ширина
+                    width: 120, 
                     child: TextFormField(
                       controller: _quantityController,
                       decoration: const InputDecoration(
@@ -931,24 +931,24 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  // Выпадающий список единиц измерения
+                  
                   Expanded(
                     child: DropdownButtonFormField<QuantityType>(
                       value: _quantityType,
                       decoration: const InputDecoration(
                         labelText: 'Единица измерения',
                         prefixIcon: Icon(Icons.straighten),
-                        // Добавляем contentPadding для лучшего отображения
+                        
                         contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                       ),
-                      // Уменьшаем padding для элементов списка
+                      
                       isExpanded: true,
                       items: _allowedQuantityTypes.map((type) {
                         return DropdownMenuItem<QuantityType>(
                           value: type,
                           child: Text(
                             type.toDisplayString(),
-                            // Добавляем стиль с меньшим размером шрифта
+                            
                             style: const TextStyle(fontSize: 14),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -967,7 +967,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
               ),
               const SizedBox(height: 24),
 
-              // Шаг 6: Срок годности
+              
               Text(
                 'Шаг 6: Укажите срок годности',
                 style: Theme.of(context).textTheme.titleMedium,
@@ -991,7 +991,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
               ),
               const SizedBox(height: 32),
 
-              // Кнопки действий
+              
               Row(
                 children: [
                   if (_isEditing)
@@ -1018,7 +1018,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 24), // Дополнительный отступ внизу
+              const SizedBox(height: 24), 
             ],
           ),
         ),
@@ -1058,7 +1058,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         if (_isEditing && _currentItem != null) {
           print('_saveProduct: Updating existing product');
 
-          // Обновление существующего продукта
+          
           final updatedItem = await dataRepository.updateRefrigeratorItem(
             itemId: _currentItem!.id,
             quantity: int.parse(_quantityController.text),
@@ -1078,7 +1078,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         } else {
           print('_saveProduct: Adding new product');
 
-          // Добавление нового продукта
+          
           if (_selectedType == null) {
             print('_saveProduct: Error - no type selected');
             throw Exception('Выберите тип продукта');
@@ -1093,7 +1093,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           }
 
           print('Final allergen IDs to send: $selectedAllergenIds');
-          // Получаем аллергены
+          
 
 
           final newIngredientResponse = await dataRepository.apiService.post('/api/ingredients/', {
@@ -1113,7 +1113,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           final ingredientId = newIngredientResponse['ing_id'];
           print('_saveProduct: New ingredient created with id=$ingredientId');
 
-          // Добавляем продукт в холодильник
+          
           print('_saveProduct: Adding product to refrigerator');
           final addedItem = await dataRepository.addRefrigeratorItem(
             ingredientId: ingredientId,

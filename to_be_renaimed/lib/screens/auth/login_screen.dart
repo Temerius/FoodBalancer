@@ -1,4 +1,4 @@
-// lib/screens/auth/login_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../config/theme.dart';
@@ -42,12 +42,12 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (success) {
-        // Очищаем ошибки перед навигацией
+        
         authProvider.clearError();
 
-        // После успешного входа инициализируем данные пользователя
+        
         try {
-          // Показываем индикатор загрузки
+          
           showDialog(
             context: context,
             barrierDismissible: false,
@@ -63,32 +63,32 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           );
 
-          // Инициализируем репозитории
+          
           await dataRepository.initialize();
 
-          // Загружаем профиль пользователя
+          
           await dataRepository.getUserProfile();
 
-          // Загружаем полный список аллергенов
+          
           await dataRepository.getAllAllergens(forceRefresh: true);
 
-          // Загружаем полный список оборудования
+          
           await dataRepository.getEquipment(forceRefresh: true);
 
-          // Обновляем аллергены пользователя
+          
           await dataRepository.refreshUserAllergens();
 
-          // Закрываем диалог с индикатором загрузки
+          
           if (mounted) {
             Navigator.pop(context);
           }
         } catch (e) {
-          // Закрываем диалог с индикатором загрузки в случае ошибки
+          
           if (mounted) {
             Navigator.pop(context);
           }
 
-          // Показываем сообщение об ошибке
+          
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Ошибка при загрузке данных: ${e.toString()}'),
@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         }
 
-        // Переходим на главный экран
+        
         if (mounted) {
           Navigator.pushReplacementNamed(context, AppRoutes.home);
         }
@@ -140,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 32),
 
-                  // Email поле
+                  
                   CustomTextField(
                     label: 'Email',
                     controller: _emailController,
@@ -150,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 16),
 
-                  // Пароль поле
+                  
                   CustomTextField(
                     label: 'Пароль',
                     controller: _passwordController,
@@ -160,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 16),
 
-                  // Опция "Запомнить меня" и "Забыли пароль"
+                  
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -207,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 24),
 
-                  // Сообщение об ошибке
+                  
                   if (authProvider.error != null) ...[
                     Container(
                       padding: EdgeInsets.all(12),
@@ -236,7 +236,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 24),
                   ],
 
-                  // Кнопка входа
+                  
                   CustomButton(
                     text: 'Войти',
                     onPressed: _login,
@@ -244,7 +244,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 24),
 
-                  // Ссылка на регистрацию
+                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -256,7 +256,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          // Очищаем ошибки перед навигацией
+                          
                           Provider.of<AuthProvider>(context, listen: false).clearError();
                           Navigator.pushReplacementNamed(context, AppRoutes.register);
                         },

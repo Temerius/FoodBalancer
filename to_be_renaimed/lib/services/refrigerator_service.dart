@@ -1,4 +1,4 @@
-// lib/services/refrigerator_service.dart
+
 import 'dart:convert';
 import '../models/refrigerator_item.dart';
 import '../models/ingredient.dart';
@@ -12,7 +12,7 @@ class RefrigeratorService {
   RefrigeratorService({required ApiService apiService})
       : _apiService = apiService;
 
-  // Получить все продукты в холодильнике (без пагинации)
+  
   Future<RefrigeratorResponse> getRefrigeratorItems({
     String? search,
     String? category,
@@ -32,7 +32,7 @@ class RefrigeratorService {
       params['expiring_soon'] = 'true';
     }
 
-    // Создаем query string
+    
     String queryString = '';
     if (params.isNotEmpty) {
       queryString = '?' + params.entries
@@ -43,7 +43,7 @@ class RefrigeratorService {
     try {
       final response = await _apiService.get('/api/refrigerator/$queryString');
 
-      // Возвращаем обработанный ответ
+      
       return RefrigeratorResponse.fromJson(response);
     } catch (e) {
       print('Error in getRefrigeratorItems: $e');
@@ -51,12 +51,12 @@ class RefrigeratorService {
     }
   }
 
-  // Получить продукты с истекающим сроком годности
+  
   Future<List<RefrigeratorItem>> getExpiringItems() async {
     try {
       final response = await _apiService.get('/api/refrigerator/expiring_soon/');
 
-      // response может быть либо списком, либо объектом с ключом results
+      
       List<dynamic> itemsJson;
 
       if (response is List) {
@@ -74,10 +74,10 @@ class RefrigeratorService {
     }
   }
 
-  // Получить статистику холодильника
+  
   Future<RefrigeratorStats> getRefrigeratorStats() async {
     try {
-      // Загружаем все продукты для получения статистики
+      
       final response = await getRefrigeratorItems();
       return response.stats;
     } catch (e) {
@@ -86,7 +86,7 @@ class RefrigeratorService {
     }
   }
 
-  // Получить категории (типы) продуктов в холодильнике
+  
   Future<List<IngredientType>> getRefrigeratorCategories() async {
     try {
       final response = await _apiService.get('/api/refrigerator/categories/');
@@ -108,8 +108,8 @@ class RefrigeratorService {
     }
   }
 
-  // Добавить продукт в холодильник
-  // Добавить продукт в холодильник
+  
+  
   Future<RefrigeratorItem> addItem({
     required int ingredientId,
     required int quantity,
@@ -122,11 +122,11 @@ class RefrigeratorService {
         'mui_quantity_type': quantityType.toString().split('.').last,
       });
 
-      // Отладочный вывод
+      
       print('API RESPONSE TYPE: ${response.runtimeType}');
       print('API RESPONSE CONTENT: $response');
 
-      // Проверяем, что именно возвращает сервер
+      
       if (response is Map<String, dynamic>) {
         print('mui_ing_id TYPE: ${response['mui_ing_id']?.runtimeType}');
         print('mui_ing_id VALUE: ${response['mui_ing_id']}');
@@ -140,7 +140,7 @@ class RefrigeratorService {
     }
   }
 
-  // Добавить несколько продуктов одновременно
+  
   Future<AddMultipleResponse> addMultipleItems(List<AddItemRequest> items) async {
     try {
       final itemsJson = items.map((item) => {
@@ -160,7 +160,7 @@ class RefrigeratorService {
     }
   }
 
-  // Обновить продукт в холодильнике
+  
   Future<RefrigeratorItem> updateItem({
     required int itemId,
     int? quantity,
@@ -185,7 +185,7 @@ class RefrigeratorService {
     }
   }
 
-  // Удалить продукт из холодильника
+  
   Future<void> removeItem(int itemId) async {
     try {
       await _apiService.delete('/api/refrigerator/$itemId/');
@@ -195,7 +195,7 @@ class RefrigeratorService {
     }
   }
 
-  // Поиск ингредиентов для добавления (без пагинации)
+  
   Future<List<Ingredient>> searchIngredients({
     required String query,
     int? typeId,
@@ -208,7 +208,7 @@ class RefrigeratorService {
       params['type_id'] = typeId.toString();
     }
 
-    // Создаем query string
+    
     String queryString = params.entries
         .map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
         .join('&');
@@ -234,7 +234,7 @@ class RefrigeratorService {
   }
 }
 
-// Обновленные классы для ответов
+
 
 class RefrigeratorResponse {
   final List<RefrigeratorItem> items;

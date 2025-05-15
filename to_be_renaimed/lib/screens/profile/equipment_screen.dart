@@ -1,4 +1,4 @@
-// lib/screens/profile/equipment_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
@@ -32,17 +32,17 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
     try {
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
-      // Загружаем оборудование (используем кэшированные данные, если они есть и актуальны)
+      
       _equipment = await dataRepository.getEquipment();
 
-      // Получаем оборудование текущего пользователя
+      
       final user = dataRepository.user ??
           Provider.of<AuthProvider>(context, listen: false).currentUser;
 
       if (user != null) {
         _selectedEquipmentIds = List<int>.from(user.equipmentIds);
 
-        // Обновляем статусы выбора в списке оборудования
+        
         for (var equip in _equipment) {
           equip.isSelected = _selectedEquipmentIds.contains(equip.id);
         }
@@ -76,12 +76,12 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
         return;
       }
 
-      // Создаем копию пользователя с обновленным оборудованием
+      
       final updatedUser = user.copyWith(
         equipmentIds: _selectedEquipmentIds,
       );
 
-      // Обновляем профиль в репозитории
+      
       final success = await dataRepository.updateUserProfile(updatedUser);
 
       if (success) {
@@ -117,7 +117,7 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
           ? const Center(child: CircularProgressIndicator())
           : Column(
         children: [
-          // Сообщение об ошибке (если есть)
+          
           if (_errorMessage != null)
             Container(
               padding: const EdgeInsets.all(12),
@@ -148,7 +148,7 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
             ),
           ),
 
-          // Список оборудования с индикатором загрузки
+          
           Expanded(
             child: _equipment.isEmpty
                 ? Center(
@@ -218,7 +218,7 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
             ),
           ),
 
-          // Информация о выбранных позициях
+          
           if (_equipment.isNotEmpty)
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -231,7 +231,7 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
               ),
             ),
 
-          // Кнопка сохранения
+          
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: SizedBox(

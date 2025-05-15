@@ -1,4 +1,4 @@
-// lib/screens/recipes/recipe_detail_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../repositories/data_repository.dart';
@@ -43,10 +43,10 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
 
       print("Trying to load recipe with ID: ${widget.recipeId}");
 
-      // Сначала загружаем список избранного, чтобы статус был актуальным
+      
       await dataRepository.getFavoriteRecipes(forceRefresh: forceRefresh);
 
-      // Затем загружаем детали рецепта
+      
       final recipe = await dataRepository.getRecipeDetails(widget.recipeId!, forceRefresh: forceRefresh);
 
       if (recipe == null) {
@@ -59,7 +59,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
         });
       }
     } catch (e) {
-      // Более подробная обработка ошибок
+      
       setState(() {
         if (e.toString().contains("column ingredient_type.category does not exist")) {
           _errorMessage = 'Ошибка в структуре данных: поле категории отсутствует в базе данных. Требуется обновление приложения.';
@@ -158,7 +158,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
   Widget _buildRecipeDetail() {
     return CustomScrollView(
       slivers: [
-        // AppBar with image
+        
         SliverAppBar(
           expandedHeight: 200.0,
           pinned: true,
@@ -169,7 +169,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
               _recipe!.mainImageUrl!,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
-                // Если не удалось загрузить изображение, показываем иконку
+                
                 return Container(
                   color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                   child: Center(
@@ -225,21 +225,21 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
           ],
         ),
 
-        // Recipe content
+        
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Recipe description
+                
                 Text(
                   _recipe!.description,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 24),
 
-                // Recipe information
+                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -265,7 +265,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                 ),
                 const SizedBox(height: 16),
 
-                // Nutritional info
+                
                 Card(
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -311,7 +311,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                           const Divider(),
                           const SizedBox(height: 8),
 
-                          // Добавим отображение пищевой ценности на 100 грамм
+                          
                           Text(
                             'На 100 грамм:',
                             style: TextStyle(
@@ -352,7 +352,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                // Ingredients
+                
                 Text(
                   'Ингредиенты',
                   style: Theme.of(context).textTheme.titleLarge,
@@ -360,7 +360,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                 const SizedBox(height: 12),
                 _buildIngredientsList(),
 
-                // Add missing ingredients to shopping list button
+                
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: SizedBox(
@@ -380,7 +380,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                // Instructions
+                
                 Text(
                   'Шаги приготовления',
                   style: Theme.of(context).textTheme.titleLarge,
@@ -389,12 +389,12 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                 _buildInstructionsList(),
                 const SizedBox(height: 24),
 
-                // Cook today button
+                
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      // Add to "Cook Today"
+                      
                       Navigator.pushNamed(context, '/meal-plan/daily');
                     },
                     icon: const Icon(Icons.restaurant_menu),
@@ -414,7 +414,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
       BuildContext context,
       IconData icon,
       String value,
-      String label,  // Этот параметр больше не используется
+      String label,  
       ) {
     return Column(
       children: [
@@ -424,7 +424,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
           value,
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        // Удалили отображение label
+        
       ],
     );
   }
@@ -456,13 +456,13 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
     );
   }
 
-  // В lib/screens/recipes/recipe_detail_screen.dart
-  // В lib/screens/recipes/recipe_detail_screen.dart
+  
+  
   Widget _buildIngredientsList() {
-    // Создаем общий список ингредиентов из всех шагов
+    
     Map<String, Map<String, dynamic>> allIngredients = {};
 
-    // Собираем ингредиенты из всех шагов
+    
     if (_recipe?.steps != null) {
       for (var step in _recipe!.steps) {
         for (var ingredient in step.ingredients) {
@@ -470,10 +470,10 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
             final key = '${ingredient.ingredientType!.id}_${ingredient.quantityType.toString()}';
 
             if (allIngredients.containsKey(key)) {
-              // Складываем количество для одинаковых ингредиентов с одинаковыми единицами измерения
+              
               allIngredients[key]!['totalQuantity'] += ingredient.quantity;
             } else {
-              // Добавляем новый ингредиент
+              
               allIngredients[key] = {
                 'ingredient': ingredient,
                 'totalQuantity': ingredient.quantity,
@@ -491,7 +491,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
       );
     }
 
-    // Просто выводим все ингредиенты без группировки
+    
     return Column(
       children: allIngredients.values.map((ingredientData) {
         final ingredient = ingredientData['ingredient'] as RecipeStepIngredient;
@@ -527,9 +527,9 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
     );
   }
 
-  // В lib/screens/recipes/recipe_detail_screen.dart
+  
   Widget _buildInstructionsList() {
-    // Check if recipe has steps
+    
     if (_recipe?.steps == null || _recipe!.steps.isEmpty) {
       return const Padding(
         padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -551,7 +551,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Step number and title
+                    
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -598,7 +598,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                       ],
                     ),
 
-                    // Step ingredients (if any)
+                    
                     if (step.ingredients.isNotEmpty) ...[
                       const SizedBox(height: 16),
                       const Divider(),

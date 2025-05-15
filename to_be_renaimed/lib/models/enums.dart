@@ -1,4 +1,4 @@
-// Enum for measurement units
+
 enum QuantityType {
   grams,
   milliliters,
@@ -54,7 +54,7 @@ enum QuantityType {
   }
 }
 
-// Enum for gender types
+
 enum Gender {
   male,
   female;

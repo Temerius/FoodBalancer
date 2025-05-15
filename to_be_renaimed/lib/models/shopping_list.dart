@@ -4,7 +4,7 @@ class ShoppingList {
   final int id;
   final int userId;
 
-  // Runtime properties
+  
   List<ShoppingListItem> items = [];
 
   ShoppingList({
@@ -27,15 +27,15 @@ class ShoppingList {
     };
   }
 
-  // Get checked items (for progress calculation)
+  
   List<ShoppingListItem> get checkedItems =>
       items.where((item) => item.isChecked).toList();
 
-  // Get progress percentage
+  
   double get progress =>
       items.isEmpty ? 0.0 : checkedItems.length / items.length;
 
-  // Get items by category
+  
   Map<String, List<ShoppingListItem>> get itemsByCategory {
     final Map<String, List<ShoppingListItem>> result = {};
 

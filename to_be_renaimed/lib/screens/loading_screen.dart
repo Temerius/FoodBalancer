@@ -1,4 +1,4 @@
-// lib/screens/loading_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
@@ -29,15 +29,15 @@ class _LoadingScreenState extends State<LoadingScreen> {
     });
   }
 
-  // В lib/screens/loading_screen.dart
-// Обновить метод _initializeApp
+  
+
 
   Future<void> _initializeApp() async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final dataRepository = Provider.of<DataRepository>(context, listen: false);
 
     try {
-      // Инициализация аутентификации
+      
       setState(() {
         _statusMessage = "Проверка авторизации...";
         _progress = 0.1;
@@ -50,14 +50,14 @@ class _LoadingScreenState extends State<LoadingScreen> {
       });
 
       if (authProvider.isAuthenticated) {
-        // ИСПРАВЛЕНИЕ: Загружаем ВСЕ данные один раз здесь
+        
 
         setState(() {
           _statusMessage = "Загрузка категорий...";
           _progress = 0.3;
         });
 
-        // 1. Загружаем все категории (один раз)
+        
         await dataRepository.getAllIngredientTypes();
 
         setState(() {
@@ -65,7 +65,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
           _progress = 0.4;
         });
 
-        // 2. Загружаем базовые данные пользователя
+        
         await dataRepository.getUserProfile(forceRefresh: true);
 
         setState(() {
@@ -73,7 +73,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
           _progress = 0.5;
         });
 
-        // 3. Загружаем аллергены
+        
         await dataRepository.getAllAllergens(forceRefresh: true);
 
         setState(() {
@@ -81,7 +81,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
           _progress = 0.6;
         });
 
-        // 4. Загружаем оборудование
+        
         await dataRepository.getEquipment(forceRefresh: true);
 
         setState(() {
@@ -89,10 +89,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
           _progress = 0.7;
         });
 
-        // 5. ВАЖНО: Загружаем продукты холодильника
-        // Это автоматически обновит:
-        // - userRefrigeratorCategories
-        // - expiringItems
+        
+        
+        
+        
         await dataRepository.getRefrigeratorItems(forceRefresh: true);
 
         setState(() {
@@ -100,7 +100,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
           _progress = 0.8;
         });
 
-        // 6. Загружаем рецепты
+        
         await dataRepository.getRecipes(forceRefresh: true);
 
         setState(() {
@@ -108,7 +108,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
           _progress = 0.85;
         });
 
-        // 7. Загружаем избранные рецепты
+        
         await dataRepository.getFavoriteRecipes(forceRefresh: true);
 
         setState(() {
@@ -116,7 +116,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
           _progress = 0.9;
         });
 
-        // 8. Загружаем статистику
+        
         await dataRepository.getRefrigeratorStats(forceRefresh: true);
 
         setState(() {
@@ -124,7 +124,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
           _progress = 0.95;
         });
 
-        // 9. Обновляем конкретные данные пользователя
+        
         await dataRepository.refreshUserAllergens();
         await dataRepository.refreshUserEquipment();
 
@@ -160,12 +160,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
         _statusMessage = "Готово!";
       });
 
-      // Небольшая задержка, чтобы пользователь увидел полный прогресс бар
+      
       await Future.delayed(const Duration(milliseconds: 500));
 
 
 
-      // Переход на соответствующий экран
+      
       if (mounted) {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => authProvider.isAuthenticated
@@ -213,7 +213,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
             children: [
               const Spacer(flex: 2),
 
-              // Логотип
+              
               Container(
                 width: 120,
                 height: 120,
@@ -230,7 +230,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
               const SizedBox(height: 24),
 
-              // Название приложения
+              
               Text(
                 'CookHelper',
                 style: Theme.of(context).textTheme.displayMedium?.copyWith(
@@ -248,7 +248,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
               const Spacer(flex: 1),
 
-              // Индикатор прогресса и статус
+              
               if (!_hasError) ...[
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40.0),
@@ -264,7 +264,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                   style: const TextStyle(color: Colors.white),
                 ),
               ] else ...[
-                // Отображение ошибки
+                
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 40.0),
                   padding: const EdgeInsets.all(16.0),
@@ -306,7 +306,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
               const Spacer(flex: 3),
 
-              // Полоса внизу для информации о версии
+              
               Container(
                 width: double.infinity,
                 color: Colors.black12,

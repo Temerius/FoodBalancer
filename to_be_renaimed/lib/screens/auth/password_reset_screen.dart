@@ -32,7 +32,7 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
           .resetPassword(_emailController.text);
 
       if (success) {
-        // Очищаем ошибки перед сменой состояния
+        
         Provider.of<AuthProvider>(context, listen: false).clearError();
         setState(() {
           _resetSent = true;
@@ -92,7 +92,7 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
           ),
           SizedBox(height: 32),
 
-          // Email поле
+          
           CustomTextField(
             label: 'Email',
             controller: _emailController,
@@ -102,7 +102,7 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
           ),
           SizedBox(height: 24),
 
-          // Сообщение об ошибке
+          
           if (authProvider.error != null) ...[
             Container(
               padding: EdgeInsets.all(12),
@@ -131,7 +131,7 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
             SizedBox(height: 24),
           ],
 
-          // Кнопка отправки
+          
           CustomButton(
             text: 'Отправить инструкции',
             onPressed: _resetPassword,
@@ -139,10 +139,10 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
           ),
           SizedBox(height: 24),
 
-          // Ссылка на вход
+          
           TextButton(
             onPressed: () {
-              // Очищаем ошибки перед навигацией
+              
               Provider.of<AuthProvider>(context, listen: false).clearError();
               Navigator.pushReplacementNamed(context, AppRoutes.login);
             },
@@ -172,25 +172,25 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
         Text(
           'Инструкции отправлены!',
           style: Theme.of(context).textTheme.displayMedium,
-          textAlign: TextAlign.center,  // Добавляем центрирование текста
+          textAlign: TextAlign.center,  
         ),
         SizedBox(height: 16),
         Text(
           'Мы отправили инструкции по восстановлению пароля на email ${_emailController.text}.',
           style: Theme.of(context).textTheme.bodyLarge,
-          textAlign: TextAlign.center,  // Уже есть, но подтверждаем
+          textAlign: TextAlign.center,  
         ),
         SizedBox(height: 16),
         Text(
           'Если вы не получили письмо, проверьте папку "Спам" или попробуйте еще раз.',
           style: Theme.of(context).textTheme.bodyMedium,
-          textAlign: TextAlign.center,  // Уже есть, но подтверждаем
+          textAlign: TextAlign.center,  
         ),
         SizedBox(height: 32),
         CustomButton(
           text: 'Вернуться к входу',
           onPressed: () {
-            // Очищаем ошибки перед навигацией
+            
             Provider.of<AuthProvider>(context, listen: false).clearError();
             Navigator.pushReplacementNamed(context, AppRoutes.login);
           },

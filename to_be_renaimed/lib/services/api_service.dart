@@ -6,14 +6,14 @@ import '../utils/network_util.dart';
 
 
 class ApiService {
-  // For your real server
-  static const String baseUrl = 'http://192.168.100.5:8000';
+  
+  static const String baseUrl = 'http://192.168.151.120:8000';
 
-  // Test whether we should use mock responses
+  
   static const bool useMockResponses = false;
 
   static const bool DEBUG = true;
-  // API endpoints
+  
   static const String loginUrl = '/api/users/login/';
   static const String registerUrl = '/api/users/register/';
   static const String profileUrl = '/api/users/profile/';
@@ -21,29 +21,29 @@ class ApiService {
   static const String passwordResetConfirmUrl = '/api/users/password-reset/confirm/';
   static const String logoutUrl = '/api/users/logout/';
 
-  // For token storage
+  
   static const String _tokenKey = 'auth_token';
 
-  // For caching
-  static const int defaultCacheTime = 24 * 60 * 60 * 1000; // 24 hours
+  
+  static const int defaultCacheTime = 24 * 60 * 60 * 1000; 
 
-  // HTTP client
+  
   final http.Client _client = http.Client();
 
-  // Network utility
+  
   final NetworkUtil _networkUtil = NetworkUtil();
 
-  // Default headers
+  
   Map<String, String> get _headers => {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     if (_token != null) 'Authorization': 'Token $_token',
   };
 
-  // Auth token
+  
   String? _token;
 
-  // Set token
+  
   void setToken(String token) {
     _token = token;
   }
@@ -52,16 +52,16 @@ class ApiService {
     return _token;
   }
 
-  // Clear token
+  
   void clearToken() {
     _token = null;
   }
 
-  // Initialize
+  
   Future<void> initialize() async {
     await _networkUtil.initialize();
 
-    // Восстановление токена из SharedPreferences
+    
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString(_tokenKey);
     if (token != null) {
@@ -72,9 +72,9 @@ class ApiService {
     }
   }
 
-  // Get all results (no pagination now)
+  
   Future<List<dynamic>> getAllPaginatedResults(String endpoint, {int pageSize = 1000}) async {
-    // Since there's no pagination, we'll just do a regular get request
+    
     try {
       if (DEBUG) {
         print('API Request (No Pagination): GET $baseUrl$endpoint');
@@ -104,32 +104,32 @@ class ApiService {
         try {
           final decoded = jsonDecode(utf8.decode(response.bodyBytes));
 
-          // Check if it's a list or a map with 'results'
+          
           if (decoded is List) {
-            // Direct list response
+            
             return decoded;
           } else if (decoded is Map<String, dynamic> && decoded.containsKey('results')) {
-            // Map with results key
+            
             return decoded['results'] as List<dynamic>;
           } else {
-            // Unknown format
+            
             throw FormatException('Неожиданный формат ответа: ${decoded.runtimeType}');
           }
         } catch (e) {
           throw FormatException('Ошибка при декодировании ответа: $e');
         }
       } else {
-        // Error handling similar to _handleResponse
+        
         String errorMessage = 'Ошибка сервера: ${response.statusCode}';
 
-        // Try to decode error response
+        
         try {
           var errorData = jsonDecode(utf8.decode(response.bodyBytes));
           if (errorData is Map<String, dynamic> && errorData.containsKey('error')) {
             errorMessage = errorData['error'];
           }
         } catch (_) {
-          // Keep the default error message if parsing fails
+          
         }
 
         throw ApiException(errorMessage);
@@ -142,9 +142,9 @@ class ApiService {
     }
   }
 
-  // GET request
+  
   Future<Map<String, dynamic>> get(String endpoint) async {
-    // Check connection before making request
+    
     final hasConnection = await _networkUtil.checkConnection();
     if (!hasConnection) {
       throw NoConnectionException(
@@ -179,9 +179,9 @@ class ApiService {
   }
 
 
-  // POST request
+  
   Future<Map<String, dynamic>> post(String endpoint, Map<String, dynamic> data) async {
-    // Check connection before making request
+    
     final hasConnection = await _networkUtil.checkConnection();
     if (!hasConnection) {
       throw NoConnectionException(
@@ -216,9 +216,9 @@ class ApiService {
     }
   }
 
-  // PUT request
+  
   Future<Map<String, dynamic>> put(String endpoint, Map<String, dynamic> data) async {
-    // Check connection before making request
+    
     final hasConnection = await _networkUtil.checkConnection();
     if (!hasConnection) {
       throw NoConnectionException(
@@ -252,13 +252,13 @@ class ApiService {
     }
   }
 
-  // DELETE request
-  // В lib/services/api_service.dart
-// Обновить метод delete для поддержки данных
+  
+  
 
-// DELETE request
+
+
   Future<Map<String, dynamic>> delete(String endpoint, {Map<String, dynamic>? data}) async {
-    // Check connection before making request
+    
     final hasConnection = await _networkUtil.checkConnection();
     if (!hasConnection) {
       throw NoConnectionException(
@@ -278,7 +278,7 @@ class ApiService {
       http.Response response;
 
       if (data != null) {
-        // DELETE с телом запроса
+        
         final request = http.Request('DELETE', Uri.parse('$baseUrl$endpoint'));
         request.headers.addAll(_headers);
         request.body = jsonEncode(data);
@@ -286,7 +286,7 @@ class ApiService {
         final streamedResponse = await _client.send(request).timeout(const Duration(seconds: 15));
         response = await http.Response.fromStream(streamedResponse);
       } else {
-        // Обычный DELETE без тела
+        
         response = await _client.delete(
           Uri.parse('$baseUrl$endpoint'),
           headers: _headers,
@@ -308,7 +308,7 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>> getWithExtendedTimeout(String endpoint, {Duration timeout = const Duration(seconds: 60)}) async {
-    // Check connection before making request
+    
     final hasConnection = await _networkUtil.checkConnection();
     if (!hasConnection) {
       throw NoConnectionException(
@@ -325,7 +325,7 @@ class ApiService {
       final response = await _client.get(
         Uri.parse('$baseUrl$endpoint'),
         headers: _headers,
-      ).timeout(timeout); // Используем увеличенный таймаут
+      ).timeout(timeout); 
 
       if (DEBUG) {
         print('Response status: ${response.statusCode}');
@@ -336,7 +336,7 @@ class ApiService {
       return _handleResponse(response);
     } catch (e) {
       if (e is TimeoutException) {
-        // Специфичная обработка для таймаутов
+        
         if (DEBUG) {
           print('API Request Timeout: $e');
         }
@@ -345,7 +345,7 @@ class ApiService {
                 'Возможно, сервер занят обработкой других запросов. Запрос: GET $endpoint'
         );
       } else {
-        // Общая обработка ошибок
+        
         if (DEBUG) {
           print('API Error: $e');
         }
@@ -354,7 +354,7 @@ class ApiService {
     }
   }
 
-  // Handle response
+  
   Map<String, dynamic> _handleResponse(http.Response response) {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       if (response.body.isEmpty) return {};
@@ -362,7 +362,7 @@ class ApiService {
       try {
         dynamic decoded = jsonDecode(utf8.decode(response.bodyBytes));
 
-        // If we got a list instead of a map, convert it to a map with a 'results' key
+        
         if (decoded is List) {
           return {'results': decoded};
         } else if (decoded is Map<String, dynamic>) {
@@ -374,23 +374,23 @@ class ApiService {
         throw FormatException('Ошибка при декодировании ответа: $e');
       }
     } else {
-      // Error handling
+      
       String errorMessage = 'Ошибка сервера: ${response.statusCode}';
 
-      // Проверка, является ли ответ HTML (что часто бывает для 404)
+      
       if (response.body.trim().startsWith('<!DOCTYPE html>') ||
           response.body.trim().startsWith('<html>')) {
-        // Это HTML, выводим более понятное сообщение об ошибке
+        
         if (response.statusCode == 404) {
           errorMessage = 'Эндпоинт не найден: ${response.request?.url.path}';
         } else {
           errorMessage = 'Сервер вернул HTML-страницу вместо ожидаемого JSON ответа';
         }
       } else {
-        // Пытаемся парсить как JSON, как и раньше
+        
         try {
           var errorData = jsonDecode(utf8.decode(response.bodyBytes));
-          // Обработка ошибок в JSON формате
+          
           if (errorData is Map<String, dynamic>) {
             if (errorData.containsKey('error')) {
               errorMessage = errorData['error'];
@@ -399,18 +399,18 @@ class ApiService {
             }
           }
         } catch (e) {
-          // Если парсинг не удался, используем текстовое содержимое
+          
           if (response.bodyBytes.isNotEmpty) {
             try {
               errorMessage = utf8.decode(response.bodyBytes);
             } catch (_) {
-              // Если и это не удалось, оставляем стандартное сообщение
+              
             }
           }
         }
       }
 
-      // Выбрасываем соответствующее исключение
+      
       if (response.statusCode == 401) {
         throw UnauthorizedException(errorMessage);
       } else if (response.statusCode == 403) {
@@ -425,9 +425,9 @@ class ApiService {
     }
   }
 
-  // Get mock response (for testing)
+  
   Map<String, dynamic> _getMockResponse(String endpoint, [Map<String, dynamic>? data]) {
-    // Mock for registration
+    
     if (endpoint == '/api/users/register/') {
       return {
         'user': {
@@ -450,9 +450,9 @@ class ApiService {
       print('Body: ${jsonEncode(data)}');
     }
 
-    // Mock for login
+    
     if (endpoint == '/api/users/login/') {
-      // Check mock credentials
+      
       if (data?['email'] == 'test@example.com' && data?['password'] == 'password') {
         return {
           'user': {
@@ -472,12 +472,12 @@ class ApiService {
       }
     }
 
-    // For all other endpoints
+    
     return {'message': 'Мок-ответ для $endpoint'};
   }
 }
 
-// API Exceptions
+
 class ApiException implements Exception {
   final String message;
   ApiException(this.message);

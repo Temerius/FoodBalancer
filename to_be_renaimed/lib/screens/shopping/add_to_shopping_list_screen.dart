@@ -21,7 +21,7 @@ class _AddToShoppingListScreenState extends State<AddToShoppingListScreen> {
   bool _isSearchingTypes = false;
   String? _errorMessage;
 
-  // Все допустимые единицы измерения
+  
   final List<QuantityType> _quantityTypes = [
     QuantityType.grams,
     QuantityType.milliliters,
@@ -29,7 +29,7 @@ class _AddToShoppingListScreenState extends State<AddToShoppingListScreen> {
     QuantityType.pieces,
   ];
 
-  // Все типы ингредиентов и результаты поиска
+  
   List<IngredientType> _allTypes = [];
   List<IngredientType> _searchResults = [];
 
@@ -45,11 +45,11 @@ class _AddToShoppingListScreenState extends State<AddToShoppingListScreen> {
     });
 
     try {
-      // Загружаем типы ингредиентов из репозитория
+      
       final dataRepository = Provider.of<DataRepository>(context, listen: false);
       _allTypes = await dataRepository.getAllIngredientTypes();
 
-      // Сортируем по имени
+      
       _allTypes.sort((a, b) => a.name.compareTo(b.name));
 
       setState(() {
@@ -63,7 +63,7 @@ class _AddToShoppingListScreenState extends State<AddToShoppingListScreen> {
     }
   }
 
-  // Функция поиска типов ингредиентов
+  
   void _searchTypes(String query) {
     if (query.isEmpty) {
       setState(() {
@@ -89,10 +89,10 @@ class _AddToShoppingListScreenState extends State<AddToShoppingListScreen> {
   }
 
   Future<void> _addItem() async {
-    // Скрываем клавиатуру
+    
     FocusScope.of(context).unfocus();
 
-    // Валидация формы
+    
     if (_formKey.currentState!.validate()) {
       if (_selectedIngredientType == null) {
         setState(() {
@@ -101,7 +101,7 @@ class _AddToShoppingListScreenState extends State<AddToShoppingListScreen> {
         return;
       }
 
-      // Получаем количество
+      
       final quantity = int.tryParse(_quantityController.text);
       if (quantity == null || quantity <= 0) {
         setState(() {
@@ -116,7 +116,7 @@ class _AddToShoppingListScreenState extends State<AddToShoppingListScreen> {
       });
 
       try {
-        // Добавляем элемент в список покупок через репозиторий
+        
         final dataRepository = Provider.of<DataRepository>(context, listen: false);
         final newItem = await dataRepository.addShoppingListItem(
           ingredientTypeId: _selectedIngredientType!.id,
@@ -125,7 +125,7 @@ class _AddToShoppingListScreenState extends State<AddToShoppingListScreen> {
         );
 
         if (newItem != null && mounted) {
-          Navigator.pop(context, true); // Возвращаем true для индикации успеха
+          Navigator.pop(context, true); 
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Продукт добавлен в список покупок')),
           );
@@ -161,7 +161,7 @@ class _AddToShoppingListScreenState extends State<AddToShoppingListScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Сообщение об ошибке, если есть
+              
               if (_errorMessage != null) ...[
                 Container(
                   padding: const EdgeInsets.all(12),
@@ -185,7 +185,7 @@ class _AddToShoppingListScreenState extends State<AddToShoppingListScreen> {
                 const SizedBox(height: 16),
               ],
 
-              // Поле поиска типа
+              
               Text(
                 'Шаг 1: Выберите тип продукта',
                 style: Theme.of(context).textTheme.titleMedium,
@@ -221,7 +221,7 @@ class _AddToShoppingListScreenState extends State<AddToShoppingListScreen> {
               ),
               const SizedBox(height: 12),
 
-              // Результаты поиска
+              
               if (_searchResults.isNotEmpty && _isSearchingTypes)
                 Container(
                   height: 200,
@@ -261,7 +261,7 @@ class _AddToShoppingListScreenState extends State<AddToShoppingListScreen> {
 
               const SizedBox(height: 24),
 
-              // Секция количества
+              
               Text(
                 'Шаг 2: Укажите количество',
                 style: Theme.of(context).textTheme.titleMedium,
@@ -270,7 +270,7 @@ class _AddToShoppingListScreenState extends State<AddToShoppingListScreen> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Поле количества
+                  
                   Expanded(
                     flex: 2,
                     child: TextFormField(
@@ -292,7 +292,7 @@ class _AddToShoppingListScreenState extends State<AddToShoppingListScreen> {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  // Выпадающий список единиц измерения
+                  
                   Expanded(
                     flex: 3,
                     child: DropdownButtonFormField<QuantityType>(
@@ -300,17 +300,17 @@ class _AddToShoppingListScreenState extends State<AddToShoppingListScreen> {
                       decoration: const InputDecoration(
                         labelText: 'Единица измерения',
                         prefixIcon: Icon(Icons.straighten),
-                        // Добавляем padding для лучшего отображения
+                        
                         contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                       ),
-                      // Увеличиваем размер по ширине
+                      
                       isExpanded: true,
                       items: _quantityTypes.map((type) {
                         return DropdownMenuItem<QuantityType>(
                           value: type,
                           child: Text(
                             type.toDisplayString(),
-                            // Стиль с меньшим размером шрифта
+                            
                             style: const TextStyle(fontSize: 14),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -330,7 +330,7 @@ class _AddToShoppingListScreenState extends State<AddToShoppingListScreen> {
 
               const SizedBox(height: 32),
 
-              // Кнопка добавления
+              
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
