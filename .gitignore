@@ -1,6 +1,6 @@
-./AppBackend/.venv/*
-./AppBackend/.env
-./AppBackend/logs/*
-./AppBackend/tests/*
-./AppBackend/**/__pycache__/
-./AppBackend/**/*.py[cod]
+/AppBackend/.venv/*
+/AppBackend/.env
+/AppBackend/logs/*
+/AppBackend/tests/*
+/AppBackend/**/__pycache__/
+/AppBackend/**/*.py[cod]

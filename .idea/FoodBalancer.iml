@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="PYTHON_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/AppBackend/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/AppBackend/.venv/Lib" />
+      <excludeFolder url="file://$MODULE_DIR$/AppBackend/.venv/Scripts" />
+      <excludeFolder url="file://$MODULE_DIR$/to_be_renaimed/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/to_be_renaimed/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/to_be_renaimed/android/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/to_be_renaimed/android/app/.cxx" />
+      <excludeFolder url="file://$MODULE_DIR$/to_be_renaimed/build" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+  <component name="PyDocumentationSettings">
+    <option name="format" value="PLAIN" />
+    <option name="myDocStringFormat" value="Plain" />
+  </component>
+  <component name="TemplatesService">
+    <option name="TEMPLATE_FOLDERS">
+      <list>
+        <option value="$MODULE_DIR$/AppBackend/templates" />
+      </list>
+    </option>
+  </component>
+  <component name="TestRunnerService">
+    <option name="PROJECT_TEST_RUNNER" value="py.test" />
+  </component>
+</module>
