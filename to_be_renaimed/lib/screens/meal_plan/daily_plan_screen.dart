@@ -1,6 +1,9 @@
 // lib/screens/meal_plan/daily_plan_screen.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../utils/date_formatter.dart';
+import '../../services/meal_plan_service.dart';
+import '../../repositories/data_repository.dart';
 
 class DailyPlanScreen extends StatefulWidget {
   final DateTime? date;
@@ -20,16 +23,81 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
   // Общее количество калорий
   int _totalCalories = 0;
 
+  // Сервис планов питания
+  final MealPlanService _mealPlanService = MealPlanService();
+
+  // Состояние загрузки
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
     _selectedDate = widget.date ?? DateTime.now();
 
-    // Инициализация данных
-    _initMealData();
+    // Загрузка данных
+    _loadData();
   }
 
-  // Инициализация данных о приемах пищи (симуляция)
+  // Загрузка данных о планах питания из сервиса
+  Future<void> _loadData() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    if (_mealPlanService.isInitialized) {
+      // Если сервис уже инициализирован, просто получаем данные
+      _loadDataFromService();
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      // Если сервис еще не инициализирован, загружаем рецепты и инициализируем
+      await _initializeService();
+    }
+  }
+
+  // Загрузка данных из сервиса
+  void _loadDataFromService() {
+    final dayData = _mealPlanService.getMealPlanForDate(_selectedDate);
+
+    if (dayData != null) {
+      // Копируем данные из сервиса
+      _meals = List<Map<String, dynamic>>.from(dayData['meals']);
+      _totalCalories = dayData['calories'];
+    } else {
+      // Если нет данных для этого дня, инициализируем по умолчанию
+      _initMealData();
+    }
+  }
+
+  // Инициализация сервиса, если он еще не был инициализирован
+  Future<void> _initializeService() async {
+    try {
+      final dataRepository = Provider.of<DataRepository>(context, listen: false);
+      final recipes = await dataRepository.getRecipes();
+
+      // Инициализация сервиса планов питания
+      await _mealPlanService.initializeWithRecipes(recipes);
+
+      // Загружаем данные из сервиса
+      _loadDataFromService();
+
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Error initializing meal plan service: $e');
+
+      // В случае ошибки, инициализируем данные по умолчанию
+      _initMealData();
+
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  // Инициализация данных о приемах пищи (используется как запасной вариант)
   void _initMealData() {
     _meals = [
       {
@@ -72,6 +140,13 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
         _totalCalories += recipe['calories'] as int;
       }
     }
+
+    // Обновляем данные в сервисе
+    final dayData = {
+      'calories': _totalCalories,
+      'meals': _meals,
+    };
+    _mealPlanService.updateMealPlanForDate(_selectedDate, dayData);
   }
 
   @override
@@ -80,7 +155,9 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
       appBar: AppBar(
         title: Text('План на ${DateFormatter.formatDateShort(_selectedDate)}'),
       ),
-      body: Column(
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
         children: [
           // Информация о калориях
           Card(
@@ -153,6 +230,8 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
                   }
                   final item = _meals.removeAt(oldIndex);
                   _meals.insert(newIndex, item);
+                  // Обновляем данные в сервисе после изменения порядка
+                  _updateTotalCalories();
                 });
               },
             ),
@@ -400,6 +479,8 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
                     'time': timeController.text,
                     'recipes': [],
                   });
+                  // Обновляем данные в сервисе после добавления
+                  _updateTotalCalories();
                 });
                 Navigator.pop(context);
               }
@@ -453,6 +534,8 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
                 setState(() {
                   meal['type'] = typeController.text;
                   meal['time'] = timeController.text;
+                  // Обновляем данные в сервисе после редактирования
+                  _updateTotalCalories();
                 });
                 Navigator.pop(context);
               }
@@ -482,6 +565,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
             onPressed: () {
               setState(() {
                 _meals.removeWhere((m) => m['id'] == meal['id']);
+                // Обновляем данные в сервисе после удаления
                 _updateTotalCalories();
               });
               Navigator.pop(context);
@@ -521,6 +605,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
                 onTap: () {
                   setState(() {
                     (meal['recipes'] as List).add(recipe);
+                    // Обновляем данные в сервисе после добавления рецепта
                     _updateTotalCalories();
                   });
                   Navigator.pop(context);

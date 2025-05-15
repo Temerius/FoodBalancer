@@ -324,44 +324,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
 
               // Отладочный блок
-              const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                color: Colors.grey[200],
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Отладка',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Icon(Icons.bug_report, size: 14, color: Colors.grey[600]),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/debug/cache');
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.symmetric(vertical: 4.0),
-                          child: Text(
-                            'Просмотр кэша',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Theme.of(context).colorScheme.primary,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // const SizedBox(height: 8),
+              // Container(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              //   color: Colors.grey[200],
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       Text(
+              //         'Отладка',
+              //         style: TextStyle(
+              //           fontSize: 12,
+              //           color: Colors.grey[600],
+              //         ),
+              //       ),
+              //       const SizedBox(width: 8),
+              //       Icon(Icons.bug_report, size: 14, color: Colors.grey[600]),
+              //       Expanded(
+              //         child: GestureDetector(
+              //           onTap: () {
+              //             Navigator.pushNamed(context, '/debug/cache');
+              //           },
+              //           child: Container(
+              //             alignment: Alignment.center,
+              //             padding: const EdgeInsets.symmetric(vertical: 4.0),
+              //             child: Text(
+              //               'Просмотр кэша',
+              //               style: TextStyle(
+              //                 fontSize: 12,
+              //                 color: Theme.of(context).colorScheme.primary,
+              //                 decoration: TextDecoration.underline,
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),

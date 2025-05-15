@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../repositories/data_repository.dart';
 import '../repositories/models/cache_config.dart';
+import '../services/meal_plan_service.dart';
 import 'auth/onboarding_screen.dart';
 import 'home_layout.dart';
 
@@ -126,15 +127,33 @@ class _LoadingScreenState extends State<LoadingScreen> {
         // 9. Обновляем конкретные данные пользователя
         await dataRepository.refreshUserAllergens();
         await dataRepository.refreshUserEquipment();
+
+        setState(() {
+          _statusMessage = "Инициализация планов питания...";
+          _progress = 0.85;
+        });
+
+
+        try {
+          final mealPlanService = MealPlanService();
+          if (!mealPlanService.isInitialized) {
+
+            final recipes = await dataRepository.getRecipes();
+            await mealPlanService.initializeWithRecipes(recipes);
+          }
+        } catch (e) {
+          print("Ошибка при инициализации планов питания: $e");
+
+        }
+
+        setState(() {
+          _statusMessage = "Загрузка списка покупок...";
+          _progress = 0.93;
+        });
+
+        await dataRepository.getShoppingListItems(forceRefresh: true);
       }
 
-      setState(() {
-        _statusMessage = "Загрузка списка покупок...";
-        _progress = 0.93;
-      });
-
-// Load shopping list data
-      await dataRepository.getShoppingListItems(forceRefresh: true);
 
       setState(() {
         _progress = 1.0;
